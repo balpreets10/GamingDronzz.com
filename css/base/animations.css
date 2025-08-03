@@ -1,0 +1,870 @@
+/* Preloader */
+
+@keyframes preloaderNameSlide {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(var(--slide-distance, -200px)) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes preloaderProgress {
+    0% {
+        width: 0%;
+        transform: translateX(-100%);
+    }
+
+    50% {
+        width: 100%;
+        transform: translateX(0%);
+    }
+
+    100% {
+        width: 0%;
+        transform: translateX(100%);
+    }
+}
+
+@keyframes backgroundPulse {
+
+    0%,
+    100% {
+        opacity: 0.1;
+    }
+
+    50% {
+        opacity: 0.05;
+    }
+}
+
+@keyframes codeRain {
+    from {
+        transform: translateY(-100vh);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+@keyframes powerUp {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 30px rgba(0, 255, 136, 0.8);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes textGlow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 10px var(--accent-color);
+    }
+
+    50% {
+        text-shadow: 0 0 20px var(--accent-color), 0 0 30px var(--tertiary-accent);
+    }
+}
+
+@keyframes progressShine {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes shadowGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px var(--glow-green);
+    }
+
+    50% {
+        box-shadow: 0 0 30px var(--glow-green);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes rgb {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+@keyframes php-email-form-loading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes preloaderSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes preloaderProgress {
+    0% {
+        width: 0%;
+        transform: translateX(-100%);
+    }
+
+    50% {
+        width: 100%;
+        transform: translateX(0%);
+    }
+
+    100% {
+        width: 0%;
+        transform: translateX(100%);
+    }
+}
+
+/* Animation Keyframes */
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes scanLine {
+
+    0%,
+    100% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+@keyframes textGlow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    50% {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+}
+
+@keyframes gridPulse {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.1;
+    }
+}
+
+@keyframes energyFlow {
+    0% {
+        background-position: 20% 0, 50% 0, 80% 0;
+    }
+
+    100% {
+        background-position: 20% 100%, 50% 100%, 80% 100%;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinInfinite {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Header Animations */
+@keyframes gamingGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes borderColorShift {
+    0% {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 25px var(--glow-green), inset 0 0 25px rgba(0, 255, 159, 0.2);
+    }
+
+    25% {
+        border-color: var(--tertiary-accent);
+        box-shadow: 0 0 25px var(--glow-blue), inset 0 0 25px rgba(0, 212, 255, 0.2);
+    }
+
+    50% {
+        border-color: var(--secondary-accent);
+        box-shadow: 0 0 25px var(--glow-magenta), inset 0 0 25px rgba(255, 0, 128, 0.2);
+    }
+
+    75% {
+        border-color: var(--quaternary-accent);
+        box-shadow: 0 0 25px var(--glow-yellow), inset 0 0 25px rgba(255, 255, 0, 0.2);
+    }
+
+    100% {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 25px var(--glow-green), inset 0 0 25px rgba(0, 255, 159, 0.2);
+    }
+}
+
+@keyframes gamingIconPulse {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 10px var(--glow-green));
+    }
+
+    25% {
+        transform: scale(1.1) rotate(2deg);
+        filter: drop-shadow(0 0 15px var(--glow-blue));
+    }
+
+    50% {
+        transform: scale(1.05) rotate(-1deg);
+        filter: drop-shadow(0 0 12px var(--glow-magenta));
+    }
+
+    75% {
+        transform: scale(1.08) rotate(1deg);
+        filter: drop-shadow(0 0 18px var(--glow-green));
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Hero Animations */
+@keyframes glitch {
+
+    2%,
+    64% {
+        transform: translate(2px, 0) skew(0deg);
+    }
+
+    4%,
+    60% {
+        transform: translate(-2px, 0) skew(0deg);
+    }
+
+    62% {
+        transform: translate(0, 0) skew(5deg);
+    }
+}
+
+@keyframes glitchTop {
+
+    2%,
+    64% {
+        transform: translate(2px, -2px);
+    }
+
+    4%,
+    60% {
+        transform: translate(-2px, 2px);
+    }
+
+    62% {
+        transform: translate(13px, -1px) skew(-13deg);
+    }
+}
+
+@keyframes glitchBottom {
+
+    2%,
+    64% {
+        transform: translate(-2px, 0);
+    }
+
+    4%,
+    60% {
+        transform: translate(-2px, 0);
+    }
+
+    62% {
+        transform: translate(-22px, 5px) skew(21deg);
+    }
+}
+
+@keyframes cleanFloat {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes particleFloatUp {
+    0% {
+        transform: translateY(100vh) translateX(0px);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100px) translateX(50px);
+        opacity: 0;
+    }
+}
+
+@keyframes matrixReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+        filter: blur(10px);
+    }
+
+    50% {
+        filter: blur(5px);
+        text-shadow: 0 0 20px var(--accent-color);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes hologram {
+
+    0%,
+    100% {
+        opacity: 0.8;
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    25% {
+        opacity: 1;
+        transform: scale(1.02);
+        filter: brightness(1.2);
+    }
+
+    50% {
+        opacity: 0.9;
+        transform: scale(0.98);
+        filter: brightness(0.9);
+    }
+
+    75% {
+        opacity: 1;
+        transform: scale(1.01);
+        filter: brightness(1.1);
+    }
+}
+
+@keyframes rgbShift {
+
+    0%,
+    100% {
+        text-shadow: 1px 0 var(--secondary-accent), -1px 0 var(--tertiary-accent);
+    }
+
+    25% {
+        text-shadow: 2px 0 var(--secondary-accent), -2px 0 var(--tertiary-accent);
+    }
+
+    50% {
+        text-shadow: -1px 0 var(--secondary-accent), 1px 0 var(--tertiary-accent);
+    }
+
+    75% {
+        text-shadow: -2px 0 var(--secondary-accent), 2px 0 var(--tertiary-accent);
+    }
+}
+
+@keyframes pixelatedFade {
+    0% {
+        opacity: 0;
+        filter: blur(8px) pixelated;
+        transform: scale(1.1);
+    }
+
+    30% {
+        filter: blur(4px);
+    }
+
+    60% {
+        filter: blur(1px);
+    }
+
+    100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: scale(1);
+    }
+}
+
+@keyframes cleanNeonPulse {
+    from {
+        text-shadow: 0 0 8px var(--accent-color), 0 0 15px var(--accent-color), 0 0 20px rgba(0, 255, 136, 0.5);
+    }
+
+    to {
+        text-shadow: 0 0 4px var(--accent-color), 0 0 8px var(--accent-color), 0 0 12px rgba(0, 255, 136, 0.3);
+    }
+}
+
+@keyframes game-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+    }
+
+    50% {
+        box-shadow: 0 0 50px rgba(0, 255, 136, 0.4);
+    }
+}
+
+@keyframes scan {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateX(10px);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes skillReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.8);
+    }
+
+    50% {
+        transform: translateY(-5px) scale(1.05);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes energyPulse {
+    0% {
+        box-shadow: 0 0 5px var(--accent-color);
+        border-color: rgba(56, 172, 95, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 25px var(--accent-color), 0 0 35px rgba(56, 172, 95, 0.3);
+        border-color: var(--accent-color);
+    }
+
+    100% {
+        box-shadow: 0 0 5px var(--accent-color);
+        border-color: rgba(56, 172, 95, 0.3);
+    }
+}
+
+@keyframes subtleShimmer {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) translateX(0px);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100px) translateX(50px);
+        opacity: 0;
+    }
+}
+
+
+
+/* Gaming Animations */
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Portfolio Animations */
+@keyframes gridMove {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(50px, 50px);
+    }
+}
+
+@keyframes particleRotate {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+    }
+}
+
+@keyframes scaleGlow {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.2;
+    }
+}
+
+@keyframes achievementGlow {
+    0% {
+        box-shadow: 0 4px 15px rgba(0, 255, 159, 0.3);
+    }
+
+    100% {
+        box-shadow: 0 4px 25px rgba(0, 255, 159, 0.6);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+/* Skills Animations */
+@keyframes gridPulse {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+@keyframes skillenergyFlow {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes scanLine {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes skillAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(20px);
+        filter: blur(5px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes gentleFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-3px) rotate(1deg);
+    }
+
+    50% {
+        transform: translateY(-2px) rotate(0deg);
+    }
+
+    75% {
+        transform: translateY(-4px) rotate(-1deg);
+    }
+}
+
+/* Contact Animations */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleInOut {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Testimonials Animation */
+@keyframes testimonialFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Portfolio Scroll Animations */
+@keyframes scrollHint {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(300%);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeInOut {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: translateY(-50%) scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.2;
+        transform: scale(1.1);
+    }
+}

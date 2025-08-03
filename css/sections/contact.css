@@ -1,0 +1,379 @@
+/* Cleaned contact.css - Redundant selectors removed, social links centered */
+
+/* Contact title styles */
+.contact-title {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    text-shadow: 0 0 20px var(--glow-green);
+    position: relative;
+    display: inline-block;
+    font-family: var(--heading-font);
+}
+
+.contact-title .title-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--glow-green);
+    border-radius: 50%;
+    filter: blur(20px);
+    z-index: -1;
+    opacity: 0.7;
+}
+
+/* Contact subtitle */
+.contact-subtitle {
+    font-size: 1.2rem;
+    color: var(--default-color);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.contact-content {
+    margin-top: 40px;
+}
+
+/* Main contact cards */
+.contact-info-card,
+.social-links-card {
+    background: var(--bg-highly-transparent);
+    backdrop-filter: blur(15px);
+    border-radius: var(--border-radius-xl);
+    padding: var(--padding-2xl);
+    border: var(--border-width-normal) solid var(--border-color);
+    box-shadow: 0 15px 40px var(--glow-green);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.contact-info-card:hover,
+.social-links-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px var(--glow-green);
+    border-color: var(--accent-color);
+}
+
+/* Card titles */
+.contact-info-card h3,
+.social-links-card h3 {
+    font-size: 1.8rem;
+    color: var(--heading-color);
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 15px;
+    text-align: center;
+    font-family: var(--heading2-font);
+}
+
+.contact-info-card h3::after,
+.social-links-card h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-color), var(--tertiary-accent));
+    border-radius: 3px;
+}
+
+/* Contact details styling */
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+.contact-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 300px;
+    transition: all var(--transition-normal);
+}
+
+.contact-item:last-child {
+    border-bottom: none;
+}
+
+.contact-item i {
+    font-size: 1rem;
+    color: var(--accent-color);
+    width: 20px;
+    text-align: center;
+}
+
+.contact-item div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.contact-item strong {
+    color: var(--heading-color);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.contact-item span {
+    color: var(--default-color);
+    font-size: 1.2rem;
+    line-height: .9;
+    justify-content: center;
+}
+
+.availability {
+    color: var(--accent-color) !important;
+    font-weight: 500;
+}
+
+/* Contact link styling */
+.contact-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition-normal);
+    padding: 8px;
+    border-radius: var(--border-radius-normal);
+}
+
+.contact-link:hover {
+    background: rgba(56, 172, 95, 0.1);
+    transform: translateY(-2px);
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+/* .contact-link:hover .contact-header i {
+    color: var(--accent-color);
+    transform: scale(1.1);
+} */
+
+/* Contact header - icon and label together */
+.contact-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    margin-bottom: 8px;
+    flex-direction: row !important;
+}
+
+.contact-header i {
+    font-size: 1.1rem;
+    color: var(--accent-color);
+    width: 20px;
+    text-align: center;
+    transition: all var(--transition-fast);
+}
+
+.contact-header strong {
+    color: var(--heading-color);
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+/* Contact value */
+.contact-value {
+    color: var(--default-color);
+    font-size: 1.1rem;
+    text-align: center;
+    line-height: 1.2;
+    transition: all var(--transition-fast);
+}
+
+.contact-value.availability {
+    color: var(--accent-color) !important;
+    font-weight: 500;
+}
+
+/* Social links container - centered vertical stacking */
+.social-links-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+/* Social Link */
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--padding-md) var(--padding-lg);
+    background: rgba(26, 26, 46, 0.5);
+    border-radius: var(--border-radius-normal);
+    border: var(--border-width-normal) solid var(--social-color, var(--border-color));
+    color: var(--heading-color);
+    text-decoration: none;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left var(--transition-slow);
+}
+
+.social-link:hover::before {
+    left: 100%;
+}
+
+.social-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px var(--social-color, var(--glow-green));
+    border-color: var(--social-color);
+}
+
+.social-link i {
+    font-size: 1.4rem;
+    color: var(--social-color);
+    width: auto;
+    text-align: center;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.social-link span {
+    font-size: 1.1rem;
+    font-weight: 500;
+    flex-grow: 0;
+}
+
+/* Contact Links Hover Effects */
+.contact-link[href^="mailto:"]:hover .contact-header i {
+    color: var(--google-red);
+}
+
+.contact-link[href^="tel:"]:hover .contact-header i {
+    color: var(--google-green);
+}
+
+.contact-link[href*="maps.google"]:hover .contact-header i {
+    color: var(--google-blue);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .contact-content .row {
+        gap: 1rem;
+    }
+
+    .contact-info-card,
+    .social-links-card {
+        padding: 20px;
+        margin-bottom: 0;
+    }
+
+    /* Convert social links to 2x2 grid on mobile */
+    .social-links-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 5px;
+        width: 100%;
+        justify-items: center;
+    }
+
+    .social-link {
+        padding: 10px 10px;
+        font-size: 0.9rem;
+        justify-content: center;
+        text-align: center;
+        max-width: 220px;
+        gap: 8px;
+    }
+
+    .social-link i {
+        font-size: 1.2rem;
+        width: 20px;
+    }
+
+    .social-link span {
+        font-size: 0.95rem;
+    }
+
+    .contact-item {
+        padding: 2px 0;
+        max-width: 90%;
+    }
+
+    .contact-header {
+        gap: 8px;
+        margin-bottom: 6px;
+    }
+
+    .contact-header i {
+        font-size: 1rem;
+        width: 18px;
+    }
+
+    .contact-header strong {
+        font-size: 0.95rem;
+    }
+
+    .contact-value {
+        font-size: 1rem;
+    }
+
+    .contact-link {
+        padding: 6px;
+    }
+
+    .contact-item i {
+        width: 20px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 540px) {
+    .social-links-container {
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: none;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .social-link {
+        max-width: 300px;
+    }
+}
+
+/* Animation for cards appearing */
+.contact-info-card.animate-in {
+    animation: slideInLeft 0.6s ease forwards;
+}
+
+.social-links-card.animate-in {
+    animation: slideInRight 0.6s ease forwards;
+}

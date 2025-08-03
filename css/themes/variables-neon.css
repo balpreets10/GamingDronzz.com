@@ -1,0 +1,89 @@
+/**
+ * Neon Gaming Theme - Synthwave/Outrun Aesthetic
+ */
+
+/* Fonts */
+:root {
+    --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --heading-font: "Ubuntu", sans-serif;
+    --nav-font: "Nunito", sans-serif;
+}
+
+/* Neon Color Palette */
+:root {
+    --background-color: #050505;
+    /* Almost pure black */
+    --default-color: #e0e0ff;
+    /* Light blue-white */
+    --heading-color: #ffffff;
+    /* Pure white */
+    --accent-color: #00ffff;
+    /* Cyan neon */
+    --secondary-accent: #ff00ff;
+    /* Magenta neon */
+    --surface-color: #0f0f0f;
+    /* Very dark gray */
+    --contrast-color: #000000;
+    /* Black */
+    --box-shadow-color: rgba(0, 255, 255, 0.3);
+    /* Cyan glow */
+    --box-shadow-color2: rgba(255, 0, 255, 0.3);
+    /* Magenta glow */
+}
+
+/* Additional Neon Colors */
+:root {
+    --tertiary-accent: #ff0080;
+    /* Hot pink */
+    --warning-color: #ffff00;
+    /* Electric yellow */
+    --success-color: #00ff00;
+    /* Bright green */
+    --error-color: #ff0040;
+    /* Neon red */
+    --info-color: #00ffff;
+    /* Cyan */
+    --border-color: #333366;
+    /* Dark blue border */
+    --input-bg: #1a1a2e;
+    /* Dark blue input bg */
+    --input-border: #0066cc;
+    /* Blue input border */
+}
+
+/* Nav Menu Colors */
+:root {
+    --nav-color: #e0e0ff;
+    /* Light blue nav text */
+    --nav-hover-color: #00ffff;
+    /* Cyan hover */
+    --nav-mobile-background-color: #0f0f1f;
+    /* Very dark blue */
+    --nav-dropdown-background-color: #1a1a2e;
+    /* Dark blue dropdown */
+    --nav-dropdown-color: #e0e0ff;
+    /* Light blue dropdown text */
+    --nav-dropdown-hover-color: #ff00ff;
+    /* Magenta dropdown hover */
+}
+
+/* Neon Glow Effects */
+.neon-glow {
+    text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+}
+
+.neon-border {
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-color), inset 0 0 10px rgba(0, 255, 255, 0.1);
+}
+
+.neon-box {
+    background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 0 20px var(--box-shadow-color);
+}
+
+/* Smooth scroll */
+:root {
+    scroll-behavior: smooth;
+}

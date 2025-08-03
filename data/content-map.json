@@ -1,0 +1,982 @@
+{
+    "sections": {
+        "hero": {
+            "keywords": [
+                "home",
+                "start",
+                "beginning",
+                "top",
+                "main",
+                "intro",
+                "introduction",
+                "who are you",
+                "about you"
+            ],
+            "response": "Welcome! Let me show you the main introduction.",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "hero"
+                }
+            ]
+        },
+        "game": {
+            "keywords": [
+                "game",
+                "interactive",
+                "gaming expertise",
+                "game development section"
+            ],
+            "response": "Here's the gaming expertise section!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "game"
+                }
+            ]
+        },
+        "portfolio": {
+            "keywords": [
+                "projects",
+                "portfolio",
+                "work",
+                "examples",
+                "showcase",
+                "what you built",
+                "creations",
+                "sample"
+            ],
+            "response": "Let me show you the project portfolio!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                }
+            ]
+        },
+        "skills": {
+            "keywords": [
+                "skills",
+                "technologies",
+                "tech stack",
+                "abilities",
+                "expertise",
+                "programming",
+                "languages",
+                "tools",
+                "stack"
+            ],
+            "response": "Here are the technical skills and expertise!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "skills"
+                }
+            ]
+        },
+        "experience": {
+            "keywords": [
+                "experience",
+                "work experience",
+                "career",
+                "job",
+                "employment",
+                "background",
+                "history",
+                "work history"
+            ],
+            "response": "Check out the professional experience!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "experience"
+                }
+            ]
+        },
+        "testimonials": {
+            "keywords": [
+                "testimonials",
+                "reviews",
+                "feedback",
+                "recommendations",
+                "what others say"
+            ],
+            "response": "Here's what clients and colleagues say!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "testimonials"
+                }
+            ]
+        },
+        "contact": {
+            "keywords": [
+                "contact",
+                "hire",
+                "email",
+                "get in touch",
+                "reach out",
+                "connect",
+                "message",
+                "hire me"
+            ],
+            "response": "Let's get connected!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "contact"
+                }
+            ]
+        }
+    },
+    "project_categories": {
+        "casino_projects": {
+            "keywords": [
+                "casino games",
+                "casino projects",
+                "slot games",
+                "gambling",
+                "rs fun",
+                "f7 fun",
+                "slot machines"
+            ],
+            "response": "Showing casino and slot game projects!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Casino",
+                    "delay": 1000
+                }
+            ]
+        },
+        "multiplayer_projects": {
+            "keywords": [
+                "multiplayer games",
+                "multiplayer projects",
+                "online games",
+                "networking",
+                "real time",
+                "bingo blast",
+                "race for white house"
+            ],
+            "response": "Here are the multiplayer gaming projects!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Multiplayer",
+                    "delay": 1000
+                }
+            ]
+        },
+        "unity_projects": {
+            "keywords": [
+                "unity games",
+                "unity projects",
+                "unity development",
+                "game engine"
+            ],
+            "response": "Showcasing Unity game development projects!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Unity",
+                    "delay": 1000
+                }
+            ]
+        },
+        "mobile_projects": {
+            "keywords": [
+                "mobile games",
+                "mobile apps",
+                "android",
+                "ios",
+                "mobile development"
+            ],
+            "response": "Here are the mobile development projects!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Mobile",
+                    "delay": 1000
+                }
+            ]
+        },
+        "web_projects": {
+            "keywords": [
+                "web projects",
+                "web development",
+                "web apps",
+                "website",
+                "javascript",
+                "html5"
+            ],
+            "response": "Check out the web development projects!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Web",
+                    "delay": 1000
+                }
+            ]
+        },
+        "3d_projects": {
+            "keywords": [
+                "3d games",
+                "3d projects",
+                "three dimensional",
+                "3d development"
+            ],
+            "response": "Showing 3D development projects!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "3D",
+                    "delay": 1000
+                }
+            ]
+        },
+        "2d_projects": {
+            "keywords": [
+                "2d games",
+                "2d projects",
+                "two dimensional",
+                "2d development"
+            ],
+            "response": "Here are the 2D game projects!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "2D",
+                    "delay": 1000
+                }
+            ]
+        }
+    },
+    "specific_projects": {
+        "rs_fun": {
+            "keywords": [
+                "rs fun",
+                "casino slot",
+                "club 7",
+                "70 games"
+            ],
+            "response": "Opening RS Fun - the immersive casino game!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "open_specific_project",
+                    "projectId": 1,
+                    "delay": 1000
+                }
+            ]
+        },
+        "bingo_blast": {
+            "keywords": [
+                "bingo blast",
+                "bingo game",
+                "16 players",
+                "multiplayer bingo"
+            ],
+            "response": "Showing Bingo Blast - the multiplayer sensation!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "open_specific_project",
+                    "projectId": 2,
+                    "delay": 1000
+                }
+            ]
+        },
+        "portfolio_website": {
+            "keywords": [
+                "balpreet.com",
+                "portfolio website",
+                "this website",
+                "ai navigation"
+            ],
+            "response": "You're looking at it! Let me show the project details.",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "open_specific_project",
+                    "projectId": 3,
+                    "delay": 1000
+                }
+            ]
+        },
+        "abc_rule_of_3": {
+            "keywords": [
+                "abc rule of 3",
+                "learning academy",
+                "english learners",
+                "education"
+            ],
+            "response": "Opening ABC Rule of 3 - the e-learning platform!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "open_specific_project",
+                    "projectId": 4,
+                    "delay": 1000
+                }
+            ]
+        },
+        "race_white_house": {
+            "keywords": [
+                "race for white house",
+                "election game",
+                "strategy",
+                "political"
+            ],
+            "response": "Showing Race for the White House - the strategy game!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "open_specific_project",
+                    "projectId": 5,
+                    "delay": 1000
+                }
+            ]
+        }
+    },
+    "project_actions": {
+        "open_random_casino": {
+            "keywords": [
+                "open casino game",
+                "show casino project",
+                "random casino",
+                "casino example"
+            ],
+            "response": "Opening a random casino project for you!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Casino",
+                    "delay": 1000
+                },
+                {
+                    "type": "open_random_project",
+                    "category": "Casino",
+                    "delay": 2000
+                }
+            ]
+        },
+        "open_random_multiplayer": {
+            "keywords": [
+                "open multiplayer game",
+                "show multiplayer project",
+                "random multiplayer"
+            ],
+            "response": "Opening a multiplayer game project!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Multiplayer",
+                    "delay": 1000
+                },
+                {
+                    "type": "open_random_project",
+                    "category": "Multiplayer",
+                    "delay": 2000
+                }
+            ]
+        },
+        "open_random_unity": {
+            "keywords": [
+                "open unity game",
+                "show unity project",
+                "random unity"
+            ],
+            "response": "Opening a Unity development project!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Unity",
+                    "delay": 1000
+                },
+                {
+                    "type": "open_random_project",
+                    "category": "Unity",
+                    "delay": 2000
+                }
+            ]
+        },
+        "open_random_web": {
+            "keywords": [
+                "open web project",
+                "show web app",
+                "random web"
+            ],
+            "response": "Opening a web development project!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Web",
+                    "delay": 1000
+                },
+                {
+                    "type": "open_random_project",
+                    "category": "Web",
+                    "delay": 2000
+                }
+            ]
+        }
+    },
+    "company_experience": {
+        "ardentinfo": {
+            "keywords": [
+                "ardentinfo",
+                "ardent info",
+                "team lead",
+                "current job",
+                "abc rule",
+                "race white house"
+            ],
+            "response": "Here's my experience as Team Lead at ArdentInfo Solutions!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "experience"
+                },
+                {
+                    "type": "highlight_experience",
+                    "companyId": 1,
+                    "delay": 1000
+                }
+            ]
+        },
+        "webzool": {
+            "keywords": [
+                "webzool",
+                "unity team leader",
+                "casino development",
+                "rs fun",
+                "f7 fun"
+            ],
+            "response": "Showing my Unity Team Leader role at Webzool Creative!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "experience"
+                },
+                {
+                    "type": "highlight_experience",
+                    "companyId": 2,
+                    "delay": 1000
+                }
+            ]
+        },
+        "lucky_strike": {
+            "keywords": [
+                "lucky strike",
+                "bingo blast",
+                "game developer",
+                "bangalore"
+            ],
+            "response": "Here's my game development experience at Lucky Strike Games!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "experience"
+                },
+                {
+                    "type": "highlight_experience",
+                    "companyId": 3,
+                    "delay": 1000
+                }
+            ]
+        },
+        "gaming_dronzz": {
+            "keywords": [
+                "gaming dronzz",
+                "co-founder",
+                "startup",
+                "consultancy"
+            ],
+            "response": "Showing my entrepreneurial journey with Gaming Dronzz!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "experience"
+                },
+                {
+                    "type": "highlight_experience",
+                    "companyId": 4,
+                    "delay": 1000
+                }
+            ]
+        }
+    },
+    "skills_detailed": {
+        "core_programming": {
+            "keywords": [
+                "c#",
+                "programming skills",
+                "oop",
+                "solid",
+                "performance",
+                "core programming"
+            ],
+            "response": "Here's my core programming expertise!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "skills"
+                },
+                {
+                    "type": "open_skills_modal",
+                    "categoryId": 1,
+                    "delay": 1000
+                }
+            ]
+        },
+        "design_patterns": {
+            "keywords": [
+                "design patterns",
+                "mvc",
+                "observer",
+                "factory",
+                "dependency injection",
+                "architecture"
+            ],
+            "response": "Let me show you my architectural design skills!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "skills"
+                },
+                {
+                    "type": "open_skills_modal",
+                    "categoryId": 2,
+                    "delay": 1000
+                }
+            ]
+        },
+        "multiplayer_systems": {
+            "keywords": [
+                "photon",
+                "multiplayer",
+                "networking",
+                "pun2",
+                "fusion",
+                "playfab"
+            ],
+            "response": "Here's my multiplayer development expertise!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "skills"
+                },
+                {
+                    "type": "open_skills_modal",
+                    "categoryId": 3,
+                    "delay": 1000
+                }
+            ]
+        },
+        "ai_tools": {
+            "keywords": [
+                "ai tools",
+                "copilot",
+                "claude",
+                "cursor",
+                "deepseek",
+                "agentic ai"
+            ],
+            "response": "Check out my AI development tools expertise!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "skills"
+                },
+                {
+                    "type": "open_skills_modal",
+                    "categoryId": 4,
+                    "delay": 1000
+                }
+            ]
+        },
+        "devops": {
+            "keywords": [
+                "devops",
+                "git",
+                "ci cd",
+                "github actions",
+                "pipeline"
+            ],
+            "response": "Here's my DevOps and pipeline expertise!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "skills"
+                },
+                {
+                    "type": "open_skills_modal",
+                    "categoryId": 5,
+                    "delay": 1000
+                }
+            ]
+        },
+        "leadership": {
+            "keywords": [
+                "team leadership",
+                "management",
+                "mentorship",
+                "scrum",
+                "agile",
+                "team lead"
+            ],
+            "response": "Let me show you my leadership and management skills!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "skills"
+                },
+                {
+                    "type": "open_skills_modal",
+                    "categoryId": 6,
+                    "delay": 1000
+                }
+            ]
+        },
+        "unity_mastery": {
+            "keywords": [
+                "unity mastery",
+                "unity expert",
+                "unity engine",
+                "8 years unity"
+            ],
+            "response": "Here's my complete Unity Engine mastery!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "skills"
+                },
+                {
+                    "type": "show_unity_mastery",
+                    "delay": 1000
+                }
+            ]
+        }
+    },
+    "technology_focus": {
+        "unity_tech": {
+            "keywords": [
+                "unity development",
+                "unity expertise",
+                "unity games",
+                "game engine"
+            ],
+            "response": "Showing Unity development projects and expertise!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Unity",
+                    "delay": 1000
+                },
+                {
+                    "type": "scroll_to_section",
+                    "target": "skills",
+                    "delay": 3000
+                },
+                {
+                    "type": "show_unity_mastery",
+                    "delay": 4000
+                }
+            ]
+        },
+        "csharp_expertise": {
+            "keywords": [
+                "c# development",
+                "c sharp",
+                "programming c#",
+                "c# skills"
+            ],
+            "response": "Here's my C# development expertise across projects!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "skills"
+                },
+                {
+                    "type": "open_skills_modal",
+                    "categoryId": 1,
+                    "delay": 1000
+                },
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio",
+                    "delay": 3000
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Unity",
+                    "delay": 4000
+                }
+            ]
+        },
+        "multiplayer_focus": {
+            "keywords": [
+                "multiplayer expertise",
+                "networking skills",
+                "online games",
+                "real time"
+            ],
+            "response": "Showcasing multiplayer development skills and projects!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "skills"
+                },
+                {
+                    "type": "open_skills_modal",
+                    "categoryId": 3,
+                    "delay": 1000
+                },
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio",
+                    "delay": 3000
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Multiplayer",
+                    "delay": 4000
+                }
+            ]
+        }
+    },
+    "achievement_focus": {
+        "million_downloads": {
+            "keywords": [
+                "million downloads",
+                "1m downloads",
+                "successful games",
+                "popular games"
+            ],
+            "response": "Here are the games with 1M+ downloads!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "highlight_achievement_projects",
+                    "achievement": "1M+ Downloads",
+                    "delay": 1000
+                }
+            ]
+        },
+        "team_leadership_projects": {
+            "keywords": [
+                "leadership projects",
+                "team lead work",
+                "management experience"
+            ],
+            "response": "Showing projects where I led development teams!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "experience"
+                },
+                {
+                    "type": "highlight_experience",
+                    "companyId": 1,
+                    "delay": 1000
+                },
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio",
+                    "delay": 3000
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Casino",
+                    "delay": 4000
+                }
+            ]
+        }
+    },
+    "complex_queries": {
+        "full_stack_overview": {
+            "keywords": [
+                "full stack",
+                "complete overview",
+                "everything",
+                "all skills",
+                "comprehensive"
+            ],
+            "response": "Let me give you a comprehensive tour of my expertise!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "hero"
+                },
+                {
+                    "type": "scroll_to_section",
+                    "target": "skills",
+                    "delay": 2000
+                },
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio",
+                    "delay": 4000
+                },
+                {
+                    "type": "scroll_to_section",
+                    "target": "experience",
+                    "delay": 6000
+                }
+            ]
+        },
+        "latest_work": {
+            "keywords": [
+                "latest work",
+                "recent projects",
+                "current work",
+                "newest"
+            ],
+            "response": "Here's my latest work at ArdentInfo Solutions!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "experience"
+                },
+                {
+                    "type": "highlight_experience",
+                    "companyId": 1,
+                    "delay": 1000
+                },
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio",
+                    "delay": 3000
+                },
+                {
+                    "type": "open_specific_project",
+                    "projectId": 4,
+                    "delay": 4000
+                }
+            ]
+        },
+        "best_games": {
+            "keywords": [
+                "best games",
+                "top projects",
+                "featured work",
+                "impressive games"
+            ],
+            "response": "Let me show you my most impressive gaming projects!",
+            "actions": [
+                {
+                    "type": "scroll_to_section",
+                    "target": "portfolio"
+                },
+                {
+                    "type": "open_specific_project",
+                    "projectId": 1,
+                    "delay": 1000
+                },
+                {
+                    "type": "filter_portfolio",
+                    "category": "Casino",
+                    "delay": 3000
+                }
+            ]
+        }
+    },
+    "responses": {
+        "greeting": [
+            "Hi! I'm Balpreet's AI assistant. I can help you navigate this portfolio with intelligent actions!",
+            "Hello! I can show you around Balpreet's portfolio using smart navigation. What interests you?",
+            "Welcome! I'm here to guide you through Balpreet's work, skills, and experience with contextual navigation."
+        ],
+        "navigation_success": [
+            "Perfect! Take a look at this section.",
+            "Here you go! Check out what I found.",
+            "Found it! This should be exactly what you're looking for."
+        ],
+        "action_chain_start": [
+            "Great question! Let me show you multiple relevant sections.",
+            "I'll take you through a guided tour of related content.",
+            "Let me demonstrate this with a comprehensive view."
+        ],
+        "not_found": [
+            "I'm not sure about that specific request. Try asking about: Unity projects, multiplayer games, casino development, team leadership, or recent work.",
+            "I didn't catch that. You can ask me to show portfolio categories, specific technologies, company experience, or skill details.",
+            "Could you rephrase? I can help with project filtering, skill demonstrations, experience highlights, or technology focus areas."
+        ]
+    },
+    "fallback_suggestions": [
+        "Here are some powerful things you can ask me:",
+        "• 'Show me casino games' - Filters and displays casino projects",
+        "• 'Open a Unity project' - Filters Unity games and opens one",
+        "• 'Tell me about multiplayer skills' - Shows networking expertise and projects",
+        "• 'Latest work at ArdentInfo' - Shows current role and recent projects",
+        "• 'C# development expertise' - Demonstrates programming skills and projects",
+        "• 'Leadership experience' - Highlights management roles and team projects"
+    ]
+}

@@ -1,0 +1,569 @@
+/*--------------------------------------------------------------
+# Global Header with Hover Collapse
+--------------------------------------------------------------*/
+.header {
+    --background-color: var(--header-bg);
+    color: var(--default-color);
+    position: fixed;
+    top: 0;
+    left: -53px;
+    bottom: 0;
+    padding: 0 var(--padding-md);
+    width: var(--icon-size-xl);
+    transition: width ease-in-out var(--transition-normal);
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: var(--z-index-modal);
+}
+
+.header .header-container {
+    border-radius: var(--border-radius-large);
+    border-style: solid;
+    padding: 5px;
+    background-color: var(--background-color);
+    border-width: var(--border-width-normal);
+    border-color: var(--accent-color);
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+/* Collapsed state - show only icons */
+.header.collapsed {
+    width: var(--header-width-collapsed);
+}
+
+/* Expanded state - show full navigation */
+.header.expanded {
+    width: var(--header-width-expanded);
+}
+
+/* Social links styling with transitions */
+.header .social-links {
+    margin: 0 0 10px 0;
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.1s ease, transform 0.1s ease;
+}
+
+.header.collapsed .social-links {
+    opacity: 0;
+    transform: translateX(-20px);
+    pointer-events: none;
+}
+
+.header .social-links a {
+    font-size: var(--font-size-base);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--default-color), transparent 90%);
+    color: var(--default-color);
+    margin: 0 var(--spacing-xs);
+    border-radius: 50%;
+    text-align: center;
+    width: var(--avatar-size-sm);
+    height: var(--avatar-size-sm);
+    transition: var(--transition-normal);
+}
+
+.header .social-links a:hover {
+    color: var(--contrast-color);
+    background: var(--accent-color);
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--glow-green);
+}
+
+
+
+.header.header-show {
+    left: 0;
+}
+
+/* Optional: Backdrop overlay */
+.header-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 996;
+    /* Below header */
+    backdrop-filter: blur(10px);
+}
+
+/* Header toggle button animation */
+.header.header-show .header-toggle {
+    transform: rotate(90deg) scale(1.1);
+    background-color: var(--error-color);
+}
+
+
+
+.header .header-toggle {
+    color: var(--contrast-color);
+    background-color: var(--tertiary-accent);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--avatar-size-sm);
+    height: var(--avatar-size-sm);
+    border-radius: 50%;
+    cursor: pointer;
+    position: fixed;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    z-index: var(--z-index-max);
+    transition: all var(--transition-normal) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 0 15px var(--glow-green);
+}
+
+.header .header-toggle:hover {
+    color: var(--contrast-color);
+    background-color: color-mix(in srgb, var(--secondary-accent) 90%, white 15%);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--glow-green);
+}
+
+@media (min-width: 1200px) {
+
+    .header~main,
+    .header~#footer {
+        margin-left: 0;
+        /* Reduced margin for collapsed state */
+        /* transition: margin-left 0.3s ease; */
+    }
+
+    .header.expanded~main,
+    .header.expanded~#footer {
+        margin-left: 0;
+        /* Full margin when expanded */
+    }
+
+    .header.header-show {
+        left: -2.5rem;
+    }
+}
+
+@media (max-width: 1199px) {
+    .header {
+        left: -100%;
+        /* Mobile navigation starts off-screen */
+        width: 300px;
+        /* Reset width for mobile */
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        /* Smooth easing */
+        /* Smooth slide transition */
+    }
+
+    /* Disable hover effects on mobile */
+    .header.collapsed,
+    .header.expanded {
+        left: -100%;
+        width: 300px;
+        transition: left var(--transition-normal) ease-in-out;
+    }
+
+    .header.collapsed .social-links {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+    }
+
+    .header.collapsed .navmenu a span {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    body.nav-open .header-backdrop {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@media (max-width: 768px) {
+    .header.header-show {
+        left: -2.5rem;
+    }
+
+}
+
+@media (max-width: 576px) {
+    .header.header-show {
+        left: -2.5rem;
+    }
+
+}
+
+
+
+/*--------------------------------------------------------------
+# Navigation Menu with Gaming Enhancements and Hover Collapse
+--------------------------------------------------------------*/
+.mobile-nav-toggle {
+    display: none;
+}
+
+.navmenu {
+    padding: 0;
+    z-index: 9997;
+    width: 100%;
+    background-color: var(--background-gradient);
+
+}
+
+/*Added navlabel to connect labels to classes */
+.navlabel {
+    display: inline;
+    font-size: 1.5rem;
+}
+
+.header.header.collapsed .navlabel {
+    display: none;
+}
+
+.navmenu ul {
+    list-style: none;
+    padding: 0 0 10px 0;
+    padding-left: 1.5rem;
+}
+
+.navmenu ul li {
+    margin: 2px;
+}
+
+.navmenu a,
+.navmenu a:focus {
+    color: var(--nav-color);
+    padding: var(--padding-md) var(--padding-sm);
+    font-family: var(--nav-font);
+    font-size: var(--font-size-base);
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    transition: all var(--transition-normal) ease;
+    width: 100%;
+    border-radius: var(--border-radius-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Text labels with transition */
+.navmenu a span {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.header.collapsed .navmenu a span {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+/* Adjust padding for collapsed state */
+.header.collapsed .navmenu a {
+    padding: 15px 5px;
+    justify-content: center;
+}
+
+/* Gaming glow effect on hover */
+.navmenu a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--glow-green), transparent);
+    transition: left 0.5s ease;
+    z-index: -1;
+}
+
+.navmenu a:hover::before {
+    left: 100%;
+}
+
+.navmenu a .navicon,
+.navmenu a:focus .navicon {
+    font-size: 20px;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+/* Adjust icon margin for collapsed state */
+.header.collapsed .navmenu a .navicon {
+    margin-right: 0;
+    padding-left: 5px;
+    padding-right: -2px;
+}
+
+/* Gaming Icons Animation on Hover */
+.navmenu a:hover .navicon {
+    transform: scale(1.2) rotate(5deg);
+    color: var(--accent-color);
+    filter: drop-shadow(0 0 8px var(--glow-green));
+}
+
+/* Dropdown toggle styling */
+.navmenu a .toggle-dropdown,
+.navmenu a:focus .toggle-dropdown {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: auto;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 0.3s;
+    flex-shrink: 0;
+    background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Hide dropdown toggle in collapsed state */
+.header.collapsed .navmenu a .toggle-dropdown {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.navmenu a .toggle-dropdown:hover,
+.navmenu a:focus .toggle-dropdown:hover {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px var(--glow-green);
+}
+
+.navmenu a:hover,
+.navmenu .active,
+.navmenu .active:focus {
+    color: var(--nav-hover-color);
+    background: rgba(0, 255, 159, 0.1);
+    border: var(--border-width-normal) solid var(--accent-color);
+    box-shadow: 0 0 15px var(--glow-green);
+}
+
+/* Gaming Active State with Continuous Animation */
+.navmenu .active {
+    position: relative;
+    background: linear-gradient(45deg,
+            var(--box-shadow-color),
+            var(--box-shadow-color3),
+            var(--default-color));
+    background-size: 200% 200%;
+    border: var(--border-width-normal) solid var(--accent-color);
+    animation: borderColorShift 2s ease-in-out infinite;
+    box-shadow: 0 0 25px var(--glow-green),
+        inset 0 0 25px rgba(0, 255, 159, 0.2);
+}
+
+.navmenu .navicon {
+    padding-left: 20px;
+}
+
+.header.header-show .navmenu ul li:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.header.header-show .navmenu ul li:nth-child(2) {
+    transition-delay: 0.15s;
+}
+
+.header.header-show .navmenu ul li:nth-child(3) {
+    transition-delay: 0.2s;
+}
+
+.header.header-show .navmenu ul li:nth-child(4) {
+    transition-delay: 0.25s;
+}
+
+.header.header-show .navmenu ul li:nth-child(5) {
+    transition-delay: 0.3s;
+}
+
+.header.header-show .navmenu ul li:nth-child(6) {
+    transition-delay: 0.35s;
+}
+
+.header.header-show .navmenu ul li:nth-child(7) {
+    transition-delay: 0.4s;
+}
+
+.header.header-show .navmenu ul li:nth-child(8) {
+    transition-delay: 0.45s;
+}
+
+.header.header-show .navmenu ul li {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Continuous Gaming Gradient Animation for Active State */
+@keyframes gamingGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Border Color Shift Animation */
+@keyframes borderColorShift {
+    0% {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 25px var(--glow-green),
+            inset 0 0 25px rgba(0, 255, 159, 0.2);
+    }
+
+    25% {
+        border-color: var(--tertiary-accent);
+        box-shadow: 0 0 25px var(--glow-blue),
+            inset 0 0 25px rgba(0, 212, 255, 0.2);
+    }
+
+    50% {
+        border-color: var(--secondary-accent);
+        box-shadow: 0 0 25px var(--glow-magenta),
+            inset 0 0 25px rgba(255, 0, 128, 0.2);
+    }
+
+    75% {
+        border-color: var(--quaternary-accent);
+        box-shadow: 0 0 25px var(--glow-yellow),
+            inset 0 0 25px rgba(255, 255, 0, 0.2);
+    }
+
+    100% {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 25px var(--glow-green),
+            inset 0 0 25px rgba(0, 255, 159, 0.2);
+    }
+}
+
+/* Active Icon Animation */
+.navmenu .active .navicon {
+    color: var(--accent-color);
+    animation: spinInfinite 2s, linear infinite;
+    transform-origin: center;
+}
+
+@keyframes gamingIconPulse {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 10px var(--glow-green));
+    }
+
+    25% {
+        transform: scale(1.1) rotate(2deg);
+        filter: drop-shadow(0 0 15px var(--glow-blue));
+    }
+
+    50% {
+        transform: scale(1.05) rotate(-1deg);
+        filter: drop-shadow(0 0 12px var(--glow-magenta));
+    }
+
+    75% {
+        transform: scale(1.08) rotate(1deg);
+        filter: drop-shadow(0 0 18px var(--glow-green));
+    }
+}
+
+/* Active Text Glow */
+.navmenu .active span {
+    text-shadow: 0 0 10px var(--accent-color);
+    animation: textGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 10px var(--accent-color);
+    }
+
+    50% {
+        text-shadow: 0 0 20px var(--accent-color), 0 0 30px var(--tertiary-accent);
+    }
+}
+
+.navmenu a:hover .navicon,
+.navmenu .active .navicon,
+.navmenu .active:focus .navicon {
+    color: var(--accent-color);
+}
+
+.navmenu .active .toggle-dropdown,
+.navmenu .active:focus .toggle-dropdown {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+    transform: rotate(180deg);
+    box-shadow: 0 0 10px var(--glow-green);
+}
+
+.navmenu .dropdown {
+    display: block;
+}
+
+.navmenu .dropdown a,
+.navmenu .dropdown a:focus {
+    color: --nav-dropdown-color;
+}
+
+.navmenu .dropdown a:hover,
+.navmenu .dropdown .active,
+.navmenu .dropdown .active:focus {
+    color: var(--nav-dropdown-hover-color);
+}
+
+.navmenu .dropdown ul {
+    position: static;
+    display: none;
+    z-index: 99;
+    padding: 5px 10px;
+    margin: 5px 10px;
+    background-color: var(--nav-dropdown-background-color);
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+    box-shadow: none;
+    transition: all 0.5s ease-in-out;
+    border-radius: 8px;
+}
+
+.navmenu .dropdown ul ul {
+    background-color: rgba(33, 37, 41, 0.1);
+}
+
+.navmenu .dropdown>.dropdown-active {
+    display: block;
+    background-color: rgba(33, 37, 41, 0.03);
+}
+
+/* Enhanced Gaming Effects for Dropdown */
+.navmenu .dropdown ul li a:hover {
+    background: rgba(0, 255, 159, 0.1);
+    transform: translateX(5px);
+    border-left: 3px solid var(--accent-color);
+    box-shadow: 0 0 10px var(--glow-green);
+}
+
+/* Disable dropdowns in collapsed state */
+.header.collapsed .navmenu .dropdown ul {
+    display: none !important;
+}

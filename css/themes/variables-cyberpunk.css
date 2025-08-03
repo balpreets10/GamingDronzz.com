@@ -1,0 +1,115 @@
+/**
+ * Cyberpunk Gaming Theme - Futuristic Tech Aesthetic
+ */
+
+/* Fonts */
+:root {
+    --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --heading-font: "Ubuntu", sans-serif;
+    --nav-font: "Nunito", sans-serif;
+}
+
+/* Cyberpunk Color Palette */
+:root {
+    --background-color: #0d0208;
+    /* Almost black */
+    --default-color: #f72585;
+    /* Hot pink text */
+    --heading-color: #00f5ff;
+    /* Electric blue headings */
+    --accent-color: #00f5ff;
+    /* Electric blue */
+    --secondary-accent: #ffbe0b;
+    /* Electric yellow */
+    --surface-color: #1a0f1a;
+    /* Dark purple-black */
+    --contrast-color: #0d0208;
+    /* Dark for contrast */
+    --box-shadow-color: rgba(0, 245, 255, 0.25);
+    /* Blue glow */
+    --box-shadow-color2: rgba(255, 190, 11, 0.25);
+    /* Yellow glow */
+}
+
+/* Additional Cyberpunk Colors */
+:root {
+    --tertiary-accent: #f72585;
+    /* Hot pink */
+    --warning-color: #ff006e;
+    /* Neon pink */
+    --success-color: #8ecae6;
+    /* Light blue */
+    --error-color: #fb8500;
+    /* Orange-red */
+    --info-color: #219ebc;
+    /* Ocean blue */
+    --border-color: #480ca8;
+    /* Purple border */
+    --input-bg: #240046;
+    /* Dark purple input bg */
+    --input-border: #00f5ff;
+    /* Blue input border */
+}
+
+/* Nav Menu Colors */
+:root {
+    --nav-color: #f72585;
+    /* Pink nav text */
+    --nav-hover-color: #00f5ff;
+    /* Blue hover */
+    --nav-mobile-background-color: #1a0f1a;
+    /* Dark mobile menu */
+    --nav-dropdown-background-color: #240046;
+    /* Purple dropdown */
+    --nav-dropdown-color: #f72585;
+    /* Pink dropdown text */
+    --nav-dropdown-hover-color: #ffbe0b;
+    /* Yellow hover */
+}
+
+/* Cyberpunk Effects */
+.cyber-grid {
+    background-image:
+        linear-gradient(rgba(0, 245, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 245, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.hologram-effect {
+    background: linear-gradient(45deg, transparent 30%, rgba(0, 245, 255, 0.1) 50%, transparent 70%);
+    border: 1px solid var(--accent-color);
+    animation: hologram 2s infinite;
+}
+
+@keyframes hologram {
+
+    0%,
+    100% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.data-stream {
+    background: linear-gradient(90deg, #0d0208, #1a0f1a, #240046, #1a0f1a, #0d0208);
+    background-size: 200% 100%;
+    animation: dataflow 3s linear infinite;
+}
+
+@keyframes dataflow {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Smooth scroll */
+:root {
+    scroll-behavior: smooth;
+}

@@ -1,0 +1,566 @@
+/**
+ * Skills Modal CSS - Gaming-themed skill detail modals
+ * All selectors chained to .skills-modal to prevent conflicts
+ */
+
+/* Modal-specific overrides */
+.skills-modal .modal-content {
+    max-width: 1000px;
+    background: linear-gradient(135deg, var(--background-color), rgba(26, 26, 46, 0.95));
+}
+
+.skills-modal .modal-body {
+    padding: 0;
+    max-height: 80vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) transparent;
+}
+
+.skills-modal .modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.skills-modal .modal-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.skills-modal .modal-body::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 4px;
+    opacity: 0.7;
+}
+
+.skills-modal .modal-body::-webkit-scrollbar-thumb:hover {
+    opacity: 1;
+}
+
+/* Modal Content Container */
+.skills-modal .skills-modal-content {
+    position: relative;
+}
+
+/* Category Header */
+.skills-modal .modal-category-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 25px;
+    padding: 30px;
+    background: linear-gradient(135deg,
+            rgba(56, 172, 95, 0.1),
+            rgba(0, 212, 255, 0.05));
+    border-bottom: 2px solid var(--card-border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.skills-modal .modal-category-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-color), var(--tertiary-accent), var(--secondary-accent));
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease infinite;
+}
+
+.skills-modal .category-badge {
+    width: 80px;
+    height: 80px;
+    background: var(--badge-color);
+    border: var(--border-width-normal) solid var(--badge-color);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: pulse 3s ease infinite;
+}
+
+.skills-modal .badge-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 10px var(--badge-color));
+}
+
+.skills-modal .category-badge::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px solid var(--badge-color);
+    border-radius: 25px;
+    opacity: 0.3;
+    animation: energyPulse 2s ease-in-out infinite;
+}
+
+.skills-modal .category-summary {
+    text-align: center;
+}
+
+.skills-modal .category-description {
+    font-size: 1.2rem;
+    color: rgba(217, 226, 221, 0.9);
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.skills-modal .skills-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 12px 20px;
+    border-radius: 15px;
+    border: 2px solid var(--accent-color);
+}
+
+.skills-modal .count-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    text-shadow: 0 0 10px var(--accent-color);
+}
+
+.skills-modal .count-label {
+    font-size: 0.9rem;
+    color: rgba(217, 226, 221, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Skills Grid */
+.skills-modal .skills-grid {
+    padding: 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 20px;
+}
+
+/* Individual Skill Cards */
+.skills-modal .skill-card {
+    background: linear-gradient(135deg,
+            rgba(26, 26, 46, 0.9),
+            rgba(56, 172, 95, 0.05));
+    border: 2px solid var(--card-border-color);
+    border-radius: 20px;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    backdrop-filter: blur(15px);
+}
+
+.skills-modal .skill-card.animated {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.skills-modal .skill-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: var(--accent-color);
+    box-shadow:
+        0 15px 40px rgba(56, 172, 95, 0.3),
+        0 0 30px rgba(56, 172, 95, 0.2);
+}
+
+/* Skill Header */
+.skills-modal .skill-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.skills-modal .skill-name-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.skills-modal .skill-name {
+    font-size: 1.5rem;
+    color: var(--heading-color);
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(45deg, var(--accent-color), var(--tertiary-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.skills-modal .skill-level-badge {
+    background: linear-gradient(135deg, var(--skill-color), rgba(255, 255, 255, 0.2));
+    color: var(--contrast-color);
+    padding: 8px 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    box-shadow: 0 4px 15px color-mix(in srgb, var(--skill-color), transparent 70%);
+}
+
+.skills-modal .level-number {
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.skills-modal .level-percent {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Circular Progress Ring */
+.skills-modal .skill-progress-ring {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg,
+            var(--ring-color) calc(var(--progress) * 3.6deg),
+            rgba(255, 255, 255, 0.1) calc(var(--progress) * 3.6deg));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 1s ease;
+    transform: scale(0);
+}
+
+.skills-modal .skill-progress-ring.animate-progress {
+    transform: scale(1);
+}
+
+.skills-modal .skill-progress-ring::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    background: var(--background-color);
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.skills-modal .progress-center {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.skills-modal .progress-text {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ring-color);
+    text-shadow: 0 0 5px var(--ring-color);
+}
+
+/* Skill Body */
+.skills-modal .skill-body {
+    margin-bottom: 20px;
+}
+
+.skills-modal .skill-description {
+    color: rgba(217, 226, 221, 0.85);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.skills-modal .expertise-section {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(56, 172, 95, 0.2);
+}
+
+.skills-modal .expertise-title {
+    font-size: 1rem;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.skills-modal .expertise-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px;
+}
+
+.skills-modal .expertise-item {
+    color: rgba(217, 226, 221, 0.8);
+    font-size: 0.9rem;
+    position: relative;
+    padding-left: 15px;
+}
+
+.skills-modal .expertise-item::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-size: 0.7rem;
+}
+
+.skills-modal .expertise-more {
+    color: var(--tertiary-accent);
+    font-style: italic;
+    font-weight: 500;
+    padding-left: 15px;
+}
+
+.skills-modal .expertise-more::before {
+    content: '⚡';
+    position: absolute;
+    left: 0;
+    color: var(--tertiary-accent);
+}
+
+/* Skill Footer */
+.skills-modal .skill-footer {
+    margin-top: 20px;
+}
+
+.skills-modal .mastery-bar {
+    height: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    border: 1px solid rgba(56, 172, 95, 0.3);
+}
+
+.skills-modal .mastery-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--mastery-color), rgba(255, 255, 255, 0.3));
+    border-radius: 3px;
+    width: var(--mastery-width);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.5s ease-out;
+    position: relative;
+}
+
+.skills-modal .mastery-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: energyPulse 2s linear infinite;
+}
+
+.skills-modal .mastery-label {
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(217, 226, 221, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Modal Footer Stats */
+.skills-modal .modal-footer-stats {
+    background: linear-gradient(135deg,
+            rgba(0, 0, 0, 0.6),
+            rgba(56, 172, 95, 0.1));
+    border-top: 2px solid var(--card-border-color);
+    padding: 25px;
+}
+
+.skills-modal .overall-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.skills-modal .stat-item {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 15px;
+    border-radius: 12px;
+    border: 2px solid var(--accent-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.skills-modal .stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(56, 172, 95, 0.2), transparent);
+    animation: scan 3s ease-in-out infinite;
+}
+
+.skills-modal .stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    text-shadow: 0 0 15px var(--accent-color);
+    margin-bottom: 5px;
+}
+
+.skills-modal .stat-label {
+    font-size: 0.9rem;
+    color: rgba(217, 226, 221, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.skills-modal .card-glow-effect {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            color-mix(in srgb, var(--accent-color), transparent 90%),
+            transparent);
+    transition: left 0.6s ease;
+}
+
+.skills-modal .skill-card:hover .card-glow-effect {
+    left: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .skills-modal .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .skills-modal .modal-category-header {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 20px;
+        padding: 25px 20px;
+    }
+
+    .skills-modal .category-badge {
+        justify-self: center;
+        width: 70px;
+        height: 70px;
+    }
+
+    .skills-modal .badge-icon {
+        font-size: 2rem;
+    }
+
+    .skills-modal .skills-count {
+        justify-self: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .skills-modal .modal-content {
+        margin: 10px;
+        max-height: 95vh;
+    }
+
+    .skills-modal .skill-card {
+        padding: 20px;
+    }
+
+    .skills-modal .skill-header {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .skills-modal .skill-name-section {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .skills-modal .skill-progress-ring {
+        justify-self: center;
+        width: 60px;
+        height: 60px;
+    }
+
+    .skills-modal .expertise-list {
+        grid-template-columns: 1fr;
+    }
+
+    .skills-modal .overall-stats {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .skills-modal .category-description {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .skills-modal .modal-body {
+        max-height: 85vh;
+    }
+
+    .skills-modal .modal-category-header {
+        padding: 20px 15px;
+    }
+
+    .skills-modal .skills-grid {
+        padding: 15px;
+    }
+
+    .skills-modal .skill-card {
+        padding: 15px;
+    }
+
+    .skills-modal .skill-name {
+        font-size: 1.3rem;
+    }
+
+    .skills-modal .category-badge {
+        width: 60px;
+        height: 60px;
+    }
+
+    .skills-modal .badge-icon {
+        font-size: 1.8rem;
+    }
+}
+
+/* Animation Keyframes */
+@keyframes scan {
+    0% {
+        left: -100%;
+    }
+
+    50% {
+        left: 100%;
+    }
+
+    100% {
+        left: -100%;
+    }
+}

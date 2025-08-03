@@ -1,0 +1,354 @@
+/**
+ * Responsive Images CSS - Gaming-themed image optimization
+ * Uses variables from variables.css for consistent theming
+ */
+
+/* ============================================
+   RESPONSIVE IMAGE BASE STYLES
+   ============================================ */
+
+/* Picture element container */
+picture {
+    display: block;
+    width: 100%;
+    position: relative;
+}
+
+/* Responsive image base styles */
+.responsive-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all var(--transition-normal);
+    border-radius: var(--border-radius-normal);
+    position: relative;
+    background: linear-gradient(45deg,
+            color-mix(in srgb, var(--surface-color), transparent 80%),
+            color-mix(in srgb, var(--surface-light), transparent 80%));
+}
+
+/* ============================================
+   LAZY LOADING STYLES
+   ============================================ */
+
+/* Lazy image before loading */
+.lazy-image {
+    opacity: 0.3;
+    filter: blur(2px);
+    background: linear-gradient(45deg,
+            color-mix(in srgb, var(--surface-color), transparent 70%),
+            color-mix(in srgb, var(--surface-light), transparent 70%));
+    background-size: 200% 200%;
+    animation: gradientShift 2s ease infinite;
+}
+
+/* Lazy image loading state */
+.lazy-image::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: var(--border-width-normal) solid var(--accent-color);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 1;
+}
+
+/* Loaded image */
+.image-loaded {
+    opacity: 1;
+    filter: blur(0);
+    animation: fadeInImage var(--transition-slow) ease;
+}
+
+.image-loaded::before {
+    display: none;
+}
+
+/* ============================================
+   GAMING EFFECTS FOR IMAGES
+   ============================================ */
+
+/* Gaming hover effect for images */
+.gaming-image-effect {
+    position: relative;
+    overflow: hidden;
+    border: var(--border-width-normal) solid var(--card-border-color);
+    border-radius: var(--border-radius-large);
+    box-shadow: 0 8px 32px color-mix(in srgb, var(--contrast-color), transparent 80%);
+    transition: all var(--transition-normal);
+}
+
+.gaming-image-effect:hover {
+    border-color: var(--accent-color);
+    box-shadow:
+        0 15px 40px color-mix(in srgb, var(--accent-color), transparent 70%),
+        0 0 30px color-mix(in srgb, var(--accent-color), transparent 80%);
+    transform: translateY(-5px) scale(1.02);
+}
+
+.gaming-image-effect::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            color-mix(in srgb, var(--accent-color), transparent 80%),
+            transparent);
+    transition: left var(--transition-slow);
+    pointer-events: none;
+}
+
+.gaming-image-effect:hover::after {
+    left: 100%;
+}
+
+/* ============================================
+   SPECIALIZED IMAGE STYLES
+   ============================================ */
+
+/* Portfolio images */
+.portfolio-image {
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: var(--border-radius-medium);
+    transition: all var(--transition-normal);
+}
+
+.portfolio-image:hover {
+    filter: brightness(1.1) saturate(1.2);
+    transform: scale(1.05);
+}
+
+/* Profile/Avatar images */
+.profile-image {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: var(--border-width-medium) solid var(--accent-color);
+    box-shadow: 0 0 25px color-mix(in srgb, var(--accent-color), transparent 70%);
+    animation: profileGlow 3s ease-in-out infinite alternate;
+}
+
+/* Hero background images */
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(0.3) blur(1px);
+}
+
+/* Testimonial images */
+.testimonial-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: var(--border-width-normal) solid var(--card-border-color);
+    transition: all var(--transition-fast);
+}
+
+.testimonial-image:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINT ADJUSTMENTS
+   ============================================ */
+
+/* Large screens - optimize for quality */
+@media (min-width: 1400px) {
+    .responsive-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: optimize-contrast;
+    }
+}
+
+/* Medium screens - balance quality and performance */
+@media (max-width: 1199px) and (min-width: 768px) {
+    .gaming-image-effect:hover {
+        transform: translateY(-3px) scale(1.01);
+    }
+}
+
+/* Small screens - optimize for performance */
+@media (max-width: 767px) {
+    .responsive-image {
+        border-radius: var(--border-radius-small);
+    }
+
+    .gaming-image-effect {
+        border-width: var(--border-width-thin);
+    }
+
+    .gaming-image-effect:hover {
+        transform: translateY(-2px) scale(1.005);
+    }
+
+    .profile-image {
+        border-width: var(--border-width-normal);
+    }
+
+    /* Reduce animations on mobile for better performance */
+    .lazy-image::before {
+        animation-duration: 1.5s;
+    }
+}
+
+/* Very small screens - minimal effects */
+@media (max-width: 480px) {
+    .gaming-image-effect:hover {
+        transform: none;
+        box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-color), transparent 80%);
+    }
+
+    .gaming-image-effect::after {
+        display: none;
+    }
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+
+    .responsive-image,
+    .gaming-image-effect,
+    .lazy-image {
+        transition: none;
+        animation: none;
+    }
+
+    .gaming-image-effect:hover {
+        transform: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .gaming-image-effect {
+        border-width: var(--border-width-thick);
+        border-color: var(--default-color);
+    }
+
+    .lazy-image {
+        opacity: 0.6;
+    }
+}
+
+/* ============================================
+   CUSTOM ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInImage {
+    from {
+        opacity: 0.3;
+        filter: blur(2px);
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        filter: blur(0);
+        transform: scale(1);
+    }
+}
+
+@keyframes profileGlow {
+    0% {
+        box-shadow: 0 0 25px color-mix(in srgb, var(--accent-color), transparent 70%);
+    }
+
+    50% {
+        box-shadow: 0 0 35px color-mix(in srgb, var(--accent-color), transparent 50%);
+    }
+
+    100% {
+        box-shadow: 0 0 25px color-mix(in srgb, var(--accent-color), transparent 70%);
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Skip responsive conversion */
+.skip-responsive {
+    /* This class prevents automatic conversion */
+}
+
+/* Force aspect ratios */
+.aspect-square {
+    aspect-ratio: 1/1;
+}
+
+.aspect-video {
+    aspect-ratio: 16/9;
+}
+
+.aspect-photo {
+    aspect-ratio: 4/3;
+}
+
+.aspect-portrait {
+    aspect-ratio: 3/4;
+}
+
+/* Object fit utilities */
+.object-cover {
+    object-fit: cover;
+}
+
+.object-contain {
+    object-fit: contain;
+}
+
+.object-fill {
+    object-fit: fill;
+}
+
+/* Gaming-specific image containers */
+.image-container-neon {
+    padding: var(--border-width-normal);
+    border: var(--border-width-normal) solid var(--tertiary-accent);
+    border-radius: var(--border-radius-large);
+    background: linear-gradient(45deg,
+            color-mix(in srgb, var(--tertiary-accent), transparent 95%),
+            color-mix(in srgb, var(--accent-color), transparent 95%));
+    box-shadow: 0 0 25px color-mix(in srgb, var(--tertiary-accent), transparent 80%);
+}
+
+.image-container-glow {
+    position: relative;
+    border-radius: var(--border-radius-large);
+    overflow: hidden;
+}
+
+.image-container-glow::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    padding: 2px;
+    background: linear-gradient(45deg,
+            var(--accent-color),
+            var(--tertiary-accent),
+            var(--secondary-accent));
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    animation: gradientShift 3s ease infinite;
+}

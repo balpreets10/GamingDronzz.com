@@ -1,0 +1,90 @@
+{
+    "title": "Testimonials",
+    "subtitle": "What industry professionals say about working with me",
+    "testimonials": [
+        {
+            "quote": "The kind of technical leader who transforms teams and elevates outcomes. Visionary in systems design with unmatched problem solving attitude. Navigates high-pressure scenarios with calm and turns challenges into opportunities",
+            "clientName": "Sameer Bhanot",
+            "positions": [
+                "Co-Founder / Technical Director"
+            ],
+            "companies": [
+                "Rovelens, ArdentInfo Solutions"
+            ],
+            "companyLogo": "https://static.wixstatic.com/media/535075_53bb7b5a44c4417cb5b3ec0498a234db~mv2.png/v1/fill/w_269,h_269,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/ROVELENS%20POGO%20T%20_png.png",
+            "linkedinImage": "https://media.licdn.com/dms/image/v2/C4D03AQEFLLmXUVe0QA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1605625324403?e=1755734400&v=beta&t=FUy5Z3jSoW7Cp3QJka2cvolxo5Hg2oD2lG7KcJqozjs",
+            "highlight": true,
+            "profileUrl": "https://www.linkedin.com/in/sameer-bhanot-5446665/"
+        },
+        {
+            "quote": "Played a key role in shaping the technical direction of the project and led a team of 15 developers with clarity, patience, and strong leadership. Ability to stay grounded and collaborative",
+            "clientName": "Ankush Sharma",
+            "positions": [
+                "Senior Game Developer"
+            ],
+            "companies": [
+                "King Entertainment Corp"
+            ],
+            "companyLogo": "https://kingentertainmentcorp.com/wp-content/themes/kingentertainmentcorp/assets/img/king3.webp",
+            "linkedinImage": "https://media.licdn.com/dms/image/v2/D5603AQFMxdkhfUkNRw/profile-displayphoto-shrink_400_400/B56ZTy9CL3GQAk-/0/1739242876229?e=1755734400&v=beta&t=bAGTsJXjBJRX7neGYJoNp6SEgJKMC-RYRQPJIKsbWj8",
+            "highlight": false,
+            "profileUrl": "https://www.linkedin.com/in/ankush-sharma-619825b5/"
+        },
+        {
+            "quote": "Highly productive and unwavering commitment to quality in every aspect. Deep understanding of game development paired with technical knowledge and vision consistently guided the team towards success",
+            "clientName": "Gunjita Jamwal",
+            "positions": [
+                "Software Engineer"
+            ],
+            "companies": [
+                "Scopely"
+            ],
+            "companyLogo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAScAAACrCAMAAAATgapkAAAAe1BMVEX///8AAADp6enX19f6+vqJiYkjIyOZmZmioqKRkZH39/fJycldXV309PTs7OwRERFRUVHBwcHh4eEuLi44ODhpaWlwcHC4uLifn5+Dg4NBQUF7e3vDw8Pd3d0pKSnPz89GRkY6OjoaGhqsrKwPDw9WVlZ1dXVhYWEcHByn5ziZAAAK4klEQVR4nO2d63qqOhCGE0URLVZExfOheOj9X+HmzEwyIanbrnat5PvTpzBCeJmZTEJQxn5K3v9R+GPN/tMK+JU/qeuVRz/d/D+mgPPN2n9Go5gnP936P6eAb4fPRY9vkTflnMIznz7xwYFN3pRz8tj2+nVQgV2YsusdM7b4MqjAqqBjFSe2/WLoDWzDVHHyvgbKtqBjNaevhZ6FmBpObGHsUfYFHQOcjEPPSkwtJ+Zdrj2jD9gXdAxyYiw28CjrCoJKkBO7aEHZGXRM4ORdeHfoWTZYAUKcdKFna9AxiVNWHqg9ytqgYzKnjtDbWBt0TObEvFgBytKCoJLEKc9RFKgB3/+B5vxaEZw8KkdtLM5NuQhObCyDsrcgqERxYt5RAGVzT1eK5CTmKNuDjik5odBzmJSc2LgNPRd0TM2pzVEbuwuCSkpOdejtnDflUnNi4zyZu9xUqoMT84ZX502VujjlYz3Ly8tGnZyy0HtykcY/p25ObDx0oAppOGU56sOBYnpOWei9O1AGnLLK3IWeCSfmfTpQJpyyIcyn9aBMOLnywJBT1usdLQdlxsmFniGnLPQ+zQz/UZlyysqDo82g8nXRZrI7RwV8NOmZLaTzbO71kuKVns/t0k8mU41rjWOLQ8/ns9N68/Ze8Pq43f3opFyxkoWezaB2xd+wH63vt2P5zths40eHnuxfNo/1fL4B/43DU7JebT8LXMfbII3mYcsrq8xN8/6/JwyqUjg/pcEqLt9IPD8GyWRebF8sXOhRCg+TdLO8lOG4vQcptxoU4VFYXj9Kd7dFQetPNOl3ygBUqXA6v/PvbcuvVmAKirGRzZwyUOochWU3pwzUwMzQck7GoGznZJqjrOdk6FGOkxkoxylfY6gH5TgxI49ynHIFPNBYOE6FBjpQjlMpXY5ynCppQs9xqjTnnaAcp1IZplFX6DlOhTJMc5Z0gHKcchWY8ud6ytBznFiDibFICcpxKjDVTzkjVeg5Tq035VJ5lOOEMClBWc8JBF0pOvRs5yR4Uy4SlOWcCEx06NnNSQq6UnvZo6zmpMBEhZ7NnOb8KgddKQmUxZyU3pRrL+Qoezl1YmJsgj3KWk5Z0HV/LR1O5rZy0nhTLhR6lnLKMOnXj8PQs5OTNuhK7du1B1ZyMsQEQ89GTkZBV2pSg7KQ0xcwtTnKPk5z/m4WdKWq8sA6TgYFAVYZerZx+lLQlSpCzzJOWdB9/WdbJll5YBcn44IAa8L91CZOc/7k98v0efzx4rb8Yh04XwaDZxScuT2cesM4Pg6fUxxffrr5Tk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTn+teqd0sFm+LXeD9V71PkVr3E/8YBD4kdaSjQ/71A8Cf3RS2Xp9SgdqyUZImiK1Z5mDregoU7CD+mJO2CC8vuYwGHKo6210UF14GG1iYPlIO5bq9P0tOOr7I6UuvsdpXeN7IlzGRGEK9NYYz8BWfAVgB/VWZAD2w4vrwyM2WvgUgP5KtrzRP8Q2DY6y7Vb+NTIVp0IbRNaA07Ixfms3vuMzroG9fOc8sNcHm4krr/QmOlXvRhvG8tWPN4qDXkXbTk6c78C3IL+IE3un7GsNwNFAKz86z4qSSqA2nAnZJ+k46BbfQw0n/t7erVdxSsEH+sI+2JzUuJHgtwzCbadhCk+m9tFCyKW0TeANqFdxYiDDzoRdoOkf5AdItd+YetC18N6Yji86WxD3BpyabPoyTtDdJ2gPvMz2du50p+1Rn1foVvle+K63BS9DGXA6v5oTu7Q7Y7QDZOCFeRNXteVU30I+LHtxT+ejhdZf4VTf2ddxOoGPpIrtbTfu43NsHzMhqzfZeWFwMZXvLQ1MOXB3E06xMaeHGSdYXX2AHvXcbgbfeX4BJ/gsG+6dgnZrc1IpPu+jyemUoM1Vx5GKpvFutI/Wu6G4vV78CzmtvbDQ9JDioq4vcYrGIaW2Mu3m1AeHarNlBLaeWmPiMouWB0O8DR4007D9We3kUm+svDfEpnzVuOThgffUEUJ3xPm7LUCBxAmnX0LdnJDbN+u16X5wDkyFlceTGzQF3pgJf3Vxijdiz7ueoKlQVPVlTiNoDu/O7eWc4GnrxivqKuQm4o9/ZKOZuik4LUj19LC5DjHfb4Xx2fwK9z40nFBd+3JO6I5WqRU07wEsUV/vSwdqfAGNVlLJLnO3pm+FRT+XV33jnD2XtmFO0N+LDS/lBDNESQWO++YKy44vZkQ+8iAMvGYk4qFsTQykI/mMak4wfxYp5KWckLvmPjEG/9+RJeLEjyn9MymoB+t+kwdF8oiygN3YsdjSwQlUKcV5X8sJcjkzHAv4FkulziwhOMDBmuaXH1BBRlrAQq68eDN/KhoOOZ3kY2NpOaE4S1A7hGkpFAWVhhtxBA1rT3GfIOgtcsIrBKv1ouI141T8DzltZ7LO0Mn0nDxwZZ/sDg4uvtglFX+FjgOIA85bXbsxwYkdrpgRhVnB7+YEsUgbSMG+WM8JZRTY/UmpGkUB1LDt1mDOobI4EOwYPhS/MgaLqF03J+Cdcv30Ck4KP7nKTZdGGa3qohuyvEsHQIKXrHoVDHb2j05OMH3I9fhLOFGJh+6AOiYel57UOE0ahwzOChvoc1uREyjOpjBfEOO7l3Bi1NzjJ31t6qmARQHqSX9S/cRYJ6fdJMq1T3xwlbwZVb2eE5V4iEq6UKSc0D3nu2F+kmfdkWBFGitsIJY3cYNK6XdxYm/SMYZq4/5KMQW5Fq5DdfG14GcVL03DlCDlcYXqmcVv4CTP09JP2Sp5/QHxtK28WPi/5vsH4DEUpRYsRaW6QKH6UN/ASaq19a8iTxN5ujx3+IXwf4dg6a4YL8KjSXUmreakkNNjU6h+J70UvDeGnMTTa8dDZUuEJ0pnhicgFt0fR2UGaYFGgNK4hVTbTb943FIKO4f4mKpUIldUwjNfJpQO8pNfKFgY0ONgePQy2+k4gXzx2nFwJTxlRmaLkC+IcS/qAqZ4XE2n5/bZ9kX4rCg0mVuOALs5beAcxrdwQiOpN9IiXwMg33XU8JwvmtiWu7zw3Ca/ETSVSyh873ry6bAua3xXvocTrOjIGCgNLmKke2KvhYuxreBRJ3gfsO/NhLDuofFUVYxBTsPLotR2tvQTyR9/iFPtcI+T8nPl/OcFXf0HzFHTKvGvhGOW+kSTBkK3Xk2tqp63EPoZTmB/PAJOgjqAYotY3S+qWx0mbWPqIY1g2i5gOgiVSj1W7Jh/EvUznPCt3/r7aeiFIR7FVN2kvP5kOFu94cq0mgOUhuDb9X5+iHzpaXqdoJ/klExJ9ZpQh92RPKMHqjsNJ5xKSh3F8UsVCN6VMBa1VjEl1TwrfZKTSo2fySM3qFV7VA2ntfIYQPXd6etNm4RDLmMU1c4K/3ZOZ+UxWrV51aCJTQsvelvFup7fyEm/+AlN82rb2FayY+0tUK0T+5Wc2KRzbaY4dO4OPVxVaXIUmrr4/ZykBVBY4kODsWK1L3X8rnWsN1yo/g2cmLemHzlwsuaLFA54l0dy4Z025bE4D/ZXcMpPTi6A8+npyJRYVLij38iYU6SO3evsfzOnzKkmA9SXD3d7tXF/gB48rIipmaYBCc5T54CatUDr6bqaKcw2KNQ0vbs8AUkFclI8xAaaTpJ05Puj5KS+8ErjSbpbLZerTaJ5jJ6pF402q8x0pH67qNeKXgjSyOvp1bR+2mkGw0Wx2cnp9foP7uWPmXrNUgQAAAAASUVORK5CYII=",
+            "linkedinImage": "https://media.licdn.com/dms/image/v2/D5603AQGh8wqQhdrjbA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1718250502224?e=1755734400&v=beta&t=Lh40NG651n0hVSpNf9jEJDWe3MM46YGku0E7y-GUGi0",
+            "highlight": false,
+            "profileUrl": "https://www.linkedin.com/in/gunjita-jamwal/"
+        },
+        {
+            "quote": "Led our team with a blend of deep technical mastery and remarkable people leadership. Transformed blockers into teaching moments, shielded the team from noise",
+            "clientName": "Anant Sharma",
+            "positions": [
+                "Senior Game Developer"
+            ],
+            "companies": [
+                "Miniclip"
+            ],
+            "companyLogo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOkAAADYCAMAAAA5zzTZAAAAe1BMVEXnTDn////mQizmQCn0u7byqaPnSTXyrabqZlj++fjlOB3oV0fnTTnnRzLlNBfmRC/mOyL76ef639341NH2yMT98/L1v7rujYTsfnPrcGToWUjpX1DoVELtg3nzsavrdmr529jwnZXseW33zsvkKwDqal3vlo7xopvui4GqHhu/AAADgElEQVR4nO2d6VLjMBAGrRgcErCdAOEK4ViW4/2fcJdzbcfHjExYjar7d2qkrkQpj0r6nCQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD+5BM1niNlouL5t9pVyDfTfSVTP9VsLRlputmVarrn1JzOfUYqlqLiZ+l3K37gY+rOPb7VhXCgvaBM3XWmHae8EJYOzHSp/f1mR9LSgZm6vYVumOLYqqm7KDWjLG7EhYMzdYliqZa38rrhmR4X4jGyfGbZ1O2Ll2pxpygboKm7FD7NpPuaqiGazmTPD/mjqmqIpu5EtFRTxSIN1dTdC2ZVPOhqhmnqDgaXanqvLBmo6Wro/zdfa0sGajrYwC1WsZgONHDzU3XBYE3dYc9T4eRcXy9c054GLrvyqBeuaU8DN5ftp5gx7Wzg5mc+1UI2dUetS7XceBUL2rS1gcuu/YoFbeqmLUtVvp9iybSlgVPsp5gy3Wrgyl++pQI3bTZwWeZdKXTTRgOn2k8xZlpr4Baq/RRrppUGLr8cUSd800oDN9Htp5gz/WrgipMxVSyYuqu3p0L1fkqd3Zl6PYa389bA5QfjiuzMNDmqMJmOnOXcZz/lp0yrpCNN3ab02E/5H6Zjv1PnSo/9FJumng2MQdPxYIoppphiiimmmGKKKaaYYooppphiiimmmGKKKaaYYooppphiiimmmH6f6crz2Ibs0mJIprPSS3SV2zP97XXoaC27bBGU6dznINl9emjQ1ONw4EORmTRVH/icpYlNU/Uh3sfcqqnyYPbz3+lbNVUdtr97vU1j1lRxgWJWZpZNFZdibt8uqNo1Fd9GvHm/SWPYNEtEU/+8nWrYVJjC9nnj2LKpKFnv6xa5aVNBWuK/ZADbpoOzXyo+G7TpYApHJYLRuOlAsspL5Va1ddPeBq6WtGPetCcBqZ6eZN60p4Fb17I77Jt2NnBP9TlHYNqRPvfQyCiJwbS1gVs1ZxyDaWsDtxVbF4VpSwP3vDXhOEy30kda4iXjMG02cO/7KXUiMW00cG0xsLGY1hq4tmSoeEwraV7tcc3RmCaTl88PtEdwx2P61cB1pPJFZPrRwHUlLcZkmr02cMuuoOaYTJP0qeeVFmGZyqLzujNPi7vulFthHurO3rrSmMyBhJ4c27LvJQ+PkuJX6teceJGJCLM6AAAAAAAAAAAAAAAAAAAAAAAAAABAsPwB7fVYXEnvwiAAAAAASUVORK5CYII=",
+            "linkedinImage": "https://media.licdn.com/dms/image/v2/D4D03AQG-CUSfrhiT-w/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1732070678330?e=1755734400&v=beta&t=SkBJR-DGzbl6_UImggAGamZhqB5rcLxKOEY_6jO8B6c",
+            "highlight": false,
+            "profileUrl": "https://www.linkedin.com/in/anant-sharma-game/"
+        },
+        {
+            "quote": "Played a key role in shaping the technical direction of the module. Ability to stay grounded and collaborative and always learning aptitude",
+            "clientName": "Santosh Shedbalkar",
+            "positions": [
+                "Director Of Engineering"
+            ],
+            "companies": [
+                "Scopely"
+            ],
+            "companyLogo": "data:image/png;base64,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",
+            "linkedinImage": "https://media.licdn.com/dms/image/v2/C5103AQHLeYF5wS6v4Q/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1554402118017?e=1755734400&v=beta&t=I77Zi-WkQcdb8ZE2daXkX3OoiHlWnSvdfj-gKLVq3Sk",
+            "highlight": true,
+            "profileUrl": "https://www.linkedin.com/in/sanshedbalkar/"
+        },
+        {
+            "quote": "Able, calm and cool headed with technical brilliancy. Always figuring out innovative solutions and optimal pathways",
+            "clientName": "Altaf Navalur",
+            "positions": [
+                "Director of Engineering"
+            ],
+            "companies": [
+                "Junglee Games"
+            ],
+            "companyLogo": "data:image/png;base64,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",
+            "linkedinImage": "https://media.licdn.com/dms/image/v2/D5603AQEXcF3Grm2bqA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1711697179706?e=1755734400&v=beta&t=l2aHc2E5in82G4STEY4rG4bpugrgGonR2kl3nqdUHiU",
+            "highlight": true,
+            "profileUrl": "https://www.linkedin.com/in/altaf-hussain-navalur-1ab5852/"
+        }
+    ]
+}

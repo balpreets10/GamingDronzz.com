@@ -1,0 +1,179 @@
+{
+    "title": "Professional Journey",
+    "subtitle": "Building careers through AI, Code and Creativity",
+    "experiences": [
+        {
+            "id": 1,
+            "company": "ArdentInfo Solutions",
+            "position": "Team Lead",
+            "duration": "2021 - 2025",
+            "location": "Chandigarh, IND",
+            "type": "Full-time",
+            "description": "Leading a team of developers in creating cutting-edge mobile and PC/Web games using Unity engine.",
+            "projects": [
+                "ABC Rule of 3",
+                "Race for the White House"
+            ],
+            "achievements": [
+                "Spearheaded technical development for a narrative e-learning platform",
+                "Mentored teams of 3-4 developers",
+                "Delivered 2 games, expanding the company's portfolio by 20%",
+                "Reduced game build times by 20% via CI/CD pipelines",
+                "Cut coding effort by 80% with custom editor tools",
+                "Applied SOLID principles to improve throughput by 15%",
+                "Resolved inter-department blockers (20% productivity gain), and managed LiveOps/DLCs using Addressables",
+                "Led client workshops to translate business needs into technical specs, reducing revision cycles by 30%",
+                "Implemented Agile methodologies, improving team velocity by 25%"
+            ],
+            "technologies": [
+                "Unity",
+                "C#",
+                "Phaser.JS",
+                "Addressables",
+                "CI/CD"
+            ],
+            "skills": [
+                "Team Leadership",
+                "Project Management",
+                "Agile Methodologies",
+                "Client Relations"
+            ],
+            "featured": true
+        },
+        {
+            "id": 2,
+            "company": "Webzool Creative Inc",
+            "position": "Unity Team Leader",
+            "duration": "2019 - 2021",
+            "location": "Hybrid USA/India",
+            "type": "Full Time",
+            "description": "Leading Frontend Team, Developed Casino games and slot machines for mobile platforms.",
+            "projects": [
+                "RS Fun",
+                "F7 Fun"
+            ],
+            "achievements": [
+                "Architected a slot machine engine, reducing memory usage by 15% via Addressables and Scriptable Objects",
+                "Implemented design patterns (MVC, DI, Observer, Strategy) to enhance dev output by 25%",
+                "Managed a 14-developer team to deliver mobile games, achieving 100% deadline adherence",
+                "Built custom editor tools to accelerate development and integrated UGUI with pluggable skins for seamless UI workflows",
+                "Rapidly mastered new tools (GitHub Actions) to reduce build times by 20%",
+                "Live Ops: Implemented Info API's to gather real-time data and improve UX with progressive builds",
+                "Immediate promotion to Team Lead after 4 months for exceptional performance and leadership skills"
+            ],
+            "technologies": [
+                "Unity",
+                "C#",
+                "JavaScript",
+                "GitHub Actions",
+                "UGUI"
+            ],
+            "skills": [
+                "Team Management",
+                "Design Patterns",
+                "Performance Optimization",
+                "Live Operations"
+            ],
+            "featured": false
+        },
+        {
+            "id": 3,
+            "company": "Lucky Strike Games",
+            "position": "Game Developer",
+            "duration": "2018 - 2019",
+            "location": "Bengaluru, India",
+            "type": "Full-time",
+            "description": "Designing and developing Bingo Game, focusing on user engagement and performance optimization.",
+            "projects": [
+                "Bingo Blast"
+            ],
+            "achievements": [
+                "Scalable Minigame Framework: Developed a reusable framework for mini-games, reducing tech debt by 15%",
+                "Asset Bundles: Implemented Asset Bundles to optimize memory usage, achieving a 35% reduction in build sizes",
+                "Reduced GC allocations by 40% through efficient memory management and object pooling",
+                "Received 'Top Performer of the month' award for outstanding contributions to game development"
+            ],
+            "technologies": [
+                "Unity",
+                "C#",
+                "Asset Bundles",
+                "Android SDK"
+            ],
+            "skills": [
+                "Performance Optimization",
+                "Memory Management",
+                "UI/UX Design",
+                "Object Pooling"
+            ],
+            "featured": false
+        },
+        {
+            "id": 4,
+            "company": "Gaming Dronzz",
+            "position": "Developer, Co-Founder",
+            "duration": "2017 - 2018",
+            "location": "J&K, India",
+            "type": "Full-time",
+            "description": "Ran a game development Consultancy Startup, focusing on mobile games and educational apps.",
+            "projects": [
+                "Hyike Games",
+                "My CCA",
+                "Ludo Ultimate",
+                "DUI Cop Stop",
+                "Resume as a Game",
+                "Match-O-Mania",
+                "Gaming Dronzz Wesbite",
+                "Balpreet.com Website"
+            ],
+            "achievements": [
+                "Developed and launched mobile games for clients, Govt. organizations, and educational institutions",
+                "Managed end-to-end game development processes, from concept to deployment",
+                "Built a team of developers/designers, fostering a collaborative and innovative work environment"
+            ],
+            "technologies": [
+                "Unity",
+                "C#",
+                "Android Studio",
+                "Mobile SDK"
+            ],
+            "skills": [
+                "Entrepreneurship",
+                "Business Development",
+                "UI/UX Design",
+                "Client Management"
+            ],
+            "featured": false
+        },
+        {
+            "id": 5,
+            "company": "Freelance",
+            "position": "Developer",
+            "duration": "2015 - 2017",
+            "location": "J&K, India",
+            "type": "Full-time",
+            "description": "Worked on various freelance projects - mobile apps and websites",
+            "projects": [
+                "UNT",
+                "Pension Revision Software (Govt. of India)"
+            ],
+            "achievements": [
+                "Developed and launched mobile app for a news company",
+                "Developed and deployed a Standalone Software for Revision of Pension for CCA, Jammu, Govt. Of India",
+                "Managed end-to-end game development processes, from design to deployment"
+            ],
+            "technologies": [
+                "Visual Studio",
+                "C#",
+                "Android Studio",
+                "Mobile Development"
+            ],
+            "skills": [
+                "Full-stack Development",
+                "Client Relations",
+                "UI/UX Design",
+                "Project Management"
+            ],
+            "featured": false
+        }
+    ]
+}

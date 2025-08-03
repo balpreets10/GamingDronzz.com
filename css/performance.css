@@ -1,0 +1,278 @@
+/**
+ * Animation Performance Optimizations
+ * Add this to your base.css or create as performance.css
+ */
+
+/* Performance-First Animation Controls */
+.reduce-motion,
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
+/* Low Performance Mode - Simplified animations */
+.low-performance {
+    --transition-fast: 0.1s ease;
+    --transition-normal: 0.2s ease;
+    --transition-slow: 0.3s ease;
+}
+
+.low-performance .float-animation {
+    animation: none;
+    transform: translateY(-5px);
+}
+
+.low-performance .rgb-animation {
+    animation: none;
+    filter: hue-rotate(180deg);
+}
+
+.low-performance .pulse-glow {
+    animation: none;
+    box-shadow: 0 0 15px var(--glow-green);
+}
+
+.low-performance body::before {
+    animation: none;
+    opacity: 0.05;
+}
+
+/* Hardware Acceleration Optimizations */
+.float-animation,
+.rgb-animation,
+.pulse-glow,
+.gaming-hover-effect,
+.btn,
+.gaming-card,
+.progress-fill {
+    will-change: transform;
+    transform: translateZ(0);
+    /* Force hardware acceleration */
+    backface-visibility: hidden;
+}
+
+/* Intersection Observer Classes */
+.animation-paused {
+    animation-play-state: paused !important;
+}
+
+.animation-running {
+    animation-play-state: running !important;
+}
+
+/* Deferred Animation System */
+.deferred-animation {
+    animation-play-state: paused;
+    opacity: 0.7;
+}
+
+.active-animation {
+    animation-play-state: running;
+    opacity: 1;
+}
+
+/* Optimized Background Animations */
+body::before {
+    will-change: opacity;
+    contain: layout style paint;
+}
+
+/* Performance-Optimized Hover Effects */
+.gaming-hover-effect {
+    contain: layout style paint;
+}
+
+.gaming-hover-effect::before {
+    will-change: width, height;
+    contain: layout style paint;
+}
+
+/* Optimized Progress Animations */
+.progress-fill {
+    contain: layout style paint;
+}
+
+.progress-fill::before {
+    will-change: transform;
+    contain: layout style paint;
+}
+
+/* Reduced Animation Variants */
+@media (prefers-reduced-motion: reduce) {
+    .float-animation {
+        animation: none;
+        transform: translateY(-3px);
+    }
+
+    .rgb-animation {
+        animation: none;
+    }
+
+    .pulse-glow {
+        animation: none;
+        box-shadow: 0 0 10px var(--glow-green);
+    }
+
+    body::before {
+        animation: none;
+        opacity: 0.05;
+    }
+
+    .gaming-hover-effect:hover {
+        transform: none;
+    }
+
+    .btn:hover {
+        transform: none;
+    }
+}
+
+/* GPU Layer Management */
+.gpu-layer {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+}
+
+/* Animation Containment */
+.animation-container {
+    contain: layout style paint;
+    isolation: isolate;
+}
+
+/* Optimized Keyframes - Smaller step animations for better performance */
+@keyframes optimizedFloat {
+
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform: translate3d(0, -8px, 0);
+    }
+}
+
+@keyframes optimizedPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px var(--glow-green);
+        transform: scale3d(1, 1, 1);
+    }
+
+    50% {
+        box-shadow: 0 0 20px var(--glow-green);
+        transform: scale3d(1.02, 1.02, 1);
+    }
+}
+
+@keyframes optimizedRgb {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    25% {
+        filter: hue-rotate(90deg);
+    }
+
+    50% {
+        filter: hue-rotate(180deg);
+    }
+
+    75% {
+        filter: hue-rotate(270deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* Performance Mode Overrides */
+.performance-mode .float-animation {
+    animation: optimizedFloat 2s ease-in-out infinite;
+}
+
+.performance-mode .pulse-glow {
+    animation: optimizedPulse 1.5s ease-in-out infinite;
+}
+
+.performance-mode .rgb-animation {
+    animation: optimizedRgb 2s linear infinite;
+}
+
+/* Critical Animation Loading */
+.critical-animation {
+    animation-delay: 0s !important;
+    will-change: transform, opacity;
+}
+
+.non-critical-animation {
+    animation-delay: 0.5s;
+}
+
+/* Viewport-Specific Optimizations */
+@media (max-width: 768px) {
+
+    /* Reduce animations on mobile */
+    .float-animation {
+        animation-duration: 2s;
+    }
+
+    .rgb-animation {
+        animation-duration: 4s;
+    }
+
+    .pulse-glow {
+        animation-duration: 3s;
+    }
+
+    /* Simplify hover effects on touch devices */
+    @media (hover: none) {
+        .gaming-hover-effect:hover {
+            transform: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+    }
+}
+
+/* Battery Level Optimizations */
+@media (prefers-reduced-motion: no-preference) {
+    .battery-conscious {
+        animation-duration: calc(var(--original-duration) * 1.5);
+    }
+}
+
+/* Visibility-Based Animation Control */
+.invisible-animation {
+    animation-play-state: paused;
+    will-change: auto;
+}
+
+.visible-animation {
+    animation-play-state: running;
+    will-change: transform, opacity;
+}
+
+/* Performance Monitoring Classes */
+.fps-monitor::after {
+    content: attr(data-fps) " FPS";
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--accent-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-family: var(--code-font);
+    font-size: 12px;
+    z-index: 9999;
+    pointer-events: none;
+}
