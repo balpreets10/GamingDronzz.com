@@ -1,0 +1,263 @@
+/* About.css - Component scoped styles */
+
+.about {
+    position: relative;
+    padding: 8rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow: hidden;
+}
+
+.about::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.about__container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    z-index: 2;
+}
+
+.about__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.about__text {
+    color: white;
+}
+
+.about__heading {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.about__subheading {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+.about__description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    opacity: 0.85;
+}
+
+.about__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.about__stat {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.about__stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.about__stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.about__image {
+    position: relative;
+}
+
+.about__image img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.about__image:hover img {
+    transform: translateY(-10px);
+}
+
+.about__skills {
+    margin-top: 3rem;
+}
+
+.about__skills-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    font-weight: 600;
+}
+
+.about__skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.about__skill {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.about__skill:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.about__skill-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.about__skill-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Animation classes */
+.about--animate-in {
+    animation: aboutSlideUp 0.8s ease-out forwards;
+}
+
+@keyframes aboutSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.about__content--stagger>* {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: aboutStagger 0.6s ease-out forwards;
+}
+
+.about__content--stagger>*:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.about__content--stagger>*:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.about__content--stagger>*:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.about__content--stagger>*:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+@keyframes aboutStagger {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .about {
+        padding: 6rem 0;
+    }
+
+    .about__content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .about__heading {
+        font-size: 2.5rem;
+    }
+
+    .about__stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .about {
+        padding: 4rem 0;
+    }
+
+    .about__container {
+        padding: 0 1rem;
+    }
+
+    .about__heading {
+        font-size: 2rem;
+    }
+
+    .about__subheading {
+        font-size: 1.1rem;
+    }
+
+    .about__stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .about__stat {
+        padding: 1rem;
+    }
+
+    .about__stat-number {
+        font-size: 2rem;
+    }
+
+    .about__skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .about__content {
+        gap: 2rem;
+    }
+
+    .about__heading {
+        font-size: 1.8rem;
+    }
+
+    .about__skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
