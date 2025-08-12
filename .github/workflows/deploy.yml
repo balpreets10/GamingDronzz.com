@@ -21,8 +21,6 @@ on:
 
 env:
   NODE_VERSION: '18'
-  STAGING_DIR: 'public_html/staging.gamingdronzz.com'
-  PRODUCTION_DIR: 'public_html/gamingdronzz.com'
   WORKING_DIRECTORY: './gamingdronzz-website'
 
 jobs:
@@ -60,10 +58,6 @@ jobs:
           
       - name: 📦 Install Dependencies
         run: npm ci
-        
-      # TEMPORARILY COMMENTED OUT - ADD TESTS LATER
-      # - name: 🧪 Run Tests
-      #   run: npm run test:ci
         
       - name: 🔍 Run Linting
         run: npm run lint
@@ -104,14 +98,14 @@ jobs:
           name: build-staging
           path: dist/
           
-      - name: 🌐 Deploy via FTP
+      - name: 🌐 Deploy via FTP to Staging
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ secrets.FTP_STAGING_HOST }}
+          username: ${{ secrets.FTP_STAGING_USERNAME }}
+          password: ${{ secrets.FTP_STAGING_PASSWORD }}
           local-dir: ./dist/
-          server-dir: ${{ env.STAGING_DIR }}/
+          server-dir: ./
           clean: true
           clean-exclude: |
             .htaccess
@@ -139,14 +133,14 @@ jobs:
           name: build-production
           path: dist/
           
-      - name: 🌐 Deploy via FTP
+      - name: 🌐 Deploy via FTP to Production
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ secrets.FTP_PROD_HOST }}
+          username: ${{ secrets.FTP_PROD_USERNAME }}
+          password: ${{ secrets.FTP_PROD_PASSWORD }}
           local-dir: ./dist/
-          server-dir: ${{ env.PRODUCTION_DIR }}/
+          server-dir: ./
           clean: true
           clean-exclude: |
             .htaccess
