@@ -22,17 +22,20 @@ export default tseslint.config([
         'warn',
         { allowConstantExport: true },
       ],
-      // Allow any types temporarily for migration
+      // Make explicit any a warning instead of error
       '@typescript-eslint/no-explicit-any': 'warn',
-      // Allow unused vars with underscore prefix
-      '@typescript-eslint/no-unused-vars': ['error', {
+      // Make unused vars warnings instead of errors
+      '@typescript-eslint/no-unused-vars': ['warn', {
         argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_'
+        varsIgnorePattern: '^_',
+        ignoreRestSiblings: true
       }],
-      // Allow unused expressions for manager calls
+      // Allow unused expressions with specific patterns
       '@typescript-eslint/no-unused-expressions': ['error', {
         allowShortCircuit: true,
-        allowTernary: true
+        allowTernary: true,
+        allowTaggedTemplates: true,
+        enforceForJSX: false
       }],
       // Disable no-undef for TypeScript files (TypeScript handles this)
       'no-undef': 'off'

@@ -1,4 +1,3 @@
-
 // src/managers/ScrollManager.ts
 /**
  * ScrollManager - Handles all scroll-based animations and tracking
@@ -184,8 +183,8 @@ class ScrollManager {
         // Remove existing animation classes
         element.classList.remove(`${animation}-enter`, `${animation}-exit`);
 
-        // Force reflow
-        element.offsetHeight;
+        // Force reflow to ensure class removal takes effect
+        void element.offsetHeight;
 
         // Add new animation class
         element.classList.add(animationClass);
