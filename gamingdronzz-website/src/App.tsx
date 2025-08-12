@@ -19,12 +19,11 @@ function App() {
     }
   });
 
-  // Initialize managers
+  // Initialize managers once
   useEffect(() => {
     const scrollManager = ScrollManager.getInstance();
     const performanceManager = PerformanceManager.getInstance();
 
-    // Performance tracking for navigation
     performanceManager.startMark('app-init');
 
     return () => {
@@ -33,28 +32,16 @@ function App() {
     };
   }, []);
 
-  // Listen to navigation events for analytics
+  // Analytics tracking - stable callback
   useNavigationEvents('navigate', (event) => {
     console.log('Navigation event:', event);
-    // Here you would send to your analytics service
-  });
-
-  const handleNavigate = (itemId: string) => {
-    console.log(`Navigating to: ${itemId}`);
-    // Additional navigation logic can go here
-  };
+  }, []); // Empty deps array
 
   return (
     <div className="app">
-      {/* Navigation */}
-      <RadialMenu
-        centerIcon="🎮"
-        onNavigate={handleNavigate}
-      />
+      <RadialMenu centerIcon="🎮" onNavigate={navActions.navigate} />
 
-      {/* Main Content */}
       <main className="app__main">
-        {/* Hero Section */}
         <section id="home" className="app__section app__section--hero">
           <div className="app__container">
             <h1 className="app__hero-title">
@@ -80,7 +67,6 @@ function App() {
           </div>
         </section>
 
-        {/* About Section */}
         <section id="about" className="app__section">
           <div className="app__container">
             <h2 className="app__section-title">About Us</h2>
@@ -93,7 +79,6 @@ function App() {
           </div>
         </section>
 
-        {/* Projects Section */}
         <section id="projects" className="app__section app__section--dark">
           <div className="app__container">
             <h2 className="app__section-title">Featured Projects</h2>
@@ -120,7 +105,6 @@ function App() {
           </div>
         </section>
 
-        {/* Services Section */}
         <section id="services" className="app__section">
           <div className="app__container">
             <h2 className="app__section-title">Our Services</h2>
@@ -150,24 +134,19 @@ function App() {
           </div>
         </section>
 
-        {/* Articles Section */}
         <section id="articles" className="app__section app__section--light">
           <div className="app__container">
             <h2 className="app__section-title">Latest Articles</h2>
             <div className="app__articles-grid">
               <article className="app__article-card">
-                <h3 className="app__article-title">
-                  The Future of Mobile Gaming
-                </h3>
+                <h3 className="app__article-title">The Future of Mobile Gaming</h3>
                 <p className="app__article-excerpt">
                   Exploring emerging trends and technologies shaping the mobile gaming landscape...
                 </p>
                 <time className="app__article-date">March 15, 2024</time>
               </article>
               <article className="app__article-card">
-                <h3 className="app__article-title">
-                  Optimizing Game Performance
-                </h3>
+                <h3 className="app__article-title">Optimizing Game Performance</h3>
                 <p className="app__article-excerpt">
                   Best practices for maintaining smooth gameplay across different devices...
                 </p>
@@ -177,7 +156,6 @@ function App() {
           </div>
         </section>
 
-        {/* Contact Section */}
         <section id="contact" className="app__section app__section--contact">
           <div className="app__container">
             <h2 className="app__section-title">Get In Touch</h2>
@@ -196,7 +174,6 @@ function App() {
         </section>
       </main>
 
-      {/* Debug Info (Development Only) */}
       {import.meta.env.DEV && (
         <div className="app__debug">
           <details>
