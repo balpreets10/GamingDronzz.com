@@ -6,6 +6,23 @@
 # Enable Rewrite Engine
 RewriteEngine On
 
+# Block GoDaddy Script Injection
+<IfModule mod_rewrite.c>
+    # Block GoDaddy tracking scripts
+    RewriteCond %{QUERY_STRING} tccl\.min\.js [NC]
+    RewriteRule .* - [F,L]
+    
+    # Block other common GoDaddy injections
+    RewriteCond %{QUERY_STRING} wsimg\.com [NC]
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# Block direct access to GoDaddy scripts
+<IfModule mod_alias.c>
+    RedirectMatch 403 .*tccl\.min\.js
+    RedirectMatch 403 .*wsimg\.com.*
+</IfModule>
+
 # Handle React Router (SPA routing)
 # Redirect all requests to index.html for client-side routing
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -27,8 +44,12 @@ RewriteRule . /index.html [L]
     # Referrer Policy
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
     
-    # Content Security Policy (adjust as needed)
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://api.gamingdronzz.com;"
+    # Strict CSP - blocks all external scripts including GoDaddy injection
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://api.gamingdronzz.com; object-src 'none'; base-uri 'self'; form-action 'self';"
+    
+    # Remove any GoDaddy injected headers
+    Header unset X-GoDaddy-Site-Type
+    Header unset X-GoDaddy-Site-Verified
 </IfModule>
 
 # Browser Caching
