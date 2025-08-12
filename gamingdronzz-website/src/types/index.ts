@@ -1,79 +1,76 @@
-export interface BaseManager {
-    init(): void;
-    destroy(): void;
+import { developmentConfig } from '../config/environments/development';
+import { stagingConfig } from '../config/environments/staging';
+import { productionConfig } from '../config/environments/production';
+
+// Types for environment configurations
+export type EnvironmentConfig = typeof developmentConfig;
+
+// Get current environment
+const getEnvironment = (): string => {
+    // Check Vite environment variable first
+    if (import.meta.env.MODE) {
+        return import.meta.env.MODE;
+    }
+
+    // Check React environment variable
+    if (import.meta.env.VITE_APP_ENV) {
+        return import.meta.env.VITE_APP_ENV;
+    }
+
+    // Check process environment (for build time)
+    if (typeof process !== 'undefined' && process.env.NODE_ENV) {
+        return process.env.NODE_ENV;
+    }
+
+    // Default to development
+    return 'development';
+};
+
+// Environment configurations mapping
+const configs = {
+    development: developmentConfig,
+    staging: stagingConfig,
+    production: productionConfig,
+} as const;
+
+// Get current environment
+export const currentEnvironment = getEnvironment();
+
+// Select configuration based on environment
+const getConfig = (): EnvironmentConfig => {
+    const env = currentEnvironment as keyof typeof configs;
+
+    if (configs[env]) {
+        return configs[env];
+    }
+
+    // Fallback to development if environment not found
+    console.warn(`Environment "${env}" not found, falling back to development`);
+    return developmentConfig;
+};
+
+// Export the configuration
+export const config = getConfig();
+
+// Export individual configurations for direct access
+export { developmentConfig, stagingConfig, productionConfig };
+
+// Helper functions
+export const isDevelopment = currentEnvironment === 'development';
+export const isStaging = currentEnvironment === 'staging';
+export const isProduction = currentEnvironment === 'production';
+
+// Debug information (only in development)
+if (isDevelopment && config.features.debugMode) {
+    console.group('🔧 GamingDronzz Configuration');
+    console.log('Environment:', currentEnvironment);
+    console.log('Config:', config);
+    console.log('Build Info:', {
+        version: (globalThis as any).__APP_VERSION__,
+        buildTime: (globalThis as any).__BUILD_TIME__,
+        environment: (globalThis as any).__APP_ENV__,
+    });
+    console.groupEnd();
 }
 
-export interface ScrollAnimationOptions {
-    threshold?: number;
-    rootMargin?: string;
-    triggerOnce?: boolean;
-    reverse?: boolean;
-}
-
-export interface PerformanceTargets {
-    fcp: number;
-    lcp: number;
-    fid: number;
-    cls: number;
-}
-
-export interface AnimationConfig {
-    duration: number;
-    easing: string;
-    stagger: number;
-    reducedMotion: boolean;
-}
-
-export interface ApiConfig {
-    baseURL: string;
-    timeout: number;
-    retries: number;
-}
-
-export interface AnalyticsConfig {
-    enabled: boolean;
-    debug: boolean;
-    trackingId: string;
-}
-
-export interface FeatureFlags {
-    adminPanel: boolean;
-    debugMode: boolean;
-    mockData: boolean;
-    performanceLogging: boolean;
-}
-
-// Component prop types
-export interface BaseComponentProps {
-    className?: string;
-    children?: React.ReactNode;
-    'data-testid'?: string;
-}
-
-export interface SectionProps extends BaseComponentProps {
-    id?: string;
-    'data-scroll-animation'?: string;
-}
-
-// Manager interfaces
-export interface IScrollManager {
-    register(element: HTMLElement, animation: string, config?: ScrollAnimationOptions): string;
-    unregister(id: string): void;
-    onScroll(callback: (position: number, direction: 'up' | 'down') => void): () => void;
-    getScrollPosition(): number;
-    scrollTo(target: number | HTMLElement, smooth?: boolean): void;
-}
-
-export interface IPerformanceManager {
-    getMetrics(): PerformanceMetrics;
-    startMark(name: string): void;
-    endMark(name: string): number | null;
-}
-
-export interface PerformanceMetrics {
-    fcp: number | null;
-    lcp: number | null;
-    fid: number | null;
-    cls: number | null;
-    ttfb: number | null;
-}
+export default config;

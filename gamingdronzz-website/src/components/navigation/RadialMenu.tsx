@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import NavigationManager from '../../managers/NavigationManager';
 import { prefersReducedMotion } from '../../utils/helpers';

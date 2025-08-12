@@ -8,11 +8,15 @@
     ],
     "module": "ESNext",
     "skipLibCheck": true,
+    "types": [
+      "node"
+    ],
     /* Bundler mode */
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
