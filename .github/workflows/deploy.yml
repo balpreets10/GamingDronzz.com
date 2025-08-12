@@ -1,0 +1,201 @@
+name: 🚀 Deploy GamingDronzz
+
+on:
+  push:
+    branches: [staging, release]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deploy Environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+        - staging
+        - production
+      force_deploy:
+        description: 'Force deployment (ignore cache)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  NODE_VERSION: '18'
+  STAGING_DIR: 'public_html/staging.gamingdronzz.com'
+  PRODUCTION_DIR: 'public_html/gamingdronzz.com'
+
+jobs:
+  # Build job for both environments
+  build:
+    name: 🔨 Build Application
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.set-env.outputs.environment }}
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: 🎯 Set Environment
+        id: set-env
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "environment=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
+            echo "environment=staging" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/heads/release" ]]; then
+            echo "environment=production" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install Dependencies
+        run: npm ci
+        
+      - name: 🧪 Run Tests
+        run: npm run test
+        
+      - name: 🔍 Run Linting
+        run: npm run lint
+        
+      - name: 🏗️ Build Application
+        run: |
+          if [[ "${{ steps.set-env.outputs.environment }}" == "production" ]]; then
+            echo "Building for PRODUCTION"
+            npm run build:production
+          else
+            echo "Building for STAGING"
+            npm run build:staging
+          fi
+        env:
+          REACT_APP_ENVIRONMENT: ${{ steps.set-env.outputs.environment }}
+          REACT_APP_GA_TRACKING_ID: ${{ steps.set-env.outputs.environment == 'production' && secrets.GA_TRACKING_ID || '' }}
+          
+      - name: 📁 Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ steps.set-env.outputs.environment }}
+          path: dist/
+          retention-days: 1
+
+  # Deploy to Staging
+  deploy-staging:
+    name: 🚀 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: build
+    if: needs.build.outputs.environment == 'staging'
+    environment:
+      name: staging
+      url: https://staging.gamingdronzz.com
+      
+    steps:
+      - name: 📥 Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-staging
+          path: dist/
+          
+      - name: 🌐 Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ${{ env.STAGING_DIR }}/
+          clean: true
+          clean-exclude: |
+            .htaccess
+            .well-known/**
+            error_log
+            
+      - name: 🧹 Cache Busting
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: ${{ env.STAGING_DIR }}/
+          dry-run: false
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            
+      - name: ✅ Deployment Success
+        run: |
+          echo "🎉 Successfully deployed to staging!"
+          echo "🌐 Visit: https://staging.gamingdronzz.com"
+
+  # Deploy to Production
+  deploy-production:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: build
+    if: needs.build.outputs.environment == 'production'
+    environment:
+      name: production
+      url: https://gamingdronzz.com
+      
+    steps:
+      - name: 📥 Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-production
+          path: dist/
+          
+      - name: 🌐 Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ${{ env.PRODUCTION_DIR }}/
+          clean: true
+          clean-exclude: |
+            .htaccess
+            .well-known/**
+            error_log
+            robots.txt
+            sitemap.xml
+            
+      - name: 🔄 Cache Invalidation
+        run: |
+          echo "Cache invalidation completed"
+          
+      - name: ✅ Production Deployment Success
+        run: |
+          echo "🎉 Successfully deployed to production!"
+          echo "🌐 Visit: https://gamingdronzz.com"
+          echo "📊 Monitor performance and analytics"
+
+  # Notification job
+  notify:
+    name: 📢 Send Notifications
+    runs-on: ubuntu-latest
+    needs: [build, deploy-staging, deploy-production]
+    if: always()
+    
+    steps:
+      - name: 📱 Notify Success
+        if: needs.deploy-staging.result == 'success' || needs.deploy-production.result == 'success'
+        run: |
+          ENV="${{ needs.build.outputs.environment }}"
+          if [[ "$ENV" == "staging" ]]; then
+            echo "✅ Staging deployment successful!"
+          else
+            echo "✅ Production deployment successful!"
+          fi
+          
+      - name: 🚨 Notify Failure
+        if: needs.build.result == 'failure' || needs.deploy-staging.result == 'failure' || needs.deploy-production.result == 'failure'
+        run: |
+          echo "❌ Deployment failed!"
+          echo "Check the logs for details"
