@@ -1,6 +1,5 @@
 /**
- * useNavigation Hook - React hook for NavigationManager integration
- * Provides clean React interface for navigation system
+ * Optimized useNavigation Hook - Fixed infinite loop issues
  */
 
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
@@ -14,22 +13,17 @@ import type {
 } from '../types/navigation';
 
 const useNavigation = (options: UseNavigationOptions = {}): UseNavigationReturn => {
-    const {
-        autoInit = true,
-        customConfig,
-        onStateChange
-    } = options;
+    const { autoInit = true, customConfig } = options;
 
-    const [state, setState] = useState<NavigationState>({
-        isOpen: false,
-        activeItem: null,
-        hoveredItem: null,
-        focusedItem: null,
-        keyboardMode: false,
-        isAnimating: false
-    });
+    // Stable refs
+    const managerRef = useRef<NavigationManager | null>(null);
+    const unsubscribeRef = useRef<(() => void) | null>(null);
+    const onStateChangeRef = useRef(options.onStateChange);
 
-    // Default configuration to ensure all required properties exist
+    // Update ref without causing re-render
+    onStateChangeRef.current = options.onStateChange;
+
+    // Default config - memoized to prevent re-creation
     const defaultConfig: NavigationConfig = useMemo(() => ({
         items: [],
         animationDuration: 300,
@@ -44,103 +38,84 @@ const useNavigation = (options: UseNavigationOptions = {}): UseNavigationReturn 
         centerLabel: 'Menu'
     }), []);
 
+    const [state, setState] = useState<NavigationState>(() => ({
+        isOpen: false,
+        activeItem: null,
+        hoveredItem: null,
+        focusedItem: null,
+        keyboardMode: false,
+        isAnimating: false
+    }));
+
     const [config, setConfig] = useState<NavigationConfig>(defaultConfig);
 
-    const managerRef = useRef<NavigationManager | null>(null);
-    const unsubscribeRef = useRef<(() => void) | null>(null);
-
-    // Initialize manager
+    // Initialize manager once
     useEffect(() => {
-        if (autoInit) {
-            managerRef.current = NavigationManager.getInstance();
+        if (!autoInit) return;
 
-            // Apply custom config if provided
-            if (customConfig) {
-                managerRef.current.updateConfig(customConfig);
-            }
+        managerRef.current = NavigationManager.getInstance();
 
-            // Get config from manager and merge with defaults
-            const managerConfig = managerRef.current.getConfig();
-            const mergedConfig: NavigationConfig = {
-                ...defaultConfig,
-                ...managerConfig
-            };
-            setConfig(mergedConfig);
-
-            // Subscribe to state changes
-            unsubscribeRef.current = managerRef.current.subscribe((newState) => {
-                setState(newState);
-                onStateChange?.(newState);
-            });
-
-            // Set initial state
-            setState(managerRef.current.getState());
+        if (customConfig) {
+            managerRef.current.updateConfig(customConfig);
         }
 
+        // Set initial config and state
+        const managerConfig = managerRef.current.getConfig();
+        setConfig({ ...defaultConfig, ...managerConfig });
+        setState(managerRef.current.getState());
+
+        // Subscribe with stable callback
+        unsubscribeRef.current = managerRef.current.subscribe((newState) => {
+            setState(newState);
+            onStateChangeRef.current?.(newState);
+        });
+
         return () => {
-            if (unsubscribeRef.current) {
-                unsubscribeRef.current();
-                unsubscribeRef.current = null;
-            }
+            unsubscribeRef.current?.();
+            unsubscribeRef.current = null;
         };
-    }, [autoInit, customConfig, onStateChange, defaultConfig]);
+    }, [autoInit, defaultConfig]); // Only depend on stable values
 
-    // Navigation actions
-    const open = useCallback(() => {
-        managerRef.current?.open();
-    }, []);
+    // Update config when customConfig changes
+    useEffect(() => {
+        if (customConfig && managerRef.current) {
+            managerRef.current.updateConfig(customConfig);
+            const updatedConfig = managerRef.current.getConfig();
+            setConfig({ ...defaultConfig, ...updatedConfig });
+        }
+    }, [customConfig, defaultConfig]);
 
-    const close = useCallback(() => {
-        managerRef.current?.close();
-    }, []);
-
-    const toggle = useCallback(() => {
-        managerRef.current?.toggle();
-    }, []);
-
-    const navigate = useCallback((itemId: string) => {
-        managerRef.current?.navigate(itemId);
-    }, []);
-
-    const setHovered = useCallback((itemId: string | null) => {
-        managerRef.current?.setHoveredItem(itemId);
-    }, []);
+    // Memoized actions
+    const actions = useMemo(() => ({
+        open: () => managerRef.current?.open(),
+        close: () => managerRef.current?.close(),
+        toggle: () => managerRef.current?.toggle(),
+        navigate: (itemId: string) => managerRef.current?.navigate(itemId),
+        setHovered: (itemId: string | null) => managerRef.current?.setHoveredItem(itemId)
+    }), []);
 
     const updateConfig = useCallback((newConfig: Partial<NavigationConfig>) => {
         if (managerRef.current) {
             managerRef.current.updateConfig(newConfig);
             const updatedConfig = managerRef.current.getConfig();
-            const mergedConfig: NavigationConfig = {
-                ...defaultConfig,
-                ...config,
-                ...updatedConfig
-            };
-            setConfig(mergedConfig);
+            setConfig({ ...defaultConfig, ...updatedConfig });
         }
-    }, [config, defaultConfig]);
+    }, [defaultConfig]);
 
-    return {
-        state,
-        actions: {
-            open,
-            close,
-            toggle,
-            navigate,
-            setHovered
-        },
-        config,
-        updateConfig
-    };
+    return { state, actions, config, updateConfig };
 };
 
 /**
- * useNavigationEvents Hook - Listen to navigation events
+ * Optimized useNavigationEvents Hook
  */
 export const useNavigationEvents = (
     eventType: NavigationEvent['type'] | 'all',
     callback: (event: NavigationEvent) => void,
     deps: React.DependencyList = []
 ) => {
+    const callbackRef = useRef(callback);
+    callbackRef.current = callback; // Always use latest callback
+
     useEffect(() => {
         const handleEvent = (e: Event) => {
             const customEvent = e as CustomEvent;
@@ -152,179 +127,39 @@ export const useNavigationEvents = (
             };
 
             if (eventType === 'all' || event.type === eventType) {
-                callback(event);
+                callbackRef.current(event);
             }
         };
 
-        if (eventType === 'all') {
-            const events = ['navigation:open', 'navigation:close', 'navigation:navigate', 'navigation:hover', 'navigation:focus'];
+        const events = eventType === 'all'
+            ? ['navigation:open', 'navigation:close', 'navigation:navigate', 'navigation:hover', 'navigation:focus']
+            : [`navigation:${eventType}`];
 
-            events.forEach(eventName => {
-                document.addEventListener(eventName, handleEvent);
-            });
-
-            return () => {
-                events.forEach(eventName => {
-                    document.removeEventListener(eventName, handleEvent);
-                });
-            };
-        } else {
-            const eventName = `navigation:${eventType}`;
+        events.forEach(eventName => {
             document.addEventListener(eventName, handleEvent);
-            return () => document.removeEventListener(eventName, handleEvent);
-        }
-    }, [eventType, callback, ...deps]);
+        });
+
+        return () => {
+            events.forEach(eventName => {
+                document.removeEventListener(eventName, handleEvent);
+            });
+        };
+    }, [eventType, ...deps]); // Remove callback from deps
 };
 
 /**
- * useNavigationItem Hook - Utilities for navigation items
+ * Simplified navigation item hook
  */
 export const useNavigationItem = (itemId: string) => {
     const { state, actions } = useNavigation();
 
-    const isActive = state.activeItem === itemId;
-    const isHovered = state.hoveredItem === itemId;
-    const isFocused = state.focusedItem === itemId;
-
-    const navigate = useCallback(() => {
-        actions.navigate(itemId);
-    }, [itemId, actions]);
-
-    const setHovered = useCallback((hovered: boolean) => {
-        actions.setHovered(hovered ? itemId : null);
-    }, [itemId, actions]);
-
-    return {
-        isActive,
-        isHovered,
-        isFocused,
-        navigate,
-        setHovered
-    };
-};
-
-/**
- * useNavigationKeyboard Hook - Keyboard navigation utilities
- */
-export const useNavigationKeyboard = () => {
-    const { state, actions } = useNavigation();
-
-    const handleKeyDown = useCallback((e: KeyboardEvent) => {
-        if (!state.isOpen) return;
-
-        switch (e.key) {
-            case 'Escape':
-                e.preventDefault();
-                actions.close();
-                break;
-
-            case 'Enter':
-            case ' ':
-                if (state.focusedItem) {
-                    e.preventDefault();
-                    actions.navigate(state.focusedItem);
-                }
-                break;
-        }
-    }, [state.isOpen, state.focusedItem, actions]);
-
-    useEffect(() => {
-        document.addEventListener('keydown', handleKeyDown);
-        return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [handleKeyDown]);
-
-    return {
-        isKeyboardMode: state.keyboardMode,
-        focusedItem: state.focusedItem
-    };
-};
-
-/**
- * useNavigationAnalytics Hook - Track navigation analytics
- */
-export const useNavigationAnalytics = (
-    trackEvent: (event: string, data: any) => void
-) => {
-    useNavigationEvents('all', (event) => {
-        const analyticsData = {
-            action: `navigation_${event.type}`,
-            item_id: event.item?.id,
-            item_label: event.item?.label,
-            timestamp: event.timestamp,
-            state: event.state
-        };
-
-        trackEvent('navigation_interaction', analyticsData);
-    });
-};
-
-/**
- * useNavigationA11y Hook - Accessibility utilities
- */
-export const useNavigationA11y = () => {
-    const { state } = useNavigation();
-
-    // Announce state changes to screen readers
-    useEffect(() => {
-        const announcement = state.isOpen
-            ? 'Navigation menu opened'
-            : 'Navigation menu closed';
-
-        // Create or update live region for announcements
-        let liveRegion = document.getElementById('nav-announcements');
-        if (!liveRegion) {
-            liveRegion = document.createElement('div');
-            liveRegion.id = 'nav-announcements';
-            liveRegion.setAttribute('aria-live', 'polite');
-            liveRegion.setAttribute('aria-atomic', 'true');
-            liveRegion.style.position = 'absolute';
-            liveRegion.style.left = '-10000px';
-            liveRegion.style.width = '1px';
-            liveRegion.style.height = '1px';
-            liveRegion.style.overflow = 'hidden';
-            document.body.appendChild(liveRegion);
-        }
-
-        liveRegion.textContent = announcement;
-    }, [state.isOpen]);
-
-    return {
-        announceToScreenReader: (message: string) => {
-            const liveRegion = document.getElementById('nav-announcements');
-            if (liveRegion) {
-                liveRegion.textContent = message;
-            }
-        }
-    };
-};
-
-/**
- * useNavigationPerformance Hook - Performance monitoring
- */
-export const useNavigationPerformance = () => {
-    const startTimeRef = useRef<number>(0);
-
-    useNavigationEvents('open', () => {
-        startTimeRef.current = performance.now();
-    });
-
-    useNavigationEvents('close', () => {
-        if (startTimeRef.current > 0) {
-            const duration = performance.now() - startTimeRef.current;
-            console.log(`Navigation session duration: ${duration.toFixed(2)}ms`);
-            startTimeRef.current = 0;
-        }
-    });
-
-    return {
-        measureNavigationTiming: (callback: (duration: number) => void) => {
-            const start = performance.now();
-            return () => {
-                const duration = performance.now() - start;
-                callback(duration);
-            };
-        }
-    };
+    return useMemo(() => ({
+        isActive: state.activeItem === itemId,
+        isHovered: state.hoveredItem === itemId,
+        isFocused: state.focusedItem === itemId,
+        navigate: () => actions.navigate(itemId),
+        setHovered: (hovered: boolean) => actions.setHovered(hovered ? itemId : null)
+    }), [state.activeItem, state.hoveredItem, state.focusedItem, itemId, actions]);
 };
 
 export default useNavigation;
