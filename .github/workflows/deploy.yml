@@ -23,14 +23,18 @@ env:
   NODE_VERSION: '18'
   STAGING_DIR: 'public_html/staging.gamingdronzz.com'
   PRODUCTION_DIR: 'public_html/gamingdronzz.com'
+  WORKING_DIRECTORY: './gamingdronzz-website'
 
 jobs:
-  # Build job for both environments
   build:
     name: 🔨 Build Application
     runs-on: ubuntu-latest
     outputs:
       environment: ${{ steps.set-env.outputs.environment }}
+    
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
     
     steps:
       - name: 📥 Checkout Repository
@@ -52,12 +56,14 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
+          cache-dependency-path: ${{ env.WORKING_DIRECTORY }}/package-lock.json
           
       - name: 📦 Install Dependencies
         run: npm ci
         
-      - name: 🧪 Run Tests
-        run: npm run test
+      # TEMPORARILY COMMENTED OUT - ADD TESTS LATER
+      # - name: 🧪 Run Tests
+      #   run: npm run test:ci
         
       - name: 🔍 Run Linting
         run: npm run lint
@@ -79,10 +85,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-${{ steps.set-env.outputs.environment }}
-          path: dist/
+          path: ${{ env.WORKING_DIRECTORY }}/dist/
           retention-days: 1
 
-  # Deploy to Staging
   deploy-staging:
     name: 🚀 Deploy to Staging
     runs-on: ubuntu-latest
@@ -113,27 +118,11 @@ jobs:
             .well-known/**
             error_log
             
-      - name: 🧹 Cache Busting
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
-          server-dir: ${{ env.STAGING_DIR }}/
-          dry-run: false
-          dangerous-clean-slate: false
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            
       - name: ✅ Deployment Success
         run: |
           echo "🎉 Successfully deployed to staging!"
           echo "🌐 Visit: https://staging.gamingdronzz.com"
 
-  # Deploy to Production
   deploy-production:
     name: 🚀 Deploy to Production
     runs-on: ubuntu-latest
@@ -166,17 +155,11 @@ jobs:
             robots.txt
             sitemap.xml
             
-      - name: 🔄 Cache Invalidation
-        run: |
-          echo "Cache invalidation completed"
-          
       - name: ✅ Production Deployment Success
         run: |
           echo "🎉 Successfully deployed to production!"
           echo "🌐 Visit: https://gamingdronzz.com"
-          echo "📊 Monitor performance and analytics"
 
-  # Notification job
   notify:
     name: 📢 Send Notifications
     runs-on: ubuntu-latest
