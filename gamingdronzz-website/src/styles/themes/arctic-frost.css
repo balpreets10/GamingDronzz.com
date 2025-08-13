@@ -1,0 +1,37 @@
+/* ===== ❄️ ARCTIC FROST THEME ===== */
+html[data-theme="arctic-frost"] {
+    --gd-color-primary: #4169e1;
+    --gd-color-primary-hover: #3355cc;
+    --gd-color-primary-light: #f0f4ff;
+    --gd-color-primary-dark: #2640b8;
+
+    --gd-color-secondary: #87ceeb;
+    --gd-color-secondary-hover: #78c4e6;
+    --gd-color-secondary-light: #f8fcff;
+    --gd-color-secondary-dark: #5fa8d1;
+
+    --gd-color-accent: #00ced1;
+    --gd-color-accent-hover: #00b8bb;
+    --gd-color-accent-light: #f0feff;
+    --gd-color-accent-dark: #00a0a3;
+
+    --gd-bg-primary: #f0f8ff;
+    --gd-bg-secondary: #e6f3ff;
+    --gd-bg-tertiary: #ddeeff;
+    --gd-bg-dark: #d4e9ff;
+    --gd-bg-darker: #cce4ff;
+
+    --gd-text-primary: #1a1a2e;
+    --gd-text-secondary: #2e4057;
+    --gd-text-tertiary: #3d5a80;
+    --gd-text-inverse: #ffffff;
+    --gd-text-muted: #5c7a99;
+    --gd-text-disabled: #8fa4c4;
+
+    --gd-gradient-primary: linear-gradient(135deg, #4169e1 0%, #87ceeb 50%, #00ced1 100%);
+    --gd-gradient-hero: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 50%, #4169e1 100%);
+
+    --gd-nav-bg: rgba(240, 248, 255, 0.95);
+    --gd-nav-border: rgba(65, 105, 225, 0.2);
+    --gd-border-light: rgba(65, 105, 225, 0.15);
+}

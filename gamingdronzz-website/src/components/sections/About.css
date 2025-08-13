@@ -1,9 +1,9 @@
-/* About.css - Component scoped styles */
+/* About.css - Component scoped styles with theme variables */
 
 .about {
     position: relative;
-    padding: 8rem 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: var(--gd-section-padding);
+    background: var(--gd-gradient-primary);
     overflow: hidden;
 }
 
@@ -14,76 +14,82 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--gd-surface-overlay);
     z-index: 1;
 }
 
 .about__container {
     position: relative;
-    max-width: 1200px;
+    max-width: var(--gd-container-max-width);
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 var(--gd-container-padding);
     z-index: 2;
 }
 
 .about__content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: var(--gd-space-16);
     align-items: center;
 }
 
 .about__text {
-    color: white;
+    color: var(--gd-text-inverse);
 }
 
 .about__heading {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
+    font-size: var(--gd-font-size-5xl);
+    font-weight: var(--gd-font-weight-bold);
+    margin-bottom: var(--gd-space-6);
+    line-height: var(--gd-line-height-tight);
 }
 
 .about__subheading {
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
+    font-size: var(--gd-font-size-xl);
+    margin-bottom: var(--gd-space-8);
     opacity: 0.9;
-    font-weight: 300;
+    font-weight: var(--gd-font-weight-light);
 }
 
 .about__description {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 2rem;
+    font-size: var(--gd-font-size-lg);
+    line-height: var(--gd-line-height-relaxed);
+    margin-bottom: var(--gd-space-8);
     opacity: 0.85;
 }
 
 .about__stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
+    gap: var(--gd-space-8);
+    margin-top: var(--gd-space-12);
 }
 
 .about__stat {
     text-align: center;
-    padding: 1.5rem;
+    padding: var(--gd-space-6);
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
+    border-radius: var(--gd-radius-xl);
+    backdrop-filter: blur(var(--gd-backdrop-blur));
     border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: var(--gd-transition-base);
+}
+
+.about__stat:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
 }
 
 .about__stat-number {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #fff;
+    font-size: var(--gd-font-size-4xl);
+    font-weight: var(--gd-font-weight-bold);
+    color: var(--gd-text-inverse);
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--gd-space-2);
 }
 
 .about__stat-label {
-    font-size: 0.9rem;
+    font-size: var(--gd-font-size-sm);
     opacity: 0.8;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -96,9 +102,9 @@
 .about__image img {
     width: 100%;
     height: auto;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease;
+    border-radius: var(--gd-radius-3xl);
+    box-shadow: var(--gd-shadow-2xl);
+    transition: var(--gd-transition-slow);
 }
 
 .about__image:hover img {
@@ -106,29 +112,29 @@
 }
 
 .about__skills {
-    margin-top: 3rem;
+    margin-top: var(--gd-space-12);
 }
 
 .about__skills-title {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: #fff;
-    font-weight: 600;
+    font-size: var(--gd-font-size-2xl);
+    margin-bottom: var(--gd-space-6);
+    color: var(--gd-text-inverse);
+    font-weight: var(--gd-font-weight-semibold);
 }
 
 .about__skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
+    gap: var(--gd-space-4);
 }
 
 .about__skill {
-    padding: 1rem;
+    padding: var(--gd-space-4);
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    border-radius: var(--gd-radius-lg);
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
+    transition: var(--gd-transition-base);
 }
 
 .about__skill:hover {
@@ -137,19 +143,19 @@
 }
 
 .about__skill-icon {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    font-size: var(--gd-font-size-3xl);
+    margin-bottom: var(--gd-space-2);
     display: block;
 }
 
 .about__skill-name {
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: var(--gd-font-size-sm);
+    font-weight: var(--gd-font-weight-medium);
 }
 
 /* Animation classes */
 .about--animate-in {
-    animation: aboutSlideUp 0.8s ease-out forwards;
+    animation: aboutSlideUp 0.8s var(--gd-ease-out) forwards;
 }
 
 @keyframes aboutSlideUp {
@@ -167,7 +173,7 @@
 .about__content--stagger>* {
     opacity: 0;
     transform: translateY(30px);
-    animation: aboutStagger 0.6s ease-out forwards;
+    animation: aboutStagger 0.6s var(--gd-ease-out) forwards;
 }
 
 .about__content--stagger>*:nth-child(1) {
@@ -196,16 +202,16 @@
 /* Responsive Design */
 @media (max-width: 992px) {
     .about {
-        padding: 6rem 0;
+        padding: var(--gd-space-24) 0;
     }
 
     .about__content {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: var(--gd-space-12);
     }
 
     .about__heading {
-        font-size: 2.5rem;
+        font-size: var(--gd-font-size-4xl);
     }
 
     .about__stats {
@@ -215,32 +221,32 @@
 
 @media (max-width: 768px) {
     .about {
-        padding: 4rem 0;
+        padding: var(--gd-space-16) 0;
     }
 
     .about__container {
-        padding: 0 1rem;
+        padding: 0 var(--gd-space-4);
     }
 
     .about__heading {
-        font-size: 2rem;
+        font-size: var(--gd-font-size-3xl);
     }
 
     .about__subheading {
-        font-size: 1.1rem;
+        font-size: var(--gd-font-size-lg);
     }
 
     .about__stats {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: var(--gd-space-4);
     }
 
     .about__stat {
-        padding: 1rem;
+        padding: var(--gd-space-4);
     }
 
     .about__stat-number {
-        font-size: 2rem;
+        font-size: var(--gd-font-size-3xl);
     }
 
     .about__skills-grid {
@@ -250,11 +256,11 @@
 
 @media (max-width: 480px) {
     .about__content {
-        gap: 2rem;
+        gap: var(--gd-space-8);
     }
 
     .about__heading {
-        font-size: 1.8rem;
+        font-size: var(--gd-font-size-2xl);
     }
 
     .about__skills-grid {

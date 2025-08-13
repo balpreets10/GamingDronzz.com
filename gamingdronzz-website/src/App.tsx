@@ -4,10 +4,12 @@ import Preloader from './components/ui/Preloader';
 import useNavigation, { useNavigationEvents } from './hooks/useNavigation';
 import ScrollManager from './managers/ScrollManager';
 import PerformanceManager from './managers/PerformanceManager';
+import { initAutoThemeRotation, ThemeOption } from './utils/helpers';
 import './App.css';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [currentTheme, setCurrentTheme] = useState<ThemeOption | null>(null);
 
   const { state: navState, actions: navActions } = useNavigation({
     customConfig: {
@@ -22,16 +24,25 @@ function App() {
     }
   });
 
-  // Initialize managers once
+  // Initialize managers and auto-theme rotation once
   useEffect(() => {
     const scrollManager = ScrollManager.getInstance();
     const performanceManager = PerformanceManager.getInstance();
 
     performanceManager.startMark('app-init');
 
+    // Initialize auto theme rotation - this will pick a random theme on each refresh
+    const selectedTheme = initAutoThemeRotation();
+    setCurrentTheme(selectedTheme);
+
+    // Optional: Add smooth theme transition class to body
+    document.body.classList.add('theme-transition');
+
+    // Cleanup function
     return () => {
       scrollManager.destroy();
       performanceManager.destroy();
+      document.body.classList.remove('theme-transition');
     };
   }, []);
 
@@ -71,6 +82,14 @@ function App() {
             <p className="app__hero-subtitle">
               Professional Game Development Consultancy & Services
             </p>
+            {currentTheme && (
+              <div className="app__theme-indicator">
+                <span className="app__theme-emoji">{currentTheme.icon}</span>
+                <span className="app__theme-name">
+                  Today's Theme: {currentTheme.name}
+                </span>
+              </div>
+            )}
             <div className="app__hero-cta">
               <button
                 className="app__button app__button--primary"
@@ -201,6 +220,12 @@ function App() {
             <summary>Navigation Debug</summary>
             <pre>{JSON.stringify(navState, null, 2)}</pre>
           </details>
+          {currentTheme && (
+            <details>
+              <summary>Theme Debug</summary>
+              <pre>{JSON.stringify(currentTheme, null, 2)}</pre>
+            </details>
+          )}
         </div>
       )}
     </div>

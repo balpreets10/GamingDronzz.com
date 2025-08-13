@@ -1,11 +1,18 @@
+/* src/index.css - Root styles using theme variables */
+
+/* Import theme system */
+@import './styles/variables.css';
+@import './styles/themes/dark-cyber.css';
+/* Add other theme imports here */
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  font-family: var(--gd-font-family-primary);
+  line-height: var(--gd-line-height-relaxed);
+  font-weight: var(--gd-font-weight-normal);
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--gd-text-primary);
+  background-color: var(--gd-bg-primary);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,12 +21,20 @@
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
+  font-weight: var(--gd-font-weight-medium);
+  color: var(--gd-color-primary);
   text-decoration: inherit;
+  transition: var(--gd-transition-fast);
 }
+
 a:hover {
-  color: #535bf2;
+  color: var(--gd-color-primary-hover);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--gd-border-focus);
+  outline-offset: 2px;
+  border-radius: var(--gd-radius-sm);
 }
 
 body {
@@ -28,41 +43,107 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: var(--gd-bg-primary);
+  color: var(--gd-text-primary);
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: var(--gd-font-size-5xl);
+  line-height: var(--gd-line-height-tight);
+  font-weight: var(--gd-font-weight-bold);
+  color: var(--gd-text-primary);
 }
 
 button {
-  border-radius: 8px;
+  border-radius: var(--gd-radius-lg);
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
+  padding: var(--gd-space-3) var(--gd-space-5);
+  font-size: var(--gd-font-size-base);
+  font-weight: var(--gd-font-weight-medium);
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--gd-surface-2);
+  color: var(--gd-text-primary);
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: var(--gd-transition-base);
+  box-shadow: var(--gd-shadow-sm);
 }
 
-@media (prefers-color-scheme: light) {
+button:hover {
+  border-color: var(--gd-color-primary);
+  background-color: var(--gd-surface-3);
+  box-shadow: var(--gd-shadow-md);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 2px solid var(--gd-border-focus);
+  outline-offset: 2px;
+}
+
+button:active {
+  transform: translateY(1px);
+  box-shadow: var(--gd-shadow-sm);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--gd-surface-1);
+  color: var(--gd-text-disabled);
+}
+
+/* Dark mode specific adjustments */
+@media (prefers-color-scheme: dark) {
   :root {
-    color: #213547;
+    color: var(--gd-text-primary);
+    background-color: var(--gd-bg-primary);
+  }
+
+  a:hover {
+    color: var(--gd-color-primary-hover);
+  }
+
+  button {
+    background-color: var(--gd-surface-2);
+    color: var(--gd-text-primary);
+  }
+
+  button:hover {
+    background-color: var(--gd-surface-3);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  button {
+    border: 2px solid var(--gd-text-primary);
+  }
+
+  button:hover {
+    background: var(--gd-text-primary);
+    color: var(--gd-bg-primary);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  :root {
+    color: #000000;
     background-color: #ffffff;
   }
-  a:hover {
-    color: #747bff;
-  }
+
   button {
-    background-color: #f9f9f9;
+    border: 1px solid #000000;
+    background: #ffffff;
+    color: #000000;
   }
 }
