@@ -23,12 +23,12 @@ class NavigationManager implements INavigationManager {
 
     private config: NavigationConfig = {
         items: [
-            { id: 'home', label: 'Home', href: '#home', position: 0, icon: '🏠' },
-            { id: 'about', label: 'About', href: '#about', position: 1, icon: '👤' },
-            { id: 'projects', label: 'Projects', href: '#projects', position: 2, icon: '💼' },
-            { id: 'services', label: 'Services', href: '#services', position: 3, icon: '⚙️' },
-            { id: 'articles', label: 'Articles', href: '#articles', position: 4, icon: '📚' },
-            { id: 'contact', label: 'Contact', href: '#contact', position: 5, icon: '📧' }
+            { id: 'home', label: 'Home', href: '#home', position: 0 },
+            { id: 'about', label: 'About', href: '#about', position: 1 },
+            { id: 'projects', label: 'Projects', href: '#projects', position: 2 },
+            { id: 'services', label: 'Services', href: '#services', position: 3 },
+            { id: 'articles', label: 'Articles', href: '#articles', position: 4 },
+            { id: 'contact', label: 'Contact', href: '#contact', position: 5 }
         ],
         animationDuration: 400,
         radius: 140,

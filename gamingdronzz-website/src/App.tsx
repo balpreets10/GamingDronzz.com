@@ -1,20 +1,23 @@
-import { useEffect } from 'react';
-import PillNavigation from './components/navigation/PillNavigation';
+import { useEffect, useState } from 'react';
+import ModernNavigation from './components/navigation/ModernNavigation';
+import Preloader from './components/ui/Preloader';
 import useNavigation, { useNavigationEvents } from './hooks/useNavigation';
 import ScrollManager from './managers/ScrollManager';
 import PerformanceManager from './managers/PerformanceManager';
 import './App.css';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
   const { state: navState, actions: navActions } = useNavigation({
     customConfig: {
       items: [
-        { id: 'home', label: 'Home', href: '#home', icon: '🏠', position: 0 },
-        { id: 'about', label: 'About', href: '#about', icon: '👋', position: 1 },
-        { id: 'projects', label: 'Projects', href: '#projects', icon: '🎮', position: 2 },
-        { id: 'services', label: 'Services', href: '#services', icon: '⚡', position: 3 },
-        { id: 'articles', label: 'Articles', href: '#articles', icon: '📝', position: 4 },
-        { id: 'contact', label: 'Contact', href: '#contact', icon: '📧', position: 5 }
+        { id: 'home', label: 'Home', href: '#home', position: 0 },
+        { id: 'about', label: 'About', href: '#about', position: 1 },
+        { id: 'projects', label: 'Projects', href: '#projects', position: 2 },
+        { id: 'services', label: 'Services', href: '#services', position: 3 },
+        { id: 'articles', label: 'Articles', href: '#articles', position: 4 },
+        { id: 'contact', label: 'Contact', href: '#contact', position: 5 }
       ]
     }
   });
@@ -37,10 +40,24 @@ function App() {
     console.log('Navigation event:', event);
   }, []); // Empty deps array
 
+  const handlePreloaderComplete = () => {
+    setIsLoading(false);
+  };
+
+  if (isLoading) {
+    return (
+      <Preloader
+        onComplete={handlePreloaderComplete}
+        duration={2000}
+        minDisplayTime={1500}
+      />
+    );
+  }
+
   return (
     <div className="app">
-      {/* Pill Navigation - responsive, positioned at top */}
-      <PillNavigation
+      {/* Modern Navigation - Jack Elder inspired */}
+      <ModernNavigation
         position="fixed-top"
         onNavigate={navActions.navigate}
       />
