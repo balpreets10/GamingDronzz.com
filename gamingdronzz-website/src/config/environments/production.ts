@@ -4,6 +4,15 @@ export const productionConfig = {
         timeout: 10000,
         retries: 2
     },
+    supabase: {
+        url: import.meta.env.VITE_SUPABASE_URL!,
+        anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY!,
+        auth: {
+            autoRefreshToken: true,
+            persistSession: true,
+            detectSessionInUrl: true
+        }
+    },
     analytics: {
         enabled: true,
         debug: false,

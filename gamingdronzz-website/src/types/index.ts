@@ -1,6 +1,7 @@
 import { developmentConfig } from '../config/environments/development';
 import { stagingConfig } from '../config/environments/staging';
 import { productionConfig } from '../config/environments/production';
+export * from './auth';
 
 // Types for environment configurations
 export type EnvironmentConfig = typeof developmentConfig;

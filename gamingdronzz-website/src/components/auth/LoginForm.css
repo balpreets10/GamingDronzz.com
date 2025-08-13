@@ -1,0 +1,178 @@
+/* components/auth/LoginForm.css */
+.login-form {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+}
+
+.login-form__container {
+    background: white;
+    border-radius: 12px;
+    padding: 3rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-form__header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-form__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+}
+
+.login-form__subtitle {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.login-form__content {
+    margin-bottom: 2rem;
+}
+
+.login-form__error {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #fee;
+    color: #c53030;
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.login-form__google-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.5rem;
+    background: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.login-form__google-btn:hover {
+    background: #3367d6;
+    transform: translateY(-1px);
+}
+
+.login-form__google-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.login-form__footer {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+.login-form__help {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+/* components/auth/ProtectedRoute.css */
+.protected-route--loading,
+.protected-route--unauthorized {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.protected-route__container {
+    text-align: center;
+    max-width: 500px;
+}
+
+.protected-route__title {
+    font-size: 2rem;
+    color: #e53e3e;
+    margin-bottom: 1rem;
+}
+
+.protected-route__message {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.protected-route__user-info {
+    color: #888;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* Loading Spinner Styles */
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.loading-spinner__circle {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #4285f4;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-spinner--sm .loading-spinner__circle {
+    width: 24px;
+    height: 24px;
+    border-width: 2px;
+}
+
+.loading-spinner--lg .loading-spinner__circle {
+    width: 60px;
+    height: 60px;
+    border-width: 4px;
+}
+
+.loading-spinner__message {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .login-form {
+        padding: 1rem;
+    }
+
+    .login-form__container {
+        padding: 2rem;
+    }
+}
