@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import RadialMenu from './components/navigation/RadialMenu';
+import PillNavigation from './components/navigation/PillNavigation';
 import useNavigation, { useNavigationEvents } from './hooks/useNavigation';
 import ScrollManager from './managers/ScrollManager';
 import PerformanceManager from './managers/PerformanceManager';
@@ -39,7 +39,11 @@ function App() {
 
   return (
     <div className="app">
-      <RadialMenu centerIcon="🎮" onNavigate={navActions.navigate} />
+      {/* Pill Navigation - responsive, positioned at top */}
+      <PillNavigation
+        position="fixed-top"
+        onNavigate={navActions.navigate}
+      />
 
       <main className="app__main">
         <section id="home" className="app__section app__section--hero">
