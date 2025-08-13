@@ -1,0 +1,121 @@
+/* src/styles/themes/dark-cyber.css - 🌙 Dark Cyber Theme */
+
+html[data-theme="dark-cyber"] {
+    /* ===== CORE COLORS ===== */
+    --gd-color-primary: #00ffff;
+    --gd-color-primary-hover: #00e6e6;
+    --gd-color-primary-light: #001a1a;
+    --gd-color-primary-dark: #00cccc;
+
+    --gd-color-secondary: #ff00ff;
+    --gd-color-secondary-hover: #e600e6;
+    --gd-color-secondary-light: #1a001a;
+    --gd-color-secondary-dark: #cc00cc;
+
+    --gd-color-accent: #00ff88;
+    --gd-color-accent-hover: #00e677;
+    --gd-color-accent-light: #001a0f;
+    --gd-color-accent-dark: #00cc66;
+
+    /* ===== SEMANTIC COLORS ===== */
+    --gd-color-success: #00ff88;
+    --gd-color-warning: #ffaa00;
+    --gd-color-danger: #ff0066;
+    --gd-color-info: #0088ff;
+
+    /* ===== BACKGROUND COLORS ===== */
+    --gd-bg-primary: #0a0a0f;
+    --gd-bg-secondary: #0f0f1a;
+    --gd-bg-tertiary: #1a1a2e;
+    --gd-bg-dark: #050505;
+    --gd-bg-darker: #000000;
+
+    /* ===== TEXT COLORS ===== */
+    --gd-text-primary: #ffffff;
+    --gd-text-secondary: #b3b3ff;
+    --gd-text-tertiary: #8080ff;
+    --gd-text-inverse: #0a0a0f;
+    --gd-text-muted: #6666cc;
+    --gd-text-disabled: #404080;
+
+    /* ===== SURFACE COLORS ===== */
+    --gd-surface-1: #0f0f1a;
+    --gd-surface-2: #1a1a2e;
+    --gd-surface-3: #262647;
+    --gd-surface-4: #333366;
+    --gd-surface-raised: #1a1a2e;
+    --gd-surface-overlay: rgba(0, 255, 255, 0.1);
+
+    /* ===== BORDER COLORS ===== */
+    --gd-border-light: rgba(0, 255, 255, 0.2);
+    --gd-border-medium: rgba(0, 255, 255, 0.4);
+    --gd-border-dark: rgba(0, 255, 255, 0.6);
+    --gd-border-focus: var(--gd-color-primary);
+
+    /* ===== GRADIENTS ===== */
+    --gd-gradient-primary: linear-gradient(135deg, #00ffff 0%, #ff00ff 100%);
+    --gd-gradient-secondary: linear-gradient(135deg, #0088ff 0%, #8800ff 100%);
+    --gd-gradient-accent: linear-gradient(45deg, #00ff88, #00ffff);
+    --gd-gradient-hero: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%);
+    --gd-gradient-dark: linear-gradient(135deg, #000000 0%, #0a0a0f 100%);
+
+    /* ===== SHADOWS ===== */
+    --gd-shadow-sm: 0 1px 2px 0 rgba(0, 255, 255, 0.1);
+    --gd-shadow-base: 0 1px 3px 0 rgba(0, 255, 255, 0.2), 0 1px 2px 0 rgba(0, 255, 255, 0.1);
+    --gd-shadow-md: 0 4px 6px -1px rgba(0, 255, 255, 0.2), 0 2px 4px -1px rgba(0, 255, 255, 0.1);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(0, 255, 255, 0.3), 0 4px 6px -2px rgba(0, 255, 255, 0.2);
+    --gd-shadow-xl: 0 20px 25px -5px rgba(0, 255, 255, 0.4), 0 10px 10px -5px rgba(0, 255, 255, 0.3);
+    --gd-shadow-2xl: 0 25px 50px -12px rgba(0, 255, 255, 0.5);
+    --gd-shadow-inner: inset 0 2px 4px 0 rgba(0, 255, 255, 0.2);
+
+    /* ===== COMPONENT SPECIFIC ===== */
+
+    /* Navigation */
+    --gd-nav-bg: rgba(10, 10, 15, 0.95);
+    --gd-nav-border: rgba(0, 255, 255, 0.2);
+    --gd-nav-shadow: 0 4px 20px rgba(0, 255, 255, 0.3);
+    --gd-nav-link-color: var(--gd-text-secondary);
+    --gd-nav-link-hover: var(--gd-color-primary);
+    --gd-nav-link-active: var(--gd-color-accent);
+
+    /* Cards */
+    --gd-card-bg: var(--gd-surface-2);
+    --gd-card-border: rgba(0, 255, 255, 0.2);
+    --gd-card-shadow: 0 4px 20px rgba(0, 255, 255, 0.2);
+    --gd-card-shadow-hover: 0 8px 30px rgba(0, 255, 255, 0.4);
+
+    /* Special cyber effects */
+    --gd-cyber-glow: 0 0 20px rgba(0, 255, 255, 0.5);
+    --gd-cyber-text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    --gd-cyber-border-glow: 0 0 15px rgba(0, 255, 255, 0.6);
+}
+
+/* ===== CYBER THEME SPECIFIC ENHANCEMENTS ===== */
+
+html[data-theme="dark-cyber"] .app__brand {
+    text-shadow: var(--gd-cyber-text-shadow);
+    filter: drop-shadow(var(--gd-cyber-glow));
+}
+
+html[data-theme="dark-cyber"] .app__button--primary {
+    box-shadow: var(--gd-cyber-glow), var(--gd-shadow-md);
+    border: 1px solid var(--gd-color-primary);
+}
+
+html[data-theme="dark-cyber"] .app__button--primary:hover {
+    box-shadow: var(--gd-cyber-border-glow), var(--gd-shadow-lg);
+    text-shadow: var(--gd-cyber-text-shadow);
+}
+
+html[data-theme="dark-cyber"] .app__project-card:hover {
+    border: 1px solid var(--gd-color-primary);
+    box-shadow: var(--gd-cyber-border-glow), var(--gd-shadow-xl);
+}
+
+html[data-theme="dark-cyber"] .modern-nav__link:hover {
+    text-shadow: 0 0 8px currentColor;
+}
+
+html[data-theme="dark-cyber"] .modern-nav__link::after {
+    box-shadow: 0 0 10px var(--gd-color-primary);
+}

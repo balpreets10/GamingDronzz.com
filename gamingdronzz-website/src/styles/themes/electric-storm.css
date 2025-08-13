@@ -1,0 +1,43 @@
+/* ===== ⚡ ELECTRIC STORM THEME ===== */
+html[data-theme="electric-storm"] {
+    --gd-color-primary: #ffff00;
+    --gd-color-primary-hover: #ffed00;
+    --gd-color-primary-light: #fffff0;
+    --gd-color-primary-dark: #cccc00;
+
+    --gd-color-secondary: #9400d3;
+    --gd-color-secondary-hover: #8000cc;
+    --gd-color-secondary-light: #f5e6ff;
+    --gd-color-secondary-dark: #7300aa;
+
+    --gd-color-accent: #00ffff;
+    --gd-color-accent-hover: #00e6e6;
+    --gd-color-accent-light: #f0ffff;
+    --gd-color-accent-dark: #00cccc;
+
+    --gd-bg-primary: #1a0d26;
+    --gd-bg-secondary: #261333;
+    --gd-bg-tertiary: #331a40;
+    --gd-bg-dark: #0d0613;
+    --gd-bg-darker: #000000;
+
+    --gd-text-primary: #ffffff;
+    --gd-text-secondary: #e6ccff;
+    --gd-text-tertiary: #d9b3ff;
+    --gd-text-inverse: #1a0d26;
+    --gd-text-muted: #b380ff;
+    --gd-text-disabled: #8066cc;
+
+    --gd-gradient-primary: linear-gradient(135deg, #ffff00 0%, #c35cf0 50%, #00ffff 50%);
+    --gd-gradient-hero: linear-gradient(135deg, #000000 0%, #5d4475 30%, #261333 70%, #b5b5a2 100%);
+
+    --gd-shadow-sm: 0 1px 2px 0 rgba(255, 255, 0, 0.3);
+    --gd-shadow-base: 0 1px 3px 0 rgba(255, 255, 0, 0.4), 0 1px 2px 0 rgba(255, 255, 0, 0.3);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(255, 255, 0, 0.5), 0 4px 6px -2px rgba(255, 255, 0, 0.4);
+
+    --gd-nav-bg: rgba(26, 13, 38, 0.95);
+    --gd-nav-border: rgba(255, 255, 0, 0.3);
+    --gd-surface-1: #261333;
+    --gd-surface-2: #331a40;
+    --gd-border-light: rgba(255, 255, 0, 0.2);
+}

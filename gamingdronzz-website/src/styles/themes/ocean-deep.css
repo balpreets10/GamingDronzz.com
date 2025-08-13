@@ -1,0 +1,121 @@
+/* src/styles/themes/ocean-deep.css - 🌊 Ocean Deep Theme */
+
+html[data-theme="ocean-deep"] {
+    /* ===== CORE COLORS ===== */
+    --gd-color-primary: #20b2aa;
+    --gd-color-primary-hover: #48d1cc;
+    --gd-color-primary-light: #e0f7fa;
+    --gd-color-primary-dark: #008b8b;
+
+    --gd-color-secondary: #4682b4;
+    --gd-color-secondary-hover: #5f9ea0;
+    --gd-color-secondary-light: #e1f5fe;
+    --gd-color-secondary-dark: #2f4f4f;
+
+    --gd-color-accent: #00ced1;
+    --gd-color-accent-hover: #40e0d0;
+    --gd-color-accent-light: #e0ffff;
+    --gd-color-accent-dark: #008080;
+
+    /* ===== SEMANTIC COLORS ===== */
+    --gd-color-success: #00ff7f;
+    --gd-color-warning: #ffa500;
+    --gd-color-danger: #ff6347;
+    --gd-color-info: #87ceeb;
+
+    /* ===== BACKGROUND COLORS ===== */
+    --gd-bg-primary: #001122;
+    --gd-bg-secondary: #002244;
+    --gd-bg-tertiary: #003366;
+    --gd-bg-dark: #000811;
+    --gd-bg-darker: #000408;
+
+    /* ===== TEXT COLORS ===== */
+    --gd-text-primary: #f0f8ff;
+    --gd-text-secondary: #b0e0e6;
+    --gd-text-tertiary: #87ceeb;
+    --gd-text-inverse: #001122;
+    --gd-text-muted: #4682b4;
+    --gd-text-disabled: #2f4f4f;
+
+    /* ===== SURFACE COLORS ===== */
+    --gd-surface-1: #002244;
+    --gd-surface-2: #003366;
+    --gd-surface-3: #004488;
+    --gd-surface-4: #0055aa;
+    --gd-surface-raised: #003366;
+    --gd-surface-overlay: rgba(32, 178, 170, 0.1);
+
+    /* ===== BORDER COLORS ===== */
+    --gd-border-light: rgba(32, 178, 170, 0.2);
+    --gd-border-medium: rgba(32, 178, 170, 0.4);
+    --gd-border-dark: rgba(32, 178, 170, 0.6);
+    --gd-border-focus: var(--gd-color-primary);
+
+    /* ===== GRADIENTS ===== */
+    --gd-gradient-primary: linear-gradient(135deg, #20b2aa 0%, #4682b4 100%);
+    --gd-gradient-secondary: linear-gradient(135deg, #00ced1 0%, #20b2aa 100%);
+    --gd-gradient-accent: linear-gradient(45deg, #00ced1, #48d1cc);
+    --gd-gradient-hero: linear-gradient(135deg, #001122 0%, #003366 50%, #002244 100%);
+    --gd-gradient-dark: linear-gradient(135deg, #000408 0%, #001122 100%);
+
+    /* ===== SHADOWS ===== */
+    --gd-shadow-sm: 0 1px 2px 0 rgba(32, 178, 170, 0.1);
+    --gd-shadow-base: 0 1px 3px 0 rgba(32, 178, 170, 0.2), 0 1px 2px 0 rgba(32, 178, 170, 0.1);
+    --gd-shadow-md: 0 4px 6px -1px rgba(32, 178, 170, 0.2), 0 2px 4px -1px rgba(32, 178, 170, 0.1);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(32, 178, 170, 0.3), 0 4px 6px -2px rgba(32, 178, 170, 0.2);
+    --gd-shadow-xl: 0 20px 25px -5px rgba(32, 178, 170, 0.4), 0 10px 10px -5px rgba(32, 178, 170, 0.3);
+    --gd-shadow-2xl: 0 25px 50px -12px rgba(32, 178, 170, 0.5);
+    --gd-shadow-inner: inset 0 2px 4px 0 rgba(32, 178, 170, 0.2);
+
+    /* ===== COMPONENT SPECIFIC ===== */
+
+    /* Navigation */
+    --gd-nav-bg: rgba(0, 17, 34, 0.95);
+    --gd-nav-border: rgba(32, 178, 170, 0.2);
+    --gd-nav-shadow: 0 4px 20px rgba(32, 178, 170, 0.3);
+    --gd-nav-link-color: var(--gd-text-secondary);
+    --gd-nav-link-hover: var(--gd-color-primary);
+    --gd-nav-link-active: var(--gd-color-accent);
+
+    /* Cards */
+    --gd-card-bg: var(--gd-surface-2);
+    --gd-card-border: rgba(32, 178, 170, 0.2);
+    --gd-card-shadow: 0 4px 20px rgba(32, 178, 170, 0.2);
+    --gd-card-shadow-hover: 0 8px 30px rgba(32, 178, 170, 0.4);
+
+    /* Special ocean effects */
+    --gd-ocean-glow: 0 0 20px rgba(32, 178, 170, 0.6);
+    --gd-ocean-text-shadow: 0 0 10px rgba(72, 209, 204, 0.8);
+    --gd-ocean-border-glow: 0 0 15px rgba(32, 178, 170, 0.6);
+}
+
+/* ===== OCEAN DEEP THEME SPECIFIC ENHANCEMENTS ===== */
+
+html[data-theme="ocean-deep"] .app__brand {
+    text-shadow: var(--gd-ocean-text-shadow);
+    filter: drop-shadow(var(--gd-ocean-glow));
+}
+
+html[data-theme="ocean-deep"] .app__button--primary {
+    box-shadow: var(--gd-ocean-glow), var(--gd-shadow-md);
+    border: 1px solid var(--gd-color-primary);
+}
+
+html[data-theme="ocean-deep"] .app__button--primary:hover {
+    box-shadow: var(--gd-ocean-border-glow), var(--gd-shadow-lg);
+    text-shadow: var(--gd-ocean-text-shadow);
+}
+
+html[data-theme="ocean-deep"] .app__project-card:hover {
+    border: 1px solid var(--gd-color-primary);
+    box-shadow: var(--gd-ocean-border-glow), var(--gd-shadow-xl);
+}
+
+html[data-theme="ocean-deep"] .modern-nav__link:hover {
+    text-shadow: 0 0 8px currentColor;
+}
+
+html[data-theme="ocean-deep"] .modern-nav__link::after {
+    box-shadow: 0 0 10px var(--gd-color-primary);
+}

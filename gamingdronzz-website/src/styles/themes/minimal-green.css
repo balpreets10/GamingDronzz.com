@@ -1,0 +1,128 @@
+/* src/styles/themes/minimal-green.css - 🍃 Minimal Green Theme */
+
+html[data-theme="minimal-green"] {
+    /* ===== CORE COLORS ===== */
+    --gd-color-primary: #00c851;
+    --gd-color-primary-hover: #007e33;
+    --gd-color-primary-light: #e8f5e8;
+    --gd-color-primary-dark: #004d1a;
+
+    --gd-color-secondary: #2e7d32;
+    --gd-color-secondary-hover: #388e3c;
+    --gd-color-secondary-light: #e8f5e8;
+    --gd-color-secondary-dark: #1b5e20;
+
+    --gd-color-accent: #4caf50;
+    --gd-color-accent-hover: #66bb6a;
+    --gd-color-accent-light: #f1f8e9;
+    --gd-color-accent-dark: #2e7d32;
+
+    /* ===== SEMANTIC COLORS ===== */
+    --gd-color-success: #4caf50;
+    --gd-color-warning: #ff9800;
+    --gd-color-danger: #f44336;
+    --gd-color-info: #2196f3;
+
+    /* ===== BACKGROUND COLORS ===== */
+    --gd-bg-primary: #ffffff;
+    --gd-bg-secondary: #f8fdf8;
+    --gd-bg-tertiary: #f1f8e9;
+    --gd-bg-dark: #2e7d32;
+    --gd-bg-darker: #1b5e20;
+
+    /* ===== TEXT COLORS ===== */
+    --gd-text-primary: #1b5e20;
+    --gd-text-secondary: #2e7d32;
+    --gd-text-tertiary: #4caf50;
+    --gd-text-inverse: #ffffff;
+    --gd-text-muted: #81c784;
+    --gd-text-disabled: #c8e6c9;
+
+    /* ===== SURFACE COLORS ===== */
+    --gd-surface-1: #ffffff;
+    --gd-surface-2: #f8fdf8;
+    --gd-surface-3: #f1f8e9;
+    --gd-surface-4: #e8f5e8;
+    --gd-surface-raised: #ffffff;
+    --gd-surface-overlay: rgba(76, 175, 80, 0.1);
+
+    /* ===== BORDER COLORS ===== */
+    --gd-border-light: rgba(76, 175, 80, 0.12);
+    --gd-border-medium: rgba(76, 175, 80, 0.24);
+    --gd-border-dark: rgba(76, 175, 80, 0.38);
+    --gd-border-focus: var(--gd-color-primary);
+
+    /* ===== GRADIENTS ===== */
+    --gd-gradient-primary: linear-gradient(135deg, #00c851 0%, #2e7d32 100%);
+    --gd-gradient-secondary: linear-gradient(135deg, #4caf50 0%, #00c851 100%);
+    --gd-gradient-accent: linear-gradient(45deg, #66bb6a, #4caf50);
+    --gd-gradient-hero: linear-gradient(135deg, #ffffff 0%, #f1f8e9 50%, #f8fdf8 100%);
+    --gd-gradient-dark: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+
+    /* ===== SHADOWS ===== */
+    --gd-shadow-sm: 0 1px 2px 0 rgba(76, 175, 80, 0.06);
+    --gd-shadow-base: 0 1px 3px 0 rgba(76, 175, 80, 0.12), 0 1px 2px 0 rgba(76, 175, 80, 0.08);
+    --gd-shadow-md: 0 4px 6px -1px rgba(76, 175, 80, 0.12), 0 2px 4px -1px rgba(76, 175, 80, 0.08);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(76, 175, 80, 0.16), 0 4px 6px -2px rgba(76, 175, 80, 0.08);
+    --gd-shadow-xl: 0 20px 25px -5px rgba(76, 175, 80, 0.16), 0 10px 10px -5px rgba(76, 175, 80, 0.12);
+    --gd-shadow-2xl: 0 25px 50px -12px rgba(76, 175, 80, 0.24);
+    --gd-shadow-inner: inset 0 2px 4px 0 rgba(76, 175, 80, 0.08);
+
+    /* ===== COMPONENT SPECIFIC ===== */
+
+    /* Navigation */
+    --gd-nav-bg: rgba(255, 255, 255, 0.95);
+    --gd-nav-border: rgba(76, 175, 80, 0.12);
+    --gd-nav-shadow: 0 4px 20px rgba(76, 175, 80, 0.08);
+    --gd-nav-link-color: var(--gd-text-secondary);
+    --gd-nav-link-hover: var(--gd-color-primary);
+    --gd-nav-link-active: var(--gd-color-accent);
+
+    /* Cards */
+    --gd-card-bg: var(--gd-surface-1);
+    --gd-card-border: rgba(76, 175, 80, 0.12);
+    --gd-card-shadow: 0 4px 20px rgba(76, 175, 80, 0.08);
+    --gd-card-shadow-hover: 0 8px 30px rgba(76, 175, 80, 0.16);
+
+    /* Special minimal effects */
+    --gd-minimal-glow: 0 0 0 4px rgba(76, 175, 80, 0.1);
+    --gd-minimal-border-accent: 2px solid var(--gd-color-primary);
+}
+
+/* ===== MINIMAL GREEN THEME SPECIFIC ENHANCEMENTS ===== */
+
+html[data-theme="minimal-green"] .app__brand {
+    background: var(--gd-gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+html[data-theme="minimal-green"] .app__button--primary {
+    box-shadow: var(--gd-shadow-md);
+    border: none;
+    font-weight: var(--gd-font-weight-semibold);
+}
+
+html[data-theme="minimal-green"] .app__button--primary:hover {
+    box-shadow: var(--gd-shadow-lg);
+    transform: translateY(-1px);
+}
+
+html[data-theme="minimal-green"] .app__button--primary:focus-visible {
+    box-shadow: var(--gd-minimal-glow), var(--gd-shadow-md);
+}
+
+html[data-theme="minimal-green"] .app__project-card:hover {
+    border-left: var(--gd-minimal-border-accent);
+    transform: translateX(4px);
+}
+
+html[data-theme="minimal-green"] .modern-nav__link:hover {
+    color: var(--gd-color-primary);
+}
+
+html[data-theme="minimal-green"] .modern-nav__link::after {
+    background: var(--gd-gradient-primary);
+    height: 3px;
+}
