@@ -60,27 +60,28 @@ const PillNavigation: React.FC<PillNavigationProps> = ({
         // Update config
         setConfig(manager.getConfig());
 
-        // Listen for navigation events with stable callback
-        const handleNavigate = (e: CustomEvent) => {
-            onNavigateRef.current?.(e.detail.item.id);
-        };
-
-        document.addEventListener('navigation:navigate', handleNavigate as EventListener);
+        // REMOVED: Event listener that was causing infinite loop
+        // The component handles navigation directly through clicks
 
         return () => {
             unsubscribe();
-            document.removeEventListener('navigation:navigate', handleNavigate as EventListener);
         };
     }, []); // No dependencies - initialize once
 
     // Stable event handlers
     const handleItemClick = useCallback((itemId: string) => {
+        // Call onNavigate prop first (for parent notification)
+        onNavigateRef.current?.(itemId);
+        // Then navigate via manager
         managerRef.current!.navigate(itemId);
     }, []);
 
     const handleItemKeyDown = useCallback((e: React.KeyboardEvent, itemId: string) => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
+            // Call onNavigate prop first (for parent notification)
+            onNavigateRef.current?.(itemId);
+            // Then navigate via manager
             managerRef.current!.navigate(itemId);
         }
     }, []);
