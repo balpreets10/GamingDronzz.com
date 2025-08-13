@@ -1,6 +1,5 @@
 /**
- * NavigationManager - Handles navigation state, radial menu logic, and accessibility
- * Follows established manager pattern from Phase 1
+ * NavigationManager - Optimized to prevent infinite loops and circular updates
  */
 
 import type {
@@ -31,8 +30,8 @@ class NavigationManager implements INavigationManager {
             { id: 'articles', label: 'Articles', href: '#articles', position: 4 },
             { id: 'contact', label: 'Contact', href: '#contact', position: 5 }
         ],
-        animationDuration: 300,
-        radius: 120,
+        animationDuration: 400,
+        radius: 140,
         centerSize: 60,
         itemSize: 48,
         autoClose: true,
@@ -48,6 +47,20 @@ class NavigationManager implements INavigationManager {
     private centerButton: HTMLElement | null = null;
     private closeTimeout: number | null = null;
     private isDestroyed = false;
+
+    // Optimized update batching
+    private updateBatch: Partial<NavigationState> | null = null;
+    private batchTimeoutId: number | null = null;
+    private isNotifying = false;
+
+    // Store bound methods for proper cleanup
+    private boundMethods = {
+        handleKeyDown: this.handleKeyDown.bind(this),
+        handleKeyUp: this.handleKeyUp.bind(this),
+        handleFocusIn: this.handleFocusIn.bind(this),
+        handleFocusOut: this.handleFocusOut.bind(this),
+        resetKeyboardMode: this.resetKeyboardMode.bind(this)
+    };
 
     private constructor() {
         this.init();
@@ -66,24 +79,22 @@ class NavigationManager implements INavigationManager {
     }
 
     private setupKeyboardNavigation(): void {
-        document.addEventListener('keydown', this.handleKeyDown.bind(this));
-        document.addEventListener('keyup', this.handleKeyUp.bind(this));
+        document.addEventListener('keydown', this.boundMethods.handleKeyDown);
+        document.addEventListener('keyup', this.boundMethods.handleKeyUp);
     }
 
     private setupFocusTracking(): void {
-        document.addEventListener('focusin', this.handleFocusIn.bind(this));
-        document.addEventListener('focusout', this.handleFocusOut.bind(this));
+        document.addEventListener('focusin', this.boundMethods.handleFocusIn);
+        document.addEventListener('focusout', this.boundMethods.handleFocusOut);
     }
 
     private handleKeyDown(e: KeyboardEvent): void {
         if (this.isDestroyed) return;
 
-        // Tab navigation detection
         if (e.key === 'Tab') {
-            this.setState({ keyboardMode: true });
+            this.batchStateUpdate({ keyboardMode: true });
         }
 
-        // If navigation is not open, don't handle other keys
         if (!this.state.isOpen) return;
 
         switch (e.key) {
@@ -91,7 +102,6 @@ class NavigationManager implements INavigationManager {
                 e.preventDefault();
                 this.close();
                 break;
-
             case 'ArrowUp':
             case 'ArrowDown':
             case 'ArrowLeft':
@@ -99,18 +109,15 @@ class NavigationManager implements INavigationManager {
                 e.preventDefault();
                 this.handleArrowNavigation(e.key);
                 break;
-
             case 'Enter':
             case ' ':
                 e.preventDefault();
                 this.activateCurrentItem();
                 break;
-
             case 'Home':
                 e.preventDefault();
                 this.focusFirstItem();
                 break;
-
             case 'End':
                 e.preventDefault();
                 this.focusLastItem();
@@ -119,14 +126,13 @@ class NavigationManager implements INavigationManager {
     }
 
     private handleKeyUp(e: KeyboardEvent): void {
-        // Reset keyboard mode on mouse use
         if (e.key === 'Alt' || e.key === 'Control') {
-            document.addEventListener('mousemove', this.resetKeyboardMode.bind(this), { once: true });
+            document.addEventListener('mousemove', this.boundMethods.resetKeyboardMode, { once: true });
         }
     }
 
     private resetKeyboardMode(): void {
-        this.setState({ keyboardMode: false });
+        this.batchStateUpdate({ keyboardMode: false });
     }
 
     private handleFocusIn(e: FocusEvent): void {
@@ -134,16 +140,15 @@ class NavigationManager implements INavigationManager {
         if (this.element?.contains(target)) {
             const itemId = target.getAttribute('data-nav-item');
             if (itemId) {
-                this.setState({ focusedItem: itemId });
+                this.batchStateUpdate({ focusedItem: itemId });
             }
         }
     }
 
     private handleFocusOut(): void {
-        // Small delay to check if focus moved to another nav item
         setTimeout(() => {
             if (!this.element?.contains(document.activeElement as HTMLElement)) {
-                this.setState({ focusedItem: null });
+                this.batchStateUpdate({ focusedItem: null });
             }
         }, 0);
     }
@@ -154,14 +159,10 @@ class NavigationManager implements INavigationManager {
 
         switch (key) {
             case 'ArrowUp':
-                nextIndex = currentIndex > 0 ? currentIndex - 1 : this.config.items.length - 1;
-                break;
-            case 'ArrowDown':
-                nextIndex = currentIndex < this.config.items.length - 1 ? currentIndex + 1 : 0;
-                break;
             case 'ArrowLeft':
                 nextIndex = currentIndex > 0 ? currentIndex - 1 : this.config.items.length - 1;
                 break;
+            case 'ArrowDown':
             case 'ArrowRight':
                 nextIndex = currentIndex < this.config.items.length - 1 ? currentIndex + 1 : 0;
                 break;
@@ -177,18 +178,20 @@ class NavigationManager implements INavigationManager {
         const itemElement = this.element?.querySelector(`[data-nav-item="${itemId}"]`) as HTMLElement;
         if (itemElement) {
             itemElement.focus();
-            this.setState({ focusedItem: itemId });
+            this.batchStateUpdate({ focusedItem: itemId });
         }
     }
 
     private focusFirstItem(): void {
-        const firstItem = this.config.items[0];
-        this.focusItem(firstItem.id);
+        if (this.config.items.length > 0) {
+            this.focusItem(this.config.items[0].id);
+        }
     }
 
     private focusLastItem(): void {
-        const lastItem = this.config.items[this.config.items.length - 1];
-        this.focusItem(lastItem.id);
+        if (this.config.items.length > 0) {
+            this.focusItem(this.config.items[this.config.items.length - 1].id);
+        }
     }
 
     private activateCurrentItem(): void {
@@ -205,26 +208,24 @@ class NavigationManager implements INavigationManager {
     public open(): void {
         if (this.state.isOpen) return;
 
-        this.setState({ isOpen: true, isAnimating: true });
+        this.batchStateUpdate({ isOpen: true, isAnimating: true });
         this.clearCloseTimeout();
 
-        // Focus center button for accessibility
         if (this.state.keyboardMode && this.centerButton) {
             this.centerButton.focus();
         }
 
         this.emit('navigation:open');
 
-        // Animation complete
         setTimeout(() => {
-            this.setState({ isAnimating: false });
+            this.batchStateUpdate({ isAnimating: false });
         }, this.config.animationDuration);
     }
 
     public close(): void {
         if (!this.state.isOpen) return;
 
-        this.setState({
+        this.batchStateUpdate({
             isOpen: false,
             hoveredItem: null,
             focusedItem: null,
@@ -233,22 +234,17 @@ class NavigationManager implements INavigationManager {
 
         this.emit('navigation:close');
 
-        // Animation complete
         setTimeout(() => {
-            this.setState({ isAnimating: false });
+            this.batchStateUpdate({ isAnimating: false });
         }, this.config.animationDuration);
     }
 
     public toggle(): void {
-        if (this.state.isOpen) {
-            this.close();
-        } else {
-            this.open();
-        }
+        this.state.isOpen ? this.close() : this.open();
     }
 
     public setHoveredItem(itemId: string | null): void {
-        this.setState({ hoveredItem: itemId });
+        this.batchStateUpdate({ hoveredItem: itemId });
 
         if (itemId && this.config.autoClose) {
             this.clearCloseTimeout();
@@ -256,26 +252,23 @@ class NavigationManager implements INavigationManager {
             this.scheduleAutoClose();
         }
 
-        this.emit('navigation:hover', { item: itemId ? this.config.items.find(i => i.id === itemId) : null });
+        this.emit('navigation:hover', {
+            item: itemId ? this.config.items.find(i => i.id === itemId) : null
+        });
     }
 
     public navigate(itemId: string): void {
         const item = this.config.items.find(i => i.id === itemId);
         if (!item) return;
 
-        this.setState({ activeItem: itemId });
+        this.batchStateUpdate({ activeItem: itemId });
         this.emit('navigation:navigate', { item });
         this.close();
 
-        // Handle navigation
         if (item.href.startsWith('#')) {
-            // Smooth scroll to section
             const target = document.querySelector(item.href);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
+            target?.scrollIntoView({ behavior: 'smooth' });
         } else {
-            // External link
             if (item.external) {
                 window.open(item.href, '_blank', 'noopener,noreferrer');
             } else {
@@ -285,12 +278,18 @@ class NavigationManager implements INavigationManager {
     }
 
     public getItemPosition(position: number): Position {
-        const angle = (position * 360) / this.config.items.length;
-        const radian = (angle - 90) * (Math.PI / 180); // Start from top
+        const totalItems = this.config.items.length;
+        const angleSpread = 90;
+        const startAngle = 180;
+        const angleStep = angleSpread / Math.max(totalItems - 1, 1);
+        const angle = startAngle + (position * angleStep);
+        const radian = angle * (Math.PI / 180);
+        const radius = window.innerWidth <= 768 ?
+            (this.config.radius * 0.7) : this.config.radius;
 
         return {
-            x: Math.cos(radian) * this.config.radius,
-            y: Math.sin(radian) * this.config.radius
+            x: Math.cos(radian) * radius,
+            y: Math.sin(radian) * radius
         };
     }
 
@@ -308,26 +307,85 @@ class NavigationManager implements INavigationManager {
         }
     }
 
-    private setState(newState: Partial<NavigationState>): void {
-        this.state = { ...this.state, ...newState };
+    // Optimized batching system
+    private batchStateUpdate(newState: Partial<NavigationState>): void {
+        if (this.isDestroyed || this.isNotifying) return;
+
+        // Merge with existing batch
+        this.updateBatch = this.updateBatch ?
+            { ...this.updateBatch, ...newState } :
+            { ...newState };
+
+        // Clear existing timeout
+        if (this.batchTimeoutId) {
+            clearTimeout(this.batchTimeoutId);
+        }
+
+        // Schedule batch processing
+        this.batchTimeoutId = window.setTimeout(() => {
+            this.processBatch();
+        }, 0);
+    }
+
+    private processBatch(): void {
+        if (!this.updateBatch || this.isDestroyed || this.isNotifying) return;
+
+        const batch = this.updateBatch;
+        this.updateBatch = null;
+        this.batchTimeoutId = null;
+
+        // Check if state actually changed
+        const hasChanges = Object.keys(batch).some(
+            key => this.state[key as keyof NavigationState] !== batch[key as keyof NavigationState]
+        );
+
+        if (!hasChanges) return;
+
+        // Apply changes
+        this.state = { ...this.state, ...batch };
         this.notifySubscribers();
     }
 
     private notifySubscribers(): void {
-        this.subscribers.forEach(callback => callback(this.state));
+        if (this.isNotifying || this.isDestroyed) return;
+
+        this.isNotifying = true;
+        const currentState = { ...this.state };
+
+        Promise.resolve().then(() => {
+            if (this.isDestroyed) {
+                this.isNotifying = false;
+                return;
+            }
+
+            this.subscribers.forEach(callback => {
+                try {
+                    callback(currentState);
+                } catch (error) {
+                    console.error('Navigation subscriber error:', error);
+                }
+            });
+
+            this.isNotifying = false;
+        });
     }
 
     public subscribe(callback: (state: NavigationState) => void): () => void {
         this.subscribers.add(callback);
+
+        // Immediate call with current state
+        try {
+            callback({ ...this.state });
+        } catch (error) {
+            console.error('Navigation subscriber initial call error:', error);
+        }
+
         return () => this.subscribers.delete(callback);
     }
 
     private emit(event: string, data?: any): void {
         const customEvent = new CustomEvent(event, {
-            detail: {
-                ...data,
-                state: this.state
-            }
+            detail: { ...data, state: { ...this.state } }
         });
         document.dispatchEvent(customEvent);
     }
@@ -342,19 +400,26 @@ class NavigationManager implements INavigationManager {
 
     public updateConfig(newConfig: Partial<NavigationConfig>): void {
         this.config = { ...this.config, ...newConfig };
-        this.notifySubscribers();
     }
 
     public destroy(): void {
         this.isDestroyed = true;
+        this.isNotifying = false;
+
+        if (this.batchTimeoutId) {
+            clearTimeout(this.batchTimeoutId);
+            this.batchTimeoutId = null;
+        }
+
+        this.updateBatch = null;
         this.clearCloseTimeout();
         this.subscribers.clear();
 
         // Remove event listeners
-        document.removeEventListener('keydown', this.handleKeyDown);
-        document.removeEventListener('keyup', this.handleKeyUp);
-        document.removeEventListener('focusin', this.handleFocusIn);
-        document.removeEventListener('focusout', this.handleFocusOut);
+        document.removeEventListener('keydown', this.boundMethods.handleKeyDown);
+        document.removeEventListener('keyup', this.boundMethods.handleKeyUp);
+        document.removeEventListener('focusin', this.boundMethods.handleFocusIn);
+        document.removeEventListener('focusout', this.boundMethods.handleFocusOut);
 
         this.element = null;
         this.centerButton = null;

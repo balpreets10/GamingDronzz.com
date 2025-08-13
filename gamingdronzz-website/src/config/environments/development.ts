@@ -4,6 +4,15 @@ export const developmentConfig = {
         timeout: 30000,
         retries: 3
     },
+    supabase: {
+        url: import.meta.env.VITE_SUPABASE_URL!,
+        anonKey: import.meta.env.VITE_SUPABASE_ANON_KEY!,
+        auth: {
+            autoRefreshToken: true,
+            persistSession: true,
+            detectSessionInUrl: true
+        }
+    },
     analytics: {
         enabled: false,
         debug: true,

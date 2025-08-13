@@ -12,6 +12,40 @@ import type {
     NavigationEvent
 } from '../types/navigation';
 
+// Move defaultConfig outside hook to prevent recreation
+const DEFAULT_CONFIG: NavigationConfig = {
+    items: [],
+    animationDuration: 300,
+    radius: 120,
+    centerSize: 60,
+    itemSize: 50,
+    autoClose: true,
+    closeDelay: 1000,
+    enableKeyboard: true,
+    enableTouch: true,
+    centerIcon: 'menu',
+    centerLabel: 'Menu'
+};
+
+// Deep comparison utility
+const deepEqual = (a: any, b: any): boolean => {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (typeof a !== 'object' || typeof b !== 'object') return false;
+
+    const keysA = Object.keys(a);
+    const keysB = Object.keys(b);
+
+    if (keysA.length !== keysB.length) return false;
+
+    for (const key of keysA) {
+        if (!keysB.includes(key)) return false;
+        if (!deepEqual(a[key], b[key])) return false;
+    }
+
+    return true;
+};
+
 const useNavigation = (options: UseNavigationOptions = {}): UseNavigationReturn => {
     const { autoInit = true, customConfig } = options;
 
@@ -19,24 +53,10 @@ const useNavigation = (options: UseNavigationOptions = {}): UseNavigationReturn 
     const managerRef = useRef<NavigationManager | null>(null);
     const unsubscribeRef = useRef<(() => void) | null>(null);
     const onStateChangeRef = useRef(options.onStateChange);
+    const prevCustomConfigRef = useRef<Partial<NavigationConfig>>();
 
     // Update ref without causing re-render
     onStateChangeRef.current = options.onStateChange;
-
-    // Default config - memoized to prevent re-creation
-    const defaultConfig: NavigationConfig = useMemo(() => ({
-        items: [],
-        animationDuration: 300,
-        radius: 120,
-        centerSize: 60,
-        itemSize: 50,
-        autoClose: true,
-        closeDelay: 1000,
-        enableKeyboard: true,
-        enableTouch: true,
-        centerIcon: 'menu',
-        centerLabel: 'Menu'
-    }), []);
 
     const [state, setState] = useState<NavigationState>(() => ({
         isOpen: false,
@@ -47,7 +67,7 @@ const useNavigation = (options: UseNavigationOptions = {}): UseNavigationReturn 
         isAnimating: false
     }));
 
-    const [config, setConfig] = useState<NavigationConfig>(defaultConfig);
+    const [config, setConfig] = useState<NavigationConfig>(DEFAULT_CONFIG);
 
     // Initialize manager once
     useEffect(() => {
@@ -57,11 +77,12 @@ const useNavigation = (options: UseNavigationOptions = {}): UseNavigationReturn 
 
         if (customConfig) {
             managerRef.current.updateConfig(customConfig);
+            prevCustomConfigRef.current = customConfig;
         }
 
         // Set initial config and state
         const managerConfig = managerRef.current.getConfig();
-        setConfig({ ...defaultConfig, ...managerConfig });
+        setConfig({ ...DEFAULT_CONFIG, ...managerConfig });
         setState(managerRef.current.getState());
 
         // Subscribe with stable callback
@@ -74,16 +95,20 @@ const useNavigation = (options: UseNavigationOptions = {}): UseNavigationReturn 
             unsubscribeRef.current?.();
             unsubscribeRef.current = null;
         };
-    }, [autoInit, defaultConfig]); // Only depend on stable values
+    }, [autoInit]);
 
-    // Update config when customConfig changes
+    // Update config only when customConfig actually changes (deep comparison)
     useEffect(() => {
         if (customConfig && managerRef.current) {
-            managerRef.current.updateConfig(customConfig);
-            const updatedConfig = managerRef.current.getConfig();
-            setConfig({ ...defaultConfig, ...updatedConfig });
+            // Only update if config actually changed
+            if (!deepEqual(prevCustomConfigRef.current, customConfig)) {
+                managerRef.current.updateConfig(customConfig);
+                const updatedConfig = managerRef.current.getConfig();
+                setConfig({ ...DEFAULT_CONFIG, ...updatedConfig });
+                prevCustomConfigRef.current = customConfig;
+            }
         }
-    }, [customConfig, defaultConfig]);
+    }, [customConfig]);
 
     // Memoized actions
     const actions = useMemo(() => ({
@@ -98,9 +123,10 @@ const useNavigation = (options: UseNavigationOptions = {}): UseNavigationReturn 
         if (managerRef.current) {
             managerRef.current.updateConfig(newConfig);
             const updatedConfig = managerRef.current.getConfig();
-            setConfig({ ...defaultConfig, ...updatedConfig });
+            setConfig({ ...DEFAULT_CONFIG, ...updatedConfig });
+            prevCustomConfigRef.current = { ...prevCustomConfigRef.current, ...newConfig };
         }
-    }, [defaultConfig]);
+    }, []);
 
     return { state, actions, config, updateConfig };
 };
@@ -144,7 +170,7 @@ export const useNavigationEvents = (
                 document.removeEventListener(eventName, handleEvent);
             });
         };
-    }, [eventType, ...deps]); // Remove callback from deps
+    }, [eventType, ...deps]);
 };
 
 /**

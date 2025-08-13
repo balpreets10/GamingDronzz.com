@@ -71,17 +71,6 @@ export interface INavigationManager {
     destroy(): void;
 }
 
-// Component Props
-export interface RadialMenuProps {
-    className?: string;
-    centerIcon?: string;
-    items?: NavigationItem[];
-    onNavigate?: (itemId: string, item: NavigationItem) => void;
-    onOpen?: () => void;
-    onClose?: () => void;
-    config?: Partial<NavigationConfig>;
-}
-
 // Hook Options
 export interface UseNavigationOptions {
     autoInit?: boolean;
