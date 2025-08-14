@@ -165,7 +165,7 @@ function App() {
             </div>
           </div>
           <div className="app__footer-bottom">
-            <p>&copy; 2024 GamingDronzz. All rights reserved.</p>
+            <p>&copy; 2025 GamingDronzz. All rights reserved.</p>
           </div>
         </div>
       </footer>
