@@ -1,91 +1,255 @@
-/* src/styles/themes/variables.css - Global Theme System */
+/* src/styles/themes/variables.css - Complete Arctic Frost Theme System */
 
-/* ===== THEME SYSTEM ARCHITECTURE ===== */
-/* This file defines all themeable properties as CSS custom properties */
-/* Themes are switched by changing the data-theme attribute on <html> */
+/* ===== ARCTIC FROST THEME ARCHITECTURE ===== */
+/* This file defines a complete, consistent Arctic Frost theme */
+/* Colors are intelligently chosen for proper contrast and visual hierarchy */
 
 :root {
-    /* ===== CORE COLORS ===== */
-    --gd-color-primary: #4169e1;
-    --gd-color-primary-hover: #3355cc;
-    --gd-color-primary-light: #f0f4ff;
-    --gd-color-primary-dark: #2640b8;
+    /* ===== PRIMARY COLOR SYSTEM ===== */
+    /* Cool blue - main brand color inspired by arctic ice */
+    --gd-color-primary: #4A90E2;
+    /* Main primary - arctic blue */
+    --gd-color-primary-50: #F0F7FF;
+    /* Lightest - for subtle backgrounds */
+    --gd-color-primary-100: #E1EFFF;
+    /* Very light - for hover states on light backgrounds */
+    --gd-color-primary-200: #C3DFFF;
+    /* Light - for disabled states, light accents */
+    --gd-color-primary-300: #94C5FF;
+    /* Medium light - for borders, secondary elements */
+    --gd-color-primary-400: #5BA0F2;
+    /* Medium - for hover states */
+    --gd-color-primary-500: #4A90E2;
+    /* Base primary color */
+    --gd-color-primary-600: #3B7BC9;
+    /* Medium dark - for active states */
+    --gd-color-primary-700: #2D5FA0;
+    /* Dark - for pressed states */
+    --gd-color-primary-800: #1E4277;
+    /* Darker - for strong contrast */
+    --gd-color-primary-900: #0F254E;
+    /* Darkest - for maximum contrast */
 
-    --gd-color-secondary: #87ceeb;
-    --gd-color-secondary-hover: #78c4e6;
-    --gd-color-secondary-light: #f8fcff;
-    --gd-color-secondary-dark: #5fa8d1;
+    /* ===== SECONDARY COLOR SYSTEM ===== */
+    /* Icy cyan - complementary to primary, like frozen water */
+    --gd-color-secondary: #7DD3FC;
+    /* Main secondary - icy cyan */
+    --gd-color-secondary-50: #F0FCFF;
+    /* Lightest */
+    --gd-color-secondary-100: #E0F9FF;
+    /* Very light */
+    --gd-color-secondary-200: #BAE6FD;
+    /* Light */
+    --gd-color-secondary-300: #7DD3FC;
+    /* Medium light */
+    --gd-color-secondary-400: #38BDF8;
+    /* Medium */
+    --gd-color-secondary-500: #0EA5E9;
+    /* Base secondary */
+    --gd-color-secondary-600: #0284C7;
+    /* Medium dark */
+    --gd-color-secondary-700: #0369A1;
+    /* Dark */
+    --gd-color-secondary-800: #075985;
+    /* Darker */
+    --gd-color-secondary-900: #0C4A6E;
+    /* Darkest */
 
-    --gd-color-accent: #00ced1;
-    --gd-color-accent-hover: #00b8bb;
-    --gd-color-accent-light: #f0feff;
-    --gd-color-accent-dark: #00a0a3;
+    /* ===== ACCENT COLOR SYSTEM ===== */
+    /* Aurora green - like northern lights over ice */
+    --gd-color-accent: #34D399;
+    /* Main accent - aurora green */
+    --gd-color-accent-50: #ECFDF5;
+    /* Lightest */
+    --gd-color-accent-100: #D1FAE5;
+    /* Very light */
+    --gd-color-accent-200: #A7F3D0;
+    /* Light */
+    --gd-color-accent-300: #6EE7B7;
+    /* Medium light */
+    --gd-color-accent-400: #34D399;
+    /* Medium */
+    --gd-color-accent-500: #10B981;
+    /* Base accent */
+    --gd-color-accent-600: #059669;
+    /* Medium dark */
+    --gd-color-accent-700: #047857;
+    /* Dark */
+    --gd-color-accent-800: #065F46;
+    /* Darker */
+    --gd-color-accent-900: #064E3B;
+    /* Darkest */
 
-    --gd-bg-primary: #f0f8ff;
-    --gd-bg-secondary: #e6f3ff;
-    --gd-bg-tertiary: #ddeeff;
-    --gd-bg-dark: #d4e9ff;
-    --gd-bg-darker: #cce4ff;
+    /* ===== INTELLIGENT BACKGROUND SYSTEM ===== */
+    /* Light backgrounds with proper contrast ratios */
+    --gd-bg-primary: #FAFBFF;
+    /* Main background - very light blue-white */
+    --gd-bg-secondary: #F1F5FF;
+    /* Secondary background */
+    --gd-bg-tertiary: #E8EFFF;
+    /* Tertiary background */
+    --gd-bg-quaternary: #DFE9FF;
+    /* Fourth level background */
+    --gd-bg-elevated: #FFFFFF;
+    /* Elevated surfaces (cards, modals) */
+    --gd-bg-overlay: rgba(15, 37, 78, 0.4);
+    /* Dark overlay for modals */
 
-    --gd-text-primary: #1a1a2e;
-    --gd-text-secondary: #2e4057;
-    --gd-text-tertiary: #3d5a80;
-    --gd-text-inverse: #ffffff;
-    --gd-text-muted: #5c7a99;
-    --gd-text-disabled: #8fa4c4;
+    /* Background variants based on primary colors */
+    --gd-bg-primary-subtle: var(--gd-color-primary-50);
+    /* Primary tinted background */
+    --gd-bg-secondary-subtle: var(--gd-color-secondary-50);
+    /* Secondary tinted background */
+    --gd-bg-accent-subtle: var(--gd-color-accent-50);
+    /* Accent tinted background */
 
+    /* ===== INTELLIGENT TEXT SYSTEM ===== */
+    /* Dark text for light backgrounds - ensures readability */
+    --gd-text-primary: #0F172A;
+    /* Main text - very dark slate */
+    --gd-text-secondary: #334155;
+    /* Secondary text - medium dark */
+    --gd-text-tertiary: #64748B;
+    /* Tertiary text - medium */
+    --gd-text-quaternary: #94A3B8;
+    /* Quaternary text - light gray */
+    --gd-text-disabled: #CBD5E1;
+    /* Disabled text - very light */
+    --gd-text-inverse: #FFFFFF;
+    /* Inverse text - white for dark backgrounds */
+    --gd-text-muted: #64748B;
+    /* Muted text - same as tertiary */
 
-
-    /* ===== BORDER COLORS ===== */
-    --gd-border-light: rgba(0, 0, 0, 0.1);
-    --gd-border-medium: rgba(0, 0, 0, 0.2);
-    --gd-border-dark: rgba(0, 0, 0, 0.3);
-    --gd-border-focus: var(--gd-color-primary);
-
-    /* ===== GRADIENTS ===== */
-    --gd-gradient-primary: linear-gradient(135deg, #4169e1 0%, #87ceeb 50%, #00ced1 100%);
-    --gd-gradient-hero: linear-gradient(135deg, #4e74e7 0%, #87ceeb 50%, #12a8aa 100%);
-    --gd-gradient-secondary: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-    --gd-gradient-accent: linear-gradient(45deg, #ffd700, #ffed4e);
-    --gd-gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    /* Text on colored backgrounds */
+    --gd-text-on-primary: #FFFFFF;
+    /* White text on primary backgrounds */
+    --gd-text-on-secondary: #FFFFFF;
+    /* White text on secondary backgrounds */
+    --gd-text-on-accent: #FFFFFF;
+    /* White text on accent backgrounds */
 
     /* ===== SEMANTIC COLORS ===== */
-    --gd-color-success: #28a745;
-    --gd-color-warning: #ffc107;
-    --gd-color-danger: #dc3545;
-    --gd-color-info: #17a2b8;
+    /* Status colors with proper contrast */
+    --gd-color-success: #10B981;
+    /* Success - emerald */
+    --gd-color-success-light: #ECFDF5;
+    /* Light success background */
+    --gd-color-success-dark: #047857;
+    /* Dark success for contrast */
+
+    --gd-color-warning: #F59E0B;
+    /* Warning - amber */
+    --gd-color-warning-light: #FFFBEB;
+    /* Light warning background */
+    --gd-color-warning-dark: #D97706;
+    /* Dark warning for contrast */
+
+    --gd-color-danger: #EF4444;
+    /* Danger - red */
+    --gd-color-danger-light: #FEF2F2;
+    /* Light danger background */
+    --gd-color-danger-dark: #DC2626;
+    /* Dark danger for contrast */
+
+    --gd-color-info: var(--gd-color-primary-500);
+    /* Info uses primary color */
+    --gd-color-info-light: var(--gd-color-primary-50);
+    --gd-color-info-dark: var(--gd-color-primary-700);
+
+    /* ===== BORDER SYSTEM ===== */
+    /* Consistent border colors with proper visibility */
+    --gd-border-light: rgba(148, 163, 184, 0.2);
+    /* Very subtle borders */
+    --gd-border-medium: rgba(148, 163, 184, 0.3);
+    /* Standard borders */
+    --gd-border-strong: rgba(148, 163, 184, 0.5);
+    /* Strong borders */
+    --gd-border-primary: var(--gd-color-primary-300);
+    /* Primary colored borders */
+    --gd-border-focus: var(--gd-color-primary-500);
+    /* Focus state borders */
 
     /* ===== SURFACE COLORS ===== */
-    --gd-surface-1: #e6f3ff;
-    --gd-surface-2: #ddeeff;
-    --gd-surface-3: #e9ecef;
-    --gd-surface-4: #dee2e6;
-    --gd-surface-raised: #ffffff;
-    --gd-surface-overlay: rgba(0, 0, 0, 0.5);
+    /* Layered surface system for depth */
+    --gd-surface-1: var(--gd-bg-primary);
+    /* Base surface */
+    --gd-surface-2: var(--gd-bg-secondary);
+    /* Elevated surface */
+    --gd-surface-3: var(--gd-bg-tertiary);
+    /* More elevated surface */
+    --gd-surface-4: var(--gd-bg-quaternary);
+    /* Highest surface */
+    --gd-surface-raised: var(--gd-bg-elevated);
+    /* Card/modal surface */
+    --gd-surface-overlay: var(--gd-bg-overlay);
+    /* Modal backdrop */
+
+    /* ===== GRADIENTS ===== */
+    /* Arctic-inspired gradients */
+    --gd-gradient-primary: linear-gradient(135deg,
+            var(--gd-color-primary-400) 0%,
+            var(--gd-color-primary-600) 50%,
+            var(--gd-color-primary-800) 100%);
+
+    --gd-gradient-secondary: linear-gradient(135deg,
+            var(--gd-color-secondary-300) 0%,
+            var(--gd-color-secondary-500) 50%,
+            var(--gd-color-secondary-700) 100%);
+
+    --gd-gradient-accent: linear-gradient(135deg,
+            var(--gd-color-accent-300) 0%,
+            var(--gd-color-accent-500) 50%,
+            var(--gd-color-accent-700) 100%);
+
+    --gd-gradient-hero: linear-gradient(135deg,
+            var(--gd-color-primary-400) 0%,
+            var(--gd-color-secondary-400) 35%,
+            var(--gd-color-accent-400) 100%);
+
+    --gd-gradient-subtle: linear-gradient(135deg,
+            var(--gd-bg-primary) 0%,
+            var(--gd-bg-secondary) 50%,
+            var(--gd-bg-tertiary) 100%);
 
     /* ===== SHADOWS ===== */
-    --gd-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --gd-shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    --gd-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --gd-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --gd-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    --gd-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    --gd-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    /* Subtle shadows for Arctic theme */
+    --gd-shadow-sm: 0 1px 2px 0 rgba(15, 37, 78, 0.05);
+    --gd-shadow-base: 0 1px 3px 0 rgba(15, 37, 78, 0.1), 0 1px 2px 0 rgba(15, 37, 78, 0.06);
+    --gd-shadow-md: 0 4px 6px -1px rgba(15, 37, 78, 0.1), 0 2px 4px -1px rgba(15, 37, 78, 0.06);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(15, 37, 78, 0.1), 0 4px 6px -2px rgba(15, 37, 78, 0.05);
+    --gd-shadow-xl: 0 20px 25px -5px rgba(15, 37, 78, 0.1), 0 10px 10px -5px rgba(15, 37, 78, 0.04);
+    --gd-shadow-2xl: 0 25px 50px -12px rgba(15, 37, 78, 0.25);
+    --gd-shadow-inner: inset 0 2px 4px 0 rgba(15, 37, 78, 0.06);
+
+    /* Colored shadows for special elements */
+    --gd-shadow-primary: 0 4px 14px 0 rgba(74, 144, 226, 0.15);
+    --gd-shadow-secondary: 0 4px 14px 0 rgba(125, 211, 252, 0.15);
+    --gd-shadow-accent: 0 4px 14px 0 rgba(52, 211, 153, 0.15);
 
     /* ===== TYPOGRAPHY ===== */
     --gd-font-family-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --gd-font-family-mono: "JetBrains Mono", "Fira Code", Monaco, Consolas, monospace;
 
     --gd-font-size-xs: 0.75rem;
+    /* 12px */
     --gd-font-size-sm: 0.875rem;
+    /* 14px */
     --gd-font-size-base: 1rem;
+    /* 16px */
     --gd-font-size-lg: 1.125rem;
+    /* 18px */
     --gd-font-size-xl: 1.25rem;
+    /* 20px */
     --gd-font-size-2xl: 1.5rem;
+    /* 24px */
     --gd-font-size-3xl: 1.875rem;
+    /* 30px */
     --gd-font-size-4xl: 2.25rem;
+    /* 36px */
     --gd-font-size-5xl: 3rem;
+    /* 48px */
     --gd-font-size-6xl: 4rem;
+    /* 64px */
 
     --gd-font-weight-light: 300;
     --gd-font-weight-normal: 400;
@@ -94,35 +258,75 @@
     --gd-font-weight-bold: 700;
     --gd-font-weight-black: 900;
 
-    --gd-line-height-tight: 1.2;
+    --gd-line-height-tight: 1.25;
     --gd-line-height-normal: 1.5;
-    --gd-line-height-relaxed: 1.6;
+    --gd-line-height-relaxed: 1.625;
     --gd-line-height-loose: 2;
 
-    /* ===== SPACING ===== */
+    /* ===== SPACING SYSTEM ===== */
     --gd-space-0: 0;
+    --gd-space-px: 1px;
+    --gd-space-0_5: 0.125rem;
+    /* 2px */
     --gd-space-1: 0.25rem;
+    /* 4px */
+    --gd-space-1_5: 0.375rem;
+    /* 6px */
     --gd-space-2: 0.5rem;
+    /* 8px */
+    --gd-space-2_5: 0.625rem;
+    /* 10px */
     --gd-space-3: 0.75rem;
+    /* 12px */
+    --gd-space-3_5: 0.875rem;
+    /* 14px */
     --gd-space-4: 1rem;
+    /* 16px */
     --gd-space-5: 1.25rem;
+    /* 20px */
     --gd-space-6: 1.5rem;
+    /* 24px */
+    --gd-space-7: 1.75rem;
+    /* 28px */
     --gd-space-8: 2rem;
+    /* 32px */
+    --gd-space-9: 2.25rem;
+    /* 36px */
     --gd-space-10: 2.5rem;
+    /* 40px */
+    --gd-space-11: 2.75rem;
+    /* 44px */
     --gd-space-12: 3rem;
+    /* 48px */
+    --gd-space-14: 3.5rem;
+    /* 56px */
     --gd-space-16: 4rem;
+    /* 64px */
     --gd-space-20: 5rem;
+    /* 80px */
     --gd-space-24: 6rem;
+    /* 96px */
+    --gd-space-28: 7rem;
+    /* 112px */
+    --gd-space-32: 8rem;
+    /* 128px */
 
     /* ===== BORDER RADIUS ===== */
     --gd-radius-none: 0;
     --gd-radius-sm: 0.125rem;
+    /* 2px */
     --gd-radius-base: 0.25rem;
+    /* 4px */
     --gd-radius-md: 0.375rem;
+    /* 6px */
     --gd-radius-lg: 0.5rem;
+    /* 8px */
     --gd-radius-xl: 0.75rem;
+    /* 12px */
     --gd-radius-2xl: 1rem;
+    /* 16px */
     --gd-radius-3xl: 1.5rem;
+    /* 24px */
     --gd-radius-full: 9999px;
 
     /* ===== TRANSITIONS ===== */
@@ -149,31 +353,39 @@
 
     /* ===== LAYOUT ===== */
     --gd-container-max-width: 1200px;
-    --gd-container-padding: 2rem;
-    --gd-section-padding: 5rem 0;
-    --gd-header-height: 70px;
+    --gd-container-max-width-sm: 640px;
+    --gd-container-max-width-md: 768px;
+    --gd-container-max-width-lg: 1024px;
+    --gd-container-max-width-xl: 1280px;
+    --gd-container-padding: var(--gd-space-8);
+    --gd-section-padding: var(--gd-space-20) 0;
+    --gd-header-height: 4.375rem;
+    /* 70px */
 
-    /* ===== BREAKPOINTS (for reference, use in @media) ===== */
+    /* ===== BREAKPOINTS (for reference) ===== */
     --gd-breakpoint-sm: 640px;
     --gd-breakpoint-md: 768px;
     --gd-breakpoint-lg: 1024px;
     --gd-breakpoint-xl: 1280px;
     --gd-breakpoint-2xl: 1536px;
 
-    /* ===== COMPONENT SPECIFIC ===== */
+    /* ===== COMPONENT SPECIFIC VARIABLES ===== */
 
     /* Navigation */
     --gd-nav-height: var(--gd-header-height);
-    --gd-nav-bg: rgba(255, 255, 255, 0.95);
+    --gd-nav-bg: rgba(255, 255, 255, 0.85);
+    --gd-nav-bg-solid: var(--gd-bg-elevated);
     --gd-nav-backdrop-blur: 20px;
     --gd-nav-border: var(--gd-border-light);
     --gd-nav-shadow: var(--gd-shadow-lg);
     --gd-nav-link-color: var(--gd-text-secondary);
     --gd-nav-link-hover: var(--gd-text-primary);
-    --gd-nav-link-active: var(--gd-color-primary);
+    --gd-nav-link-active: var(--gd-color-primary-600);
 
     /* Buttons */
-    --gd-btn-padding: 1rem 2rem;
+    --gd-btn-padding-sm: var(--gd-space-2) var(--gd-space-4);
+    --gd-btn-padding-base: var(--gd-space-3) var(--gd-space-6);
+    --gd-btn-padding-lg: var(--gd-space-4) var(--gd-space-8);
     --gd-btn-radius: var(--gd-radius-lg);
     --gd-btn-font-weight: var(--gd-font-weight-semibold);
     --gd-btn-transition: var(--gd-transition-base);
@@ -184,24 +396,41 @@
     --gd-card-radius: var(--gd-radius-xl);
     --gd-card-shadow: var(--gd-shadow-base);
     --gd-card-shadow-hover: var(--gd-shadow-lg);
-    --gd-card-padding: var(--gd-space-8);
+    --gd-card-padding-sm: var(--gd-space-4);
+    --gd-card-padding-base: var(--gd-space-6);
+    --gd-card-padding-lg: var(--gd-space-8);
 
     /* Forms */
-    --gd-input-bg: var(--gd-surface-1);
+    --gd-input-bg: var(--gd-bg-elevated);
     --gd-input-border: var(--gd-border-medium);
-    --gd-input-border-focus: var(--gd-border-focus);
+    --gd-input-border-hover: var(--gd-border-strong);
+    --gd-input-border-focus: var(--gd-color-primary-500);
     --gd-input-radius: var(--gd-radius-md);
-    --gd-input-padding: 0.75rem 1rem;
+    --gd-input-padding-sm: var(--gd-space-2) var(--gd-space-3);
+    --gd-input-padding-base: var(--gd-space-3) var(--gd-space-4);
+    --gd-input-padding-lg: var(--gd-space-4) var(--gd-space-5);
+    --gd-input-shadow-focus: 0 0 0 3px rgba(74, 144, 226, 0.1);
 
-    /* Overlays */
-    --gd-overlay-bg: var(--gd-surface-overlay);
+    /* Overlays & Modals */
+    --gd-overlay-bg: rgba(15, 37, 78, 0.4);
     --gd-modal-bg: var(--gd-surface-raised);
+    --gd-modal-radius: var(--gd-radius-2xl);
+    --gd-modal-shadow: var(--gd-shadow-2xl);
     --gd-backdrop-blur: 20px;
+
+    /* Tooltips */
+    --gd-tooltip-bg: var(--gd-text-primary);
+    --gd-tooltip-color: var(--gd-text-inverse);
+    --gd-tooltip-radius: var(--gd-radius-md);
+    --gd-tooltip-shadow: var(--gd-shadow-lg);
+
+    /* Loading & Progress */
+    --gd-loading-primary: var(--gd-color-primary-500);
+    --gd-loading-secondary: var(--gd-color-primary-200);
+    --gd-progress-bg: var(--gd-color-primary-100);
+    --gd-progress-fill: var(--gd-color-primary-500);
 }
 
-/* ===== THEME SWITCHING SYSTEM ===== */
-/* Themes are applied by setting data-theme="theme-name" on the <html> element */
-/* Example: <html data-theme="dark-cyber"> */
 
 /* ===== UTILITY CLASSES ===== */
 .gd-sr-only {
@@ -238,5 +467,22 @@
         --gd-transition-base: none;
         --gd-transition-slow: none;
         --gd-transition-slowest: none;
+    }
+
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== HIGH CONTRAST SUPPORT ===== */
+@media (prefers-contrast: high) {
+    :root {
+        --gd-border-light: rgba(148, 163, 184, 0.4);
+        --gd-border-medium: rgba(148, 163, 184, 0.6);
+        --gd-border-strong: rgba(148, 163, 184, 0.8);
+        --gd-text-primary: #000000;
+        --gd-text-secondary: #1a1a1a;
     }
 }

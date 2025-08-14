@@ -10,6 +10,11 @@ export interface CompanyStat {
     label: string;
 }
 
+export interface Skill {
+    name: string;
+    icon: string;
+}
+
 export interface CompanyData {
     title: string;
     subtitle: string;
@@ -17,6 +22,7 @@ export interface CompanyData {
     mission: string;
     stats: CompanyStat[];
     team: TeamMember[];
+    skills: Skill[];
 }
 
 export const companyData: CompanyData = {
@@ -42,23 +48,37 @@ export const companyData: CompanyData = {
             label: "Project Success Rate"
         }
     ],
+    skills: [
+        { name: 'Unity', icon: '🎮' },
+        { name: 'Unreal Engine', icon: '🚀' },
+        { name: 'C#', icon: '💻' },
+        { name: 'JavaScript', icon: '⚡' },
+        { name: 'Python', icon: '🐍' },
+        { name: 'React', icon: '⚛️' },
+        { name: 'Node.js', icon: '🟢' },
+        { name: 'MongoDB', icon: '🍃' },
+        { name: 'Blender', icon: '🎨' },
+        { name: 'Photoshop', icon: '🖼️' },
+        { name: 'Git', icon: '📝' },
+        { name: 'Docker', icon: '🐳' }
+    ],
     team: [
         {
             name: "Alex Chen",
             role: "Lead Game Developer",
-            bio: "10+ years in game development with expertise in Unity and Unreal Engine",
+            bio: "10+ years in game development with expertise in Unity and Unreal Engine. Specialized in creating immersive gameplay experiences and optimizing performance across multiple platforms.",
             avatar: "/images/team/alex-chen.jpg"
         },
         {
             name: "Sarah Martinez",
             role: "Technical Director",
-            bio: "Former AAA studio technical lead specializing in performance optimization",
+            bio: "Former AAA studio technical lead specializing in performance optimization and scalable game architecture. Expert in graphics programming and engine development.",
             avatar: "/images/team/sarah-martinez.jpg"
         },
         {
             name: "David Kim",
             role: "Creative Director",
-            bio: "Award-winning game designer with focus on innovative gameplay mechanics",
+            bio: "Award-winning game designer with focus on innovative gameplay mechanics and user experience design. Passionate about creating memorable gaming moments.",
             avatar: "/images/team/david-kim.jpg"
         }
     ]

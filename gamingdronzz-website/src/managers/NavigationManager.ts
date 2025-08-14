@@ -1,5 +1,5 @@
 /**
- * NavigationManager - Optimized to prevent infinite loops and circular updates
+ * NavigationManager - Enhanced with scroll-based active section detection
  */
 
 import type {
@@ -14,7 +14,7 @@ class NavigationManager implements INavigationManager {
     private static instance: NavigationManager;
     private state: NavigationState = {
         isOpen: false,
-        activeItem: null,
+        activeItem: 'home', // Default to home
         hoveredItem: null,
         focusedItem: null,
         keyboardMode: false,
@@ -48,6 +48,11 @@ class NavigationManager implements INavigationManager {
     private closeTimeout: number | null = null;
     private isDestroyed = false;
 
+    // Scroll tracking properties
+    private intersectionObserver: IntersectionObserver | null = null;
+    private currentSections: Map<string, boolean> = new Map();
+    private scrollTimeout: number | null = null;
+
     // Optimized update batching
     private updateBatch: Partial<NavigationState> | null = null;
     private batchTimeoutId: number | null = null;
@@ -59,7 +64,9 @@ class NavigationManager implements INavigationManager {
         handleKeyUp: this.handleKeyUp.bind(this),
         handleFocusIn: this.handleFocusIn.bind(this),
         handleFocusOut: this.handleFocusOut.bind(this),
-        resetKeyboardMode: this.resetKeyboardMode.bind(this)
+        resetKeyboardMode: this.resetKeyboardMode.bind(this),
+        handleIntersection: this.handleIntersection.bind(this),
+        handleScroll: this.handleScroll.bind(this)
     };
 
     private constructor() {
@@ -76,6 +83,129 @@ class NavigationManager implements INavigationManager {
     private init(): void {
         this.setupKeyboardNavigation();
         this.setupFocusTracking();
+        this.setupScrollTracking();
+    }
+
+    private setupScrollTracking(): void {
+        // Setup intersection observer for scroll-based active detection
+        this.intersectionObserver = new IntersectionObserver(
+            this.boundMethods.handleIntersection,
+            {
+                threshold: [0, 0.25, 0.5, 0.75, 1],
+                rootMargin: '-20% 0px -70% 0px' // Trigger when section is 20% from top
+            }
+        );
+
+        // Setup scroll listener for additional scroll handling
+        let ticking = false;
+        const scrollHandler = () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    this.boundMethods.handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        window.addEventListener('scroll', scrollHandler, { passive: true });
+
+        // Observe sections after DOM is ready
+        setTimeout(() => this.observeSections(), 100);
+    }
+
+    private observeSections(): void {
+        if (!this.intersectionObserver) return;
+
+        this.config.items.forEach(item => {
+            if (item.href.startsWith('#')) {
+                const sectionId = item.href.substring(1);
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    this.intersectionObserver!.observe(section);
+                    this.currentSections.set(item.id, false);
+                }
+            }
+        });
+    }
+
+    private handleIntersection(entries: IntersectionObserverEntry[]): void {
+        let activeSection: string | null = null;
+        let maxRatio = 0;
+
+        entries.forEach(entry => {
+            const sectionId = entry.target.id;
+            const navItem = this.config.items.find(item => item.href === `#${sectionId}`);
+
+            if (navItem) {
+                this.currentSections.set(navItem.id, entry.isIntersecting);
+
+                // Find the section with the highest intersection ratio
+                if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                    maxRatio = entry.intersectionRatio;
+                    activeSection = navItem.id;
+                }
+            }
+        });
+
+        // If no section is intersecting significantly, find the closest one
+        if (!activeSection) {
+            activeSection = this.findClosestSection();
+        }
+
+        // Update active item if it changed
+        if (activeSection && activeSection !== this.state.activeItem) {
+            this.setActiveItem(activeSection);
+        }
+    }
+
+    private findClosestSection(): string | null {
+        const scrollPosition = window.pageYOffset;
+        const windowHeight = window.innerHeight;
+        let closestSection: string | null = null;
+        let minDistance = Infinity;
+
+        this.config.items.forEach(item => {
+            if (item.href.startsWith('#')) {
+                const sectionId = item.href.substring(1);
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = rect.top + scrollPosition;
+                    const sectionCenter = sectionTop + rect.height / 2;
+                    const viewportCenter = scrollPosition + windowHeight / 2;
+                    const distance = Math.abs(sectionCenter - viewportCenter);
+
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestSection = item.id;
+                    }
+                }
+            }
+        });
+
+        return closestSection;
+    }
+
+    private handleScroll(): void {
+        // Clear existing timeout
+        if (this.scrollTimeout) {
+            clearTimeout(this.scrollTimeout);
+        }
+
+        // Additional scroll-based logic can go here
+        this.scrollTimeout = window.setTimeout(() => {
+            // Scroll ended
+        }, 150);
+    }
+
+    private setActiveItem(itemId: string): void {
+        if (this.state.activeItem !== itemId) {
+            this.batchStateUpdate({ activeItem: itemId });
+            this.emit('navigation:activate', {
+                item: this.config.items.find(i => i.id === itemId)
+            });
+        }
     }
 
     private setupKeyboardNavigation(): void {
@@ -261,13 +391,18 @@ class NavigationManager implements INavigationManager {
         const item = this.config.items.find(i => i.id === itemId);
         if (!item) return;
 
-        this.batchStateUpdate({ activeItem: itemId });
+        // Don't update activeItem here - let scroll detection handle it
         this.emit('navigation:navigate', { item });
         this.close();
 
         if (item.href.startsWith('#')) {
             const target = document.querySelector(item.href);
-            target?.scrollIntoView({ behavior: 'smooth' });
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         } else {
             if (item.external) {
                 window.open(item.href, '_blank', 'noopener,noreferrer');
@@ -400,6 +535,12 @@ class NavigationManager implements INavigationManager {
 
     public updateConfig(newConfig: Partial<NavigationConfig>): void {
         this.config = { ...this.config, ...newConfig };
+
+        // Re-observe sections if items changed
+        if (newConfig.items) {
+            this.currentSections.clear();
+            setTimeout(() => this.observeSections(), 100);
+        }
     }
 
     public destroy(): void {
@@ -411,9 +552,20 @@ class NavigationManager implements INavigationManager {
             this.batchTimeoutId = null;
         }
 
+        if (this.scrollTimeout) {
+            clearTimeout(this.scrollTimeout);
+            this.scrollTimeout = null;
+        }
+
         this.updateBatch = null;
         this.clearCloseTimeout();
         this.subscribers.clear();
+
+        // Disconnect intersection observer
+        if (this.intersectionObserver) {
+            this.intersectionObserver.disconnect();
+            this.intersectionObserver = null;
+        }
 
         // Remove event listeners
         document.removeEventListener('keydown', this.boundMethods.handleKeyDown);
@@ -423,6 +575,7 @@ class NavigationManager implements INavigationManager {
 
         this.element = null;
         this.centerButton = null;
+        this.currentSections.clear();
     }
 }
 

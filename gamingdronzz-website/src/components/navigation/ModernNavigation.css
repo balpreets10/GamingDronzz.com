@@ -253,7 +253,7 @@
     font-weight: var(--gd-font-weight-semibold);
     font-size: var(--gd-font-size-lg);
     background: none;
-    border: none;
+    border: solid 1px var(--gd-color-secondary);
     cursor: pointer;
     transition: var(--gd-transition-base);
     border-radius: var(--gd-radius-lg);
