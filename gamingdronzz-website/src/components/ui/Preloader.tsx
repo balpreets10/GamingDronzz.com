@@ -10,8 +10,8 @@ interface PreloaderProps {
 
 const Preloader: React.FC<PreloaderProps> = ({
     onComplete,
-    duration = 1200, // Reduced from 2000ms
-    minDisplayTime = 800, // Reduced from 1500ms
+    duration = 800,
+    minDisplayTime = 600,
     className = ''
 }) => {
     const [progress, setProgress] = useState(0);
@@ -19,14 +19,14 @@ const Preloader: React.FC<PreloaderProps> = ({
     const [isExiting, setIsExiting] = useState(false);
     const [currentPhase, setCurrentPhase] = useState<'loading' | 'complete' | 'exiting'>('loading');
 
-    // Predefined loading messages for more engaging experience
-    const loadingMessages = [
-        'Initializing Game Engine...',
-        'Loading Assets...',
+    // Fixed: Memoize loading messages to prevent dependency changes
+    const loadingMessages = useMemo(() => [
+        'Initializing Systems...',
+        'Loading Core Modules...',
         'Optimizing Performance...',
-        'Preparing Experience...',
-        'Almost Ready...'
-    ];
+        'Finalizing Setup...',
+        'Launch Ready!'
+    ], []);
 
     const [currentMessage, setCurrentMessage] = useState(loadingMessages[0]);
 
@@ -52,9 +52,9 @@ const Preloader: React.FC<PreloaderProps> = ({
                 animationFrame = requestAnimationFrame(updateProgress);
             } else {
                 setCurrentPhase('complete');
-                setCurrentMessage('Ready to Launch!');
+                setCurrentMessage('Ready!');
 
-                // Ensure minimum display time
+                // Ensure minimum display time without hardcoded delays
                 const totalElapsed = Date.now() - startTime;
                 const remainingTime = Math.max(0, minDisplayTime - totalElapsed);
 
@@ -64,15 +64,12 @@ const Preloader: React.FC<PreloaderProps> = ({
                     setTimeout(() => {
                         setIsVisible(false);
                         onComplete?.();
-                    }, 400); // Reduced exit animation duration
+                    }, 300);
                 }, remainingTime);
             }
         };
 
-        // Add a small delay before starting for smooth appearance
-        setTimeout(() => {
-            animationFrame = requestAnimationFrame(updateProgress);
-        }, 100);
+        animationFrame = requestAnimationFrame(updateProgress);
 
         return () => {
             if (animationFrame) {
@@ -94,68 +91,98 @@ const Preloader: React.FC<PreloaderProps> = ({
 
     return (
         <div className={progressClasses}>
-            {/* Animated Background Elements */}
-            <div className="preloader__bg-animation">
-                <div className="preloader__particle preloader__particle--1"></div>
-                <div className="preloader__particle preloader__particle--2"></div>
-                <div className="preloader__particle preloader__particle--3"></div>
-                <div className="preloader__particle preloader__particle--4"></div>
+            {/* Modern Geometric Background */}
+            <div className="preloader__bg">
+                <div className="preloader__grid"></div>
+                <div className="preloader__orbs">
+                    <div className="preloader__orb preloader__orb--1"></div>
+                    <div className="preloader__orb preloader__orb--2"></div>
+                    <div className="preloader__orb preloader__orb--3"></div>
+                </div>
             </div>
 
             <div className="preloader__content">
-                {/* Brand Logo/Text */}
+                {/* Modern Brand Logo */}
                 <div className="preloader__brand">
                     <div className="preloader__logo">
-                        <span className="preloader__bracket-open">{'{'}</span>
-                        <span className="preloader__brand-text">
+                        <div className="preloader__logo-icon">
+                            <div className="preloader__logo-cube">
+                                <div className="preloader__cube-face preloader__cube-face--front"></div>
+                                <div className="preloader__cube-face preloader__cube-face--back"></div>
+                                <div className="preloader__cube-face preloader__cube-face--right"></div>
+                                <div className="preloader__cube-face preloader__cube-face--left"></div>
+                                <div className="preloader__cube-face preloader__cube-face--top"></div>
+                                <div className="preloader__cube-face preloader__cube-face--bottom"></div>
+                            </div>
+                        </div>
+                        <div className="preloader__brand-text">
                             Gaming<span className="preloader__brand-accent">Dronzz</span>
-                        </span>
-                        <span className="preloader__bracket-close">{'}'}</span>
-                    </div>
-                </div>
-
-                {/* Loading Message */}
-                <div className="preloader__message">
-                    {currentMessage}
-                </div>
-
-                {/* Progress Section */}
-                <div className="preloader__progress-section">
-                    <div className="preloader__percentage">
-                        {Math.round(progress)}%
-                    </div>
-
-                    <div className="preloader__progress-container">
-                        <div className="preloader__progress-track">
-                            <div
-                                className="preloader__progress-fill"
-                                style={{ width: `${progress}%` }}
-                            />
-                            <div className="preloader__progress-glow" />
                         </div>
                     </div>
                 </div>
 
-                {/* Loading Dots Animation */}
-                <div className="preloader__dots">
-                    <span className="preloader__dot"></span>
-                    <span className="preloader__dot"></span>
-                    <span className="preloader__dot"></span>
+                {/* Status Message */}
+                <div className="preloader__status">
+                    <div className="preloader__message">{currentMessage}</div>
+                </div>
+
+                {/* Modern Progress Indicator */}
+                <div className="preloader__progress-section">
+                    <div className="preloader__progress-ring">
+                        <svg className="preloader__ring-svg" viewBox="0 0 120 120">
+                            <circle
+                                className="preloader__ring-bg"
+                                cx="60"
+                                cy="60"
+                                r="50"
+                                fill="none"
+                                strokeWidth="4"
+                            />
+                            <circle
+                                className="preloader__ring-progress"
+                                cx="60"
+                                cy="60"
+                                r="50"
+                                fill="none"
+                                strokeWidth="4"
+                                style={{
+                                    strokeDasharray: 314,
+                                    strokeDashoffset: 314 - (progress * 314) / 100
+                                }}
+                            />
+                        </svg>
+                        <div className="preloader__percentage">
+                            {Math.round(progress)}%
+                        </div>
+                    </div>
+
+                    {/* Pulse Bars */}
+                    <div className="preloader__pulse-bars">
+                        <div className="preloader__bar"></div>
+                        <div className="preloader__bar"></div>
+                        <div className="preloader__bar"></div>
+                        <div className="preloader__bar"></div>
+                        <div className="preloader__bar"></div>
+                    </div>
                 </div>
             </div>
 
-            {/* Success Checkmark for Complete Phase */}
+            {/* Success Animation */}
             {currentPhase === 'complete' && (
                 <div className="preloader__success">
-                    <div className="preloader__checkmark">
-                        <svg viewBox="0 0 24 24" className="preloader__checkmark-icon">
-                            <path
-                                d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
-                                stroke="currentColor"
-                                strokeWidth="2"
+                    <div className="preloader__success-ring">
+                        <svg viewBox="0 0 52 52" className="preloader__success-svg">
+                            <circle
+                                className="preloader__success-circle"
+                                cx="26"
+                                cy="26"
+                                r="20"
                                 fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
+                            />
+                            <path
+                                className="preloader__success-check"
+                                fill="none"
+                                d="M14,27 L22,35 L38,19"
                             />
                         </svg>
                     </div>
