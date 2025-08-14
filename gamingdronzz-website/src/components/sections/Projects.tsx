@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { useContentManager } from '../../hooks/useContentManager';
 import { useLazyLoad } from '../../hooks/useLazyLoad';
 import { projectsData, ProjectData, getFeaturedProjects } from '../../data/projects';
@@ -17,19 +17,32 @@ const Projects: React.FC<ProjectsProps> = ({
     const { setCurrentSection } = useContentManager();
     const { observeImage } = useLazyLoad();
     const [filter, setFilter] = useState<'all' | ProjectData['category']>('all');
+    const [isLoading, setIsLoading] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
 
-    const projects = showFeaturedOnly
-        ? getFeaturedProjects()
-        : projectsData;
+    // Memoized data to prevent unnecessary recalculations
+    const projects = useMemo(() =>
+        showFeaturedOnly ? getFeaturedProjects() : projectsData,
+        [showFeaturedOnly]
+    );
 
-    const filteredProjects = filter === 'all'
-        ? projects
-        : projects.filter(p => p.category === filter);
+    const filteredProjects = useMemo(() => {
+        const filtered = filter === 'all'
+            ? projects
+            : projects.filter(p => p.category === filter);
 
-    const displayProjects = maxProjects
-        ? filteredProjects.slice(0, maxProjects)
-        : filteredProjects;
+        return maxProjects ? filtered.slice(0, maxProjects) : filtered;
+    }, [projects, filter, maxProjects]);
 
+    // Available categories based on current projects
+    const categories = useMemo((): Array<'all' | ProjectData['category']> => {
+        if (showFeaturedOnly) return ['all'];
+
+        const uniqueCategories = ['all' as const, ...new Set(projects.map(p => p.category))];
+        return uniqueCategories as Array<'all' | ProjectData['category']>;
+    }, [projects, showFeaturedOnly]);
+
+    // Intersection observer for section tracking
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -47,9 +60,22 @@ const Projects: React.FC<ProjectsProps> = ({
         return () => observer.disconnect();
     }, [setCurrentSection]);
 
-    const categories: Array<'all' | ProjectData['category']> = [
-        'all', 'mobile', 'pc', 'console', 'vr', 'ar'
-    ];
+    // Handle filter changes with smooth animation
+    const handleFilterChange = useCallback((newFilter: 'all' | ProjectData['category']) => {
+        if (newFilter === filter || isAnimating) return;
+
+        setIsAnimating(true);
+        setIsLoading(true);
+
+        // Brief loading state for smooth transition
+        setTimeout(() => {
+            setFilter(newFilter);
+            setIsLoading(false);
+
+            // Reset animation state after cards animate in
+            setTimeout(() => setIsAnimating(false), 600);
+        }, 150);
+    }, [filter, isAnimating]);
 
     return (
         <section
@@ -60,35 +86,57 @@ const Projects: React.FC<ProjectsProps> = ({
         >
             <div className="projects__container">
                 <div className="projects__header">
-                    <h2 className="projects__title">Our Projects</h2>
+                    <h2 className="projects__title">
+                        {showFeaturedOnly ? 'Featured Projects' : 'Our Projects'}
+                    </h2>
                     <p className="projects__subtitle">
-                        Showcasing our latest game development work
+                        {showFeaturedOnly
+                            ? 'Highlighting our most successful game development projects'
+                            : 'Showcasing our comprehensive game development portfolio across all platforms'
+                        }
                     </p>
                 </div>
 
-                {!showFeaturedOnly && (
+                {!showFeaturedOnly && categories.length > 1 && (
                     <div className="projects__filters">
                         {categories.map(category => (
                             <button
                                 key={category}
                                 className={`projects__filter ${filter === category ? 'projects__filter--active' : ''}`}
-                                onClick={() => setFilter(category)}
+                                onClick={() => handleFilterChange(category)}
+                                disabled={isAnimating}
+                                aria-label={`Filter projects by ${category === 'all' ? 'all categories' : category}`}
                             >
-                                {category === 'all' ? 'All' : category.toUpperCase()}
+                                {category === 'all' ? 'All Projects' : category.toUpperCase()}
                             </button>
                         ))}
                     </div>
                 )}
 
-                <div className="projects__grid">
-                    {displayProjects.map((project) => (
-                        <ProjectCard
-                            key={project.id}
-                            project={project}
-                            observeImage={observeImage}
-                        />
-                    ))}
-                </div>
+                {isLoading ? (
+                    <div className="projects__loading">
+                        <div className="projects__spinner" aria-hidden="true"></div>
+                        <p className="projects__loading-text">Loading projects...</p>
+                    </div>
+                ) : (
+                    <div className={`projects__grid ${isAnimating ? 'projects__grid--filtering' : ''}`}>
+                        {filteredProjects.length > 0 ? (
+                            filteredProjects.map((project, index) => (
+                                <ProjectCard
+                                    key={`${project.id}-${filter}`}
+                                    project={project}
+                                    observeImage={observeImage}
+                                    index={index}
+                                    isFilteringIn={isAnimating}
+                                />
+                            ))
+                        ) : (
+                            <div className="projects__empty">
+                                <p>No projects found for the selected category.</p>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         </section>
     );
@@ -97,10 +145,19 @@ const Projects: React.FC<ProjectsProps> = ({
 interface ProjectCardProps {
     project: ProjectData;
     observeImage: (img: HTMLImageElement) => void;
+    index: number;
+    isFilteringIn: boolean;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, observeImage }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({
+    project,
+    observeImage,
+    index,
+    isFilteringIn
+}) => {
     const imgRef = useRef<HTMLImageElement>(null);
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const [imageError, setImageError] = useState(false);
 
     useEffect(() => {
         if (imgRef.current) {
@@ -108,16 +165,58 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, observeImage }) => {
         }
     }, [observeImage]);
 
+    const handleImageLoad = useCallback(() => {
+        setImageLoaded(true);
+        setImageError(false);
+    }, []);
+
+    const handleImageError = useCallback(() => {
+        setImageError(true);
+        setImageLoaded(false);
+    }, []);
+
+    // Format status for display
+    const getStatusDisplay = (status: string) => {
+        switch (status) {
+            case 'completed': return 'Completed';
+            case 'ongoing': return 'In Progress';
+            case 'upcoming': return 'Upcoming';
+            default: return status;
+        }
+    };
+
     return (
-        <div className="projects__card">
+        <article
+            className={`projects__card ${isFilteringIn ? 'projects__card--filtering-in' : ''}`}
+            style={{ animationDelay: `${index * 0.1}s` }}
+        >
             <div className="projects__card-image">
+                {!imageLoaded && !imageError && (
+                    <div className="projects__image-placeholder">
+                        <div className="projects__spinner"></div>
+                    </div>
+                )}
+
                 <img
                     ref={imgRef}
                     data-src={project.image}
-                    alt={project.title}
-                    className="projects__image"
+                    alt={`${project.title} - ${project.category} game project`}
+                    className={`projects__image ${imageLoaded ? 'projects__image--loaded' : ''}`}
                     loading="lazy"
+                    onLoad={handleImageLoad}
+                    onError={handleImageError}
+                    style={{
+                        opacity: imageLoaded ? 1 : 0,
+                        display: imageError ? 'none' : 'block'
+                    }}
                 />
+
+                {imageError && (
+                    <div className="projects__image-fallback">
+                        <span>Image not available</span>
+                    </div>
+                )}
+
                 <div className="projects__card-overlay">
                     <div className="projects__card-actions">
                         {project.link && (
@@ -126,6 +225,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, observeImage }) => {
                                 className="projects__action"
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                aria-label={`View ${project.title} project`}
                             >
                                 View Project
                             </a>
@@ -134,6 +234,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, observeImage }) => {
                             <a
                                 href={project.caseStudy}
                                 className="projects__action projects__action--secondary"
+                                aria-label={`Read ${project.title} case study`}
                             >
                                 Case Study
                             </a>
@@ -145,31 +246,51 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, observeImage }) => {
             <div className="projects__card-content">
                 <div className="projects__card-header">
                     <h3 className="projects__card-title">{project.title}</h3>
-                    <span className={`projects__status projects__status--${project.status}`}>
-                        {project.status}
+                    <span
+                        className={`projects__status projects__status--${project.status}`}
+                        aria-label={`Project status: ${getStatusDisplay(project.status)}`}
+                    >
+                        {getStatusDisplay(project.status)}
                     </span>
                 </div>
 
                 <p className="projects__card-description">{project.description}</p>
 
                 {project.client && (
-                    <p className="projects__client">Client: {project.client}</p>
+                    <p className="projects__client">
+                        <strong>Client:</strong> {project.client}
+                    </p>
                 )}
 
-                <div className="projects__technologies">
-                    {project.technologies.map((tech, index) => (
-                        <span key={index} className="projects__tech-tag">
+                <div className="projects__technologies" role="list" aria-label="Technologies used">
+                    {project.technologies.map((tech, techIndex) => (
+                        <span
+                            key={techIndex}
+                            className="projects__tech-tag"
+                            role="listitem"
+                        >
                             {tech}
                         </span>
                     ))}
                 </div>
 
                 <div className="projects__meta">
-                    <span className="projects__category">{project.category}</span>
-                    <span className="projects__year">{project.year}</span>
+                    <span
+                        className="projects__category"
+                        aria-label={`Category: ${project.category}`}
+                    >
+                        {project.category}
+                    </span>
+                    <time
+                        className="projects__year"
+                        dateTime={project.year.toString()}
+                        aria-label={`Year: ${project.year}`}
+                    >
+                        {project.year}
+                    </time>
                 </div>
             </div>
-        </div>
+        </article>
     );
 };
 
