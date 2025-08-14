@@ -1,0 +1,161 @@
+/* src/styles/themes/retro-arcade.css - 🎮 Retro Arcade Theme */
+
+html[data-theme="retro-arcade"] {
+    /* ===== CORE COLORS ===== */
+    --gd-color-primary: #ff0080;
+    --gd-color-primary-hover: #ff33a0;
+    --gd-color-primary-light: #fff0f8;
+    --gd-color-primary-dark: #cc0066;
+
+    --gd-color-secondary: #00ff80;
+    --gd-color-secondary-hover: #33ffa0;
+    --gd-color-secondary-light: #f0fff8;
+    --gd-color-secondary-dark: #00cc66;
+
+    --gd-color-accent: #ffff00;
+    --gd-color-accent-hover: #ffff33;
+    --gd-color-accent-light: #fffff0;
+    --gd-color-accent-dark: #cccc00;
+
+    /* ===== SEMANTIC COLORS ===== */
+    --gd-color-success: #00ff80;
+    --gd-color-warning: #ffff00;
+    --gd-color-danger: #ff0080;
+    --gd-color-info: #0080ff;
+
+    /* ===== BACKGROUND COLORS ===== */
+    --gd-bg-primary: #0a0a0a;
+    --gd-bg-secondary: #1a0a1a;
+    --gd-bg-tertiary: #2a0a2a;
+    --gd-bg-dark: #050005;
+    --gd-bg-darker: #020002;
+
+    /* ===== TEXT COLORS ===== */
+    --gd-text-primary: #ffffff;
+    --gd-text-secondary: #ff80c0;
+    --gd-text-tertiary: #80ff80;
+    --gd-text-inverse: #0a0a0a;
+    --gd-text-muted: #8080ff;
+    --gd-text-disabled: #404040;
+
+    /* ===== SURFACE COLORS ===== */
+    --gd-surface-1: #1a0a1a;
+    --gd-surface-2: #2a0a2a;
+    --gd-surface-3: #3a0a3a;
+    --gd-surface-4: #4a0a4a;
+    --gd-surface-raised: #2a0a2a;
+    --gd-surface-overlay: rgba(255, 0, 128, 0.1);
+
+    /* ===== BORDER COLORS ===== */
+    --gd-border-light: rgba(255, 0, 128, 0.2);
+    --gd-border-medium: rgba(255, 0, 128, 0.4);
+    --gd-border-dark: rgba(255, 0, 128, 0.6);
+    --gd-border-focus: var(--gd-color-primary);
+
+    /* ===== GRADIENTS ===== */
+    --gd-gradient-primary: linear-gradient(135deg, #ff0080 0%, #00ff80 100%);
+    --gd-gradient-secondary: linear-gradient(135deg, #ffff00 0%, #ff0080 100%);
+    --gd-gradient-accent: linear-gradient(45deg, #ffff00, #00ff80);
+    --gd-gradient-hero: linear-gradient(135deg, #0a0a0a 0%, #2a0a2a 50%, #1a0a1a 100%);
+    --gd-gradient-dark: linear-gradient(135deg, #020002 0%, #0a0a0a 100%);
+
+    /* ===== SHADOWS ===== */
+    --gd-shadow-sm: 0 1px 2px 0 rgba(255, 0, 128, 0.1);
+    --gd-shadow-base: 0 1px 3px 0 rgba(255, 0, 128, 0.2), 0 1px 2px 0 rgba(255, 0, 128, 0.1);
+    --gd-shadow-md: 0 4px 6px -1px rgba(255, 0, 128, 0.2), 0 2px 4px -1px rgba(255, 0, 128, 0.1);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(255, 0, 128, 0.3), 0 4px 6px -2px rgba(255, 0, 128, 0.2);
+    --gd-shadow-xl: 0 20px 25px -5px rgba(255, 0, 128, 0.4), 0 10px 10px -5px rgba(255, 0, 128, 0.3);
+    --gd-shadow-2xl: 0 25px 50px -12px rgba(255, 0, 128, 0.5);
+    --gd-shadow-inner: inset 0 2px 4px 0 rgba(255, 0, 128, 0.2);
+
+    /* ===== COMPONENT SPECIFIC ===== */
+
+    /* Navigation */
+    --gd-nav-bg: rgba(10, 10, 10, 0.95);
+    --gd-nav-border: rgba(255, 0, 128, 0.2);
+    --gd-nav-shadow: 0 4px 20px rgba(255, 0, 128, 0.3);
+    --gd-nav-link-color: var(--gd-text-secondary);
+    --gd-nav-link-hover: var(--gd-color-primary);
+    --gd-nav-link-active: var(--gd-color-accent);
+
+    /* Cards */
+    --gd-card-bg: var(--gd-surface-2);
+    --gd-card-border: rgba(255, 0, 128, 0.2);
+    --gd-card-shadow: 0 4px 20px rgba(255, 0, 128, 0.2);
+    --gd-card-shadow-hover: 0 8px 30px rgba(255, 0, 128, 0.4);
+
+    /* Special neon arcade effects */
+    --gd-neon-glow: 0 0 20px rgba(255, 0, 128, 0.8);
+    --gd-neon-text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 40px currentColor;
+    --gd-neon-border-glow: 0 0 15px rgba(255, 0, 128, 0.8), 0 0 30px rgba(255, 0, 128, 0.6);
+    --gd-scanline: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px);
+}
+
+/* ===== RETRO ARCADE THEME SPECIFIC ENHANCEMENTS ===== */
+
+html[data-theme="retro-arcade"] .app__brand {
+    text-shadow: var(--gd-neon-text-shadow);
+    filter: drop-shadow(var(--gd-neon-glow));
+    animation: neon-flicker 2s ease-in-out infinite alternate;
+}
+
+html[data-theme="retro-arcade"] .app__button--primary {
+    box-shadow: var(--gd-neon-glow), var(--gd-shadow-md);
+    border: 2px solid var(--gd-color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+html[data-theme="retro-arcade"] .app__button--primary:hover {
+    box-shadow: var(--gd-neon-border-glow), var(--gd-shadow-lg);
+    text-shadow: var(--gd-neon-text-shadow);
+}
+
+html[data-theme="retro-arcade"] .app__project-card:hover {
+    border: 2px solid var(--gd-color-primary);
+    box-shadow: var(--gd-neon-border-glow), var(--gd-shadow-xl);
+}
+
+html[data-theme="retro-arcade"] .modern-nav__link:hover {
+    text-shadow: var(--gd-neon-text-shadow);
+}
+
+html[data-theme="retro-arcade"] .modern-nav__link::after {
+    box-shadow: var(--gd-neon-border-glow);
+}
+
+/* Add scanline effect to the entire theme */
+html[data-theme="retro-arcade"]::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gd-scanline);
+    pointer-events: none;
+    z-index: 10000;
+    opacity: 0.8;
+}
+
+/* Neon flicker animation */
+@keyframes neon-flicker {
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        text-shadow: var(--gd-neon-text-shadow);
+        filter: drop-shadow(var(--gd-neon-glow));
+    }
+
+    20%,
+    24%,
+    55% {
+        text-shadow: none;
+        filter: none;
+    }
+}

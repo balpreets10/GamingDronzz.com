@@ -1,0 +1,173 @@
+/* src/styles/themes/gaming-inferno.css - 🔥 Gaming Inferno Theme */
+
+html[data-theme="gaming-inferno"] {
+    /* ===== CORE COLORS ===== */
+    --gd-color-primary: #ff4500;
+    --gd-color-primary-hover: #ff3300;
+    --gd-color-primary-light: #fff3f0;
+    --gd-color-primary-dark: #cc3600;
+
+    --gd-color-secondary: #ff6b35;
+    --gd-color-secondary-hover: #ff5722;
+    --gd-color-secondary-light: #fff4f1;
+    --gd-color-secondary-dark: #e64a19;
+
+    --gd-color-accent: #ffd700;
+    --gd-color-accent-hover: #ffed4e;
+    --gd-color-accent-light: #fffdf0;
+    --gd-color-accent-dark: #b8860b;
+
+    /* ===== SEMANTIC COLORS ===== */
+    --gd-color-success: #4caf50;
+    --gd-color-warning: #ff9800;
+    --gd-color-danger: #f44336;
+    --gd-color-info: #2196f3;
+
+    /* ===== BACKGROUND COLORS ===== */
+    --gd-bg-primary: #1a0f0a;
+    --gd-bg-secondary: #2d1b13;
+    --gd-bg-tertiary: #3d251a;
+    --gd-bg-dark: #0f0807;
+    --gd-bg-darker: #000000;
+
+    /* ===== TEXT COLORS ===== */
+    --gd-text-primary: #ffffff;
+    --gd-text-secondary: #ffb3a0;
+    --gd-text-tertiary: #ff9980;
+    --gd-text-inverse: #1a0f0a;
+    --gd-text-muted: #cc6640;
+    --gd-text-disabled: #804020;
+
+    /* ===== SURFACE COLORS ===== */
+    --gd-surface-1: #2d1b13;
+    --gd-surface-2: #3d251a;
+    --gd-surface-3: #4d2f20;
+    --gd-surface-4: #5d3926;
+    --gd-surface-raised: #3d251a;
+    --gd-surface-overlay: rgba(255, 69, 0, 0.2);
+
+    /* ===== BORDER COLORS ===== */
+    --gd-border-light: rgba(255, 69, 0, 0.3);
+    --gd-border-medium: rgba(255, 69, 0, 0.5);
+    --gd-border-dark: rgba(255, 69, 0, 0.7);
+    --gd-border-focus: var(--gd-color-primary);
+
+    /* ===== GRADIENTS ===== */
+    --gd-gradient-primary: linear-gradient(135deg, #ff4500 0%, #ff6b35 50%, #ff8c00 100%);
+    --gd-gradient-secondary: linear-gradient(135deg, #dc143c 0%, #ff4500 100%);
+    --gd-gradient-accent: linear-gradient(45deg, #ffd700, #ff8c00);
+    --gd-gradient-hero: linear-gradient(135deg, #000000 0%, #1a0f0a 30%, #2d1b13 70%, #ff4500 100%);
+    --gd-gradient-dark: linear-gradient(135deg, #000000 0%, #1a0f0a 100%);
+
+    /* ===== SHADOWS ===== */
+    --gd-shadow-sm: 0 1px 2px 0 rgba(255, 69, 0, 0.2);
+    --gd-shadow-base: 0 1px 3px 0 rgba(255, 69, 0, 0.3), 0 1px 2px 0 rgba(255, 69, 0, 0.2);
+    --gd-shadow-md: 0 4px 6px -1px rgba(255, 69, 0, 0.3), 0 2px 4px -1px rgba(255, 69, 0, 0.2);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(255, 69, 0, 0.4), 0 4px 6px -2px rgba(255, 69, 0, 0.3);
+    --gd-shadow-xl: 0 20px 25px -5px rgba(255, 69, 0, 0.5), 0 10px 10px -5px rgba(255, 69, 0, 0.4);
+    --gd-shadow-2xl: 0 25px 50px -12px rgba(255, 69, 0, 0.6);
+    --gd-shadow-inner: inset 0 2px 4px 0 rgba(255, 69, 0, 0.3);
+
+    /* ===== COMPONENT SPECIFIC ===== */
+
+    /* Navigation */
+    --gd-nav-bg: rgba(26, 15, 10, 0.95);
+    --gd-nav-border: rgba(255, 69, 0, 0.3);
+    --gd-nav-shadow: 0 4px 20px rgba(255, 69, 0, 0.4);
+    --gd-nav-link-color: var(--gd-text-secondary);
+    --gd-nav-link-hover: var(--gd-color-primary);
+    --gd-nav-link-active: var(--gd-color-accent);
+
+    /* Cards */
+    --gd-card-bg: var(--gd-surface-2);
+    --gd-card-border: rgba(255, 69, 0, 0.3);
+    --gd-card-shadow: 0 4px 20px rgba(255, 69, 0, 0.3);
+    --gd-card-shadow-hover: 0 8px 30px rgba(255, 69, 0, 0.5);
+
+    /* Special fire effects */
+    --gd-fire-glow: 0 0 30px rgba(255, 69, 0, 0.8);
+    --gd-fire-text-shadow: 0 0 15px rgba(255, 140, 0, 0.9);
+    --gd-fire-border-glow: 0 0 20px rgba(255, 69, 0, 0.7);
+    --gd-ember-glow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+/* ===== GAMING INFERNO SPECIFIC ENHANCEMENTS ===== */
+
+html[data-theme="gaming-inferno"] .app__brand {
+    text-shadow: var(--gd-fire-text-shadow);
+    filter: drop-shadow(var(--gd-ember-glow));
+}
+
+html[data-theme="gaming-inferno"] .app__button--primary {
+    box-shadow: var(--gd-fire-glow), var(--gd-shadow-md);
+    border: 1px solid var(--gd-color-primary);
+    position: relative;
+    overflow: hidden;
+}
+
+html[data-theme="gaming-inferno"] .app__button--primary::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: transform 0.6s ease;
+    opacity: 0;
+}
+
+html[data-theme="gaming-inferno"] .app__button--primary:hover::before {
+    opacity: 1;
+    transform: rotate(45deg) translate(100%, 100%);
+}
+
+html[data-theme="gaming-inferno"] .app__button--primary:hover {
+    box-shadow: var(--gd-fire-border-glow), var(--gd-shadow-lg);
+    text-shadow: var(--gd-fire-text-shadow);
+}
+
+html[data-theme="gaming-inferno"] .app__project-card:hover {
+    border: 1px solid var(--gd-color-primary);
+    box-shadow: var(--gd-fire-border-glow), var(--gd-shadow-xl);
+}
+
+html[data-theme="gaming-inferno"] .modern-nav__link:hover {
+    text-shadow: 0 0 12px currentColor;
+}
+
+html[data-theme="gaming-inferno"] .modern-nav__link::after {
+    box-shadow: var(--gd-fire-glow);
+}
+
+/* Animated fire particles effect for hero section */
+html[data-theme="gaming-inferno"] .app__section--hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 140, 0, 0.8), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 69, 0, 0.6), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 215, 0, 0.9), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 69, 0, 0.7), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(255, 140, 0, 0.5), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: fire-particles 20s linear infinite;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+@keyframes fire-particles {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+    }
+}

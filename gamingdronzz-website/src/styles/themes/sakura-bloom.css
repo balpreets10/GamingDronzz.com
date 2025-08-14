@@ -1,0 +1,43 @@
+/* ===== 🌸 SAKURA BLOOM THEME ===== */
+html[data-theme="sakura-bloom"] {
+    --gd-color-primary: #ff69b4;
+    --gd-color-primary-hover: #ff1493;
+    --gd-color-primary-light: #fff0f8;
+    --gd-color-primary-dark: #c44569;
+
+    --gd-color-secondary: #ffc0cb;
+    --gd-color-secondary-hover: #ffb6c1;
+    --gd-color-secondary-light: #fffafc;
+    --gd-color-secondary-dark: #d6909a;
+
+    --gd-color-accent: #ff6347;
+    --gd-color-accent-hover: #ff4500;
+    --gd-color-accent-light: #fff3f0;
+    --gd-color-accent-dark: #cc5039;
+
+    --gd-bg-primary: #fef9f9;
+    --gd-bg-secondary: #fdf2f2;
+    --gd-bg-tertiary: #fce8e8;
+    --gd-bg-dark: #f8e8e8;
+    --gd-bg-darker: #f0d0d0;
+
+    --gd-text-primary: #4a1a1a;
+    --gd-text-secondary: #8b3a3a;
+    --gd-text-tertiary: #a64545;
+    --gd-text-inverse: #ffffff;
+    --gd-text-muted: #b85555;
+    --gd-text-disabled: #d6a0a0;
+
+    --gd-gradient-primary: linear-gradient(135deg, #ff69b4 0%, #ffc0cb 50%, #ff6347 100%);
+    --gd-gradient-hero: linear-gradient(135deg, #fef9f9 0%, #fdf2f2 50%, #ff69b4 100%);
+
+    --gd-shadow-sm: 0 1px 2px 0 rgba(255, 105, 180, 0.15);
+    --gd-shadow-base: 0 1px 3px 0 rgba(255, 105, 180, 0.2), 0 1px 2px 0 rgba(255, 105, 180, 0.15);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(255, 105, 180, 0.25), 0 4px 6px -2px rgba(255, 105, 180, 0.2);
+
+    --gd-nav-bg: rgba(254, 249, 249, 0.95);
+    --gd-nav-border: rgba(255, 105, 180, 0.2);
+    --gd-surface-1: #fdf2f2;
+    --gd-surface-2: #fce8e8;
+    --gd-border-light: rgba(255, 105, 180, 0.15);
+}

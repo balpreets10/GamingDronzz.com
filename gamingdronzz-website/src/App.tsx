@@ -1,18 +1,26 @@
 import { useEffect, useState } from 'react';
 import ModernNavigation from './components/navigation/ModernNavigation';
 import Preloader from './components/ui/Preloader';
+import Hero from './components/sections/Hero';
+import About from './components/sections/About';
+import Projects from './components/sections/Projects';
+import Services from './components/sections/Services';
+import Articles from './components/sections/Articles';
+import Contact from './components/sections/Contact';
 import useNavigation, { useNavigationEvents } from './hooks/useNavigation';
 import ScrollManager from './managers/ScrollManager';
 import PerformanceManager from './managers/PerformanceManager';
+import { initAutoThemeRotation, ThemeOption } from './utils/helpers';
 import './App.css';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [currentTheme, setCurrentTheme] = useState<ThemeOption | null>(null);
 
   const { state: navState, actions: navActions } = useNavigation({
     customConfig: {
       items: [
-        { id: 'home', label: 'Home', href: '#home', position: 0 },
+        { id: 'hero', label: 'Home', href: '#hero', position: 0 },
         { id: 'about', label: 'About', href: '#about', position: 1 },
         { id: 'projects', label: 'Projects', href: '#projects', position: 2 },
         { id: 'services', label: 'Services', href: '#services', position: 3 },
@@ -22,16 +30,25 @@ function App() {
     }
   });
 
-  // Initialize managers once
+  // Initialize managers and auto-theme rotation once
   useEffect(() => {
     const scrollManager = ScrollManager.getInstance();
     const performanceManager = PerformanceManager.getInstance();
 
     performanceManager.startMark('app-init');
 
+    // Initialize auto theme rotation - this will pick a random theme on each refresh
+    const selectedTheme = initAutoThemeRotation();
+    setCurrentTheme(selectedTheme);
+
+    // Optional: Add smooth theme transition class to body
+    document.body.classList.add('theme-transition');
+
+    // Cleanup function
     return () => {
       scrollManager.destroy();
       performanceManager.destroy();
+      document.body.classList.remove('theme-transition');
     };
   }, []);
 
@@ -42,14 +59,20 @@ function App() {
 
   const handlePreloaderComplete = () => {
     setIsLoading(false);
+    // Trigger any post-load animations or effects here
+    document.body.classList.add('app-loaded');
+  };
+
+  const handleNavigate = (sectionId: string) => {
+    navActions.navigate(sectionId);
   };
 
   if (isLoading) {
     return (
       <Preloader
         onComplete={handlePreloaderComplete}
-        duration={2000}
-        minDisplayTime={1500}
+        duration={1200} // Reduced from 2000ms
+        minDisplayTime={800} // Reduced from 1500ms
       />
     );
   }
@@ -59,141 +82,93 @@ function App() {
       {/* Modern Navigation - Jack Elder inspired */}
       <ModernNavigation
         position="fixed-top"
-        onNavigate={navActions.navigate}
+        onNavigate={handleNavigate}
       />
 
       <main className="app__main">
-        <section id="home" className="app__section app__section--hero">
-          <div className="app__container">
-            <h1 className="app__hero-title">
-              Welcome to Gaming<span className="app__brand">Dronzz</span>
-            </h1>
-            <p className="app__hero-subtitle">
-              Professional Game Development Consultancy & Services
-            </p>
-            <div className="app__hero-cta">
-              <button
-                className="app__button app__button--primary"
-                onClick={() => navActions.navigate('contact')}
-              >
-                Get Started
-              </button>
-              <button
-                className="app__button app__button--secondary"
-                onClick={() => navActions.navigate('projects')}
-              >
-                View Projects
-              </button>
-            </div>
-          </div>
-        </section>
+        {/* Hero Section */}
+        <Hero
+          title={`Welcome to Gaming${currentTheme ? ' ' : ''}Dronzz`}
+          subtitle="Professional Game Development Consultancy & Services"
+          ctaText="Get Started"
+          onCtaClick={() => handleNavigate('contact')}
+        />
 
-        <section id="about" className="app__section">
-          <div className="app__container">
-            <h2 className="app__section-title">About Us</h2>
-            <p className="app__section-text">
-              We are a team of experienced game developers and consultants dedicated to
-              helping you bring your gaming vision to life. With expertise across multiple
-              platforms and technologies, we deliver high-quality solutions tailored to
-              your specific needs.
-            </p>
-          </div>
-        </section>
+        {/* About Section */}
+        <About />
 
-        <section id="projects" className="app__section app__section--dark">
-          <div className="app__container">
-            <h2 className="app__section-title">Featured Projects</h2>
-            <div className="app__projects-grid">
-              <div className="app__project-card">
-                <h3 className="app__project-title">Project Alpha</h3>
-                <p className="app__project-description">
-                  A next-generation mobile RPG with immersive storytelling.
-                </p>
-              </div>
-              <div className="app__project-card">
-                <h3 className="app__project-title">Project Beta</h3>
-                <p className="app__project-description">
-                  Cross-platform multiplayer strategy game with real-time combat.
-                </p>
-              </div>
-              <div className="app__project-card">
-                <h3 className="app__project-title">Project Gamma</h3>
-                <p className="app__project-description">
-                  VR experience pushing the boundaries of interactive entertainment.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Projects Section */}
+        <Projects
+          showFeaturedOnly={false}
+          maxProjects={6}
+        />
 
-        <section id="services" className="app__section">
-          <div className="app__container">
-            <h2 className="app__section-title">Our Services</h2>
-            <div className="app__services-grid">
-              <div className="app__service-item">
-                <div className="app__service-icon">🎨</div>
-                <h3 className="app__service-title">Game Design</h3>
-                <p className="app__service-description">
-                  Complete game design from concept to final implementation.
-                </p>
-              </div>
-              <div className="app__service-item">
-                <div className="app__service-icon">⚙️</div>
-                <h3 className="app__service-title">Development</h3>
-                <p className="app__service-description">
-                  Full-stack game development using cutting-edge technologies.
-                </p>
-              </div>
-              <div className="app__service-item">
-                <div className="app__service-icon">📊</div>
-                <h3 className="app__service-title">Consulting</h3>
-                <p className="app__service-description">
-                  Strategic consulting to optimize your game development process.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Services Section */}
+        <Services
+          showFeaturedOnly={false}
+          maxServices={6}
+        />
 
-        <section id="articles" className="app__section app__section--light">
-          <div className="app__container">
-            <h2 className="app__section-title">Latest Articles</h2>
-            <div className="app__articles-grid">
-              <article className="app__article-card">
-                <h3 className="app__article-title">The Future of Mobile Gaming</h3>
-                <p className="app__article-excerpt">
-                  Exploring emerging trends and technologies shaping the mobile gaming landscape...
-                </p>
-                <time className="app__article-date">March 15, 2024</time>
-              </article>
-              <article className="app__article-card">
-                <h3 className="app__article-title">Optimizing Game Performance</h3>
-                <p className="app__article-excerpt">
-                  Best practices for maintaining smooth gameplay across different devices...
-                </p>
-                <time className="app__article-date">March 10, 2024</time>
-              </article>
-            </div>
-          </div>
-        </section>
+        {/* Articles Section */}
+        <Articles
+          showFeaturedOnly={false}
+          maxArticles={3}
+        />
 
-        <section id="contact" className="app__section app__section--contact">
-          <div className="app__container">
-            <h2 className="app__section-title">Get In Touch</h2>
-            <p className="app__section-text">
-              Ready to start your next gaming project? We'd love to hear from you.
-            </p>
-            <div className="app__contact-form">
-              <button
-                className="app__button app__button--primary app__button--large"
-                onClick={() => window.location.href = 'mailto:hello@gamingdronzz.com'}
-              >
-                Start Your Project
-              </button>
-            </div>
-          </div>
-        </section>
+        {/* Contact Section */}
+        <Contact
+          showForm={true}
+        />
       </main>
+
+      {/* Footer */}
+      <footer className="app__footer">
+        <div className="app__container">
+          <div className="app__footer-content">
+            <div className="app__footer-brand">
+              <h3>GamingDronzz</h3>
+              <p>Crafting exceptional gaming experiences</p>
+              {currentTheme && (
+                <div className="app__theme-indicator">
+                  <span className="app__theme-emoji">{currentTheme.icon}</span>
+                  <span className="app__theme-name">
+                    Today's Theme: {currentTheme.name}
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className="app__footer-links">
+              <div className="app__footer-section">
+                <h4>Services</h4>
+                <ul>
+                  <li><a href="#services" onClick={() => handleNavigate('services')}>Game Design</a></li>
+                  <li><a href="#services" onClick={() => handleNavigate('services')}>Development</a></li>
+                  <li><a href="#services" onClick={() => handleNavigate('services')}>Consulting</a></li>
+                </ul>
+              </div>
+              <div className="app__footer-section">
+                <h4>Company</h4>
+                <ul>
+                  <li><a href="#about" onClick={() => handleNavigate('about')}>About</a></li>
+                  <li><a href="#projects" onClick={() => handleNavigate('projects')}>Projects</a></li>
+                  <li><a href="#articles" onClick={() => handleNavigate('articles')}>Blog</a></li>
+                </ul>
+              </div>
+              <div className="app__footer-section">
+                <h4>Connect</h4>
+                <ul>
+                  <li><a href="#contact" onClick={() => handleNavigate('contact')}>Contact</a></li>
+                  <li><a href="mailto:hello@gamingdronzz.com">Email</a></li>
+                  <li><a href="tel:+15551234567">Phone</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="app__footer-bottom">
+            <p>&copy; 2024 GamingDronzz. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
 
       {import.meta.env.DEV && (
         <div className="app__debug">
@@ -201,6 +176,12 @@ function App() {
             <summary>Navigation Debug</summary>
             <pre>{JSON.stringify(navState, null, 2)}</pre>
           </details>
+          {currentTheme && (
+            <details>
+              <summary>Theme Debug</summary>
+              <pre>{JSON.stringify(currentTheme, null, 2)}</pre>
+            </details>
+          )}
         </div>
       )}
     </div>

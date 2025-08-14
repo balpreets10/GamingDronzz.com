@@ -1,0 +1,127 @@
+/* src/styles/themes/all-themes.css - Import all available themes */
+
+/* ===== CORE THEME SYSTEM ===== */
+@import '../variables.css';
+
+/* ===== THEME VARIATIONS ===== */
+/* Import all theme variations - each theme overrides the base variables */
+
+@import './arctic-frost.css';
+@import './dark-cyber.css';
+/* 🌙 Dark Cyber - Futuristic neon cyberpunk */
+/* @import './forest-tech.css'; */
+@import './gaming-inferno.css';
+/* 🔥 Gaming Inferno - Fiery red-orange gaming */
+@import './minimal-green.css';
+/* 🍃 Minimal Green - Clean minimalist green */
+@import './ocean-deep.css';
+/* 🌊 Ocean Deep - Calming deep ocean blues */
+@import './retro-arcade.css';
+/* 🎮 Retro Arcade - 80s neon synthwave */
+@import './sakura-bloom.css';
+@import './space-explorer.css';
+
+
+
+/* ===== ADDITIONAL THEMES ===== */
+/* Create these files following the same pattern as above themes */
+
+/* @import './sakura-bloom.css';     🌸 Sakura Bloom - Soft pink cherry blossom */
+/* @import './electric-storm.css';   ⚡ Electric Storm - Lightning yellow and purple */
+/* @import './forest-tech.css';      🌲 Forest Tech - Nature-tech fusion */
+/* @import './arctic-frost.css';     ❄️ Arctic Frost - Cool whites and icy blues */
+/* @import './sunset-gradient.css';  🌅 Sunset Gradient - Warm oranges to purples */
+/* @import './space-explorer.css';   🚀 Space Explorer - Deep space blues with gold */
+/* @import './pure-monochrome.css';  ⚫ Pure Monochrome - Black, white, and grays */
+
+/* ===== THEME SYSTEM NOTES ===== */
+/*
+Theme Implementation Guide:
+
+1. Each theme follows this structure:
+   html[data-theme="theme-name"] {
+     --gd-color-primary: #newcolor;
+     /* ... override other variables ...
+}
+
+2. Theme switching is handled by: - Setting data-theme attribute on <html>element - Using ThemeSwitcher component - Persisting choice in localStorage 3. To add a new theme: - Create new CSS file following the pattern - Add import statement above - Add theme object to ThemeSwitcher themes array - Update the theme count in documentation 4. Theme variables are defined in variables.css and can be: - Colors (primary, secondary, backgrounds, text) - Typography (fonts, sizes, weights) - Spacing (margins, paddings) - Shadows and effects - Component-specific overrides 5. Special theme enhancements: - Each theme can add unique effects (glow, shadows, animations) - Component-specific styling can be theme-dependent - Use CSS custom properties for maximum flexibility 6. Browser compatibility: - CSS Custom Properties supported in all modern browsers - Fallbacks provided for older browsers via base variables - Progressive enhancement approach 7. Performance considerations: - All themes loaded at once for instant switching - Minimal CSS overhead due to variable-based approach - Optimized selector specificity */
+/* ===== GLOBAL THEME UTILITIES ===== */
+
+/* Theme transition class for smooth switching */
+.theme-transition {
+    transition:
+        background-color var(--gd-transition-base),
+        color var(--gd-transition-base),
+        border-color var(--gd-transition-base),
+        box-shadow var(--gd-transition-base) !important;
+}
+
+/* Apply to body when switching themes for smooth transitions */
+body.theme-switching * {
+    transition:
+        background-color var(--gd-transition-base),
+        color var(--gd-transition-base),
+        border-color var(--gd-transition-base),
+        box-shadow var(--gd-transition-base) !important;
+}
+
+/* Remove transitions after theme switch is complete */
+body.theme-switching.theme-switch-complete * {
+    transition: none;
+}
+
+/* Theme-specific animations that can be used across themes */
+@keyframes theme-glow-pulse {
+
+    0%,
+    100% {
+        box-shadow: var(--gd-shadow-base);
+    }
+
+    50% {
+        box-shadow: var(--gd-shadow-lg);
+    }
+}
+
+@keyframes theme-text-glow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 5px currentColor;
+    }
+
+    50% {
+        text-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+    }
+}
+
+/* Utility classes for theme-specific effects */
+.gd-theme-glow {
+    animation: theme-glow-pulse 2s ease-in-out infinite;
+}
+
+.gd-theme-text-glow {
+    animation: theme-text-glow 3s ease-in-out infinite;
+}
+
+/* High contrast theme overrides */
+@media (prefers-contrast: high) {
+    :root {
+        --gd-border-light: rgba(0, 0, 0, 0.3);
+        --gd-border-medium: rgba(0, 0, 0, 0.5);
+        --gd-border-dark: rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* Reduced motion theme adjustments */
+@media (prefers-reduced-motion: reduce) {
+
+    .gd-theme-glow,
+    .gd-theme-text-glow {
+        animation: none;
+    }
+
+    body.theme-switching * {
+        transition: none !important;
+    }
+}
