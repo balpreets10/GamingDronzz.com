@@ -3,7 +3,7 @@
 .services {
     position: relative;
     padding: var(--gd-section-padding);
-    background: var(--gd-bg-primary);
+    background: var(--gd-gradient-subtle);
     color: var(--gd-text-primary);
     overflow: hidden;
 }

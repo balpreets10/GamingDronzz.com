@@ -3,7 +3,7 @@
 .projects {
     position: relative;
     padding: var(--gd-section-padding);
-    background: var(--gd-bg-primary);
+    background: var(--gd-gradient-subtle);
     overflow: hidden;
 }
 
