@@ -39,5 +39,11 @@ export const developmentConfig = {
         easing: 'ease-out',
         stagger: 100,
         reducedMotion: false
+    },
+    environment: 'development',
+    buildInfo: {
+        version: import.meta.env.VITE_APP_VERSION || '1.0.0-dev',
+        buildTime: new Date().toISOString(),
+        gitBranch: 'development'
     }
-};
+} as const;

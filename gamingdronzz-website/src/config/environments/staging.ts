@@ -1,13 +1,8 @@
 export const stagingConfig = {
     api: {
-        baseURL: 'https://staging-api.gamingdronzz.com', // You can change this to your staging API
+        baseURL: 'https://staging-api.gamingdronzz.com',
         timeout: 15000,
         retries: 2
-    },
-    analytics: {
-        enabled: false, // Disabled for staging
-        debug: true,
-        trackingId: 'STAGING-DISABLED'
     },
     supabase: {
         url: import.meta.env.VITE_SUPABASE_URL!,
@@ -18,11 +13,16 @@ export const stagingConfig = {
             detectSessionInUrl: true
         }
     },
+    analytics: {
+        enabled: false,
+        debug: true,
+        trackingId: 'STAGING-DISABLED'
+    },
     features: {
-        adminPanel: true, // Keep admin panel for testing
-        debugMode: true, // Keep debug mode for staging
-        mockData: false, // Use real data in staging
-        performanceLogging: true // Monitor performance
+        adminPanel: true,
+        debugMode: true,
+        mockData: false,
+        performanceLogging: true
     },
     performance: {
         enableLogging: true,
@@ -42,8 +42,8 @@ export const stagingConfig = {
     },
     environment: 'staging',
     buildInfo: {
-        version: process.env.REACT_APP_VERSION || '1.0.0',
+        version: import.meta.env.VITE_APP_VERSION || '1.0.0-staging',
         buildTime: new Date().toISOString(),
         gitBranch: 'staging'
     }
-};
+} as const;
