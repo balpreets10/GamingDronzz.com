@@ -8,16 +8,14 @@
 
 @import './arctic-frost.css';
 @import './dark-cyber.css';
-/* 🌙 Dark Cyber - Futuristic neon cyberpunk */
-/* @import './forest-tech.css'; */
+@import './dark-cyber.css';
+@import './default.css';
+@import './electric-storm.css';
+@import './forest-tech.css';
 @import './gaming-inferno.css';
-/* 🔥 Gaming Inferno - Fiery red-orange gaming */
 @import './minimal-green.css';
-/* 🍃 Minimal Green - Clean minimalist green */
 @import './ocean-deep.css';
-/* 🌊 Ocean Deep - Calming deep ocean blues */
 @import './retro-arcade.css';
-/* 🎮 Retro Arcade - 80s neon synthwave */
 @import './sakura-bloom.css';
 @import './space-explorer.css';
 
@@ -124,4 +122,88 @@ body.theme-switching.theme-switch-complete * {
     body.theme-switching * {
         transition: none !important;
     }
+}
+
+
+html[data-theme="arctic-frost"] .app__brand {
+    text-shadow: 0 0 10px rgba(65, 105, 225, 0.3);
+}
+
+html[data-theme="arctic-frost"] .app__button--primary {
+    box-shadow: 0 4px 14px 0 rgba(65, 105, 225, 0.2);
+}
+
+html[data-theme="arctic-frost"] .app__button--primary:hover {
+    box-shadow: 0 8px 20px 0 rgba(65, 105, 225, 0.3);
+}
+
+/* Dark Cyber Theme Enhancements */
+html[data-theme="dark-cyber"] .app__brand {
+    text-shadow: var(--gd-cyber-text-shadow);
+    filter: drop-shadow(var(--gd-cyber-glow));
+}
+
+html[data-theme="dark-cyber"] .app__button--primary {
+    box-shadow: var(--gd-cyber-glow), var(--gd-shadow-md);
+    border: 1px solid var(--gd-color-primary);
+}
+
+html[data-theme="dark-cyber"] .app__button--primary:hover {
+    box-shadow: var(--gd-cyber-border-glow), var(--gd-shadow-lg);
+    text-shadow: var(--gd-cyber-text-shadow);
+}
+
+html[data-theme="dark-cyber"] .app__project-card:hover {
+    border: 1px solid var(--gd-color-primary);
+    box-shadow: var(--gd-cyber-border-glow), var(--gd-shadow-xl);
+}
+
+html[data-theme="dark-cyber"] .modern-nav__link:hover {
+    text-shadow: 0 0 8px currentColor;
+}
+
+html[data-theme="dark-cyber"] .modern-nav__link::after {
+    box-shadow: 0 0 10px var(--gd-color-primary);
+}
+
+/* Electric Storm Theme Enhancements */
+html[data-theme="electric-storm"] .app__brand {
+    text-shadow: var(--gd-electric-text-shadow);
+    filter: drop-shadow(var(--gd-electric-glow));
+}
+
+html[data-theme="electric-storm"] .app__button--primary {
+    box-shadow: var(--gd-electric-glow), var(--gd-shadow-md);
+    border: 1px solid var(--gd-color-primary);
+}
+
+html[data-theme="electric-storm"] .app__button--primary:hover {
+    box-shadow: var(--gd-electric-border-glow), var(--gd-shadow-lg);
+    text-shadow: var(--gd-electric-text-shadow);
+}
+
+html[data-theme="electric-storm"] .app__project-card:hover {
+    border: 1px solid var(--gd-color-primary);
+    box-shadow: var(--gd-electric-border-glow), var(--gd-shadow-xl);
+}
+
+/* Forest Tech Theme Enhancements */
+html[data-theme="forest-tech"] .app__brand {
+    text-shadow: var(--gd-forest-text-shadow);
+    filter: drop-shadow(var(--gd-forest-glow));
+}
+
+html[data-theme="forest-tech"] .app__button--primary {
+    box-shadow: var(--gd-forest-glow), var(--gd-shadow-md);
+    border: 1px solid var(--gd-color-primary);
+}
+
+html[data-theme="forest-tech"] .app__button--primary:hover {
+    box-shadow: var(--gd-forest-border-glow), var(--gd-shadow-lg);
+    text-shadow: var(--gd-forest-text-shadow);
+}
+
+html[data-theme="forest-tech"] .app__project-card:hover {
+    border: 1px solid var(--gd-color-primary);
+    box-shadow: var(--gd-forest-border-glow), var(--gd-shadow-xl);
 }

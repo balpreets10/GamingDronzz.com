@@ -1,37 +1,148 @@
-/* ===== ❄️ ARCTIC FROST THEME ===== */
 html[data-theme="arctic-frost"] {
+    /* ===== PRIMARY COLOR SYSTEM ===== */
     --gd-color-primary: #4169e1;
-    --gd-color-primary-hover: #3355cc;
-    --gd-color-primary-light: #f0f4ff;
-    --gd-color-primary-dark: #2640b8;
+    --gd-color-primary-50: #f0f4ff;
+    --gd-color-primary-100: #e1efff;
+    --gd-color-primary-200: #c3dfff;
+    --gd-color-primary-300: #94c5ff;
+    --gd-color-primary-400: #5ba0f2;
+    --gd-color-primary-500: #4169e1;
+    --gd-color-primary-600: #3355cc;
+    --gd-color-primary-700: #2640b8;
+    --gd-color-primary-800: #1e338f;
+    --gd-color-primary-900: #1a2866;
 
+    /* ===== SECONDARY COLOR SYSTEM ===== */
     --gd-color-secondary: #87ceeb;
-    --gd-color-secondary-hover: #78c4e6;
-    --gd-color-secondary-light: #f8fcff;
-    --gd-color-secondary-dark: #5fa8d1;
+    --gd-color-secondary-50: #f8fcff;
+    --gd-color-secondary-100: #e6f7ff;
+    --gd-color-secondary-200: #b8e6ff;
+    --gd-color-secondary-300: #87ceeb;
+    --gd-color-secondary-400: #78c4e6;
+    --gd-color-secondary-500: #5fa8d1;
+    --gd-color-secondary-600: #4a8cb8;
+    --gd-color-secondary-700: #3d709e;
+    --gd-color-secondary-800: #2e5485;
+    --gd-color-secondary-900: #1f386b;
 
+    /* ===== ACCENT COLOR SYSTEM ===== */
     --gd-color-accent: #00ced1;
-    --gd-color-accent-hover: #00b8bb;
-    --gd-color-accent-light: #f0feff;
-    --gd-color-accent-dark: #00a0a3;
+    --gd-color-accent-50: #f0feff;
+    --gd-color-accent-100: #ccfcff;
+    --gd-color-accent-200: #99f7ff;
+    --gd-color-accent-300: #66f2ff;
+    --gd-color-accent-400: #33edff;
+    --gd-color-accent-500: #00ced1;
+    --gd-color-accent-600: #00b8bb;
+    --gd-color-accent-700: #00a0a3;
+    --gd-color-accent-800: #00888b;
+    --gd-color-accent-900: #006b73;
 
+    /* ===== INTELLIGENT BACKGROUND SYSTEM ===== */
     --gd-bg-primary: #f0f8ff;
     --gd-bg-secondary: #e6f3ff;
     --gd-bg-tertiary: #ddeeff;
-    --gd-bg-dark: #d4e9ff;
-    --gd-bg-darker: #cce4ff;
+    --gd-bg-quaternary: #d4e9ff;
+    --gd-bg-elevated: #ffffff;
+    --gd-bg-overlay: rgba(26, 40, 184, 0.4);
 
+    --gd-bg-primary-subtle: var(--gd-color-primary-50);
+    --gd-bg-secondary-subtle: var(--gd-color-secondary-50);
+    --gd-bg-accent-subtle: var(--gd-color-accent-50);
+
+    /* ===== INTELLIGENT TEXT SYSTEM ===== */
     --gd-text-primary: #1a1a2e;
     --gd-text-secondary: #2e4057;
     --gd-text-tertiary: #3d5a80;
+    --gd-text-quaternary: #5c7a99;
+    --gd-text-disabled: #8fa4c4;
     --gd-text-inverse: #ffffff;
     --gd-text-muted: #5c7a99;
-    --gd-text-disabled: #8fa4c4;
 
-    --gd-gradient-primary: linear-gradient(135deg, #4169e1 0%, #87ceeb 50%, #00ced1 100%);
-    --gd-gradient-hero: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 50%, #4169e1 100%);
+    --gd-text-on-primary: #ffffff;
+    --gd-text-on-secondary: #ffffff;
+    --gd-text-on-accent: #ffffff;
 
-    --gd-nav-bg: rgba(240, 248, 255, 0.95);
-    --gd-nav-border: rgba(65, 105, 225, 0.2);
+    /* ===== SEMANTIC COLORS ===== */
+    --gd-color-success: #059669;
+    --gd-color-success-light: #ecfdf5;
+    --gd-color-success-dark: #047857;
+    --gd-color-warning: #d97706;
+    --gd-color-warning-light: #fffbeb;
+    --gd-color-warning-dark: #b45309;
+    --gd-color-danger: #dc2626;
+    --gd-color-danger-light: #fef2f2;
+    --gd-color-danger-dark: #b91c1c;
+    --gd-color-info: var(--gd-color-primary-500);
+    --gd-color-info-light: var(--gd-color-primary-50);
+    --gd-color-info-dark: var(--gd-color-primary-700);
+
+    /* ===== BORDER SYSTEM ===== */
     --gd-border-light: rgba(65, 105, 225, 0.15);
+    --gd-border-medium: rgba(65, 105, 225, 0.25);
+    --gd-border-strong: rgba(65, 105, 225, 0.4);
+    --gd-border-primary: var(--gd-color-primary-300);
+    --gd-border-focus: var(--gd-color-primary-500);
+
+    /* ===== SURFACE COLORS ===== */
+    --gd-surface-1: var(--gd-bg-primary);
+    --gd-surface-2: var(--gd-bg-secondary);
+    --gd-surface-3: var(--gd-bg-tertiary);
+    --gd-surface-4: var(--gd-bg-quaternary);
+    --gd-surface-raised: var(--gd-bg-elevated);
+    --gd-surface-overlay: var(--gd-bg-overlay);
+
+    /* ===== GRADIENTS ===== */
+    --gd-gradient-primary: linear-gradient(135deg, #4169e1 0%, #87ceeb 50%, #00ced1 100%);
+    --gd-gradient-secondary: linear-gradient(135deg, #87ceeb 0%, #00ced1 100%);
+    --gd-gradient-accent: linear-gradient(135deg, #00ced1 0%, #4169e1 100%);
+    --gd-gradient-hero: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 50%, #4169e1 100%);
+    --gd-gradient-subtle: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 50%, #ddeeff 100%);
+
+    /* ===== SHADOWS ===== */
+    --gd-shadow-sm: 0 1px 2px 0 rgba(26, 40, 184, 0.08);
+    --gd-shadow-base: 0 1px 3px 0 rgba(26, 40, 184, 0.12), 0 1px 2px 0 rgba(26, 40, 184, 0.08);
+    --gd-shadow-md: 0 4px 6px -1px rgba(26, 40, 184, 0.12), 0 2px 4px -1px rgba(26, 40, 184, 0.08);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(26, 40, 184, 0.12), 0 4px 6px -2px rgba(26, 40, 184, 0.06);
+    --gd-shadow-xl: 0 20px 25px -5px rgba(26, 40, 184, 0.12), 0 10px 10px -5px rgba(26, 40, 184, 0.05);
+    --gd-shadow-2xl: 0 25px 50px -12px rgba(26, 40, 184, 0.3);
+    --gd-shadow-inner: inset 0 2px 4px 0 rgba(26, 40, 184, 0.08);
+
+    --gd-shadow-primary: 0 4px 14px 0 rgba(65, 105, 225, 0.2);
+    --gd-shadow-secondary: 0 4px 14px 0 rgba(135, 206, 235, 0.2);
+    --gd-shadow-accent: 0 4px 14px 0 rgba(0, 206, 209, 0.2);
+
+    /* ===== COMPONENT SPECIFIC ===== */
+    --gd-nav-bg: rgba(240, 248, 255, 0.95);
+    --gd-nav-bg-solid: var(--gd-bg-elevated);
+    --gd-nav-backdrop-blur: 20px;
+    --gd-nav-border: rgba(65, 105, 225, 0.2);
+    --gd-nav-shadow: var(--gd-shadow-lg);
+    --gd-nav-link-color: var(--gd-text-secondary);
+    --gd-nav-link-hover: var(--gd-text-primary);
+    --gd-nav-link-active: var(--gd-color-primary-600);
+
+    --gd-card-bg: var(--gd-surface-raised);
+    --gd-card-border: var(--gd-border-light);
+    --gd-card-shadow: var(--gd-shadow-base);
+    --gd-card-shadow-hover: var(--gd-shadow-lg);
+
+    --gd-input-bg: var(--gd-bg-elevated);
+    --gd-input-border: var(--gd-border-medium);
+    --gd-input-border-hover: var(--gd-border-strong);
+    --gd-input-border-focus: var(--gd-color-primary-500);
+    --gd-input-shadow-focus: 0 0 0 3px rgba(65, 105, 225, 0.15);
+
+    --gd-overlay-bg: rgba(26, 40, 184, 0.4);
+    --gd-modal-bg: var(--gd-surface-raised);
+    --gd-modal-shadow: var(--gd-shadow-2xl);
+
+    --gd-tooltip-bg: var(--gd-text-primary);
+    --gd-tooltip-color: var(--gd-text-inverse);
+    --gd-tooltip-shadow: var(--gd-shadow-lg);
+
+    --gd-loading-primary: var(--gd-color-primary-500);
+    --gd-loading-secondary: var(--gd-color-primary-200);
+    --gd-progress-bg: var(--gd-color-primary-100);
+    --gd-progress-fill: var(--gd-color-primary-500);
 }
