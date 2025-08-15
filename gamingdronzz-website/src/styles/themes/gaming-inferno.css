@@ -1,173 +1,314 @@
-/* src/styles/themes/gaming-inferno.css - 🔥 Gaming Inferno Theme */
+/* src/styles/themes/gaming-inferno.css - 🔥 Gaming Inferno Theme (Refined) */
 
 html[data-theme="gaming-inferno"] {
-    /* ===== CORE COLORS ===== */
-    --gd-color-primary: #ff4500;
-    --gd-color-primary-hover: #ff3300;
-    --gd-color-primary-light: #fff3f0;
-    --gd-color-primary-dark: #cc3600;
+    /* ===== PRIMARY COLOR SYSTEM ===== */
+    /* Softer orange-red - less harsh, more sophisticated */
+    --gd-color-primary: #E85A4F;
+    --gd-color-primary-50: #FEF7F6;
+    --gd-color-primary-100: #FDEAE8;
+    --gd-color-primary-200: #FACAC5;
+    --gd-color-primary-300: #F7AAA1;
+    --gd-color-primary-400: #F0827A;
+    --gd-color-primary-500: #E85A4F;
+    --gd-color-primary-600: #D14A3E;
+    --gd-color-primary-700: #B83A2D;
+    --gd-color-primary-800: #9F2B1C;
+    --gd-color-primary-900: #851E0F;
 
-    --gd-color-secondary: #ff6b35;
-    --gd-color-secondary-hover: #ff5722;
-    --gd-color-secondary-light: #fff4f1;
-    --gd-color-secondary-dark: #e64a19;
+    /* ===== SECONDARY COLOR SYSTEM ===== */
+    /* Warmer coral - complements the primary while being less intense */
+    --gd-color-secondary: #D2691E;
+    --gd-color-secondary-50: #FDF6F0;
+    --gd-color-secondary-100: #FAE8D9;
+    --gd-color-secondary-200: #F5D1B3;
+    --gd-color-secondary-300: #EFBA8C;
+    --gd-color-secondary-400: #E6A066;
+    --gd-color-secondary-500: #D2691E;
+    --gd-color-secondary-600: #BC5E1A;
+    --gd-color-secondary-700: #A65316;
+    --gd-color-secondary-800: #904712;
+    --gd-color-secondary-900: #7A3C0E;
 
-    --gd-color-accent: #ffd700;
-    --gd-color-accent-hover: #ffed4e;
-    --gd-color-accent-light: #fffdf0;
-    --gd-color-accent-dark: #b8860b;
+    /* ===== ACCENT COLOR SYSTEM ===== */
+    /* Muted gold - elegant and less flashy */
+    --gd-color-accent: #DAA520;
+    --gd-color-accent-50: #FEFCF0;
+    --gd-color-accent-100: #FDF7D9;
+    --gd-color-accent-200: #FBEFB3;
+    --gd-color-accent-300: #F8E78C;
+    --gd-color-accent-400: #F4DF66;
+    --gd-color-accent-500: #DAA520;
+    --gd-color-accent-600: #C4951D;
+    --gd-color-accent-700: #AE851A;
+    --gd-color-accent-800: #987516;
+    --gd-color-accent-900: #826513;
+
+    /* ===== INTELLIGENT BACKGROUND SYSTEM ===== */
+    /* Much lighter, more usable backgrounds */
+    --gd-bg-primary: #2A1F1A;
+    --gd-bg-secondary: #352B24;
+    --gd-bg-tertiary: #40362E;
+    --gd-bg-quaternary: #4B4138;
+    --gd-bg-elevated: #352B24;
+    --gd-bg-overlay: rgba(232, 90, 79, 0.15);
+
+    --gd-bg-primary-subtle: #3D2722;
+    --gd-bg-secondary-subtle: #2A1F1A;
+    --gd-bg-accent-subtle: #3D3520;
+
+    /* ===== INTELLIGENT TEXT SYSTEM ===== */
+    --gd-text-primary: #FAF5F2;
+    --gd-text-secondary: #E8D5CB;
+    --gd-text-tertiary: #D6C0B3;
+    --gd-text-quaternary: #C4AA9B;
+    --gd-text-disabled: #A3917F;
+    --gd-text-inverse: #2A1F1A;
+    --gd-text-muted: #C4AA9B;
+
+    --gd-text-on-primary: #FAF5F2;
+    --gd-text-on-secondary: #FAF5F2;
+    --gd-text-on-accent: #2A1F1A;
 
     /* ===== SEMANTIC COLORS ===== */
-    --gd-color-success: #4caf50;
-    --gd-color-warning: #ff9800;
-    --gd-color-danger: #f44336;
-    --gd-color-info: #2196f3;
+    --gd-color-success: #4ADE80;
+    --gd-color-success-light: #0F1A0F;
+    --gd-color-success-dark: #22C55E;
 
-    /* ===== BACKGROUND COLORS ===== */
-    --gd-bg-primary: #1a0f0a;
-    --gd-bg-secondary: #2d1b13;
-    --gd-bg-tertiary: #3d251a;
-    --gd-bg-dark: #0f0807;
-    --gd-bg-darker: #000000;
+    --gd-color-warning: #FBBF24;
+    --gd-color-warning-light: #1F1A0D;
+    --gd-color-warning-dark: #F59E0B;
 
-    /* ===== TEXT COLORS ===== */
-    --gd-text-primary: #ffffff;
-    --gd-text-secondary: #ffb3a0;
-    --gd-text-tertiary: #ff9980;
-    --gd-text-inverse: #1a0f0a;
-    --gd-text-muted: #cc6640;
-    --gd-text-disabled: #804020;
+    --gd-color-danger: #F87171;
+    --gd-color-danger-light: #1F1212;
+    --gd-color-danger-dark: #EF4444;
+
+    --gd-color-info: var(--gd-color-accent-500);
+    --gd-color-info-light: var(--gd-color-accent-50);
+    --gd-color-info-dark: var(--gd-color-accent-700);
+
+    /* ===== BORDER SYSTEM ===== */
+    --gd-border-light: rgba(232, 90, 79, 0.15);
+    --gd-border-medium: rgba(232, 90, 79, 0.25);
+    --gd-border-strong: rgba(232, 90, 79, 0.35);
+    --gd-border-primary: var(--gd-color-primary-400);
+    --gd-border-focus: var(--gd-color-primary-500);
 
     /* ===== SURFACE COLORS ===== */
-    --gd-surface-1: #2d1b13;
-    --gd-surface-2: #3d251a;
-    --gd-surface-3: #4d2f20;
-    --gd-surface-4: #5d3926;
-    --gd-surface-raised: #3d251a;
-    --gd-surface-overlay: rgba(255, 69, 0, 0.2);
-
-    /* ===== BORDER COLORS ===== */
-    --gd-border-light: rgba(255, 69, 0, 0.3);
-    --gd-border-medium: rgba(255, 69, 0, 0.5);
-    --gd-border-dark: rgba(255, 69, 0, 0.7);
-    --gd-border-focus: var(--gd-color-primary);
+    --gd-surface-1: var(--gd-bg-primary);
+    --gd-surface-2: var(--gd-bg-secondary);
+    --gd-surface-3: var(--gd-bg-tertiary);
+    --gd-surface-4: var(--gd-bg-quaternary);
+    --gd-surface-raised: var(--gd-bg-elevated);
+    --gd-surface-overlay: var(--gd-bg-overlay);
 
     /* ===== GRADIENTS ===== */
-    --gd-gradient-primary: linear-gradient(135deg, #ff4500 0%, #ff6b35 50%, #ff8c00 100%);
-    --gd-gradient-secondary: linear-gradient(135deg, #dc143c 0%, #ff4500 100%);
-    --gd-gradient-accent: linear-gradient(45deg, #ffd700, #ff8c00);
-    --gd-gradient-hero: linear-gradient(135deg, #000000 0%, #1a0f0a 30%, #2d1b13 70%, #ff4500 100%);
-    --gd-gradient-dark: linear-gradient(135deg, #000000 0%, #1a0f0a 100%);
+    --gd-gradient-primary: linear-gradient(135deg,
+            var(--gd-color-primary-400) 0%,
+            var(--gd-color-primary-600) 50%,
+            var(--gd-color-primary-800) 100%);
+
+    --gd-gradient-secondary: linear-gradient(135deg,
+            var(--gd-color-secondary-400) 0%,
+            var(--gd-color-secondary-600) 50%,
+            var(--gd-color-secondary-800) 100%);
+
+    --gd-gradient-accent: linear-gradient(135deg,
+            var(--gd-color-accent-300) 0%,
+            var(--gd-color-accent-500) 50%,
+            var(--gd-color-accent-700) 100%);
+
+    --gd-gradient-hero: linear-gradient(135deg,
+            #1A120F 0%,
+            var(--gd-bg-primary) 30%,
+            var(--gd-bg-secondary) 70%,
+            var(--gd-color-secondary-700) 100%);
+
+    --gd-gradient-subtle: linear-gradient(135deg,
+            var(--gd-bg-primary) 0%,
+            var(--gd-bg-secondary) 50%,
+            var(--gd-bg-tertiary) 100%);
 
     /* ===== SHADOWS ===== */
-    --gd-shadow-sm: 0 1px 2px 0 rgba(255, 69, 0, 0.2);
-    --gd-shadow-base: 0 1px 3px 0 rgba(255, 69, 0, 0.3), 0 1px 2px 0 rgba(255, 69, 0, 0.2);
-    --gd-shadow-md: 0 4px 6px -1px rgba(255, 69, 0, 0.3), 0 2px 4px -1px rgba(255, 69, 0, 0.2);
-    --gd-shadow-lg: 0 10px 15px -3px rgba(255, 69, 0, 0.4), 0 4px 6px -2px rgba(255, 69, 0, 0.3);
-    --gd-shadow-xl: 0 20px 25px -5px rgba(255, 69, 0, 0.5), 0 10px 10px -5px rgba(255, 69, 0, 0.4);
-    --gd-shadow-2xl: 0 25px 50px -12px rgba(255, 69, 0, 0.6);
-    --gd-shadow-inner: inset 0 2px 4px 0 rgba(255, 69, 0, 0.3);
+    --gd-shadow-sm: 0 1px 2px 0 rgba(232, 90, 79, 0.1);
+    --gd-shadow-base: 0 1px 3px 0 rgba(232, 90, 79, 0.15), 0 1px 2px 0 rgba(232, 90, 79, 0.1);
+    --gd-shadow-md: 0 4px 6px -1px rgba(232, 90, 79, 0.15), 0 2px 4px -1px rgba(232, 90, 79, 0.1);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(232, 90, 79, 0.2), 0 4px 6px -2px rgba(232, 90, 79, 0.15);
+    --gd-shadow-xl: 0 20px 25px -5px rgba(232, 90, 79, 0.25), 0 10px 10px -5px rgba(232, 90, 79, 0.2);
+    --gd-shadow-2xl: 0 25px 50px -12px rgba(232, 90, 79, 0.3);
+    --gd-shadow-inner: inset 0 2px 4px 0 rgba(232, 90, 79, 0.15);
 
-    /* ===== COMPONENT SPECIFIC ===== */
+    --gd-shadow-primary: 0 4px 14px 0 rgba(232, 90, 79, 0.2);
+    --gd-shadow-secondary: 0 4px 14px 0 rgba(210, 105, 30, 0.2);
+    --gd-shadow-accent: 0 4px 14px 0 rgba(218, 165, 32, 0.2);
+
+    /* ===== TYPOGRAPHY ===== */
+    --gd-font-family-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --gd-font-family-mono: "JetBrains Mono", "Fira Code", Monaco, Consolas, monospace;
+
+    --gd-font-size-xs: 0.75rem;
+    --gd-font-size-sm: 0.875rem;
+    --gd-font-size-base: 1rem;
+    --gd-font-size-lg: 1.125rem;
+    --gd-font-size-xl: 1.25rem;
+    --gd-font-size-2xl: 1.5rem;
+    --gd-font-size-3xl: 1.875rem;
+    --gd-font-size-4xl: 2.25rem;
+    --gd-font-size-5xl: 3rem;
+    --gd-font-size-6xl: 4rem;
+
+    --gd-font-weight-light: 300;
+    --gd-font-weight-normal: 400;
+    --gd-font-weight-medium: 500;
+    --gd-font-weight-semibold: 600;
+    --gd-font-weight-bold: 700;
+    --gd-font-weight-black: 900;
+
+    --gd-line-height-tight: 1.25;
+    --gd-line-height-normal: 1.5;
+    --gd-line-height-relaxed: 1.625;
+    --gd-line-height-loose: 2;
+
+    /* ===== SPACING SYSTEM ===== */
+    --gd-space-0: 0;
+    --gd-space-px: 1px;
+    --gd-space-0_5: 0.125rem;
+    --gd-space-1: 0.25rem;
+    --gd-space-1_5: 0.375rem;
+    --gd-space-2: 0.5rem;
+    --gd-space-2_5: 0.625rem;
+    --gd-space-3: 0.75rem;
+    --gd-space-3_5: 0.875rem;
+    --gd-space-4: 1rem;
+    --gd-space-5: 1.25rem;
+    --gd-space-6: 1.5rem;
+    --gd-space-7: 1.75rem;
+    --gd-space-8: 2rem;
+    --gd-space-9: 2.25rem;
+    --gd-space-10: 2.5rem;
+    --gd-space-11: 2.75rem;
+    --gd-space-12: 3rem;
+    --gd-space-14: 3.5rem;
+    --gd-space-16: 4rem;
+    --gd-space-20: 5rem;
+    --gd-space-24: 6rem;
+    --gd-space-28: 7rem;
+    --gd-space-32: 8rem;
+
+    /* ===== BORDER RADIUS ===== */
+    --gd-radius-none: 0;
+    --gd-radius-sm: 0.125rem;
+    --gd-radius-base: 0.25rem;
+    --gd-radius-md: 0.375rem;
+    --gd-radius-lg: 0.5rem;
+    --gd-radius-xl: 0.75rem;
+    --gd-radius-2xl: 1rem;
+    --gd-radius-3xl: 1.5rem;
+    --gd-radius-full: 9999px;
+
+    /* ===== TRANSITIONS ===== */
+    --gd-transition-fast: all 0.15s ease;
+    --gd-transition-base: all 0.2s ease;
+    --gd-transition-slow: all 0.3s ease;
+    --gd-transition-slowest: all 0.5s ease;
+
+    --gd-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --gd-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --gd-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --gd-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* ===== Z-INDEX SCALE ===== */
+    --gd-z-dropdown: 1000;
+    --gd-z-sticky: 1020;
+    --gd-z-fixed: 1030;
+    --gd-z-modal-backdrop: 1040;
+    --gd-z-modal: 1050;
+    --gd-z-popover: 1060;
+    --gd-z-tooltip: 1070;
+    --gd-z-toast: 1080;
+    --gd-z-preloader: 9999;
+
+    /* ===== LAYOUT ===== */
+    --gd-container-max-width: 1200px;
+    --gd-container-max-width-sm: 640px;
+    --gd-container-max-width-md: 768px;
+    --gd-container-max-width-lg: 1024px;
+    --gd-container-max-width-xl: 1280px;
+    --gd-container-padding: var(--gd-space-8);
+    --gd-section-padding: var(--gd-space-20) 0;
+    --gd-header-height: 4.375rem;
+
+    /* ===== BREAKPOINTS ===== */
+    --gd-breakpoint-sm: 640px;
+    --gd-breakpoint-md: 768px;
+    --gd-breakpoint-lg: 1024px;
+    --gd-breakpoint-xl: 1280px;
+    --gd-breakpoint-2xl: 1536px;
+
+    /* ===== COMPONENT SPECIFIC VARIABLES ===== */
 
     /* Navigation */
-    --gd-nav-bg: rgba(26, 15, 10, 0.95);
-    --gd-nav-border: rgba(255, 69, 0, 0.3);
-    --gd-nav-shadow: 0 4px 20px rgba(255, 69, 0, 0.4);
+    --gd-nav-height: var(--gd-header-height);
+    --gd-nav-bg: rgba(42, 31, 26, 0.9);
+    --gd-nav-bg-solid: var(--gd-bg-elevated);
+    --gd-nav-backdrop-blur: 20px;
+    --gd-nav-border: rgba(232, 90, 79, 0.2);
+    --gd-nav-shadow: 0 4px 20px rgba(232, 90, 79, 0.15);
     --gd-nav-link-color: var(--gd-text-secondary);
-    --gd-nav-link-hover: var(--gd-color-primary);
-    --gd-nav-link-active: var(--gd-color-accent);
+    --gd-nav-link-hover: var(--gd-color-primary-400);
+    --gd-nav-link-active: var(--gd-color-accent-400);
+
+    /* Buttons */
+    --gd-btn-padding-sm: var(--gd-space-2) var(--gd-space-4);
+    --gd-btn-padding-base: var(--gd-space-3) var(--gd-space-6);
+    --gd-btn-padding-lg: var(--gd-space-4) var(--gd-space-8);
+    --gd-btn-radius: var(--gd-radius-lg);
+    --gd-btn-font-weight: var(--gd-font-weight-semibold);
+    --gd-btn-transition: var(--gd-transition-base);
 
     /* Cards */
-    --gd-card-bg: var(--gd-surface-2);
-    --gd-card-border: rgba(255, 69, 0, 0.3);
-    --gd-card-shadow: 0 4px 20px rgba(255, 69, 0, 0.3);
-    --gd-card-shadow-hover: 0 8px 30px rgba(255, 69, 0, 0.5);
+    --gd-card-bg: var(--gd-surface-raised);
+    --gd-card-border: rgba(232, 90, 79, 0.15);
+    --gd-card-radius: var(--gd-radius-xl);
+    --gd-card-shadow: 0 4px 20px rgba(210, 105, 30, 0.1);
+    --gd-card-shadow-hover: 0 8px 30px rgba(232, 90, 79, 0.2);
+    --gd-card-padding-sm: var(--gd-space-4);
+    --gd-card-padding-base: var(--gd-space-6);
+    --gd-card-padding-lg: var(--gd-space-8);
 
-    /* Special fire effects */
-    --gd-fire-glow: 0 0 30px rgba(255, 69, 0, 0.8);
-    --gd-fire-text-shadow: 0 0 15px rgba(255, 140, 0, 0.9);
-    --gd-fire-border-glow: 0 0 20px rgba(255, 69, 0, 0.7);
-    --gd-ember-glow: 0 0 10px rgba(255, 215, 0, 0.6);
-}
+    /* Forms */
+    --gd-input-bg: var(--gd-bg-tertiary);
+    --gd-input-border: rgba(232, 90, 79, 0.2);
+    --gd-input-border-hover: rgba(232, 90, 79, 0.3);
+    --gd-input-border-focus: var(--gd-color-primary-500);
+    --gd-input-radius: var(--gd-radius-md);
+    --gd-input-padding-sm: var(--gd-space-2) var(--gd-space-3);
+    --gd-input-padding-base: var(--gd-space-3) var(--gd-space-4);
+    --gd-input-padding-lg: var(--gd-space-4) var(--gd-space-5);
+    --gd-input-shadow-focus: 0 0 0 3px rgba(232, 90, 79, 0.1);
 
-/* ===== GAMING INFERNO SPECIFIC ENHANCEMENTS ===== */
+    /* Overlays & Modals */
+    --gd-overlay-bg: rgba(232, 90, 79, 0.15);
+    --gd-modal-bg: var(--gd-surface-raised);
+    --gd-modal-radius: var(--gd-radius-2xl);
+    --gd-modal-shadow: 0 25px 50px -12px rgba(232, 90, 79, 0.3);
+    --gd-backdrop-blur: 20px;
 
-html[data-theme="gaming-inferno"] .app__brand {
-    text-shadow: var(--gd-fire-text-shadow);
-    filter: drop-shadow(var(--gd-ember-glow));
-}
+    /* Tooltips */
+    --gd-tooltip-bg: var(--gd-text-primary);
+    --gd-tooltip-color: var(--gd-text-inverse);
+    --gd-tooltip-radius: var(--gd-radius-md);
+    --gd-tooltip-shadow: 0 10px 20px rgba(232, 90, 79, 0.2);
 
-html[data-theme="gaming-inferno"] .app__button--primary {
-    box-shadow: var(--gd-fire-glow), var(--gd-shadow-md);
-    border: 1px solid var(--gd-color-primary);
-    position: relative;
-    overflow: hidden;
-}
+    /* Loading & Progress */
+    --gd-loading-primary: var(--gd-color-primary-500);
+    --gd-loading-secondary: var(--gd-color-primary-200);
+    --gd-progress-bg: var(--gd-color-primary-100);
+    --gd-progress-fill: var(--gd-color-primary-500);
 
-html[data-theme="gaming-inferno"] .app__button--primary::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
-    transform: rotate(45deg);
-    transition: transform 0.6s ease;
-    opacity: 0;
-}
-
-html[data-theme="gaming-inferno"] .app__button--primary:hover::before {
-    opacity: 1;
-    transform: rotate(45deg) translate(100%, 100%);
-}
-
-html[data-theme="gaming-inferno"] .app__button--primary:hover {
-    box-shadow: var(--gd-fire-border-glow), var(--gd-shadow-lg);
-    text-shadow: var(--gd-fire-text-shadow);
-}
-
-html[data-theme="gaming-inferno"] .app__project-card:hover {
-    border: 1px solid var(--gd-color-primary);
-    box-shadow: var(--gd-fire-border-glow), var(--gd-shadow-xl);
-}
-
-html[data-theme="gaming-inferno"] .modern-nav__link:hover {
-    text-shadow: 0 0 12px currentColor;
-}
-
-html[data-theme="gaming-inferno"] .modern-nav__link::after {
-    box-shadow: var(--gd-fire-glow);
-}
-
-/* Animated fire particles effect for hero section */
-html[data-theme="gaming-inferno"] .app__section--hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image:
-        radial-gradient(2px 2px at 20px 30px, rgba(255, 140, 0, 0.8), transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(255, 69, 0, 0.6), transparent),
-        radial-gradient(1px 1px at 90px 40px, rgba(255, 215, 0, 0.9), transparent),
-        radial-gradient(1px 1px at 130px 80px, rgba(255, 69, 0, 0.7), transparent),
-        radial-gradient(2px 2px at 160px 30px, rgba(255, 140, 0, 0.5), transparent);
-    background-repeat: repeat;
-    background-size: 200px 100px;
-    animation: fire-particles 20s linear infinite;
-    opacity: 0.3;
-    pointer-events: none;
-}
-
-@keyframes fire-particles {
-    0% {
-        transform: translateY(100vh) rotate(0deg);
-    }
-
-    100% {
-        transform: translateY(-100vh) rotate(360deg);
-    }
+    /* ===== GAMING INFERNO SPECIFIC EFFECTS ===== */
+    --gd-fire-glow: 0 0 15px rgba(232, 90, 79, 0.3);
+    --gd-fire-text-shadow: 0 0 8px rgba(218, 165, 32, 0.5);
+    --gd-fire-border-glow: 0 0 12px rgba(232, 90, 79, 0.4);
+    --gd-ember-glow: 0 0 8px rgba(218, 165, 32, 0.3);
+    --gd-warm-glow: 0 0 20px rgba(210, 105, 30, 0.2);
 }

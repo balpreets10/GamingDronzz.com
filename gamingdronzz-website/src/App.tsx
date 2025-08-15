@@ -10,12 +10,12 @@ import Contact from './components/sections/Contact';
 import useNavigation, { useNavigationEvents } from './hooks/useNavigation';
 import ScrollManager from './managers/ScrollManager';
 import PerformanceManager from './managers/PerformanceManager';
-import { initAutoThemeRotation, ThemeOption } from './utils/helpers';
+import { initializeThemeSystem, type Theme } from './managers/ThemeManager';
 import './App.css';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [currentTheme, setCurrentTheme] = useState<ThemeOption | null>(null);
+  const [currentTheme, setCurrentTheme] = useState<Theme | null>(null);
 
   const { state: navState, actions: navActions } = useNavigation({
     customConfig: {
@@ -30,18 +30,21 @@ function App() {
     }
   });
 
-  // Initialize managers and auto-theme rotation once
+  // Initialize managers and theme system once
   useEffect(() => {
     const scrollManager = ScrollManager.getInstance();
     const performanceManager = PerformanceManager.getInstance();
 
     performanceManager.startMark('app-init');
 
-    // Initialize auto theme rotation - this will pick a random theme on each refresh
-    const selectedTheme = initAutoThemeRotation();
+    // Initialize optimized theme system - picks theme and applies immediately
+    const selectedTheme = initializeThemeSystem({
+      enableSessionConsistency: true, // Prevents flickering during dev
+      enableLogging: import.meta.env.DEV
+    });
     setCurrentTheme(selectedTheme);
 
-    // Optional: Add smooth theme transition class to body
+    // Add smooth theme transition class to body
     document.body.classList.add('theme-transition');
 
     // Cleanup function
@@ -79,19 +82,19 @@ function App() {
 
   return (
     <div className="app">
-      {/* Modern Navigation - Jack Elder inspired */}
+      {/* Modern Navigation */}
       <ModernNavigation
         position="fixed-top"
         onNavigate={handleNavigate}
       />
 
       <main className="app__main">
-        {/* Hero Section */}
+        {/* Hero Section - Fixed props to match HeroProps interface */}
         <Hero
-          title={`Welcome to Gaming${currentTheme ? ' ' : ''}Dronzz`}
+          title="Welcome to Gaming Dronzz"
           subtitle="Professional Game Development Consultancy & Services"
-          ctaText="Get Started"
-          onCtaClick={() => handleNavigate('contact')}
+          primaryCtaText="Get Started"
+          onPrimaryCtaClick={() => handleNavigate('contact')}
         />
 
         {/* About Section */}

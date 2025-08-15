@@ -59,9 +59,9 @@ export const currentEnvironment = getEnvironment();
 const getConfig = (): EnvironmentConfig => {
     const env = currentEnvironment as keyof typeof configs;
 
-    if (configs[env]) {
-        return configs[env];
-    }
+    // if (configs[env]) {
+    //     return configs[env];
+    // }
 
     // Enhanced error handling for unknown environments
     const availableEnvs = Object.keys(configs).join(', ');
