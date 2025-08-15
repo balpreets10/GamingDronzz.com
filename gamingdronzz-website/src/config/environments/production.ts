@@ -16,7 +16,7 @@ export const productionConfig = {
     analytics: {
         enabled: true,
         debug: false,
-        trackingId: process.env.REACT_APP_GA_TRACKING_ID || ''
+        trackingId: import.meta.env.VITE_GA_TRACKING_ID || ''
     },
     features: {
         adminPanel: false,
@@ -38,6 +38,13 @@ export const productionConfig = {
         duration: 300,
         easing: 'ease-out',
         stagger: 100,
-        reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        reducedMotion: typeof window !== 'undefined' ?
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches : false
+    },
+    environment: 'production',
+    buildInfo: {
+        version: import.meta.env.VITE_APP_VERSION || '1.0.0',
+        buildTime: import.meta.env.VITE_BUILD_TIME || new Date().toISOString(),
+        gitBranch: import.meta.env.VITE_GIT_BRANCH || 'main'
     }
-};
+} as const;
