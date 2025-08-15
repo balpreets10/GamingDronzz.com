@@ -139,17 +139,35 @@
 }
 
 .hero__title-line--primary {
-    background: linear-gradient(135deg,
-            var(--gd-text-primary) 0%,
-            var(--gd-color-primary-600) 30%,
-            var(--gd-color-primary-700) 70%,
-            var(--gd-text-primary) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    /* Remove gradient text clipping for better readability */
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+
+    /* Use solid primary color with proper contrast */
+    color: var(--gd-color-primary-800);
     display: block;
-    /* Fallback for better browser support */
-    color: var(--gd-text-primary);
+    position: relative;
+
+    /* Enhanced typography for better visibility */
+    font-weight: var(--gd-font-weight-black);
+    text-shadow: 0 2px 8px rgba(74, 144, 226, 0.1);
+
+    /* Optional: Add subtle underline accent */
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg,
+                var(--gd-color-primary-500),
+                var(--gd-color-accent-500));
+        border-radius: var(--gd-radius-full);
+        opacity: 0.8;
+    }
 }
 
 .hero__subtitle {
