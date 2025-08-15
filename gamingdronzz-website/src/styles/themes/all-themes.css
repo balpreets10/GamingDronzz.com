@@ -8,17 +8,14 @@
 
 @import './arctic-frost.css';
 @import './dark-cyber.css';
-/* 🌙 Dark Cyber - Futuristic neon cyberpunk */
-/* @import './forest-tech.css'; */
+@import './dark-cyber.css';
+@import './default.css';
 @import './electric-storm.css';
+@import './forest-tech.css';
 @import './gaming-inferno.css';
-/* 🔥 Gaming Inferno - Fiery red-orange gaming */
 @import './minimal-green.css';
-/* 🍃 Minimal Green - Clean minimalist green */
 @import './ocean-deep.css';
-/* 🌊 Ocean Deep - Calming deep ocean blues */
 @import './retro-arcade.css';
-/* 🎮 Retro Arcade - 80s neon synthwave */
 @import './sakura-bloom.css';
 @import './space-explorer.css';
 

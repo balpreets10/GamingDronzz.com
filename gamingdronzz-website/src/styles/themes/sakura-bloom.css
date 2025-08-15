@@ -1,43 +1,410 @@
-/* ===== 🌸 SAKURA BLOOM THEME ===== */
+/* ===== 🌸 SAKURA BLOOM THEME - COMPLETE ===== */
+/* Beautiful cherry blossom inspired theme with soft pinks and elegant contrasts */
 html[data-theme="sakura-bloom"] {
-    --gd-color-primary: #ff69b4;
-    --gd-color-primary-hover: #ff1493;
-    --gd-color-primary-light: #fff0f8;
-    --gd-color-primary-dark: #c44569;
+    /* ===== PRIMARY COLOR SYSTEM ===== */
+    /* Hot pink - main brand color inspired by cherry blossoms */
+    --gd-color-primary: #FF69B4;
+    /* Main primary - hot pink */
+    --gd-color-primary-50: #FFF0F8;
+    /* Lightest - for subtle backgrounds */
+    --gd-color-primary-100: #FFE1F1;
+    /* Very light - for hover states on light backgrounds */
+    --gd-color-primary-200: #FFC3E3;
+    /* Light - for disabled states, light accents */
+    --gd-color-primary-300: #FF94D5;
+    /* Medium light - for borders, secondary elements */
+    --gd-color-primary-400: #FF7EC7;
+    /* Medium - for hover states */
+    --gd-color-primary-500: #FF69B4;
+    /* Base primary color */
+    --gd-color-primary-600: #E55A9F;
+    /* Medium dark - for active states */
+    --gd-color-primary-700: #CC4B8A;
+    /* Dark - for pressed states */
+    --gd-color-primary-800: #B23C75;
+    /* Darker - for strong contrast */
+    --gd-color-primary-900: #802B54;
+    /* Darkest - for maximum contrast */
 
-    --gd-color-secondary: #ffc0cb;
-    --gd-color-secondary-hover: #ffb6c1;
-    --gd-color-secondary-light: #fffafc;
-    --gd-color-secondary-dark: #d6909a;
+    /* Legacy support */
+    --gd-color-primary-hover: var(--gd-color-primary-600);
+    --gd-color-primary-light: var(--gd-color-primary-50);
+    --gd-color-primary-dark: var(--gd-color-primary-700);
 
-    --gd-color-accent: #ff6347;
-    --gd-color-accent-hover: #ff4500;
-    --gd-color-accent-light: #fff3f0;
-    --gd-color-accent-dark: #cc5039;
+    /* ===== SECONDARY COLOR SYSTEM ===== */
+    /* Soft rose - complementary to primary, like rose petals */
+    --gd-color-secondary: #FFC0CB;
+    /* Main secondary - soft rose */
+    --gd-color-secondary-50: #FFFAFC;
+    /* Lightest */
+    --gd-color-secondary-100: #FFF0F5;
+    /* Very light */
+    --gd-color-secondary-200: #FFE6EB;
+    /* Light */
+    --gd-color-secondary-300: #FFD0DC;
+    /* Medium light */
+    --gd-color-secondary-400: #FFB6C1;
+    /* Medium */
+    --gd-color-secondary-500: #FFC0CB;
+    /* Base secondary */
+    --gd-color-secondary-600: #E5ADB7;
+    /* Medium dark */
+    --gd-color-secondary-700: #CC9AA3;
+    /* Dark */
+    --gd-color-secondary-800: #B2878F;
+    /* Darker */
+    --gd-color-secondary-900: #80626B;
+    /* Darkest */
 
-    --gd-bg-primary: #fef9f9;
-    --gd-bg-secondary: #fdf2f2;
-    --gd-bg-tertiary: #fce8e8;
-    --gd-bg-dark: #f8e8e8;
-    --gd-bg-darker: #f0d0d0;
+    /* Legacy support */
+    --gd-color-secondary-hover: var(--gd-color-secondary-600);
+    --gd-color-secondary-light: var(--gd-color-secondary-50);
+    --gd-color-secondary-dark: var(--gd-color-secondary-700);
 
-    --gd-text-primary: #4a1a1a;
-    --gd-text-secondary: #8b3a3a;
-    --gd-text-tertiary: #a64545;
-    --gd-text-inverse: #ffffff;
-    --gd-text-muted: #b85555;
-    --gd-text-disabled: #d6a0a0;
+    /* ===== ACCENT COLOR SYSTEM ===== */
+    /* Coral - like sunset cherry blossoms */
+    --gd-color-accent: #FF6347;
+    /* Main accent - coral */
+    --gd-color-accent-50: #FFF3F0;
+    /* Lightest */
+    --gd-color-accent-100: #FFE7E1;
+    /* Very light */
+    --gd-color-accent-200: #FFCFC3;
+    /* Light */
+    --gd-color-accent-300: #FFB7A5;
+    /* Medium light */
+    --gd-color-accent-400: #FF8D75;
+    /* Medium */
+    --gd-color-accent-500: #FF6347;
+    /* Base accent */
+    --gd-color-accent-600: #E5593F;
+    /* Medium dark */
+    --gd-color-accent-700: #CC4F37;
+    /* Dark */
+    --gd-color-accent-800: #B2452F;
+    /* Darker */
+    --gd-color-accent-900: #803222;
+    /* Darkest */
 
-    --gd-gradient-primary: linear-gradient(135deg, #ff69b4 0%, #ffc0cb 50%, #ff6347 100%);
-    --gd-gradient-hero: linear-gradient(135deg, #fef9f9 0%, #fdf2f2 50%, #ff69b4 100%);
+    /* Legacy support */
+    --gd-color-accent-hover: var(--gd-color-accent-600);
+    --gd-color-accent-light: var(--gd-color-accent-50);
+    --gd-color-accent-dark: var(--gd-color-accent-700);
 
+    /* ===== INTELLIGENT BACKGROUND SYSTEM ===== */
+    /* Soft pink backgrounds with proper contrast ratios */
+    --gd-bg-primary: #FEF9F9;
+    /* Main background - very light pink-white */
+    --gd-bg-secondary: #FDF2F2;
+    /* Secondary background */
+    --gd-bg-tertiary: #FCE8E8;
+    /* Tertiary background */
+    --gd-bg-quaternary: #FADEDE;
+    /* Fourth level background */
+    --gd-bg-elevated: #FFFFFF;
+    /* Elevated surfaces (cards, modals) */
+    --gd-bg-overlay: rgba(128, 43, 84, 0.4);
+    /* Dark overlay for modals */
+
+    /* Legacy support */
+    --gd-bg-dark: var(--gd-bg-tertiary);
+    --gd-bg-darker: var(--gd-bg-quaternary);
+
+    /* Background variants based on primary colors */
+    --gd-bg-primary-subtle: var(--gd-color-primary-50);
+    /* Primary tinted background */
+    --gd-bg-secondary-subtle: var(--gd-color-secondary-50);
+    /* Secondary tinted background */
+    --gd-bg-accent-subtle: var(--gd-color-accent-50);
+    /* Accent tinted background */
+
+    /* ===== INTELLIGENT TEXT SYSTEM ===== */
+    /* Dark text for light backgrounds - ensures readability */
+    --gd-text-primary: #4A1A1A;
+    /* Main text - deep burgundy */
+    --gd-text-secondary: #8B3A3A;
+    /* Secondary text - medium burgundy */
+    --gd-text-tertiary: #A64545;
+    /* Tertiary text - lighter burgundy */
+    --gd-text-quaternary: #B85555;
+    /* Quaternary text - soft burgundy */
+    --gd-text-disabled: #D6A0A0;
+    /* Disabled text - very light */
+    --gd-text-inverse: #FFFFFF;
+    /* Inverse text - white for dark backgrounds */
+    --gd-text-muted: var(--gd-text-tertiary);
+    /* Muted text - same as tertiary */
+
+    /* Text on colored backgrounds */
+    --gd-text-on-primary: #FFFFFF;
+    /* White text on primary backgrounds */
+    --gd-text-on-secondary: #4A1A1A;
+    /* Dark text on secondary backgrounds */
+    --gd-text-on-accent: #FFFFFF;
+    /* White text on accent backgrounds */
+
+    /* ===== SEMANTIC COLORS ===== */
+    /* Status colors with proper contrast adapted for Sakura theme */
+    --gd-color-success: #FF6B9D;
+    /* Success - pink variant */
+    --gd-color-success-light: #FFF0F6;
+    /* Light success background */
+    --gd-color-success-dark: #E55A8A;
+    /* Dark success for contrast */
+
+    --gd-color-warning: #FFB347;
+    /* Warning - soft orange */
+    --gd-color-warning-light: #FFF9F0;
+    /* Light warning background */
+    --gd-color-warning-dark: #E59F3F;
+    /* Dark warning for contrast */
+
+    --gd-color-danger: #FF5C7A;
+    /* Danger - soft red-pink */
+    --gd-color-danger-light: #FFF0F3;
+    /* Light danger background */
+    --gd-color-danger-dark: #E5526D;
+    /* Dark danger for contrast */
+
+    --gd-color-info: var(--gd-color-primary-500);
+    /* Info uses primary color */
+    --gd-color-info-light: var(--gd-color-primary-50);
+    --gd-color-info-dark: var(--gd-color-primary-700);
+
+    /* ===== BORDER SYSTEM ===== */
+    /* Consistent border colors with proper visibility */
+    --gd-border-light: rgba(255, 105, 180, 0.15);
+    /* Very subtle borders */
+    --gd-border-medium: rgba(255, 105, 180, 0.25);
+    /* Standard borders */
+    --gd-border-strong: rgba(255, 105, 180, 0.4);
+    /* Strong borders */
+    --gd-border-primary: var(--gd-color-primary-300);
+    /* Primary colored borders */
+    --gd-border-focus: var(--gd-color-primary-500);
+    /* Focus state borders */
+
+    /* ===== SURFACE COLORS ===== */
+    /* Layered surface system for depth */
+    --gd-surface-1: var(--gd-bg-primary);
+    /* Base surface */
+    --gd-surface-2: var(--gd-bg-secondary);
+    /* Elevated surface */
+    --gd-surface-3: var(--gd-bg-tertiary);
+    /* More elevated surface */
+    --gd-surface-4: var(--gd-bg-quaternary);
+    /* Highest surface */
+    --gd-surface-raised: var(--gd-bg-elevated);
+    /* Card/modal surface */
+    --gd-surface-overlay: var(--gd-bg-overlay);
+    /* Modal backdrop */
+
+    /* ===== GRADIENTS ===== */
+    /* Sakura-inspired gradients */
+    --gd-gradient-primary: linear-gradient(135deg,
+            var(--gd-color-primary-400) 0%,
+            var(--gd-color-primary-600) 50%,
+            var(--gd-color-primary-800) 100%);
+
+    --gd-gradient-secondary: linear-gradient(135deg,
+            var(--gd-color-secondary-300) 0%,
+            var(--gd-color-secondary-500) 50%,
+            var(--gd-color-secondary-700) 100%);
+
+    --gd-gradient-accent: linear-gradient(135deg,
+            var(--gd-color-accent-300) 0%,
+            var(--gd-color-accent-500) 50%,
+            var(--gd-color-accent-700) 100%);
+
+    --gd-gradient-hero: linear-gradient(135deg,
+            var(--gd-color-primary-300) 0%,
+            var(--gd-color-secondary-400) 35%,
+            var(--gd-color-accent-400) 100%);
+
+    --gd-gradient-subtle: linear-gradient(135deg,
+            var(--gd-bg-primary) 0%,
+            var(--gd-bg-secondary) 50%,
+            var(--gd-bg-tertiary) 100%);
+
+    /* ===== SHADOWS ===== */
+    /* Soft pink shadows for Sakura theme */
     --gd-shadow-sm: 0 1px 2px 0 rgba(255, 105, 180, 0.15);
     --gd-shadow-base: 0 1px 3px 0 rgba(255, 105, 180, 0.2), 0 1px 2px 0 rgba(255, 105, 180, 0.15);
+    --gd-shadow-md: 0 4px 6px -1px rgba(255, 105, 180, 0.2), 0 2px 4px -1px rgba(255, 105, 180, 0.15);
     --gd-shadow-lg: 0 10px 15px -3px rgba(255, 105, 180, 0.25), 0 4px 6px -2px rgba(255, 105, 180, 0.2);
+    --gd-shadow-xl: 0 20px 25px -5px rgba(255, 105, 180, 0.25), 0 10px 10px -5px rgba(255, 105, 180, 0.15);
+    --gd-shadow-2xl: 0 25px 50px -12px rgba(255, 105, 180, 0.3);
+    --gd-shadow-inner: inset 0 2px 4px 0 rgba(255, 105, 180, 0.15);
 
-    --gd-nav-bg: rgba(254, 249, 249, 0.95);
+    /* Colored shadows for special elements */
+    --gd-shadow-primary: 0 4px 14px 0 rgba(255, 105, 180, 0.25);
+    --gd-shadow-secondary: 0 4px 14px 0 rgba(255, 192, 203, 0.2);
+    --gd-shadow-accent: 0 4px 14px 0 rgba(255, 99, 71, 0.2);
+
+    /* ===== COMPONENT SPECIFIC VARIABLES ===== */
+
+    /* Navigation */
+    --gd-nav-height: var(--gd-header-height);
+    --gd-nav-bg: rgba(254, 249, 249, 0.9);
+    --gd-nav-bg-solid: var(--gd-bg-elevated);
+    --gd-nav-backdrop-blur: 20px;
     --gd-nav-border: rgba(255, 105, 180, 0.2);
-    --gd-surface-1: #fdf2f2;
-    --gd-surface-2: #fce8e8;
-    --gd-border-light: rgba(255, 105, 180, 0.15);
+    --gd-nav-shadow: var(--gd-shadow-lg);
+    --gd-nav-link-color: var(--gd-text-secondary);
+    --gd-nav-link-hover: var(--gd-text-primary);
+    --gd-nav-link-active: var(--gd-color-primary-600);
+
+    /* Buttons */
+    --gd-btn-padding-sm: var(--gd-space-2) var(--gd-space-4);
+    --gd-btn-padding-base: var(--gd-space-3) var(--gd-space-6);
+    --gd-btn-padding-lg: var(--gd-space-4) var(--gd-space-8);
+    --gd-btn-radius: var(--gd-radius-lg);
+    --gd-btn-font-weight: var(--gd-font-weight-semibold);
+    --gd-btn-transition: var(--gd-transition-base);
+
+    /* Cards */
+    --gd-card-bg: var(--gd-surface-raised);
+    --gd-card-border: var(--gd-border-light);
+    --gd-card-radius: var(--gd-radius-xl);
+    --gd-card-shadow: var(--gd-shadow-base);
+    --gd-card-shadow-hover: var(--gd-shadow-lg);
+    --gd-card-padding-sm: var(--gd-space-4);
+    --gd-card-padding-base: var(--gd-space-6);
+    --gd-card-padding-lg: var(--gd-space-8);
+
+    /* Forms */
+    --gd-input-bg: var(--gd-bg-elevated);
+    --gd-input-border: var(--gd-border-medium);
+    --gd-input-border-hover: var(--gd-border-strong);
+    --gd-input-border-focus: var(--gd-color-primary-500);
+    --gd-input-radius: var(--gd-radius-md);
+    --gd-input-padding-sm: var(--gd-space-2) var(--gd-space-3);
+    --gd-input-padding-base: var(--gd-space-3) var(--gd-space-4);
+    --gd-input-padding-lg: var(--gd-space-4) var(--gd-space-5);
+    --gd-input-shadow-focus: 0 0 0 3px rgba(255, 105, 180, 0.15);
+
+    /* Overlays & Modals */
+    --gd-overlay-bg: rgba(128, 43, 84, 0.4);
+    --gd-modal-bg: var(--gd-surface-raised);
+    --gd-modal-radius: var(--gd-radius-2xl);
+    --gd-modal-shadow: var(--gd-shadow-2xl);
+    --gd-backdrop-blur: 20px;
+
+    /* Tooltips */
+    --gd-tooltip-bg: var(--gd-text-primary);
+    --gd-tooltip-color: var(--gd-text-inverse);
+    --gd-tooltip-radius: var(--gd-radius-md);
+    --gd-tooltip-shadow: var(--gd-shadow-lg);
+
+    /* Loading & Progress */
+    --gd-loading-primary: var(--gd-color-primary-500);
+    --gd-loading-secondary: var(--gd-color-primary-200);
+    --gd-progress-bg: var(--gd-color-primary-100);
+    --gd-progress-fill: var(--gd-color-primary-500);
+
+    /* Typography (inherits from main variables.css) */
+    --gd-font-family-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --gd-font-family-mono: "JetBrains Mono", "Fira Code", Monaco, Consolas, monospace;
+
+    /* Spacing System (inherits from main variables.css) */
+    --gd-space-0: 0;
+    --gd-space-px: 1px;
+    --gd-space-0_5: 0.125rem;
+    --gd-space-1: 0.25rem;
+    --gd-space-1_5: 0.375rem;
+    --gd-space-2: 0.5rem;
+    --gd-space-2_5: 0.625rem;
+    --gd-space-3: 0.75rem;
+    --gd-space-3_5: 0.875rem;
+    --gd-space-4: 1rem;
+    --gd-space-5: 1.25rem;
+    --gd-space-6: 1.5rem;
+    --gd-space-7: 1.75rem;
+    --gd-space-8: 2rem;
+    --gd-space-9: 2.25rem;
+    --gd-space-10: 2.5rem;
+    --gd-space-11: 2.75rem;
+    --gd-space-12: 3rem;
+    --gd-space-14: 3.5rem;
+    --gd-space-16: 4rem;
+    --gd-space-20: 5rem;
+    --gd-space-24: 6rem;
+    --gd-space-28: 7rem;
+    --gd-space-32: 8rem;
+
+    /* Border Radius (inherits from main variables.css) */
+    --gd-radius-none: 0;
+    --gd-radius-sm: 0.125rem;
+    --gd-radius-base: 0.25rem;
+    --gd-radius-md: 0.375rem;
+    --gd-radius-lg: 0.5rem;
+    --gd-radius-xl: 0.75rem;
+    --gd-radius-2xl: 1rem;
+    --gd-radius-3xl: 1.5rem;
+    --gd-radius-full: 9999px;
+
+    /* Transitions (inherits from main variables.css) */
+    --gd-transition-fast: all 0.15s ease;
+    --gd-transition-base: all 0.2s ease;
+    --gd-transition-slow: all 0.3s ease;
+    --gd-transition-slowest: all 0.5s ease;
+
+    --gd-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --gd-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --gd-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --gd-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Z-Index Scale (inherits from main variables.css) */
+    --gd-z-dropdown: 1000;
+    --gd-z-sticky: 1020;
+    --gd-z-fixed: 1030;
+    --gd-z-modal-backdrop: 1040;
+    --gd-z-modal: 1050;
+    --gd-z-popover: 1060;
+    --gd-z-tooltip: 1070;
+    --gd-z-toast: 1080;
+    --gd-z-preloader: 9999;
+
+    /* Layout (inherits from main variables.css) */
+    --gd-container-max-width: 1200px;
+    --gd-container-max-width-sm: 640px;
+    --gd-container-max-width-md: 768px;
+    --gd-container-max-width-lg: 1024px;
+    --gd-container-max-width-xl: 1280px;
+    --gd-container-padding: var(--gd-space-8);
+    --gd-section-padding: var(--gd-space-20) 0;
+    --gd-header-height: 4.375rem;
+
+    /* Font Sizes (inherits from main variables.css) */
+    --gd-font-size-xs: 0.75rem;
+    --gd-font-size-sm: 0.875rem;
+    --gd-font-size-base: 1rem;
+    --gd-font-size-lg: 1.125rem;
+    --gd-font-size-xl: 1.25rem;
+    --gd-font-size-2xl: 1.5rem;
+    --gd-font-size-3xl: 1.875rem;
+    --gd-font-size-4xl: 2.25rem;
+    --gd-font-size-5xl: 3rem;
+    --gd-font-size-6xl: 4rem;
+
+    /* Font Weights (inherits from main variables.css) */
+    --gd-font-weight-light: 300;
+    --gd-font-weight-normal: 400;
+    --gd-font-weight-medium: 500;
+    --gd-font-weight-semibold: 600;
+    --gd-font-weight-bold: 700;
+    --gd-font-weight-black: 900;
+
+    /* Line Heights (inherits from main variables.css) */
+    --gd-line-height-tight: 1.25;
+    --gd-line-height-normal: 1.5;
+    --gd-line-height-relaxed: 1.625;
+    --gd-line-height-loose: 2;
+
+    /* Breakpoints (inherits from main variables.css) */
+    --gd-breakpoint-sm: 640px;
+    --gd-breakpoint-md: 768px;
+    --gd-breakpoint-lg: 1024px;
+    --gd-breakpoint-xl: 1280px;
+    --gd-breakpoint-2xl: 1536px;
 }

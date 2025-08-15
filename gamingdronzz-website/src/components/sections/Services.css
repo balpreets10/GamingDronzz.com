@@ -112,7 +112,7 @@
 .services__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: var(--gd-space-6);
+    gap: var(--gd-space-16);
     margin-bottom: var(--gd-space-16);
     /* Ensure proper alignment */
     align-items: start;

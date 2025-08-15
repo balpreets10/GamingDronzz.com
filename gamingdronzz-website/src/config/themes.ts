@@ -12,10 +12,11 @@ export interface Theme {
 }
 
 export const availableThemes: Theme[] = [
+
     {
-        id: 'default',
-        name: 'Formal',
-        icon: '☀️'
+        id: 'arctic-frost',
+        name: 'Arctic Frost',
+        icon: '❄️'
     },
     {
         id: 'dark-cyber',
@@ -23,9 +24,29 @@ export const availableThemes: Theme[] = [
         icon: '🌙'
     },
     {
+        id: 'default',
+        name: 'Formal',
+        icon: '☀️'
+    },
+    {
+        id: 'electric-storm',
+        name: 'Electric Storm',
+        icon: '☀️'
+    },
+    {
+        id: 'forest-tech',
+        name: 'Forest Tech',
+        icon: '🌲'
+    },
+    {
         id: 'gaming-inferno',
         name: 'Gaming Inferno',
         icon: '🔥'
+    },
+    {
+        id: 'minimal-green',
+        name: 'Minimal Green',
+        icon: '🍃'
     },
     {
         id: 'ocean-deep',
@@ -37,26 +58,19 @@ export const availableThemes: Theme[] = [
         name: 'Retro Arcade',
         icon: '🎮'
     },
-    {
-        id: 'minimal-green',
-        name: 'Minimal Green',
-        icon: '🍃'
-    },
+
     {
         id: 'sakura-bloom',
         name: 'Sakura Bloom',
         icon: '🌸'
     },
     {
-        id: 'forest-tech',
-        name: 'Forest Tech',
-        icon: '🌲'
+        id: 'space-explorer',
+        name: 'Space Explorer',
+        icon: '🍃'
     },
-    {
-        id: 'arctic-frost',
-        name: 'Arctic Frost',
-        icon: '❄️'
-    }
+
+
 ];
 
 // ===== THEME DATA UTILITIES ===== //

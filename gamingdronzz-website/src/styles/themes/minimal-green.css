@@ -1,92 +1,176 @@
 /* src/styles/themes/minimal-green.css - 🍃 Minimal Green Theme */
 
 html[data-theme="minimal-green"] {
-    /* ===== CORE COLORS ===== */
-    --gd-color-primary: #00c851;
-    --gd-color-primary-hover: #007e33;
-    --gd-color-primary-light: #e8f5e8;
-    --gd-color-primary-dark: #004d1a;
+    /* ===== PRIMARY COLOR SYSTEM ===== */
+    /* Fresh green - main brand color inspired by nature */
+    --gd-color-primary: #10b981;
+    --gd-color-primary-50: #ecfdf5;
+    --gd-color-primary-100: #d1fae5;
+    --gd-color-primary-200: #a7f3d0;
+    --gd-color-primary-300: #6ee7b7;
+    --gd-color-primary-400: #34d399;
+    --gd-color-primary-500: #10b981;
+    --gd-color-primary-600: #059669;
+    --gd-color-primary-700: #047857;
+    --gd-color-primary-800: #065f46;
+    --gd-color-primary-900: #064e3b;
 
-    --gd-color-secondary: #2e7d32;
-    --gd-color-secondary-hover: #388e3c;
-    --gd-color-secondary-light: #e8f5e8;
-    --gd-color-secondary-dark: #1b5e20;
+    /* ===== SECONDARY COLOR SYSTEM ===== */
+    /* Sage green - complementary natural tone */
+    --gd-color-secondary: #16a34a;
+    --gd-color-secondary-50: #f0fdf4;
+    --gd-color-secondary-100: #dcfce7;
+    --gd-color-secondary-200: #bbf7d0;
+    --gd-color-secondary-300: #86efac;
+    --gd-color-secondary-400: #4ade80;
+    --gd-color-secondary-500: #22c55e;
+    --gd-color-secondary-600: #16a34a;
+    --gd-color-secondary-700: #15803d;
+    --gd-color-secondary-800: #166534;
+    --gd-color-secondary-900: #14532d;
 
-    --gd-color-accent: #4caf50;
-    --gd-color-accent-hover: #66bb6a;
-    --gd-color-accent-light: #f1f8e9;
-    --gd-color-accent-dark: #2e7d32;
+    /* ===== ACCENT COLOR SYSTEM ===== */
+    /* Lime - vibrant nature accent */
+    --gd-color-accent: #84cc16;
+    --gd-color-accent-50: #f7fee7;
+    --gd-color-accent-100: #ecfccb;
+    --gd-color-accent-200: #d9f99d;
+    --gd-color-accent-300: #bef264;
+    --gd-color-accent-400: #a3e635;
+    --gd-color-accent-500: #84cc16;
+    --gd-color-accent-600: #65a30d;
+    --gd-color-accent-700: #4d7c0f;
+    --gd-color-accent-800: #365314;
+    --gd-color-accent-900: #1a2e05;
 
     /* ===== SEMANTIC COLORS ===== */
-    --gd-color-success: #4caf50;
-    --gd-color-warning: #ff9800;
-    --gd-color-danger: #f44336;
-    --gd-color-info: #2196f3;
+    --gd-color-success: #10b981;
+    --gd-color-success-light: #d1fae5;
+    --gd-color-success-dark: #047857;
 
-    /* ===== BACKGROUND COLORS ===== */
-    --gd-bg-primary: #ffffff;
-    --gd-bg-secondary: #f8fdf8;
-    --gd-bg-tertiary: #f1f8e9;
-    --gd-bg-dark: #2e7d32;
-    --gd-bg-darker: #1b5e20;
+    --gd-color-warning: #f59e0b;
+    --gd-color-warning-light: #fef3c7;
+    --gd-color-warning-dark: #d97706;
 
-    /* ===== TEXT COLORS ===== */
-    --gd-text-primary: #1b5e20;
-    --gd-text-secondary: #2e7d32;
-    --gd-text-tertiary: #4caf50;
+    --gd-color-danger: #ef4444;
+    --gd-color-danger-light: #fecaca;
+    --gd-color-danger-dark: #dc2626;
+
+    --gd-color-info: var(--gd-color-primary-500);
+    --gd-color-info-light: var(--gd-color-primary-50);
+    --gd-color-info-dark: var(--gd-color-primary-700);
+
+    /* ===== INTELLIGENT BACKGROUND SYSTEM ===== */
+    --gd-bg-primary: #fefffe;
+    --gd-bg-secondary: #f9fef9;
+    --gd-bg-tertiary: #f0fdf4;
+    --gd-bg-quaternary: #e5f5e5;
+    --gd-bg-elevated: #ffffff;
+    --gd-bg-overlay: rgba(6, 78, 59, 0.4);
+
+    /* Background variants */
+    --gd-bg-primary-subtle: var(--gd-color-primary-50);
+    --gd-bg-secondary-subtle: var(--gd-color-secondary-50);
+    --gd-bg-accent-subtle: var(--gd-color-accent-50);
+
+    /* ===== INTELLIGENT TEXT SYSTEM ===== */
+    --gd-text-primary: #0f172a;
+    --gd-text-secondary: #1e293b;
+    --gd-text-tertiary: #475569;
+    --gd-text-quaternary: #64748b;
+    --gd-text-disabled: #cbd5e1;
     --gd-text-inverse: #ffffff;
-    --gd-text-muted: #81c784;
-    --gd-text-disabled: #c8e6c9;
+    --gd-text-muted: #64748b;
+
+    /* Text on colored backgrounds */
+    --gd-text-on-primary: #ffffff;
+    --gd-text-on-secondary: #ffffff;
+    --gd-text-on-accent: #ffffff;
+
+    /* ===== BORDER SYSTEM ===== */
+    --gd-border-light: rgba(16, 185, 129, 0.08);
+    --gd-border-medium: rgba(16, 185, 129, 0.15);
+    --gd-border-strong: rgba(16, 185, 129, 0.25);
+    --gd-border-primary: var(--gd-color-primary-300);
+    --gd-border-focus: var(--gd-color-primary-500);
 
     /* ===== SURFACE COLORS ===== */
-    --gd-surface-1: #ffffff;
-    --gd-surface-2: #f8fdf8;
-    --gd-surface-3: #f1f8e9;
-    --gd-surface-4: #e8f5e8;
-    --gd-surface-raised: #ffffff;
-    --gd-surface-overlay: rgba(76, 175, 80, 0.1);
-
-    /* ===== BORDER COLORS ===== */
-    --gd-border-light: rgba(76, 175, 80, 0.12);
-    --gd-border-medium: rgba(76, 175, 80, 0.24);
-    --gd-border-dark: rgba(76, 175, 80, 0.38);
-    --gd-border-focus: var(--gd-color-primary);
+    --gd-surface-1: var(--gd-bg-primary);
+    --gd-surface-2: var(--gd-bg-secondary);
+    --gd-surface-3: var(--gd-bg-tertiary);
+    --gd-surface-4: var(--gd-bg-quaternary);
+    --gd-surface-raised: var(--gd-bg-elevated);
+    --gd-surface-overlay: var(--gd-bg-overlay);
 
     /* ===== GRADIENTS ===== */
-    --gd-gradient-primary: linear-gradient(135deg, #00c851 0%, #2e7d32 100%);
-    --gd-gradient-secondary: linear-gradient(135deg, #4caf50 0%, #00c851 100%);
-    --gd-gradient-accent: linear-gradient(45deg, #66bb6a, #4caf50);
-    --gd-gradient-hero: linear-gradient(135deg, #ffffff 0%, #f1f8e9 50%, #f8fdf8 100%);
-    --gd-gradient-dark: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+    --gd-gradient-primary: linear-gradient(135deg,
+            var(--gd-color-primary-400) 0%,
+            var(--gd-color-primary-600) 50%,
+            var(--gd-color-primary-800) 100%);
+
+    --gd-gradient-secondary: linear-gradient(135deg,
+            var(--gd-color-secondary-300) 0%,
+            var(--gd-color-secondary-500) 50%,
+            var(--gd-color-secondary-700) 100%);
+
+    --gd-gradient-accent: linear-gradient(135deg,
+            var(--gd-color-accent-300) 0%,
+            var(--gd-color-accent-500) 50%,
+            var(--gd-color-accent-700) 100%);
+
+    --gd-gradient-hero: linear-gradient(135deg,
+            var(--gd-color-primary-50) 0%,
+            var(--gd-color-secondary-50) 35%,
+            var(--gd-color-accent-50) 100%);
+
+    --gd-gradient-subtle: linear-gradient(135deg,
+            var(--gd-bg-primary) 0%,
+            var(--gd-bg-secondary) 50%,
+            var(--gd-bg-tertiary) 100%);
 
     /* ===== SHADOWS ===== */
-    --gd-shadow-sm: 0 1px 2px 0 rgba(76, 175, 80, 0.06);
-    --gd-shadow-base: 0 1px 3px 0 rgba(76, 175, 80, 0.12), 0 1px 2px 0 rgba(76, 175, 80, 0.08);
-    --gd-shadow-md: 0 4px 6px -1px rgba(76, 175, 80, 0.12), 0 2px 4px -1px rgba(76, 175, 80, 0.08);
-    --gd-shadow-lg: 0 10px 15px -3px rgba(76, 175, 80, 0.16), 0 4px 6px -2px rgba(76, 175, 80, 0.08);
-    --gd-shadow-xl: 0 20px 25px -5px rgba(76, 175, 80, 0.16), 0 10px 10px -5px rgba(76, 175, 80, 0.12);
-    --gd-shadow-2xl: 0 25px 50px -12px rgba(76, 175, 80, 0.24);
-    --gd-shadow-inner: inset 0 2px 4px 0 rgba(76, 175, 80, 0.08);
+    --gd-shadow-sm: 0 1px 2px 0 rgba(16, 185, 129, 0.05);
+    --gd-shadow-base: 0 1px 3px 0 rgba(16, 185, 129, 0.1), 0 1px 2px 0 rgba(16, 185, 129, 0.06);
+    --gd-shadow-md: 0 4px 6px -1px rgba(16, 185, 129, 0.1), 0 2px 4px -1px rgba(16, 185, 129, 0.06);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(16, 185, 129, 0.1), 0 4px 6px -2px rgba(16, 185, 129, 0.05);
+    --gd-shadow-xl: 0 20px 25px -5px rgba(16, 185, 129, 0.1), 0 10px 10px -5px rgba(16, 185, 129, 0.04);
+    --gd-shadow-2xl: 0 25px 50px -12px rgba(16, 185, 129, 0.25);
+    --gd-shadow-inner: inset 0 2px 4px 0 rgba(16, 185, 129, 0.06);
 
-    /* ===== COMPONENT SPECIFIC ===== */
+    /* Colored shadows for special elements */
+    --gd-shadow-primary: 0 4px 14px 0 rgba(16, 185, 129, 0.15);
+    --gd-shadow-secondary: 0 4px 14px 0 rgba(22, 163, 74, 0.15);
+    --gd-shadow-accent: 0 4px 14px 0 rgba(132, 204, 22, 0.15);
+
+    /* ===== COMPONENT SPECIFIC VARIABLES ===== */
 
     /* Navigation */
-    --gd-nav-bg: rgba(255, 255, 255, 0.95);
-    --gd-nav-border: rgba(76, 175, 80, 0.12);
-    --gd-nav-shadow: 0 4px 20px rgba(76, 175, 80, 0.08);
+    --gd-nav-bg: rgba(255, 255, 255, 0.85);
+    --gd-nav-bg-solid: var(--gd-bg-elevated);
+    --gd-nav-backdrop-blur: 20px;
+    --gd-nav-border: var(--gd-border-light);
+    --gd-nav-shadow: var(--gd-shadow-lg);
     --gd-nav-link-color: var(--gd-text-secondary);
-    --gd-nav-link-hover: var(--gd-color-primary);
-    --gd-nav-link-active: var(--gd-color-accent);
+    --gd-nav-link-hover: var(--gd-text-primary);
+    --gd-nav-link-active: var(--gd-color-primary-600);
+
+    /* Buttons */
+    --gd-btn-padding-sm: var(--gd-space-2) var(--gd-space-4);
+    --gd-btn-padding-base: var(--gd-space-3) var(--gd-space-6);
+    --gd-btn-padding-lg: var(--gd-space-4) var(--gd-space-8);
+    --gd-btn-radius: var(--gd-radius-lg);
+    --gd-btn-font-weight: var(--gd-font-weight-semibold);
+    --gd-btn-transition: var(--gd-transition-base);
 
     /* Cards */
-    --gd-card-bg: var(--gd-surface-1);
-    --gd-card-border: rgba(76, 175, 80, 0.12);
-    --gd-card-shadow: 0 4px 20px rgba(76, 175, 80, 0.08);
-    --gd-card-shadow-hover: 0 8px 30px rgba(76, 175, 80, 0.16);
-
-    /* Special minimal effects */
-    --gd-minimal-glow: 0 0 0 4px rgba(76, 175, 80, 0.1);
-    --gd-minimal-border-accent: 2px solid var(--gd-color-primary);
+    --gd-card-bg: var(--gd-surface-raised);
+    --gd-card-border: var(--gd-border-light);
+    --gd-card-radius: var(--gd-radius-xl);
+    --gd-card-shadow: var(--gd-shadow-base);
+    --gd-card-shadow-hover: var(--gd-shadow-lg);
+    --gd-card-padding-sm: var(--gd-space-4);
+    --gd-card-padding-base: var(--gd-space-6);
+    --gd-card-padding-lg: var(--gd-space-8);
 }
 
 /* ===== MINIMAL GREEN THEME SPECIFIC ENHANCEMENTS ===== */
