@@ -1,0 +1,365 @@
+/* ProfileDropdown.css - Using theme variables for consistency */
+
+/* ===== PROFILE DROPDOWN CONTAINER ===== */
+.profile-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* ===== TRIGGER BUTTON ===== */
+.profile-dropdown__trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--gd-space-2);
+    padding: var(--gd-space-2);
+    background: none;
+    border: 1px solid var(--gd-border-light);
+    border-radius: var(--gd-radius-lg);
+    color: var(--gd-text-primary);
+    cursor: pointer;
+    transition: var(--gd-transition-base);
+    font-family: inherit;
+    font-size: var(--gd-font-size-sm);
+    font-weight: var(--gd-font-weight-medium);
+    min-height: 40px;
+}
+
+.profile-dropdown__trigger:hover {
+    background: var(--gd-bg-secondary);
+    border-color: var(--gd-border-medium);
+    transform: translateY(-1px);
+}
+
+.profile-dropdown__trigger:focus {
+    outline: 2px solid var(--gd-border-focus);
+    outline-offset: 2px;
+    border-color: var(--gd-border-focus);
+}
+
+.profile-dropdown--open .profile-dropdown__trigger {
+    background: var(--gd-bg-secondary);
+    border-color: var(--gd-border-focus);
+    box-shadow: var(--gd-input-shadow-focus);
+}
+
+/* ===== LOGIN BUTTON VARIANT ===== */
+.profile-dropdown__trigger--login {
+    background: var(--gd-color-primary);
+    color: var(--gd-text-on-primary);
+    border-color: var(--gd-color-primary);
+    padding: var(--gd-space-3) var(--gd-space-5);
+    font-weight: var(--gd-font-weight-semibold);
+}
+
+.profile-dropdown__trigger--login:hover {
+    background: var(--gd-color-primary-600);
+    border-color: var(--gd-color-primary-600);
+    color: var(--gd-text-on-primary);
+    box-shadow: var(--gd-shadow-primary);
+}
+
+.profile-dropdown__trigger--login:focus {
+    outline-color: var(--gd-color-primary-300);
+    box-shadow: var(--gd-input-shadow-focus);
+}
+
+.profile-dropdown__login-text {
+    white-space: nowrap;
+}
+
+/* ===== AVATAR ===== */
+.profile-dropdown__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--gd-color-primary);
+    color: var(--gd-text-on-primary);
+    border-radius: var(--gd-radius-full);
+    font-size: var(--gd-font-size-sm);
+    font-weight: var(--gd-font-weight-semibold);
+    flex-shrink: 0;
+}
+
+.profile-dropdown__initials {
+    user-select: none;
+    line-height: 1;
+}
+
+/* ===== CARET ICON ===== */
+.profile-dropdown__caret {
+    display: flex;
+    align-items: center;
+    color: var(--gd-text-tertiary);
+    transition: var(--gd-transition-base);
+    flex-shrink: 0;
+}
+
+.profile-dropdown--open .profile-dropdown__caret {
+    transform: rotate(180deg);
+    color: var(--gd-text-primary);
+}
+
+/* ===== DROPDOWN MENU ===== */
+.profile-dropdown__menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: var(--gd-z-dropdown);
+    min-width: 280px;
+    margin-top: var(--gd-space-2);
+    background: var(--gd-modal-bg);
+    border: 1px solid var(--gd-border-light);
+    border-radius: var(--gd-modal-radius);
+    box-shadow: var(--gd-shadow-xl);
+    overflow: hidden;
+    animation: profile-dropdown-enter 0.15s ease-out;
+}
+
+@keyframes profile-dropdown-enter {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ===== MENU HEADER (User Info) ===== */
+.profile-dropdown__header {
+    display: flex;
+    align-items: center;
+    gap: var(--gd-space-3);
+    padding: var(--gd-space-4);
+    background: var(--gd-bg-primary-subtle);
+    border-bottom: 1px solid var(--gd-border-light);
+}
+
+.profile-dropdown__user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--gd-color-primary);
+    color: var(--gd-text-on-primary);
+    border-radius: var(--gd-radius-full);
+    font-size: var(--gd-font-size-base);
+    font-weight: var(--gd-font-weight-semibold);
+    flex-shrink: 0;
+}
+
+.profile-dropdown__user-initials {
+    user-select: none;
+    line-height: 1;
+}
+
+.profile-dropdown__user-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-dropdown__user-name {
+    font-size: var(--gd-font-size-sm);
+    font-weight: var(--gd-font-weight-semibold);
+    color: var(--gd-text-primary);
+    margin-bottom: var(--gd-space-1);
+    word-break: break-word;
+}
+
+.profile-dropdown__user-email {
+    font-size: var(--gd-font-size-xs);
+    color: var(--gd-text-tertiary);
+    word-break: break-all;
+    margin-bottom: var(--gd-space-1);
+}
+
+.profile-dropdown__user-role {
+    display: inline-block;
+    padding: var(--gd-space-1) var(--gd-space-2);
+    background: var(--gd-color-accent);
+    color: var(--gd-text-on-accent);
+    font-size: var(--gd-font-size-xs);
+    font-weight: var(--gd-font-weight-medium);
+    border-radius: var(--gd-radius-base);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ===== MENU DIVIDER ===== */
+.profile-dropdown__divider {
+    height: 1px;
+    background: var(--gd-border-light);
+    margin: var(--gd-space-2) 0;
+}
+
+/* ===== MENU ITEMS ===== */
+.profile-dropdown__items {
+    padding: var(--gd-space-2);
+}
+
+.profile-dropdown__item {
+    display: flex;
+    align-items: center;
+    gap: var(--gd-space-3);
+    width: 100%;
+    padding: var(--gd-space-3) var(--gd-space-4);
+    background: none;
+    border: none;
+    border-radius: var(--gd-radius-md);
+    color: var(--gd-text-primary);
+    font-family: inherit;
+    font-size: var(--gd-font-size-sm);
+    font-weight: var(--gd-font-weight-medium);
+    text-align: left;
+    cursor: pointer;
+    transition: var(--gd-transition-base);
+    min-height: 40px;
+}
+
+.profile-dropdown__item:hover {
+    background: var(--gd-bg-secondary);
+    color: var(--gd-text-primary);
+}
+
+.profile-dropdown__item:focus {
+    outline: 2px solid var(--gd-border-focus);
+    outline-offset: -2px;
+    background: var(--gd-bg-secondary);
+}
+
+.profile-dropdown__item--danger {
+    color: var(--gd-color-danger);
+}
+
+.profile-dropdown__item--danger:hover {
+    background: var(--gd-color-danger-light);
+    color: var(--gd-color-danger-dark);
+}
+
+.profile-dropdown__item--danger:focus {
+    outline-color: var(--gd-color-danger);
+    background: var(--gd-color-danger-light);
+}
+
+/* ===== MENU ITEM ELEMENTS ===== */
+.profile-dropdown__item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: currentColor;
+}
+
+.profile-dropdown__item-text {
+    flex: 1;
+    white-space: nowrap;
+    color: currentColor;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 767px) {
+
+    /* Mobile: Adjust dropdown positioning and size */
+    .profile-dropdown__menu {
+        min-width: 260px;
+        max-width: calc(100vw - var(--gd-space-8));
+    }
+
+    .profile-dropdown__header {
+        padding: var(--gd-space-3);
+    }
+
+    .profile-dropdown__user-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: var(--gd-font-size-sm);
+    }
+
+    .profile-dropdown__avatar {
+        width: 28px;
+        height: 28px;
+        font-size: var(--gd-font-size-xs);
+    }
+
+    .profile-dropdown__trigger {
+        padding: var(--gd-space-2);
+        min-height: 36px;
+    }
+
+    .profile-dropdown__trigger--login {
+        padding: var(--gd-space-2_5) var(--gd-space-4);
+    }
+}
+
+/* ===== ACCESSIBILITY ENHANCEMENTS ===== */
+@media (prefers-reduced-motion: reduce) {
+    .profile-dropdown__menu {
+        animation: none;
+    }
+
+    .profile-dropdown__trigger,
+    .profile-dropdown__item,
+    .profile-dropdown__caret {
+        transition: none;
+    }
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+    .profile-dropdown__trigger {
+        border-width: 2px;
+    }
+
+    .profile-dropdown__menu {
+        border-width: 2px;
+    }
+
+    .profile-dropdown__item:focus {
+        outline-width: 3px;
+    }
+}
+
+/* ===== THEME-SPECIFIC ENHANCEMENTS ===== */
+/* These will be activated by the theme system */
+
+/* Dark themes enhancement */
+html[data-theme*="dark"] .profile-dropdown__menu,
+html[data-theme*="cyber"] .profile-dropdown__menu {
+    backdrop-filter: blur(var(--gd-backdrop-blur));
+    -webkit-backdrop-filter: blur(var(--gd-backdrop-blur));
+}
+
+/* Arctic Frost theme enhancement */
+html[data-theme="arctic-frost"] .profile-dropdown__avatar,
+html[data-theme="arctic-frost"] .profile-dropdown__user-avatar {
+    box-shadow: 0 0 10px rgba(74, 144, 226, 0.2);
+}
+
+html[data-theme="arctic-frost"] .profile-dropdown__menu {
+    box-shadow: var(--gd-shadow-2xl), 0 0 20px rgba(74, 144, 226, 0.1);
+}
+
+/* Gaming themes enhancement */
+html[data-theme="gaming-inferno"] .profile-dropdown__user-role,
+html[data-theme="electric-storm"] .profile-dropdown__user-role {
+    text-shadow: 0 0 4px currentColor;
+}
+
+/* ===== STATES & LOADING ===== */
+.profile-dropdown--loading .profile-dropdown__trigger {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.profile-dropdown--error .profile-dropdown__trigger {
+    border-color: var(--gd-color-danger);
+    color: var(--gd-color-danger);
+}
