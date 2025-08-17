@@ -292,6 +292,7 @@
     .profile-dropdown__trigger {
         padding: var(--gd-space-2);
         min-height: 36px;
+        width: 100%;
     }
 
     .profile-dropdown__trigger--login {
@@ -362,4 +363,128 @@ html[data-theme="electric-storm"] .profile-dropdown__user-role {
 .profile-dropdown--error .profile-dropdown__trigger {
     border-color: var(--gd-color-danger);
     color: var(--gd-color-danger);
+}
+
+/* Add these styles to your existing ProfileDropdown.css file */
+
+/* ===== LOADING SPINNER ===== */
+.profile-dropdown__loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ffffff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== GOOGLE AUTH BUTTON ENHANCEMENTS ===== */
+.profile-dropdown__trigger--login {
+    display: flex;
+    align-items: center;
+    gap: var(--gd-space-2);
+    padding: var(--gd-space-3) var(--gd-space-5);
+    background: #4285f4;
+    color: white;
+    border: none;
+    border-radius: var(--gd-radius-lg);
+    font-size: var(--gd-font-size-sm);
+    font-weight: var(--gd-font-weight-semibold);
+    font-family: var(--gd-font-family-primary);
+    cursor: pointer;
+    transition: var(--gd-transition-base);
+    min-width: 100px;
+    justify-content: center;
+}
+
+.profile-dropdown__trigger--login:hover:not(:disabled) {
+    background: #3367d6;
+    transform: translateY(-1px);
+    box-shadow: var(--gd-shadow-lg);
+}
+
+.profile-dropdown__trigger--login:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.profile-dropdown__trigger--login:disabled {
+    background: var(--gd-text-quaternary);
+    cursor: not-allowed;
+    transform: none;
+    opacity: 0.7;
+}
+
+.profile-dropdown__google-icon {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.profile-dropdown__login-text {
+    font-weight: var(--gd-font-weight-semibold);
+    white-space: nowrap;
+}
+
+/* ===== CUSTOM LOGIN FALLBACK ===== */
+.profile-dropdown__custom-login {
+    padding: var(--gd-space-2) var(--gd-space-3);
+    background: var(--gd-bg-secondary);
+    color: var(--gd-text-primary);
+    border: 1px solid var(--gd-border-medium);
+    border-radius: var(--gd-radius-base);
+    font-size: var(--gd-font-size-xs);
+    font-weight: var(--gd-font-weight-medium);
+    cursor: pointer;
+    transition: var(--gd-transition-base);
+}
+
+.profile-dropdown__custom-login:hover:not(:disabled) {
+    background: var(--gd-bg-tertiary);
+    border-color: var(--gd-border-strong);
+}
+
+.profile-dropdown__custom-login:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 480px) {
+    .profile-dropdown__trigger--login {
+        min-width: 80px;
+        padding: var(--gd-space-2) var(--gd-space-4);
+        font-size: var(--gd-font-size-xs);
+    }
+
+    .profile-dropdown__custom-login {
+        display: none;
+        /* Hide fallback on mobile */
+    }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+    .profile-dropdown__loading-spinner {
+        animation: none;
+    }
+
+    .profile-dropdown__trigger--login {
+        transition: none;
+    }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+    .profile-dropdown__trigger--login {
+        border: 2px solid var(--gd-border-strong);
+    }
+
+    .profile-dropdown__trigger--login:disabled {
+        border-color: var(--gd-text-disabled);
+    }
 }

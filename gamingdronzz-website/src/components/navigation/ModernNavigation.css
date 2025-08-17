@@ -1,4 +1,4 @@
-/* ModernNavigation.css - Using theme variables */
+/* ModernNavigation.css - Fixed layout and mobile integration */
 
 /* ===== MAIN NAVIGATION ===== */
 .modern-nav {
@@ -44,6 +44,7 @@
     cursor: pointer;
     transition: var(--gd-transition-base);
     letter-spacing: -0.5px;
+    flex-shrink: 0;
 }
 
 .modern-nav__brand:hover {
@@ -51,7 +52,7 @@
     transform: translateY(-1px);
 }
 
-/* ===== DESKTOP NAVIGATION ===== */
+/* ===== DESKTOP NAVIGATION - CENTERED ===== */
 .modern-nav__list {
     display: flex;
     align-items: center;
@@ -122,6 +123,24 @@
 
 .modern-nav__label {
     transition: var(--gd-transition-base);
+}
+
+/* ===== RIGHT SIDE CONTAINER ===== */
+.modern-nav__right {
+    display: flex;
+    align-items: center;
+    gap: var(--gd-space-4);
+    flex-shrink: 0;
+}
+
+/* ===== PROFILE INTEGRATION ===== */
+.modern-nav__profile {
+    /* Profile dropdown styling handled in ProfileDropdown.css */
+}
+
+.modern-nav__profile--mobile {
+    width: 100%;
+    margin-top: var(--gd-space-4);
 }
 
 /* ===== HAMBURGER MENU ===== */
@@ -197,7 +216,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: var(--gd-space-8) 0;
+    padding: var(--gd-space-8) var(--gd-space-6);
     margin: 0;
     list-style: none;
     height: 100%;
@@ -240,6 +259,10 @@
 
 .modern-nav--open .modern-nav__mobile-item:nth-child(6) {
     transition-delay: 0.35s;
+}
+
+.modern-nav--open .modern-nav__mobile-item:nth-child(7) {
+    transition-delay: 0.4s;
 }
 
 .modern-nav__mobile-link {
@@ -296,6 +319,13 @@
     z-index: 1;
 }
 
+/* ===== MOBILE PROFILE SECTION ===== */
+.modern-nav__mobile-item--profile {
+    margin-top: var(--gd-space-8);
+    border-top: 1px solid var(--gd-border-light);
+    padding-top: var(--gd-space-6);
+}
+
 /* ===== ACCESSIBILITY ===== */
 .modern-nav--keyboard .modern-nav__link:focus {
     outline: 2px solid var(--gd-border-focus);
@@ -340,6 +370,11 @@
     .modern-nav__brand {
         font-size: var(--gd-font-size-xl);
     }
+
+    /* Hide desktop profile dropdown on mobile */
+    .modern-nav__profile:not(.modern-nav__profile--mobile) {
+        display: none;
+    }
 }
 
 @media (min-width: 768px) {
@@ -347,6 +382,11 @@
     .modern-nav__hamburger,
     .modern-nav__mobile-overlay {
         display: none !important;
+    }
+
+    /* Hide mobile profile dropdown on desktop */
+    .modern-nav__profile--mobile {
+        display: none;
     }
 }
 
@@ -359,6 +399,10 @@
     .modern-nav__link {
         padding: var(--gd-space-4) var(--gd-space-5);
         font-size: var(--gd-font-size-sm);
+    }
+
+    .modern-nav__right {
+        gap: var(--gd-space-3);
     }
 }
 

@@ -12,9 +12,10 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
     className = ''
 }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [authLoading, setAuthLoading] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const { user, isAdmin, isAuthenticated, signOut } = useAuth();
+    const { user, isAdmin, isAuthenticated, signOut, signInWithGoogle } = useAuth();
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -66,7 +67,29 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         }
     }, [signOut]);
 
-    const handleLoginClick = useCallback(() => {
+    // Updated login handler to use Google auth directly
+    const handleLoginClick = useCallback(async () => {
+        if (authLoading) return;
+
+        setAuthLoading(true);
+        setIsOpen(false);
+
+        try {
+            console.log('Starting Google sign in from navigation...');
+            const result = await signInWithGoogle();
+
+            if (!result.success) {
+                console.error('Google sign in failed:', result.error);
+            }
+        } catch (error) {
+            console.error('Google sign in error:', error);
+        } finally {
+            setAuthLoading(false);
+        }
+    }, [signInWithGoogle, authLoading]);
+
+    // Fallback to custom login if provided
+    const handleCustomLogin = useCallback(() => {
         setIsOpen(false);
         onLoginClick?.();
     }, [onLoginClick]);
@@ -117,23 +140,47 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
     ].filter(Boolean).join(' ');
 
     if (!isAuthenticated) {
-        // Not signed in state
+        // Not signed in state - Updated with Google auth
         return (
             <div className={profileClasses}>
                 <button
                     ref={buttonRef}
                     className="profile-dropdown__trigger profile-dropdown__trigger--login"
                     onClick={handleLoginClick}
-                    aria-label="Sign in"
+                    disabled={authLoading}
+                    aria-label={authLoading ? "Signing in..." : "Sign in with Google"}
                     type="button"
                 >
-                    <span className="profile-dropdown__login-text">Sign In</span>
+                    {authLoading ? (
+                        <>
+                            <span className="profile-dropdown__loading-spinner"></span>
+                            <span className="profile-dropdown__login-text">Signing in...</span>
+                        </>
+                    ) : (
+                        <>
+                            <span className="profile-dropdown__google-icon">🔐</span>
+                            <span className="profile-dropdown__login-text">Sign In</span>
+                        </>
+                    )}
                 </button>
+
+                {/* Optional: Custom login fallback */}
+                {onLoginClick && (
+                    <button
+                        className="profile-dropdown__custom-login"
+                        onClick={handleCustomLogin}
+                        disabled={authLoading}
+                        type="button"
+                        style={{ marginLeft: '8px' }}
+                    >
+                        Custom Login
+                    </button>
+                )}
             </div>
         );
     }
 
-    // Signed in state
+    // Signed in state (unchanged)
     return (
         <div className={profileClasses}>
             <button

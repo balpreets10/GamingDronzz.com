@@ -59,9 +59,22 @@ export const currentEnvironment = getEnvironment();
 const getConfig = (): EnvironmentConfig => {
     const env = currentEnvironment as keyof typeof configs;
 
-    // if (configs[env]) {
-    //     return configs[env];
-    // }
+    // Debug logging for development
+    if (currentEnvironment === 'development') {
+        console.log('🔍 Environment Detection Debug:', {
+            detected: env,
+            available: Object.keys(configs),
+            exists: !!configs[env],
+            viteMode: typeof import.meta !== 'undefined' ? import.meta.env?.MODE : 'undefined',
+            viteEnv: typeof import.meta !== 'undefined' ? import.meta.env?.VITE_APP_ENV : 'undefined',
+            nodeEnv: typeof process !== 'undefined' ? process.env?.NODE_ENV : 'undefined'
+        });
+    }
+
+    // Check if the environment exists in configs
+    if (configs[env]) {
+        return configs[env] as EnvironmentConfig;
+    }
 
     // Enhanced error handling for unknown environments
     const availableEnvs = Object.keys(configs).join(', ');

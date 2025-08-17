@@ -1,5 +1,5 @@
-// managers/AuthManager.ts - Enhanced with Google OAuth integration
-import { Session, User } from '@supabase/supabase-js';
+// managers/AuthManager.ts - Fixed Supabase auth integration
+import { Session, User, AuthChangeEvent } from '@supabase/supabase-js';
 import SupabaseService from '../services/SupabaseService';
 
 interface AuthState {
@@ -19,7 +19,7 @@ class AuthManager {
     private static instance: AuthManager;
     private state: AuthState;
     private subscribers: Set<AuthSubscriber>;
-    private authListener: { data?: { subscription?: { unsubscribe: () => void } } } | null;
+    private authListener: (() => void) | null = null;
     private readonly LOCKOUT_DURATION = 15 * 60 * 1000; // 15 minutes
     private readonly MAX_ATTEMPTS = 10;
     private readonly LOCKOUT_KEY = 'auth_lockout';
@@ -38,7 +38,6 @@ class AuthManager {
             lockoutExpiry: this.getLockoutExpiry()
         };
         this.subscribers = new Set();
-        this.authListener = null;
     }
 
     static getInstance(): AuthManager {
@@ -48,7 +47,6 @@ class AuthManager {
         return AuthManager.instance;
     }
 
-    // Set notification callback for success/error messages
     setNotificationCallback(callback: (message: string, type: 'success' | 'error') => void): void {
         this.notificationCallback = callback;
     }
@@ -57,7 +55,6 @@ class AuthManager {
         if (this.notificationCallback) {
             this.notificationCallback(message, type);
         } else {
-            // Fallback to console
             console.log(`${type.toUpperCase()}: ${message}`);
         }
     }
@@ -68,6 +65,7 @@ class AuthManager {
         try {
             this.checkAndUpdateLockout();
 
+            // Fixed: Use correct response structure
             const { session, error } = await SupabaseService.getSession();
 
             if (!error && session) {
@@ -75,8 +73,9 @@ class AuthManager {
                 this.resetFailedAttempts();
             }
 
+            // Fixed: Proper Supabase auth listener with correct return type
             this.authListener = SupabaseService.onAuthStateChange(
-                async (event: string, session: Session | null) => {
+                async (event: AuthChangeEvent, session: Session | null) => {
                     console.log('Auth event:', event, session?.user?.email);
 
                     switch (event) {
@@ -85,7 +84,6 @@ class AuthManager {
                                 await this.handleUserSession(session);
                                 this.resetFailedAttempts();
 
-                                // Show success notification for Google login
                                 const provider = session.user.app_metadata?.provider;
                                 if (provider === 'google') {
                                     const userName = this.getDisplayName(session.user);
@@ -132,7 +130,6 @@ class AuthManager {
         });
     }
 
-    // Helper to get display name from user
     private getDisplayName(user: User): string {
         return user.user_metadata?.full_name ||
             user.user_metadata?.name ||
@@ -257,7 +254,6 @@ class AuthManager {
                 throw error;
             }
 
-            // Note: Success notification will be shown in the auth state change handler
             return { success: true, data };
         } catch (error) {
             console.error('Google sign in error:', error);
@@ -285,7 +281,6 @@ class AuthManager {
                 throw error;
             }
 
-            // Success notification will be shown in auth state change handler
             return { success: true, data };
         } catch (error) {
             console.error('Email sign in error:', error);
@@ -379,8 +374,8 @@ class AuthManager {
 
     // ===== CLEANUP ===== //
     destroy(): void {
-        if (this.authListener?.data?.subscription) {
-            this.authListener.data.subscription.unsubscribe();
+        if (this.authListener) {
+            this.authListener();
         }
         this.subscribers.clear();
         AuthManager.instance = null as any;
