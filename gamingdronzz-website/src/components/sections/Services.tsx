@@ -268,7 +268,8 @@ interface ServiceProcessProps {
 }
 
 const ServiceProcess: React.FC<ServiceProcessProps> = ({ process }) => {
-    const { elementRef: processRef, isIntersecting: isVisible } = useIntersectionObserver({
+    // Fix: Specify HTMLDivElement as the generic type
+    const { elementRef: processRef, isIntersecting: isVisible } = useIntersectionObserver<HTMLDivElement>({
         threshold: 0.2
     });
 

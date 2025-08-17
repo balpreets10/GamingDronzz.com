@@ -14,9 +14,9 @@ export const stagingConfig = {
         }
     },
     analytics: {
-        enabled: false,
+        enabled: true,
         debug: true,
-        trackingId: 'STAGING-DISABLED'
+        trackingId: import.meta.env.VITE_GA_STAGING_TRACKING_ID || 'STAGING-TRACKING-ID'
     },
     features: {
         adminPanel: true,
@@ -43,7 +43,7 @@ export const stagingConfig = {
     environment: 'staging',
     buildInfo: {
         version: import.meta.env.VITE_APP_VERSION || '1.0.0-staging',
-        buildTime: new Date().toISOString(),
-        gitBranch: 'staging'
+        buildTime: import.meta.env.VITE_BUILD_TIME || new Date().toISOString(),
+        gitBranch: import.meta.env.VITE_GIT_BRANCH || 'staging'
     }
 } as const;

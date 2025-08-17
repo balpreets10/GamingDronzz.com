@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import NavigationManager from '../../managers/NavigationManager';
+import ProfileDropdown from './ProfileDropdown';
 import { prefersReducedMotion } from '../../utils/helpers';
 import './ModernNavigation.css';
 
@@ -7,6 +8,7 @@ interface ModernNavigationProps {
     className?: string;
     position?: 'top' | 'bottom' | 'fixed-top' | 'fixed-bottom';
     onNavigate?: (itemId: string) => void;
+    onLoginClick?: () => void;
     brand?: string;
     brandHref?: string;
 }
@@ -23,14 +25,17 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
     className = '',
     position = 'fixed-top',
     onNavigate,
+    onLoginClick,
     brand = 'GamingDronzz',
     brandHref = '#home'
 }) => {
     const navRef = useRef<HTMLDivElement>(null);
     const onNavigateRef = useRef(onNavigate);
+    const onLoginClickRef = useRef(onLoginClick);
     const managerRef = useRef<NavigationManager>();
 
     onNavigateRef.current = onNavigate;
+    onLoginClickRef.current = onLoginClick;
 
     if (!managerRef.current) {
         managerRef.current = NavigationManager.getInstance();
@@ -145,6 +150,10 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
         }
     }, [brandHref, config.items, handleItemClick]);
 
+    const handleLoginClick = useCallback(() => {
+        onLoginClickRef.current?.();
+    }, []);
+
     const navClasses = useMemo(() => [
         'modern-nav',
         `modern-nav--${position}`,
@@ -215,19 +224,28 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                     })}
                 </ul>
 
-                {/* Hamburger Menu Button */}
-                <button
-                    className="modern-nav__hamburger"
-                    onClick={toggleMobileMenu}
-                    aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-                    aria-expanded={isMobileMenuOpen}
-                    aria-controls="mobile-nav-menu"
-                    type="button"
-                >
-                    <span className="modern-nav__hamburger-line"></span>
-                    <span className="modern-nav__hamburger-line"></span>
-                    <span className="modern-nav__hamburger-line"></span>
-                </button>
+                {/* Right side - Profile Dropdown + Hamburger */}
+                <div className="modern-nav__right">
+                    {/* Profile Dropdown - Desktop */}
+                    <ProfileDropdown
+                        onLoginClick={handleLoginClick}
+                        className="modern-nav__profile"
+                    />
+
+                    {/* Hamburger Menu Button */}
+                    <button
+                        className="modern-nav__hamburger"
+                        onClick={toggleMobileMenu}
+                        aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                        aria-expanded={isMobileMenuOpen}
+                        aria-controls="mobile-nav-menu"
+                        type="button"
+                    >
+                        <span className="modern-nav__hamburger-line"></span>
+                        <span className="modern-nav__hamburger-line"></span>
+                        <span className="modern-nav__hamburger-line"></span>
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Navigation Overlay */}
@@ -257,6 +275,14 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                             </li>
                         );
                     })}
+
+                    {/* Mobile Profile Section */}
+                    <li className="modern-nav__mobile-item modern-nav__mobile-item--profile">
+                        <ProfileDropdown
+                            onLoginClick={handleLoginClick}
+                            className="modern-nav__profile--mobile"
+                        />
+                    </li>
                 </ul>
             </div>
         </nav>
