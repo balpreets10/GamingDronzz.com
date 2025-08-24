@@ -2,72 +2,72 @@
 
 html[data-theme="electric-storm"] {
     /* ===== PRIMARY COLOR SYSTEM ===== */
-    /* Softer electric yellow - more golden and less harsh */
-    --gd-color-primary: #E6B800;
-    --gd-color-primary-50: #FFFDF0;
-    --gd-color-primary-100: #FFF9D9;
-    --gd-color-primary-200: #FFF2B3;
-    --gd-color-primary-300: #FFE680;
-    --gd-color-primary-400: #F0D633;
-    --gd-color-primary-500: #E6B800;
-    --gd-color-primary-600: #CCA500;
-    --gd-color-primary-700: #B39200;
-    --gd-color-primary-800: #997F00;
-    --gd-color-primary-900: #806600;
+    /* Electric blue-cyan - vibrant yet pleasing */
+    --gd-color-primary: #00D4FF;
+    --gd-color-primary-50: #F0FDFF;
+    --gd-color-primary-100: #E0F9FF;
+    --gd-color-primary-200: #BAF2FF;
+    --gd-color-primary-300: #7AECFF;
+    --gd-color-primary-400: #33E3FF;
+    --gd-color-primary-500: #00D4FF;
+    --gd-color-primary-600: #00B8E6;
+    --gd-color-primary-700: #009CC4;
+    --gd-color-primary-800: #0080A1;
+    --gd-color-primary-900: #006B87;
 
     /* ===== SECONDARY COLOR SYSTEM ===== */
-    /* Muted purple - less saturated and easier on eyes */
-    --gd-color-secondary: #8B5FBF;
-    --gd-color-secondary-50: #F8F5FF;
-    --gd-color-secondary-100: #EDE5FF;
-    --gd-color-secondary-200: #D9CCFF;
-    --gd-color-secondary-300: #C4B3FF;
-    --gd-color-secondary-400: #A87FE6;
-    --gd-color-secondary-500: #8B5FBF;
-    --gd-color-secondary-600: #7A52A6;
-    --gd-color-secondary-700: #68458C;
-    --gd-color-secondary-800: #563973;
-    --gd-color-secondary-900: #452D59;
+    /* Electric purple - vibrant complement to the cyan */
+    --gd-color-secondary: #8A2BE2;
+    --gd-color-secondary-50: #F7F2FF;
+    --gd-color-secondary-100: #EEE5FF;
+    --gd-color-secondary-200: #DCC9FF;
+    --gd-color-secondary-300: #C5A4FF;
+    --gd-color-secondary-400: #A972FF;
+    --gd-color-secondary-500: #8A2BE2;
+    --gd-color-secondary-600: #7B24CB;
+    --gd-color-secondary-700: #6B1FB3;
+    --gd-color-secondary-800: #5A1A9B;
+    --gd-color-secondary-900: #4A1580;
 
     /* ===== ACCENT COLOR SYSTEM ===== */
-    /* Soft electric blue - toned down cyan */
-    --gd-color-accent: #5BB3D9;
-    --gd-color-accent-50: #F0F9FF;
-    --gd-color-accent-100: #E0F4FF;
-    --gd-color-accent-200: #BAE6FD;
-    --gd-color-accent-300: #7DD3FC;
-    --gd-color-accent-400: #5BB3D9;
-    --gd-color-accent-500: #0EA5E9;
-    --gd-color-accent-600: #0284C7;
-    --gd-color-accent-700: #0369A1;
-    --gd-color-accent-800: #075985;
-    --gd-color-accent-900: #0C4A6E;
+    /* Electric lime - energetic and vibrant */
+    --gd-color-accent: #ADFF2F;
+    --gd-color-accent-50: #FCFFF7;
+    --gd-color-accent-100: #F7FFED;
+    --gd-color-accent-200: #EDFFCC;
+    --gd-color-accent-300: #DDFF9A;
+    --gd-color-accent-400: #C9FF5C;
+    --gd-color-accent-500: #ADFF2F;
+    --gd-color-accent-600: #9AE629;
+    --gd-color-accent-700: #86CC22;
+    --gd-color-accent-800: #72B31C;
+    --gd-color-accent-900: #5E9915;
 
     /* ===== INTELLIGENT BACKGROUND SYSTEM ===== */
-    /* Much lighter backgrounds for better readability */
-    --gd-bg-primary: #2B2633;
-    --gd-bg-secondary: #363142;
-    --gd-bg-tertiary: #413C52;
-    --gd-bg-quaternary: #4C4661;
-    --gd-bg-elevated: #363142;
-    --gd-bg-overlay: rgba(139, 95, 191, 0.2);
+    /* Darker electric backgrounds for better contrast with bright colors */
+    --gd-bg-primary: #0A0B1A;
+    --gd-bg-secondary: #131426;
+    --gd-bg-tertiary: #1C1D33;
+    --gd-bg-quaternary: #25263F;
+    --gd-bg-elevated: #131426;
+    --gd-bg-overlay: rgba(0, 212, 255, 0.1);
 
-    --gd-bg-primary-subtle: #3D3442;
-    --gd-bg-secondary-subtle: #2B2633;
-    --gd-bg-accent-subtle: #2A3240;
+    --gd-bg-primary-subtle: #161729;
+    --gd-bg-secondary-subtle: #0A0B1A;
+    --gd-bg-accent-subtle: #0F1A0F;
 
     /* ===== INTELLIGENT TEXT SYSTEM ===== */
-    --gd-text-primary: #F5F3FF;
-    --gd-text-secondary: #D1C7E6;
-    --gd-text-tertiary: #B8A8D9;
-    --gd-text-quaternary: #9988BF;
-    --gd-text-disabled: #7A6FA6;
-    --gd-text-inverse: #2B2633;
-    --gd-text-muted: #9988BF;
+    --gd-text-primary: #E6F7FF;
+    --gd-text-secondary: #B3E5FF;
+    --gd-text-tertiary: #80D4FF;
+    --gd-text-quaternary: #4DC2FF;
+    --gd-text-disabled: #2A7A9A;
+    --gd-text-inverse: #0A0B1A;
+    --gd-text-muted: #66B8E6;
 
-    --gd-text-on-primary: #2B2633;
-    --gd-text-on-secondary: #F5F3FF;
-    --gd-text-on-accent: #F5F3FF;
+    --gd-text-on-primary: #0A0B1A;
+    --gd-text-on-secondary: #E6F7FF;
+    --gd-text-on-accent: #0A0B1A;
 
     /* ===== SEMANTIC COLORS ===== */
     --gd-color-success: #4ADE80;
@@ -87,9 +87,9 @@ html[data-theme="electric-storm"] {
     --gd-color-info-dark: var(--gd-color-accent-700);
 
     /* ===== BORDER SYSTEM ===== */
-    --gd-border-light: rgba(230, 184, 0, 0.15);
-    --gd-border-medium: rgba(230, 184, 0, 0.25);
-    --gd-border-strong: rgba(230, 184, 0, 0.35);
+    --gd-border-light: rgba(0, 212, 255, 0.2);
+    --gd-border-medium: rgba(0, 212, 255, 0.35);
+    --gd-border-strong: rgba(0, 212, 255, 0.5);
     --gd-border-primary: var(--gd-color-primary-400);
     --gd-border-focus: var(--gd-color-primary-500);
 
@@ -118,10 +118,10 @@ html[data-theme="electric-storm"] {
             var(--gd-color-accent-700) 100%);
 
     --gd-gradient-hero: linear-gradient(135deg,
-            #1F1B26 0%,
+            #050510 0%,
             var(--gd-bg-primary) 30%,
             var(--gd-bg-secondary) 70%,
-            var(--gd-color-secondary-700) 100%);
+            rgba(138, 43, 226, 0.3) 100%);
 
     --gd-gradient-subtle: linear-gradient(135deg,
             var(--gd-bg-primary) 0%,
@@ -129,17 +129,17 @@ html[data-theme="electric-storm"] {
             var(--gd-bg-tertiary) 100%);
 
     /* ===== SHADOWS ===== */
-    --gd-shadow-sm: 0 1px 2px 0 rgba(230, 184, 0, 0.1);
-    --gd-shadow-base: 0 1px 3px 0 rgba(230, 184, 0, 0.15), 0 1px 2px 0 rgba(230, 184, 0, 0.1);
-    --gd-shadow-md: 0 4px 6px -1px rgba(230, 184, 0, 0.15), 0 2px 4px -1px rgba(230, 184, 0, 0.1);
-    --gd-shadow-lg: 0 10px 15px -3px rgba(230, 184, 0, 0.2), 0 4px 6px -2px rgba(230, 184, 0, 0.15);
-    --gd-shadow-xl: 0 20px 25px -5px rgba(230, 184, 0, 0.25), 0 10px 10px -5px rgba(230, 184, 0, 0.2);
-    --gd-shadow-2xl: 0 25px 50px -12px rgba(230, 184, 0, 0.3);
-    --gd-shadow-inner: inset 0 2px 4px 0 rgba(230, 184, 0, 0.15);
+    --gd-shadow-sm: 0 1px 2px 0 rgba(0, 212, 255, 0.15);
+    --gd-shadow-base: 0 1px 3px 0 rgba(0, 212, 255, 0.2), 0 1px 2px 0 rgba(0, 212, 255, 0.15);
+    --gd-shadow-md: 0 4px 6px -1px rgba(0, 212, 255, 0.2), 0 2px 4px -1px rgba(0, 212, 255, 0.15);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(0, 212, 255, 0.25), 0 4px 6px -2px rgba(0, 212, 255, 0.2);
+    --gd-shadow-xl: 0 20px 25px -5px rgba(0, 212, 255, 0.3), 0 10px 10px -5px rgba(0, 212, 255, 0.25);
+    --gd-shadow-2xl: 0 25px 50px -12px rgba(0, 212, 255, 0.35);
+    --gd-shadow-inner: inset 0 2px 4px 0 rgba(0, 212, 255, 0.2);
 
-    --gd-shadow-primary: 0 4px 14px 0 rgba(230, 184, 0, 0.2);
-    --gd-shadow-secondary: 0 4px 14px 0 rgba(139, 95, 191, 0.2);
-    --gd-shadow-accent: 0 4px 14px 0 rgba(91, 179, 217, 0.2);
+    --gd-shadow-primary: 0 4px 14px 0 rgba(0, 212, 255, 0.3);
+    --gd-shadow-secondary: 0 4px 14px 0 rgba(138, 43, 226, 0.25);
+    --gd-shadow-accent: 0 4px 14px 0 rgba(173, 255, 47, 0.25);
 
     /* ===== TYPOGRAPHY ===== */
     --gd-font-family-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -248,11 +248,11 @@ html[data-theme="electric-storm"] {
 
     /* Navigation */
     --gd-nav-height: var(--gd-header-height);
-    --gd-nav-bg: rgba(43, 38, 51, 0.9);
+    --gd-nav-bg: rgba(10, 11, 26, 0.95);
     --gd-nav-bg-solid: var(--gd-bg-elevated);
     --gd-nav-backdrop-blur: 20px;
-    --gd-nav-border: rgba(230, 184, 0, 0.2);
-    --gd-nav-shadow: 0 4px 20px rgba(230, 184, 0, 0.15);
+    --gd-nav-border: rgba(0, 212, 255, 0.3);
+    --gd-nav-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
     --gd-nav-link-color: var(--gd-text-secondary);
     --gd-nav-link-hover: var(--gd-color-primary-400);
     --gd-nav-link-active: var(--gd-color-accent-400);
@@ -267,46 +267,48 @@ html[data-theme="electric-storm"] {
 
     /* Cards */
     --gd-card-bg: var(--gd-surface-raised);
-    --gd-card-border: rgba(230, 184, 0, 0.15);
+    --gd-card-border: rgba(0, 212, 255, 0.2);
     --gd-card-radius: var(--gd-radius-xl);
-    --gd-card-shadow: 0 4px 20px rgba(139, 95, 191, 0.1);
-    --gd-card-shadow-hover: 0 8px 30px rgba(230, 184, 0, 0.2);
+    --gd-card-shadow: 0 4px 20px rgba(0, 212, 255, 0.1);
+    --gd-card-shadow-hover: 0 8px 30px rgba(0, 212, 255, 0.25);
     --gd-card-padding-sm: var(--gd-space-4);
     --gd-card-padding-base: var(--gd-space-6);
     --gd-card-padding-lg: var(--gd-space-8);
 
     /* Forms */
     --gd-input-bg: var(--gd-bg-tertiary);
-    --gd-input-border: rgba(230, 184, 0, 0.2);
-    --gd-input-border-hover: rgba(230, 184, 0, 0.3);
+    --gd-input-border: rgba(0, 212, 255, 0.25);
+    --gd-input-border-hover: rgba(0, 212, 255, 0.4);
     --gd-input-border-focus: var(--gd-color-primary-500);
     --gd-input-radius: var(--gd-radius-md);
     --gd-input-padding-sm: var(--gd-space-2) var(--gd-space-3);
     --gd-input-padding-base: var(--gd-space-3) var(--gd-space-4);
     --gd-input-padding-lg: var(--gd-space-4) var(--gd-space-5);
-    --gd-input-shadow-focus: 0 0 0 3px rgba(230, 184, 0, 0.1);
+    --gd-input-shadow-focus: 0 0 0 3px rgba(0, 212, 255, 0.15);
 
     /* Overlays & Modals */
-    --gd-overlay-bg: rgba(139, 95, 191, 0.2);
+    --gd-overlay-bg: rgba(0, 212, 255, 0.15);
     --gd-modal-bg: var(--gd-surface-raised);
     --gd-modal-radius: var(--gd-radius-2xl);
-    --gd-modal-shadow: 0 25px 50px -12px rgba(230, 184, 0, 0.3);
+    --gd-modal-shadow: 0 25px 50px -12px rgba(0, 212, 255, 0.35);
     --gd-backdrop-blur: 20px;
 
     /* Tooltips */
     --gd-tooltip-bg: var(--gd-text-primary);
     --gd-tooltip-color: var(--gd-text-inverse);
     --gd-tooltip-radius: var(--gd-radius-md);
-    --gd-tooltip-shadow: 0 10px 20px rgba(230, 184, 0, 0.2);
+    --gd-tooltip-shadow: 0 10px 20px rgba(0, 212, 255, 0.25);
 
     /* Loading & Progress */
     --gd-loading-primary: var(--gd-color-primary-500);
-    --gd-loading-secondary: var(--gd-color-primary-200);
-    --gd-progress-bg: var(--gd-color-primary-100);
+    --gd-loading-secondary: var(--gd-color-primary-300);
+    --gd-progress-bg: var(--gd-color-primary-200);
     --gd-progress-fill: var(--gd-color-primary-500);
 
     /* ===== ELECTRIC STORM SPECIFIC EFFECTS ===== */
-    --gd-electric-glow: 0 0 15px rgba(230, 184, 0, 0.3);
-    --gd-electric-text-shadow: 0 0 8px rgba(230, 184, 0, 0.5);
-    --gd-electric-border-glow: 0 0 12px rgba(230, 184, 0, 0.4);
+    --gd-electric-glow: 0 0 20px rgba(0, 212, 255, 0.4);
+    --gd-electric-text-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+    --gd-electric-border-glow: 0 0 15px rgba(0, 212, 255, 0.5);
+    --gd-electric-pulse: 0 0 30px rgba(173, 255, 47, 0.3);
+    --gd-electric-storm-gradient: linear-gradient(45deg, var(--gd-color-primary-500), var(--gd-color-secondary-500), var(--gd-color-accent-500));
 }

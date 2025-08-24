@@ -44,55 +44,55 @@ html[data-theme="space-explorer"] {
     --gd-color-accent-900: #7a5800;
 
     /* ===== INTELLIGENT BACKGROUND SYSTEM ===== */
-    /* Deep space backgrounds with cosmic depth */
-    --gd-bg-primary: #0a0a1a;
-    /* Deep space void */
-    --gd-bg-secondary: #13132e;
-    /* Darker nebula */
-    --gd-bg-tertiary: #1a1a40;
-    /* Medium space depth */
-    --gd-bg-quaternary: #21215a;
-    /* Lighter cosmic areas */
-    --gd-bg-elevated: #2a2a6b;
-    /* Elevated surfaces (cards, modals) */
-    --gd-bg-overlay: rgba(0, 0, 0, 0.7);
-    /* Dark overlay for modals */
+    /* Enhanced deep space backgrounds with better layering contrast */
+    --gd-bg-primary: #1a1a2e;
+    /* Lighter space void for better contrast */
+    --gd-bg-secondary: #2d2d44;
+    /* Lighter nebula with more distinction */
+    --gd-bg-tertiary: #404066;
+    /* Medium space depth with better separation */
+    --gd-bg-quaternary: #525288;
+    /* Lighter cosmic areas with more contrast */
+    --gd-bg-elevated: #6464aa;
+    /* Elevated surfaces with clear distinction */
+    --gd-bg-overlay: rgba(26, 26, 46, 0.85);
+    /* Lighter overlay for better separation */
 
     /* Background variants for subtle effects */
     --gd-bg-primary-subtle: rgba(75, 0, 130, 0.05);
     --gd-bg-secondary-subtle: rgba(72, 61, 139, 0.05);
     --gd-bg-accent-subtle: rgba(255, 215, 0, 0.05);
 
-    /* Additional background variants */
-    --gd-bg-dark: #050510;
-    /* Deepest void */
-    --gd-bg-darker: #000000;
-    /* Absolute black */
+    /* Additional background variants with enhanced contrast */
+    --gd-bg-dark: #151529;
+    /* Deepest void with subtle purple tint */
+    --gd-bg-darker: #0f0f1f;
+    /* Near absolute black with hint of depth */
 
     /* ===== INTELLIGENT TEXT SYSTEM ===== */
-    /* Light text for dark backgrounds - cosmic readability */
+    /* Enhanced text system with better contrast for cosmic readability */
     --gd-text-primary: #ffffff;
     /* Pure white - primary text */
-    --gd-text-secondary: #d6d6ff;
-    /* Light lavender - secondary */
-    --gd-text-tertiary: #b3b3ff;
-    /* Medium lavender - tertiary */
-    --gd-text-quaternary: #9999cc;
-    /* Muted lavender - quaternary */
-    --gd-text-disabled: #5555cc;
-    /* Disabled lavender */
-    --gd-text-inverse: #0a0a1a;
-    /* Dark text for light backgrounds */
-    --gd-text-muted: #8080ff;
-    /* Muted cosmic blue */
+    --gd-text-secondary: #f0f0ff;
+    /* Ultra-bright lavender - secondary */
+    --gd-text-tertiary: #e6e6ff;
+    /* Bright lavender - tertiary */
+    --gd-text-quaternary: #d0d0f0;
+    /* Medium lavender - quaternary */
+    --gd-text-disabled: #a6a6d4;
+    /* Brighter disabled lavender for better visibility */
+    --gd-text-inverse: #1a1a2e;
+    /* Darker text for light backgrounds */
+    --gd-text-muted: #b8b8e8;
+    /* Much brighter muted cosmic blue */
 
     /* Text on colored backgrounds */
     --gd-text-on-primary: #ffffff;
     /* White on primary */
     --gd-text-on-secondary: #ffffff;
     /* White on secondary */
-    --gd-text-on-accent: #0a0a1a;
-    /* Dark text on golden accent */
+    --gd-text-on-accent: #1a1a2e;
+    /* Darker text on golden accent for better contrast */
 
     /* ===== SEMANTIC COLORS ===== */
     /* Cosmic-themed status colors */
@@ -116,10 +116,10 @@ html[data-theme="space-explorer"] {
     --gd-color-info-dark: var(--gd-color-primary-700);
 
     /* ===== BORDER SYSTEM ===== */
-    /* Cosmic border system with purple tints */
-    --gd-border-light: rgba(75, 0, 130, 0.2);
-    --gd-border-medium: rgba(75, 0, 130, 0.3);
-    --gd-border-strong: rgba(75, 0, 130, 0.5);
+    /* Enhanced cosmic border system with better visibility */
+    --gd-border-light: rgba(75, 0, 130, 0.3);
+    --gd-border-medium: rgba(75, 0, 130, 0.5);
+    --gd-border-strong: rgba(75, 0, 130, 0.7);
     --gd-border-primary: var(--gd-color-primary-400);
     --gd-border-focus: var(--gd-color-accent-400);
 
@@ -177,10 +177,10 @@ html[data-theme="space-explorer"] {
 
     /* ===== NAVIGATION ===== */
     --gd-nav-height: var(--gd-header-height);
-    --gd-nav-bg: rgba(10, 10, 26, 0.95);
+    --gd-nav-bg: rgba(26, 26, 46, 0.95);
     --gd-nav-bg-solid: var(--gd-bg-secondary);
     --gd-nav-backdrop-blur: 20px;
-    --gd-nav-border: rgba(75, 0, 130, 0.3);
+    --gd-nav-border: rgba(75, 0, 130, 0.6);
     --gd-nav-shadow: var(--gd-shadow-lg);
     --gd-nav-link-color: var(--gd-text-secondary);
     --gd-nav-link-hover: var(--gd-text-primary);
@@ -206,24 +206,24 @@ html[data-theme="space-explorer"] {
 
     /* ===== FORMS ===== */
     --gd-input-bg: var(--gd-bg-tertiary);
-    --gd-input-border: var(--gd-border-medium);
-    --gd-input-border-hover: var(--gd-border-strong);
+    --gd-input-border: var(--gd-border-strong);
+    --gd-input-border-hover: rgba(75, 0, 130, 0.8);
     --gd-input-border-focus: var(--gd-color-accent-400);
     --gd-input-radius: var(--gd-radius-md);
     --gd-input-padding-sm: var(--gd-space-2) var(--gd-space-3);
     --gd-input-padding-base: var(--gd-space-3) var(--gd-space-4);
     --gd-input-padding-lg: var(--gd-space-4) var(--gd-space-5);
-    --gd-input-shadow-focus: 0 0 0 3px rgba(255, 215, 0, 0.2);
+    --gd-input-shadow-focus: 0 0 0 3px rgba(255, 215, 0, 0.4);
 
     /* ===== OVERLAYS & MODALS ===== */
-    --gd-overlay-bg: rgba(0, 0, 0, 0.7);
+    --gd-overlay-bg: rgba(15, 15, 31, 0.8);
     --gd-modal-bg: var(--gd-surface-raised);
     --gd-modal-radius: var(--gd-radius-2xl);
     --gd-modal-shadow: var(--gd-shadow-2xl);
     --gd-backdrop-blur: 20px;
 
     /* ===== TOOLTIPS ===== */
-    --gd-tooltip-bg: var(--gd-bg-quaternary);
+    --gd-tooltip-bg: var(--gd-bg-tertiary);
     --gd-tooltip-color: var(--gd-text-primary);
     --gd-tooltip-radius: var(--gd-radius-md);
     --gd-tooltip-shadow: var(--gd-shadow-lg);

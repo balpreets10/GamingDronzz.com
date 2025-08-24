@@ -31,7 +31,7 @@ export const availableThemes: Theme[] = [
     {
         id: 'electric-storm',
         name: 'Electric Storm',
-        icon: '☀️'
+        icon: '⚡'
     },
     {
         id: 'forest-tech',
@@ -67,7 +67,7 @@ export const availableThemes: Theme[] = [
     {
         id: 'space-explorer',
         name: 'Space Explorer',
-        icon: '🍃'
+        icon: '🚀'
     },
 
 

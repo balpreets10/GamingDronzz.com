@@ -39,7 +39,7 @@ function App() {
 
     // Initialize optimized theme system - picks theme and applies immediately
     const selectedTheme = initializeThemeSystem({
-      enableSessionConsistency: true, // Prevents flickering during dev
+      enableSessionConsistency: false, // Load new theme on every reload
       enableLogging: import.meta.env.DEV
     });
     setCurrentTheme(selectedTheme);
