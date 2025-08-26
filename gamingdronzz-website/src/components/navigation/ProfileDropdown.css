@@ -5,6 +5,23 @@
     position: relative;
     display: flex;
     align-items: center;
+    /* Smooth transitions between authentication states */
+    transition: all var(--gd-transition-base);
+}
+
+/* ===== AUTHENTICATION STATE TRANSITIONS ===== */
+.profile-dropdown--transitioning {
+    /* Prevent interaction during transitions */
+    pointer-events: none;
+}
+
+.profile-dropdown__transition-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    /* Set minimum width to prevent layout shift */
+    min-width: 120px;
+    min-height: 40px;
 }
 
 /* ===== TRIGGER BUTTON ===== */
@@ -23,6 +40,54 @@
     font-size: var(--gd-font-size-sm);
     font-weight: var(--gd-font-weight-medium);
     min-height: 40px;
+    /* Enhanced transitions for authentication state changes */
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ===== AUTHENTICATION STATE TRANSITIONS ===== */
+.profile-dropdown__state-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.profile-dropdown__state-item {
+    transition: opacity 0.3s var(--gd-ease-in-out), 
+                transform 0.3s var(--gd-ease-in-out),
+                width 0.3s var(--gd-ease-in-out),
+                height 0.3s var(--gd-ease-in-out),
+                padding 0.3s var(--gd-ease-in-out);
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.profile-dropdown__state-item--entering {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+}
+
+.profile-dropdown__state-item--entered {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.profile-dropdown__state-item--exiting {
+    opacity: 0;
+    transform: scale(0.95) translateY(-8px);
+    pointer-events: none;
+}
+
+.profile-dropdown__state-item--exited {
+    opacity: 0;
+    transform: scale(0.9) translateY(-12px);
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .profile-dropdown__trigger:hover {
@@ -298,6 +363,26 @@
     .profile-dropdown__trigger--login {
         padding: var(--gd-space-2_5) var(--gd-space-4);
     }
+    
+    /* Mobile: Adjusted transition container for smaller screens */
+    .profile-dropdown__transition-container {
+        min-width: 100px;
+        min-height: 36px;
+    }
+    
+    /* Mobile: Simplified transitions for better performance */
+    .profile-dropdown__state-item--entering,
+    .profile-dropdown__state-item--exiting {
+        transform: scale(0.98) translateY(4px);
+    }
+}
+
+/* ===== TABLET RESPONSIVE ===== */
+@media (max-width: 1024px) and (min-width: 768px) {
+    .profile-dropdown__transition-container {
+        min-width: 110px;
+        min-height: 38px;
+    }
 }
 
 /* ===== ACCESSIBILITY ENHANCEMENTS ===== */
@@ -308,8 +393,36 @@
 
     .profile-dropdown__trigger,
     .profile-dropdown__item,
-    .profile-dropdown__caret {
+    .profile-dropdown__caret,
+    .profile-dropdown__state-item,
+    .profile-dropdown__loading-spinner {
         transition: none;
+    }
+    
+    /* Simplify authentication state transitions for reduced motion */
+    .profile-dropdown__state-item--entering,
+    .profile-dropdown__state-item--entered,
+    .profile-dropdown__state-item--exiting,
+    .profile-dropdown__state-item--exited {
+        transform: none;
+    }
+    
+    .profile-dropdown__state-item--entering,
+    .profile-dropdown__state-item--exiting,
+    .profile-dropdown__state-item--exited {
+        opacity: 0;
+    }
+    
+    .profile-dropdown__state-item--entered {
+        opacity: 1;
+    }
+    
+    /* Simplify loading spinner animations for reduced motion */
+    .profile-dropdown__loading-spinner--entering,
+    .profile-dropdown__loading-spinner--exiting {
+        animation: none;
+        opacity: 1;
+        transform: none;
     }
 }
 
@@ -367,7 +480,12 @@ html[data-theme="electric-storm"] .profile-dropdown__user-role {
 
 /* Add these styles to your existing ProfileDropdown.css file */
 
-/* ===== LOADING SPINNER ===== */
+/* ===== LOADING STATES ===== */
+.profile-dropdown--loading {
+    opacity: 0.8;
+    pointer-events: none;
+}
+
 .profile-dropdown__loading-spinner {
     display: inline-block;
     width: 16px;
@@ -376,11 +494,45 @@ html[data-theme="electric-storm"] .profile-dropdown__user-role {
     border-radius: 50%;
     border-top-color: #ffffff;
     animation: spin 1s ease-in-out infinite;
+    transition: opacity 0.2s var(--gd-ease-in-out);
+}
+
+.profile-dropdown__loading-spinner--entering {
+    opacity: 0;
+    transform: scale(0.8);
+    animation: spin 1s ease-in-out infinite, loading-enter 0.2s ease-out forwards;
+}
+
+.profile-dropdown__loading-spinner--exiting {
+    opacity: 1;
+    animation: spin 1s ease-in-out infinite, loading-exit 0.2s ease-in forwards;
 }
 
 @keyframes spin {
     to {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes loading-enter {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes loading-exit {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.8);
     }
 }
 

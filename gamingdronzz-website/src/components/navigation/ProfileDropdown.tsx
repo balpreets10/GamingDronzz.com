@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { useAuthTransition, useReducedMotion } from '../../hooks/useAuthTransition';
 import './ProfileDropdown.css';
 
 interface ProfileDropdownProps {
@@ -16,6 +17,19 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
     const dropdownRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const { user, isAdmin, isAuthenticated, signOut, signInWithGoogle } = useAuth();
+    
+    // Authentication transition management
+    const reducedMotion = useReducedMotion();
+    const { transitionState, isTransitioning, transitionClasses, getLoadingSpinnerClasses } = useAuthTransition(
+        isAuthenticated, 
+        { reducedMotion }
+    );
+    
+    // Track previous loading state for smooth transitions
+    const prevAuthLoadingRef = useRef(authLoading);
+    useEffect(() => {
+        prevAuthLoadingRef.current = authLoading;
+    });
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -136,53 +150,38 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
     const profileClasses = [
         'profile-dropdown',
         className,
-        isOpen && 'profile-dropdown--open'
+        isOpen && 'profile-dropdown--open',
+        isTransitioning && 'profile-dropdown--transitioning',
+        authLoading && 'profile-dropdown--loading'
     ].filter(Boolean).join(' ');
 
-    if (!isAuthenticated) {
-        // Not signed in state - Updated with Google auth
-        return (
-            <div className={profileClasses}>
-                <button
-                    ref={buttonRef}
-                    className="profile-dropdown__trigger profile-dropdown__trigger--login"
-                    onClick={handleLoginClick}
-                    disabled={authLoading}
-                    aria-label={authLoading ? "Signing in..." : "Sign in with Google"}
-                    type="button"
-                >
-                    {authLoading ? (
-                        <>
-                            <span className="profile-dropdown__loading-spinner"></span>
-                            <span className="profile-dropdown__login-text">Signing in...</span>
-                        </>
-                    ) : (
-                        <>
-                            <span className="profile-dropdown__google-icon">🔐</span>
-                            <span className="profile-dropdown__login-text">Sign In</span>
-                        </>
-                    )}
-                </button>
+    // Render sign-in button component
+    const renderSignInButton = () => (
+        <button
+            ref={buttonRef}
+            className="profile-dropdown__trigger profile-dropdown__trigger--login"
+            onClick={handleLoginClick}
+            disabled={authLoading}
+            aria-label={authLoading ? "Signing in..." : "Sign in with Google"}
+            type="button"
+        >
+            {authLoading ? (
+                <>
+                    <span className={getLoadingSpinnerClasses(authLoading, prevAuthLoadingRef.current)}></span>
+                    <span className="profile-dropdown__login-text">Signing in...</span>
+                </>
+            ) : (
+                <>
+                    <span className="profile-dropdown__google-icon">🔐</span>
+                    <span className="profile-dropdown__login-text">Sign In</span>
+                </>
+            )}
+        </button>
+    );
 
-                {/* Optional: Custom login fallback */}
-                {onLoginClick && (
-                    <button
-                        className="profile-dropdown__custom-login"
-                        onClick={handleCustomLogin}
-                        disabled={authLoading}
-                        type="button"
-                        style={{ marginLeft: '8px' }}
-                    >
-                        Custom Login
-                    </button>
-                )}
-            </div>
-        );
-    }
-
-    // Signed in state (unchanged)
-    return (
-        <div className={profileClasses}>
+    // Render user profile button component
+    const renderProfileButton = () => (
+        <>
             <button
                 ref={buttonRef}
                 className="profile-dropdown__trigger"
@@ -331,6 +330,30 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
                     </div>
                 </div>
             )}
+        </>
+    );
+
+    // Main render with transition wrapper
+    return (
+        <div className={profileClasses}>
+            <div className="profile-dropdown__state-wrapper">
+                <div className={transitionClasses}>
+                    {isAuthenticated ? renderProfileButton() : renderSignInButton()}
+                    
+                    {/* Optional: Custom login fallback for non-authenticated state */}
+                    {!isAuthenticated && onLoginClick && (
+                        <button
+                            className="profile-dropdown__custom-login"
+                            onClick={handleCustomLogin}
+                            disabled={authLoading}
+                            type="button"
+                            style={{ marginLeft: '8px' }}
+                        >
+                            Custom Login
+                        </button>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };

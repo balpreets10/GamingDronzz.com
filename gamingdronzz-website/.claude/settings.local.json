@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/F:\\f\\wamp\\www\\gamingdronzz.com/**)",
+      "Read(/F:\\f\\wamp\\www\\gamingdronzz.com/**)",
+      "Read(/F:\\f\\wamp\\www\\gamingdronzz.com/**)",
+      "Read(/F:\\f\\wamp\\www\\gamingdronzz.com/**)",
+      "Read(/F:\\f\\wamp\\www\\gamingdronzz.com\\gamingdronzz-website/**)",
+      "Read(/F:\\f\\wamp\\www\\gamingdronzz.com\\gamingdronzz-website/**)",
+      "Read(/F:\\f\\wamp\\www\\gamingdronzz.com\\gamingdronzz-website/**)",
+      "Read(/F:\\f\\wamp\\www\\gamingdronzz.com\\gamingdronzz-website\\src\\components/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
