@@ -8,6 +8,7 @@ import Services from './components/sections/Services';
 import Articles from './components/sections/Articles';
 import Contact from './components/sections/Contact';
 import useNavigation, { useNavigationEvents } from './hooks/useNavigation';
+import { useAuth } from './hooks/useAuth';
 import ScrollManager from './managers/ScrollManager';
 import PerformanceManager from './managers/PerformanceManager';
 import { initializeThemeSystem, type Theme } from './managers/ThemeManager';
@@ -16,7 +17,9 @@ import './App.css';
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentTheme, setCurrentTheme] = useState<Theme | null>(null);
+  const [preloaderCompleted, setPreloaderCompleted] = useState(false);
 
+  const { loading: authLoading } = useAuth();
   const { state: navState, actions: navActions } = useNavigation({
     customConfig: {
       items: [
@@ -61,10 +64,16 @@ function App() {
   }, []); // Empty deps array
 
   const handlePreloaderComplete = () => {
-    setIsLoading(false);
-    // Trigger any post-load animations or effects here
-    document.body.classList.add('app-loaded');
+    setPreloaderCompleted(true);
   };
+
+  // Handle transition to main app only when both preloader is done AND auth is ready
+  useEffect(() => {
+    if (preloaderCompleted && !authLoading) {
+      setIsLoading(false);
+      document.body.classList.add('app-loaded');
+    }
+  }, [preloaderCompleted, authLoading]);
 
   const handleNavigate = (sectionId: string) => {
     navActions.navigate(sectionId);

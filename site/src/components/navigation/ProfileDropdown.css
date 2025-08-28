@@ -582,28 +582,6 @@ html[data-theme="electric-storm"] .profile-dropdown__user-role {
     white-space: nowrap;
 }
 
-/* ===== CUSTOM LOGIN FALLBACK ===== */
-.profile-dropdown__custom-login {
-    padding: var(--gd-space-2) var(--gd-space-3);
-    background: var(--gd-bg-secondary);
-    color: var(--gd-text-primary);
-    border: 1px solid var(--gd-border-medium);
-    border-radius: var(--gd-radius-base);
-    font-size: var(--gd-font-size-xs);
-    font-weight: var(--gd-font-weight-medium);
-    cursor: pointer;
-    transition: var(--gd-transition-base);
-}
-
-.profile-dropdown__custom-login:hover:not(:disabled) {
-    background: var(--gd-bg-tertiary);
-    border-color: var(--gd-border-strong);
-}
-
-.profile-dropdown__custom-login:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
 
 /* ===== RESPONSIVE ADJUSTMENTS ===== */
 @media (max-width: 480px) {
@@ -613,10 +591,6 @@ html[data-theme="electric-storm"] .profile-dropdown__user-role {
         font-size: var(--gd-font-size-xs);
     }
 
-    .profile-dropdown__custom-login {
-        display: none;
-        /* Hide fallback on mobile */
-    }
 }
 
 /* ===== ACCESSIBILITY ===== */

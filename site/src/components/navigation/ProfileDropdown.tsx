@@ -102,11 +102,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         }
     }, [signInWithGoogle, authLoading]);
 
-    // Fallback to custom login if provided
-    const handleCustomLogin = useCallback(() => {
-        setIsOpen(false);
-        onLoginClick?.();
-    }, [onLoginClick]);
 
     const handleProfileClick = useCallback(() => {
         setIsOpen(false);
@@ -339,19 +334,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
             <div className="profile-dropdown__state-wrapper">
                 <div className={transitionClasses}>
                     {isAuthenticated ? renderProfileButton() : renderSignInButton()}
-                    
-                    {/* Optional: Custom login fallback for non-authenticated state */}
-                    {!isAuthenticated && onLoginClick && (
-                        <button
-                            className="profile-dropdown__custom-login"
-                            onClick={handleCustomLogin}
-                            disabled={authLoading}
-                            type="button"
-                            style={{ marginLeft: '8px' }}
-                        >
-                            Custom Login
-                        </button>
-                    )}
                 </div>
             </div>
         </div>

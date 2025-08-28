@@ -1,0 +1,7 @@
+/* Default theme - uses base variables from variables.css */
+/* This theme doesn't override any variables, using the Arctic Frost base theme */
+
+:root {
+    /* Default theme uses base Arctic Frost variables */
+    /* No overrides needed - variables.css provides the complete theme */
+}

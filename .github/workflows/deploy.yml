@@ -21,7 +21,7 @@ on:
 
 env:
   NODE_VERSION: '18'
-  WORKING_DIRECTORY: './gamingdronzz-website'
+  WORKING_DIRECTORY: './site'
 
 jobs:
   build:

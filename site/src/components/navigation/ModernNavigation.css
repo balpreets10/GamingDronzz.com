@@ -35,21 +35,33 @@
 
 /* ===== BRAND/LOGO ===== */
 .modern-nav__brand {
-    font-size: var(--gd-font-size-2xl);
-    font-weight: var(--gd-font-weight-bold);
-    color: var(--gd-text-primary);
-    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: none;
     border: none;
     cursor: pointer;
     transition: var(--gd-transition-base);
-    letter-spacing: -0.5px;
     flex-shrink: 0;
+    padding: var(--gd-space-2);
+    border-radius: var(--gd-radius-base);
 }
 
 .modern-nav__brand:hover {
-    color: var(--gd-nav-link-active);
     transform: translateY(-1px);
+    box-shadow: var(--gd-shadow-sm);
+}
+
+.modern-nav__brand-logo {
+    height: 32px;
+    width: auto;
+    max-width: 150px;
+    object-fit: contain;
+    transition: var(--gd-transition-base);
+}
+
+.modern-nav__brand:hover .modern-nav__brand-logo {
+    filter: brightness(1.1);
 }
 
 /* ===== DESKTOP NAVIGATION - CENTERED ===== */
@@ -181,149 +193,42 @@
     transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* ===== MOBILE OVERLAY ===== */
-.modern-nav__mobile-overlay {
+/* ===== LEGACY MOBILE OVERLAY (removed - using RadialMenu now) ===== */
+/* Mobile overlay styles have been replaced with RadialMenu component */
+
+/* ===== MOBILE PROFILE OVERLAY ===== */
+.modern-nav__mobile-profile-overlay {
     position: fixed;
-    top: var(--gd-nav-height);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100vh;
-    background: var(--gd-modal-bg);
+    top: var(--gd-space-4);
+    right: var(--gd-space-4);
+    z-index: calc(var(--gd-z-modal) + 1);
+    background: var(--gd-surface-raised);
+    border-radius: var(--gd-radius-2xl);
+    padding: var(--gd-space-3);
+    box-shadow: var(--gd-shadow-2xl);
+    border: 2px solid var(--gd-border-medium);
     backdrop-filter: blur(var(--gd-backdrop-blur));
     -webkit-backdrop-filter: blur(var(--gd-backdrop-blur));
-    opacity: 0;
-    visibility: hidden;
-    transition: var(--gd-transition-slow) var(--gd-ease-in-out);
-    z-index: var(--gd-z-modal);
+    /* Enhanced visibility */
+    opacity: 1;
+    transform: scale(1);
+    transition: all var(--gd-transition-base);
+    /* Pulsing animation to grab attention */
+    animation: profilePulse 2s ease-in-out infinite;
 }
 
-/* Fallback for browsers that don't support backdrop-filter */
-@supports not (backdrop-filter: blur(20px)) {
-    .modern-nav__mobile-overlay {
-        background: var(--gd-bg-primary);
+@keyframes profilePulse {
+    0%, 100% {
+        box-shadow: var(--gd-shadow-2xl), 0 0 0 0 rgba(74, 144, 226, 0.7);
+    }
+    50% {
+        box-shadow: var(--gd-shadow-2xl), 0 0 0 8px rgba(74, 144, 226, 0);
     }
 }
 
-.modern-nav--open .modern-nav__mobile-overlay {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* ===== MOBILE NAVIGATION LIST ===== */
-.modern-nav__mobile-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: var(--gd-space-8) var(--gd-space-6);
-    margin: 0;
-    list-style: none;
-    height: 100%;
-    gap: 0;
-}
-
-.modern-nav__mobile-item {
-    width: 100%;
-    max-width: 300px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: var(--gd-transition-slow) var(--gd-ease-out);
-}
-
-.modern-nav--open .modern-nav__mobile-item {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Staggered animation delays */
-.modern-nav--open .modern-nav__mobile-item:nth-child(1) {
-    transition-delay: 0.1s;
-}
-
-.modern-nav--open .modern-nav__mobile-item:nth-child(2) {
-    transition-delay: 0.15s;
-}
-
-.modern-nav--open .modern-nav__mobile-item:nth-child(3) {
-    transition-delay: 0.2s;
-}
-
-.modern-nav--open .modern-nav__mobile-item:nth-child(4) {
-    transition-delay: 0.25s;
-}
-
-.modern-nav--open .modern-nav__mobile-item:nth-child(5) {
-    transition-delay: 0.3s;
-}
-
-.modern-nav--open .modern-nav__mobile-item:nth-child(6) {
-    transition-delay: 0.35s;
-}
-
-.modern-nav--open .modern-nav__mobile-item:nth-child(7) {
-    transition-delay: 0.4s;
-}
-
-.modern-nav__mobile-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: var(--gd-space-5) var(--gd-space-8);
-    color: var(--gd-text-primary);
-    text-decoration: none;
-    font-weight: var(--gd-font-weight-semibold);
-    font-size: var(--gd-font-size-lg);
-    background: none;
-    border: solid 1px var(--gd-color-secondary);
-    cursor: pointer;
-    transition: var(--gd-transition-base);
-    border-radius: var(--gd-radius-lg);
-    margin-bottom: var(--gd-space-2);
-    position: relative;
-    overflow: hidden;
-}
-
-.modern-nav__mobile-link::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--gd-color-primary);
-    opacity: 0;
-    transition: var(--gd-transition-base);
-    border-radius: var(--gd-radius-lg);
-}
-
-.modern-nav__mobile-link:hover {
-    color: var(--gd-text-inverse);
-    transform: translateY(-2px);
-}
-
-.modern-nav__mobile-link:hover::before {
-    opacity: 1;
-}
-
-.modern-nav__mobile-item--active .modern-nav__mobile-link {
-    color: var(--gd-text-inverse);
-    background: var(--gd-color-primary);
-    font-weight: var(--gd-font-weight-bold);
-}
-
-/* Text should be above background */
-.modern-nav__mobile-link .modern-nav__label {
-    position: relative;
-    z-index: 1;
-}
-
-/* ===== MOBILE PROFILE SECTION ===== */
+/* ===== LEGACY MOBILE PROFILE SECTION (hidden) ===== */
 .modern-nav__mobile-item--profile {
-    margin-top: var(--gd-space-8);
-    border-top: 1px solid var(--gd-border-light);
-    padding-top: var(--gd-space-6);
+    display: none;
 }
 
 /* ===== ACCESSIBILITY ===== */
@@ -353,6 +258,12 @@
     animation: none !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .modern-nav__mobile-profile-overlay {
+        animation: none !important;
+    }
+}
+
 /* ===== RESPONSIVE BREAKPOINTS ===== */
 @media (max-width: 767px) {
     .modern-nav__container {
@@ -367,8 +278,9 @@
         display: none;
     }
 
-    .modern-nav__brand {
-        font-size: var(--gd-font-size-xl);
+    .modern-nav__brand-logo {
+        height: 28px;
+        max-width: 120px;
     }
 
     /* Hide desktop profile dropdown on mobile */
@@ -378,9 +290,9 @@
 }
 
 @media (min-width: 768px) {
-
     .modern-nav__hamburger,
-    .modern-nav__mobile-overlay {
+    .modern-nav__radial-menu,
+    .modern-nav__mobile-profile-overlay {
         display: none !important;
     }
 

@@ -14,7 +14,7 @@ class NavigationManager implements INavigationManager {
     private static instance: NavigationManager;
     private state: NavigationState = {
         isOpen: false,
-        activeItem: 'home', // Default to home
+        activeItem: 'hero', // Default to hero
         hoveredItem: null,
         focusedItem: null,
         keyboardMode: false,
@@ -23,7 +23,7 @@ class NavigationManager implements INavigationManager {
 
     private config: NavigationConfig = {
         items: [
-            { id: 'home', label: 'Home', href: '#home', position: 0 },
+            { id: 'hero', label: 'Home', href: '#hero', position: 0 },
             { id: 'about', label: 'About', href: '#about', position: 1 },
             { id: 'projects', label: 'Projects', href: '#projects', position: 2 },
             { id: 'services', label: 'Services', href: '#services', position: 3 },
@@ -91,8 +91,8 @@ class NavigationManager implements INavigationManager {
         this.intersectionObserver = new IntersectionObserver(
             this.boundMethods.handleIntersection,
             {
-                threshold: [0, 0.25, 0.5, 0.75, 1],
-                rootMargin: '-20% 0px -70% 0px' // Trigger when section is 20% from top
+                threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+                rootMargin: '-10% 0px -60% 0px' // More lenient detection
             }
         );
 
@@ -115,7 +115,16 @@ class NavigationManager implements INavigationManager {
     }
 
     private observeSections(): void {
-        if (!this.intersectionObserver) return;
+        if (!this.intersectionObserver) {
+            // Re-create observer if it was destroyed
+            this.intersectionObserver = new IntersectionObserver(
+                this.boundMethods.handleIntersection,
+                {
+                    threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+                    rootMargin: '-10% 0px -60% 0px'
+                }
+            );
+        }
 
         this.config.items.forEach(item => {
             if (item.href.startsWith('#')) {
@@ -141,7 +150,8 @@ class NavigationManager implements INavigationManager {
                 this.currentSections.set(navItem.id, entry.isIntersecting);
 
                 // Find the section with the highest intersection ratio
-                if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                // Use a lower threshold for better detection
+                if (entry.isIntersecting && entry.intersectionRatio > maxRatio && entry.intersectionRatio >= 0.1) {
                     maxRatio = entry.intersectionRatio;
                     activeSection = navItem.id;
                 }
@@ -162,6 +172,9 @@ class NavigationManager implements INavigationManager {
     private findClosestSection(): string | null {
         const scrollPosition = window.pageYOffset;
         const windowHeight = window.innerHeight;
+        const viewportTop = scrollPosition;
+        const viewportBottom = scrollPosition + windowHeight;
+        
         let closestSection: string | null = null;
         let minDistance = Infinity;
 
@@ -172,9 +185,22 @@ class NavigationManager implements INavigationManager {
                 if (section) {
                     const rect = section.getBoundingClientRect();
                     const sectionTop = rect.top + scrollPosition;
-                    const sectionCenter = sectionTop + rect.height / 2;
-                    const viewportCenter = scrollPosition + windowHeight / 2;
-                    const distance = Math.abs(sectionCenter - viewportCenter);
+                    const sectionBottom = sectionTop + rect.height;
+                    
+                    // Calculate distance based on which section is closest to the viewport center
+                    let distance;
+                    if (sectionTop > viewportBottom) {
+                        // Section is below viewport
+                        distance = sectionTop - viewportBottom;
+                    } else if (sectionBottom < viewportTop) {
+                        // Section is above viewport
+                        distance = viewportTop - sectionBottom;
+                    } else {
+                        // Section is intersecting viewport - prioritize these
+                        const sectionCenter = sectionTop + rect.height / 2;
+                        const viewportCenter = viewportTop + windowHeight / 2;
+                        distance = Math.abs(sectionCenter - viewportCenter) * 0.1; // Lower weight for intersecting sections
+                    }
 
                     if (distance < minDistance) {
                         minDistance = distance;
@@ -391,17 +417,32 @@ class NavigationManager implements INavigationManager {
         const item = this.config.items.find(i => i.id === itemId);
         if (!item) return;
 
-        // Don't update activeItem here - let scroll detection handle it
+        // Immediately update activeItem for responsive UI feedback
+        this.setActiveItem(itemId);
+        
         this.emit('navigation:navigate', { item });
         this.close();
 
         if (item.href.startsWith('#')) {
             const target = document.querySelector(item.href);
             if (target) {
+                // Disable intersection observer temporarily during programmatic scroll
+                const observer = this.intersectionObserver;
+                if (observer) {
+                    observer.disconnect();
+                }
+                
                 target.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
+
+                // Re-enable intersection observer after scroll animation completes
+                setTimeout(() => {
+                    if (observer && !this.isDestroyed) {
+                        this.observeSections();
+                    }
+                }, 800); // Wait for scroll animation to complete
             }
         } else {
             if (item.external) {

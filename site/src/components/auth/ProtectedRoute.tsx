@@ -2,8 +2,6 @@
 import { ReactNode } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
-import LoginForm from './LoginForm';
-import './ProtectedRoute.css';
 
 interface ProtectedRouteProps {
     children: ReactNode;
@@ -23,7 +21,16 @@ const ProtectedRoute = ({ children, requireAdmin = false, fallback = null }: Pro
     }
 
     if (!isAuthenticated) {
-        return <>{fallback || <LoginForm />}</>;
+        return <>{fallback || (
+            <div className="protected-route protected-route--unauthenticated">
+                <div className="protected-route__container">
+                    <h2 className="protected-route__title">Authentication Required</h2>
+                    <p className="protected-route__message">
+                        Please sign in using the navigation bar to access this content.
+                    </p>
+                </div>
+            </div>
+        )}</>;
     }
 
     if (requireAdmin && !isAdmin) {

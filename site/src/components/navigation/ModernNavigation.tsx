@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import NavigationManager from '../../managers/NavigationManager';
 import ProfileDropdown from './ProfileDropdown';
+import RadialMenu from './RadialMenu';
 import { prefersReducedMotion } from '../../utils/helpers';
+import { useThemeLogo } from '../../utils/logoUtils';
 import './ModernNavigation.css';
 
 interface ModernNavigationProps {
@@ -27,7 +29,7 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
     onNavigate,
     onLoginClick,
     brand = 'GamingDronzz',
-    brandHref = '#home'
+    brandHref = '#hero'
 }) => {
     const navRef = useRef<HTMLDivElement>(null);
     const onNavigateRef = useRef(onNavigate);
@@ -44,7 +46,7 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
     const [config, setConfig] = useState(() => managerRef.current?.getConfig() ?? { items: [] });
     const [navState, setNavState] = useState<NavigationState>(() => ({
         isOpen: false,
-        activeItem: 'home',
+        activeItem: 'hero',
         hoveredItem: null,
         focusedItem: null,
         keyboardMode: false
@@ -54,6 +56,7 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
     const [isScrolled, setIsScrolled] = useState(false);
 
     const reducedMotion = useMemo(() => prefersReducedMotion(), []);
+    const logoInfo = useThemeLogo();
 
     // Handle scroll effect for navbar styling
     useEffect(() => {
@@ -186,7 +189,11 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                     aria-label={`Go to ${brand} home page`}
                     type="button"
                 >
-                    {brand}
+                    <img 
+                        src={logoInfo.src} 
+                        alt={logoInfo.alt} 
+                        className={`modern-nav__brand-logo ${logoInfo.isLightLogo ? 'modern-nav__brand-logo--light' : 'modern-nav__brand-logo--dark'}`}
+                    />
                 </button>
 
                 {/* Desktop Navigation - Centered */}
@@ -248,43 +255,27 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                 </div>
             </div>
 
-            {/* Mobile Navigation Overlay */}
-            <div className="modern-nav__mobile-overlay" id="mobile-nav-menu">
-                <ul className="modern-nav__mobile-list" role="menu">
-                    {config.items.map((item) => {
-                        const isActive = navState.activeItem === item.id;
+            {/* Radial Menu for Mobile */}
+            <RadialMenu
+                isOpen={isMobileMenuOpen}
+                items={config.items}
+                activeItem={navState.activeItem}
+                onItemClick={handleItemClick}
+                onClose={() => setIsMobileMenuOpen(false)}
+                centerIcon="✕"
+                centerLabel="Close"
+                className="modern-nav__radial-menu"
+            />
 
-                        const itemClasses = [
-                            'modern-nav__mobile-item',
-                            isActive && 'modern-nav__mobile-item--active'
-                        ].filter(Boolean).join(' ');
-
-                        return (
-                            <li key={`mobile-${item.id}`} className={itemClasses}>
-                                <button
-                                    className="modern-nav__mobile-link"
-                                    onClick={() => handleItemClick(item.id)}
-                                    onKeyDown={(e) => handleItemKeyDown(e, item.id)}
-                                    role="menuitem"
-                                    aria-current={isActive ? 'page' : undefined}
-                                    aria-label={`Navigate to ${item.label}`}
-                                    type="button"
-                                >
-                                    <span className="modern-nav__label">{item.label}</span>
-                                </button>
-                            </li>
-                        );
-                    })}
-
-                    {/* Mobile Profile Section */}
-                    <li className="modern-nav__mobile-item modern-nav__mobile-item--profile">
-                        <ProfileDropdown
-                            onLoginClick={handleLoginClick}
-                            className="modern-nav__profile--mobile"
-                        />
-                    </li>
-                </ul>
-            </div>
+            {/* Mobile Profile Overlay */}
+            {isMobileMenuOpen && (
+                <div className="modern-nav__mobile-profile-overlay">
+                    <ProfileDropdown
+                        onLoginClick={handleLoginClick}
+                        className="modern-nav__profile--mobile"
+                    />
+                </div>
+            )}
         </nav>
     );
 };
