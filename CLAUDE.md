@@ -8,6 +8,7 @@ If a query is complex, you can trigger a subagent to solve problems but make sur
 
 This project uses a structured documentation approach. All information is organized in the `info/` directory:
 
+- **Site Information**: `info/site-info.md` - Website details, branding, and site-specific configuration
 - **Project Information**: `info/project-info.md` - Application architecture, technology stack, components, and maintenance guidelines
 - **Deployment Information**: `info/deployment-info.md` - Build processes, environment configuration, and deployment procedures
 - **Backend Information**: `info/backend/backend-info.md` - Database system, authentication, API operations, and data management
@@ -47,8 +48,13 @@ IMPORTANT: Claude must end EVERY single response with token usage statistics, no
 Mandatory ending for ALL responses:
 - Count total words in current conversation
 - Estimate total tokens used
-- Always offer the clear option
-- Format: "📊 Conversation stats: [X] words, [Y] tokens used. Run `/clear` to optimize? [Y/n]"
+- Always offer the clear option AND chat compaction option
+- Format: "📊 Conversation stats: [X] words, [Y] tokens used. Run `/clear` to optimize or `/compact` to continue? [C/c/n]"
+
+**Chat Management Options:**
+- `/clear` - Start fresh conversation (recommended for token optimization)
+- `/compact` - Summarize conversation context to reduce tokens while preserving important information
+- User chooses based on whether they want to continue the current conversation thread
 
 ### Query Optimization Tracking
 - When conversations exceed 2000 tokens, automatically log to `info/query-optimization/query-journal.md`

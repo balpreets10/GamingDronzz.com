@@ -12,7 +12,8 @@
       "Bash(npm run lint)",
       "Bash(npm run build:*)",
       "Bash(dir \"G:\\Websites\\gamingdronzz.com\\data\\supabase\\db_schema\" /a)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []
