@@ -284,35 +284,64 @@ const About: React.FC<AboutProps> = ({ customData }) => {
                             <p className="about__mission-text">{data.mission}</p>
                         </div>
 
-                        {data.stats.length > 0 && (
-                            <div className="about__stats" role="group" aria-label="Company statistics">
-                                {data.stats.map((stat, index) => (
-                                    <div
-                                        key={`stat-${index}`}
-                                        className="about__stat"
-                                        tabIndex={0}
-                                        role="button"
-                                        aria-label={`${stat.number} ${stat.label}`}
-                                    >
-                                        <span className="about__stat-number" aria-hidden="true">
-                                            {stat.number}
-                                        </span>
-                                        <span className="about__stat-label">{stat.label}</span>
-                                    </div>
-                                ))}
+                        <div className="about__values-section">
+                            <h3 className="about__values-title">Our Values</h3>
+                            <div className="about__values-grid">
+                                <div className="about__value">
+                                    <div className="about__value-icon">🎯</div>
+                                    <h4>Innovation</h4>
+                                    <p>Pushing boundaries with cutting-edge technology and creative solutions</p>
+                                </div>
+                                <div className="about__value">
+                                    <div className="about__value-icon">⚡</div>
+                                    <h4>Performance</h4>
+                                    <p>Delivering high-quality, optimized experiences that exceed expectations</p>
+                                </div>
+                                <div className="about__value">
+                                    <div className="about__value-icon">🤝</div>
+                                    <h4>Collaboration</h4>
+                                    <p>Working closely with clients to bring their gaming visions to life</p>
+                                </div>
                             </div>
-                        )}
+                        </div>
+
+                        <div className="about__approach-section">
+                            <h3 className="about__approach-title">Our Approach</h3>
+                            <p className="about__approach-text">
+                                We combine technical expertise with creative vision to deliver games that not only function flawlessly but also create lasting emotional connections with players. Every project is an opportunity to innovate and push the boundaries of what's possible in interactive entertainment.
+                            </p>
+                        </div>
                     </div>
 
-                    <div className="about__image">
-                        <img
-                            // src="/images/about-hero.jpg"
-                            alt="GamingDronzz team working collaboratively on innovative game development projects"
-                            loading="lazy"
-                            width="600"
-                            height="400"
-                            onError={(e) => handleImageError(e, generateFallbackImage)}
-                        />
+                    <div className="about__visual">
+                        <div className="about__animated-grid">
+                            {Array.from({ length: 24 }, (_, i) => (
+                                <div
+                                    key={`grid-${i}`}
+                                    className="about__grid-item"
+                                    style={{
+                                        animationDelay: `${i * 50}ms`
+                                    }}
+                                />
+                            ))}
+                        </div>
+                        <div className="about__floating-shapes">
+                            <div className="about__shape about__shape--circle" />
+                            <div className="about__shape about__shape--triangle" />
+                            <div className="about__shape about__shape--square" />
+                            <div className="about__shape about__shape--diamond" />
+                        </div>
+                        <div className="about__particles">
+                            {Array.from({ length: 12 }, (_, i) => (
+                                <div
+                                    key={`particle-${i}`}
+                                    className="about__particle"
+                                    style={{
+                                        animationDelay: `${i * 200}ms`
+                                    }}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
 

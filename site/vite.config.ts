@@ -3,13 +3,21 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 
 export default defineConfig(({ mode }) => {
-  // Load environment variables
+  // Load environment variables based on mode
   const env = loadEnv(mode, process.cwd(), '')
+  
+  // Load environment-specific files
+  const envFiles = [
+    `.env.${mode}.local`,
+    `.env.local`,
+    `.env.${mode}`,
+    `.env`
+  ]
 
   // Determine if this is a production build
   const isProduction = mode === 'production'
   const isStaging = mode === 'staging'
-  const isDevelopment = mode === 'development'
+  const isDevelopment = mode === 'development' || !mode
 
   return {
     plugins: [react()],

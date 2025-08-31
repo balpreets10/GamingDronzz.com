@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "High-performance React app for game development consultancy",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "build:staging": "vite build --mode staging",
-    "build:production": "vite build --mode production",
+    "dev": "vite --mode development",
+    "dev:staging": "vite --mode staging",
+    "dev:production": "vite --mode production",
     "preview": "vite preview",
     "preview:staging": "vite preview --mode staging",
     "preview:production": "vite preview --mode production",
+    "build": "vite build --mode development",
+    "build:dev": "vite build --mode development",
+    "build:staging": "vite build --mode staging",
+    "build:production": "vite build --mode production",
     "test": "vitest",
     "test:ci": "vitest run",
     "lint": "eslint src --ext js,jsx,ts,tsx",
@@ -17,13 +20,15 @@
     "deploy:staging": "npm run build:staging && echo 'Staging build complete'",
     "deploy:production": "npm run build:production && echo 'Production build complete'",
     "clean": "rm -rf dist",
-    "analyze": "npm run build && npx vite-bundle-analyzer dist"
+    "analyze": "npm run build:dev && npx vite-bundle-analyzer dist"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.55.0",
+    "@types/react-router-dom": "^5.3.3",
     "framer-motion": "^10.16.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^7.8.2",
     "zustand": "^4.4.1"
   },
   "devDependencies": {

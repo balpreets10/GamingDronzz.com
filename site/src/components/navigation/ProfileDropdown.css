@@ -256,6 +256,16 @@
     letter-spacing: 0.5px;
 }
 
+.profile-dropdown__user-role--admin {
+    background: var(--gd-color-primary);
+    color: var(--gd-text-on-primary);
+}
+
+.profile-dropdown__user-role--user {
+    background: var(--gd-text-quaternary);
+    color: var(--gd-text-primary);
+}
+
 /* ===== MENU DIVIDER ===== */
 .profile-dropdown__divider {
     height: 1px;

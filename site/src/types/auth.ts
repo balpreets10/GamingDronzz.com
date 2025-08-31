@@ -1,23 +1,44 @@
 import { User, Session } from '@supabase/supabase-js';
+import { UserProfile, UserRole as ProfileUserRole } from './profile';
+
+// ===== CORE AUTHENTICATION TYPES (UI only) =====
 
 export interface AuthState {
     user: User | null;
     session: Session | null;
     loading: boolean;
+    isAuthenticated: boolean;
     isAdmin: boolean;
     initialized: boolean;
+    profile: UserProfile | null;
+    profileLoading: boolean;
+    profileCompleted: boolean;
 }
 
-export interface AuthResponse {
+export interface AuthResult {
     success: boolean;
+    error?: { message: string } | null;
     data?: any;
-    error?: any;
+    profile?: UserProfile;
+    profileCreated?: boolean;
+    profileCompleted?: boolean;
 }
 
-export interface UserRole {
-    id: string;
-    user_id: string;
-    role: 'admin' | 'user';
-    created_at: string;
-    updated_at: string;
+// ===== BASIC TYPES FOR UI COMPATIBILITY =====
+
+export interface OAuthCallbackResult {
+    success: boolean;
+    error?: string;
+}
+
+export interface ProfileUpdateResult {
+    success: boolean;
+    error?: string;
+    profile?: UserProfile;
+}
+
+export type AuthProvider = 'google' | 'email' | 'github' | 'facebook';
+
+export interface AuthResponse extends AuthResult {
+    data?: any;
 }

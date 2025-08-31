@@ -225,11 +225,9 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
                             <div className="profile-dropdown__user-email">
                                 {user?.email}
                             </div>
-                            {isAdmin && (
-                                <div className="profile-dropdown__user-role">
-                                    Admin
-                                </div>
-                            )}
+                            <div className={`profile-dropdown__user-role ${isAdmin ? 'profile-dropdown__user-role--admin' : 'profile-dropdown__user-role--user'}`}>
+                                {isAdmin ? 'Admin' : 'User'}
+                            </div>
                         </div>
                     </div>
 

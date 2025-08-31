@@ -1,54 +1,25 @@
-// components/auth/ProtectedRoute.tsx
+// components/auth/ProtectedRoute.tsx - Non-functional (UI only)
 import { ReactNode } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { LoadingSpinner } from '../../components/ui/LoadingSpinner';
+import './ProtectedRoute.css';
 
 interface ProtectedRouteProps {
     children: ReactNode;
     requireAdmin?: boolean;
+    requireProfileCompletion?: boolean;
+    minCompletionPercentage?: number;
     fallback?: ReactNode;
+    profileIncompleteCallback?: () => void;
 }
 
-const ProtectedRoute = ({ children, requireAdmin = false, fallback = null }: ProtectedRouteProps) => {
-    const { loading, isAuthenticated, isAdmin, user } = useAuth();
-
-    if (loading) {
-        return (
-            <div className="protected-route protected-route--loading">
-                <LoadingSpinner />
-            </div>
-        );
-    }
-
-    if (!isAuthenticated) {
-        return <>{fallback || (
-            <div className="protected-route protected-route--unauthenticated">
-                <div className="protected-route__container">
-                    <h2 className="protected-route__title">Authentication Required</h2>
-                    <p className="protected-route__message">
-                        Please sign in using the navigation bar to access this content.
-                    </p>
-                </div>
-            </div>
-        )}</>;
-    }
-
-    if (requireAdmin && !isAdmin) {
-        return (
-            <div className="protected-route protected-route--unauthorized">
-                <div className="protected-route__container">
-                    <h2 className="protected-route__title">Access Denied</h2>
-                    <p className="protected-route__message">
-                        You don't have admin privileges to access this area.
-                    </p>
-                    <p className="protected-route__user-info">
-                        Signed in as: {user?.email}
-                    </p>
-                </div>
-            </div>
-        );
-    }
-
+const ProtectedRoute = ({ 
+    children, 
+    requireAdmin: _requireAdmin = false, 
+    requireProfileCompletion: _requireProfileCompletion = false,
+    minCompletionPercentage: _minCompletionPercentage = 60,
+    fallback: _fallback = null,
+    profileIncompleteCallback: _profileIncompleteCallback
+}: ProtectedRouteProps) => {
+    // Non-functional - always render children
     return <>{children}</>;
 };
 
@@ -57,10 +28,19 @@ interface AdminRouteProps {
     fallback?: ReactNode;
 }
 
-export const AdminRoute = ({ children, fallback = null }: AdminRouteProps) => (
-    <ProtectedRoute requireAdmin={true} fallback={fallback}>
-        {children}
-    </ProtectedRoute>
+interface ProfileRequiredRouteProps {
+    children: ReactNode;
+    minCompletionPercentage?: number;
+    fallback?: ReactNode;
+    onProfileIncomplete?: () => void;
+}
+
+export const AdminRoute = ({ children }: AdminRouteProps) => (
+    <>{children}</>
+);
+
+export const ProfileRequiredRoute = ({ children }: ProfileRequiredRouteProps) => (
+    <>{children}</>
 );
 
 export default ProtectedRoute;

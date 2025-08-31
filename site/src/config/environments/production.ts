@@ -10,8 +10,17 @@ export const productionConfig = {
         auth: {
             autoRefreshToken: true,
             persistSession: true,
-            detectSessionInUrl: true
+            detectSessionInUrl: true,
+            redirectTo: 'https://gamingdronzz.com/auth/callback'
         }
+    },
+    google: {
+        clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID!,
+        redirectUri: 'https://gamingdronzz.com/auth/callback'
+    },
+    app: {
+        siteUrl: 'https://gamingdronzz.com',
+        name: 'Gaming Dronzz'
     },
     analytics: {
         enabled: true,

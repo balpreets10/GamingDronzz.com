@@ -10,8 +10,17 @@ export const stagingConfig = {
         auth: {
             autoRefreshToken: true,
             persistSession: true,
-            detectSessionInUrl: true
+            detectSessionInUrl: true,
+            redirectTo: 'https://staging.gamingdronzz.com/auth/callback'
         }
+    },
+    google: {
+        clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID!,
+        redirectUri: 'https://staging.gamingdronzz.com/auth/callback'
+    },
+    app: {
+        siteUrl: 'https://staging.gamingdronzz.com',
+        name: 'Gaming Dronzz - Staging'
     },
     analytics: {
         enabled: true,

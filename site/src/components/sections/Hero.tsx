@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { useContentManager } from '../../hooks/useContentManager';
+import { StatisticsService, type HeroStatistics } from '../../services/StatisticsService';
 import './Hero.css';
 
 interface HeroProps {
@@ -65,37 +66,96 @@ const Hero: React.FC<HeroProps> = ({
     const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
     const [isHovered, setIsHovered] = useState(false);
     const [reducedMotion, setReducedMotion] = useState(false);
+    const [statistics, setStatistics] = useState<HeroStatistics | null>(null);
+    const [statisticsLoading, setStatisticsLoading] = useState(true);
 
     // Hooks
     const { setCurrentSection } = useContentManager();
 
-    // Achievement stats for the hero
-    const achievements: Achievement[] = useMemo(() => [
-        {
-            number: "50+",
-            label: "Games Developed",
-            icon: "🎮",
-            ariaLabel: "Over 50 games developed"
-        },
-        {
-            number: "100K+",
-            label: "Players Reached",
-            icon: "👥",
-            ariaLabel: "Over 100,000 players reached"
-        },
-        {
-            number: "5⭐",
-            label: "Client Rating",
-            icon: "⭐",
-            ariaLabel: "5 star client rating"
-        },
-        {
-            number: "24/7",
-            label: "Support",
-            icon: "🚀",
-            ariaLabel: "24/7 customer support"
+    // Load statistics from database
+    useEffect(() => {
+        const loadStatistics = async () => {
+            try {
+                setStatisticsLoading(true);
+                const stats = await StatisticsService.getHeroStatistics();
+                setStatistics(stats);
+            } catch (error) {
+                console.error('Failed to load statistics:', error);
+            } finally {
+                setStatisticsLoading(false);
+            }
+        };
+
+        loadStatistics();
+    }, []);
+
+    // Achievement stats for the hero based on real database data
+    const achievements: Achievement[] = useMemo(() => {
+        if (!statistics) {
+            return [
+                {
+                    number: "...",
+                    label: "Projects",
+                    icon: "🎮",
+                    ariaLabel: "Loading projects count"
+                },
+                {
+                    number: "...",
+                    label: "Articles",
+                    icon: "📝",
+                    ariaLabel: "Loading articles count"
+                },
+                {
+                    number: "...",
+                    label: "Page Views",
+                    icon: "👁️",
+                    ariaLabel: "Loading page views count"
+                },
+                {
+                    number: "...",
+                    label: "Clients",
+                    icon: "👥",
+                    ariaLabel: "Loading clients count"
+                }
+            ];
         }
-    ], []);
+
+        const formatNumber = (num: number): string => {
+            if (num >= 1000000) {
+                return `${(num / 1000000).toFixed(1)}M`;
+            } else if (num >= 1000) {
+                return `${(num / 1000).toFixed(1)}K`;
+            }
+            return num.toString();
+        };
+
+        return [
+            {
+                number: statistics.projectsCount > 0 ? `${statistics.projectsCount}+` : "0",
+                label: "Projects Delivered",
+                icon: "🎮",
+                ariaLabel: `${statistics.projectsCount} projects delivered`
+            },
+            {
+                number: statistics.articlesCount > 0 ? `${statistics.articlesCount}+` : "0",
+                label: "Articles Published",
+                icon: "📝",
+                ariaLabel: `${statistics.articlesCount} articles published`
+            },
+            {
+                number: statistics.totalViews > 0 ? `${formatNumber(statistics.totalViews)}+` : "0",
+                label: "Page Views",
+                icon: "👁️",
+                ariaLabel: `${statistics.totalViews} page views`
+            },
+            {
+                number: statistics.clientsCount > 0 ? `${statistics.clientsCount}+` : "0",
+                label: "Clients Served",
+                icon: "👥",
+                ariaLabel: `${statistics.clientsCount} clients served`
+            }
+        ];
+    }, [statistics]);
 
     // Featured technologies
     const technologies: Technology[] = useMemo(() => [
@@ -106,6 +166,38 @@ const Hero: React.FC<HeroProps> = ({
         { name: "AI/ML", icon: "🧠", ariaLabel: "Artificial Intelligence and Machine Learning" },
         { name: "Cloud", icon: "☁️", ariaLabel: "Cloud technologies" }
     ], []);
+
+    // Today's theme
+    const todaysTheme = useMemo(() => {
+        const today = new Date();
+        const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+        
+        const themes = [
+            "🎮 Innovation in Gaming",
+            "🚀 Future-Ready Development",
+            "🌟 Creative Excellence",
+            "⚡ Performance & Precision",
+            "🎯 Player-Centric Design",
+            "🔥 Cutting-Edge Technology",
+            "💎 Quality & Craftsmanship",
+            "🌈 Immersive Experiences",
+            "🎨 Art Meets Technology",
+            "🏆 Award-Winning Solutions"
+        ];
+        
+        const selectedTheme = themes[dayOfYear % themes.length];
+        const formattedDate = today.toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+        
+        return {
+            theme: selectedTheme,
+            date: formattedDate
+        };
+    }, []);
 
     // Generate particles data
     const particlesData: ParticleData[] = useMemo(() => {
@@ -273,6 +365,17 @@ const Hero: React.FC<HeroProps> = ({
                             <div className="hero__badge" role="img" aria-label="Industry leaders badge">
                                 <span className="hero__badge-icon" aria-hidden="true">🚀</span>
                                 <span className="hero__badge-text">Industry Leaders in Game Development</span>
+                            </div>
+
+                            {/* Today's Theme */}
+                            <div className="hero__theme-of-day" role="region" aria-label={`Today's theme: ${todaysTheme.theme}`}>
+                                <div className="hero__theme-header">
+                                    <span className="hero__theme-label">Today's Focus:</span>
+                                    <span className="hero__theme-date">{todaysTheme.date}</span>
+                                </div>
+                                <div className="hero__theme-content">
+                                    <span className="hero__theme-text">{todaysTheme.theme}</span>
+                                </div>
                             </div>
 
                             {/* Main Title */}

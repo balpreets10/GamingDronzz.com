@@ -1,20 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useContentManager } from '../../hooks/useContentManager';
 import { useLazyLoad } from '../../hooks/useLazyLoad';
+import ArticleService, { ArticleData } from '../../services/ArticleService';
 import './Articles.css';
 
-interface ArticleData {
-    id: string;
-    title: string;
-    excerpt: string;
-    category: string;
-    author: string;
-    publishDate: string;
-    readTime: string;
-    image?: string;
-    tags: string[];
-    featured: boolean;
-}
 
 interface ArticlesProps {
     showFeaturedOnly?: boolean;
@@ -22,64 +11,6 @@ interface ArticlesProps {
     customData?: ArticleData[];
 }
 
-// Enhanced fallback data with better variety
-const defaultArticlesData: ArticleData[] = [
-    {
-        id: '1',
-        title: 'The Future of Mobile Gaming: AR Integration & Cloud Solutions',
-        excerpt: 'Exploring emerging trends and technologies shaping the mobile gaming landscape, from AR integration to cloud gaming solutions that are revolutionizing how we play...',
-        category: 'Mobile Gaming',
-        author: 'Alex Chen',
-        publishDate: 'March 15, 2024',
-        readTime: '5 min',
-        tags: ['mobile', 'AR', 'cloud', 'trends'],
-        featured: true
-    },
-    {
-        id: '2',
-        title: 'Optimizing Game Performance Across Multiple Platforms',
-        excerpt: 'Best practices for maintaining smooth gameplay across different devices, covering memory management, rendering optimization, and platform-specific considerations...',
-        category: 'Performance',
-        author: 'Sarah Martinez',
-        publishDate: 'March 12, 2024',
-        readTime: '8 min',
-        tags: ['performance', 'optimization', 'unity', 'mobile'],
-        featured: false
-    },
-    {
-        id: '3',
-        title: 'Game Development Trends 2024: AI-Assisted Design',
-        excerpt: 'A comprehensive look at the latest trends in game development, from AI-assisted design tools to sustainable development practices that are changing the industry...',
-        category: 'Industry',
-        author: 'Mike Johnson',
-        publishDate: 'March 10, 2024',
-        readTime: '6 min',
-        tags: ['AI', 'trends', 'industry', 'design'],
-        featured: true
-    },
-    {
-        id: '4',
-        title: 'Building Scalable Multiplayer Architecture',
-        excerpt: 'Deep dive into creating robust multiplayer systems that can handle thousands of concurrent players while maintaining low latency and high reliability...',
-        category: 'Backend',
-        author: 'Emily Davis',
-        publishDate: 'March 8, 2024',
-        readTime: '12 min',
-        tags: ['multiplayer', 'backend', 'scalability', 'architecture'],
-        featured: false
-    },
-    {
-        id: '5',
-        title: 'Monetization Strategies for Indie Games',
-        excerpt: 'Proven strategies for indie game developers to effectively monetize their games without compromising player experience or game quality...',
-        category: 'Business',
-        author: 'David Kim',
-        publishDate: 'March 5, 2024',
-        readTime: '7 min',
-        tags: ['monetization', 'indie', 'business', 'strategy'],
-        featured: false
-    }
-];
 
 const Articles: React.FC<ArticlesProps> = ({
     showFeaturedOnly = false,
@@ -92,8 +23,43 @@ const Articles: React.FC<ArticlesProps> = ({
     const [filter, setFilter] = useState<'all' | string>('all');
     const [viewMode, setViewMode] = useState<'timeline' | 'grid'>('timeline');
     const [visibleCards, setVisibleCards] = useState<Set<string>>(new Set());
+    const [articles, setArticles] = useState<ArticleData[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    const articles = customData || defaultArticlesData;
+    // Load articles from backend
+    useEffect(() => {
+        const loadArticles = async () => {
+            if (customData) {
+                setArticles(customData);
+                setLoading(false);
+                return;
+            }
+
+            try {
+                setLoading(true);
+                setError(null);
+                
+                let fetchedArticles: ArticleData[];
+                
+                if (showFeaturedOnly) {
+                    fetchedArticles = await ArticleService.getFeaturedArticles();
+                } else {
+                    fetchedArticles = await ArticleService.getLatestArticles(maxArticles || 10);
+                }
+                
+                setArticles(fetchedArticles);
+            } catch (err) {
+                console.error('Failed to load articles:', err);
+                setError('Failed to load articles. Please try again later.');
+                setArticles([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadArticles();
+    }, [showFeaturedOnly, maxArticles, customData]);
 
     const filteredArticles = filter === 'all'
         ? articles
@@ -212,35 +178,69 @@ const Articles: React.FC<ArticlesProps> = ({
                     </div>
                 )}
 
+                {/* Loading State */}
+                {loading && (
+                    <div className="articles__loading">
+                        <div className="articles__loading-spinner"></div>
+                        <p>Loading articles...</p>
+                    </div>
+                )}
+
+                {/* Error State */}
+                {error && !loading && (
+                    <div className="articles__error">
+                        <div className="articles__error-icon">⚠️</div>
+                        <h3>Unable to Load Articles</h3>
+                        <p>{error}</p>
+                        <button 
+                            className="articles__retry-btn"
+                            onClick={() => window.location.reload()}
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                )}
+
+                {/* Empty State */}
+                {!loading && !error && displayArticles.length === 0 && (
+                    <div className="articles__empty">
+                        <div className="articles__empty-icon">📄</div>
+                        <h3>No Articles Available</h3>
+                        <p>Check back later for new content!</p>
+                    </div>
+                )}
+
                 {/* Articles Container */}
-                <div className={`articles__content articles__content--${viewMode}`}>
-                    {viewMode === 'timeline' ? (
-                        <div className="articles__timeline">
-                            <div className="articles__timeline-line"></div>
-                            {displayArticles.map((article, index) => (
-                                <ArticleTimelineItem
-                                    key={article.id}
-                                    article={article}
-                                    index={index}
-                                    isVisible={visibleCards.has(article.id)}
-                                    observeImage={observeImage}
-                                />
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="articles__grid">
-                            {displayArticles.map((article, index) => (
-                                <ArticleGridItem
-                                    key={article.id}
-                                    article={article}
-                                    index={index}
-                                    isVisible={visibleCards.has(article.id)}
-                                    observeImage={observeImage}
-                                />
-                            ))}
-                        </div>
-                    )}
-                </div>
+                {!loading && !error && displayArticles.length > 0 && (
+                    <div className={`articles__content articles__content--${viewMode}`}>
+                        {viewMode === 'timeline' ? (
+                            <div className="articles__timeline">
+                                <div className="articles__timeline-line"></div>
+                                {displayArticles.map((article, index) => (
+                                    <ArticleTimelineItem
+                                        key={article.id}
+                                        article={article}
+                                        index={index}
+                                        isVisible={visibleCards.has(article.id)}
+                                        observeImage={observeImage}
+                                    />
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="articles__grid">
+                                {displayArticles.map((article, index) => (
+                                    <ArticleGridItem
+                                        key={article.id}
+                                        article={article}
+                                        index={index}
+                                        isVisible={visibleCards.has(article.id)}
+                                        observeImage={observeImage}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                )}
 
                 {/* CTA */}
                 {!showFeaturedOnly && (

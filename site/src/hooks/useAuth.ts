@@ -1,22 +1,12 @@
-// hooks/useAuth.ts - Fixed Supabase integration with proper types
-import { useState, useEffect, useCallback } from 'react';
-import { Session, User, AuthChangeEvent } from '@supabase/supabase-js';
-import SupabaseService from '../services/SupabaseService';
-import NotificationManager from '../utils/NotificationManager';
+// hooks/useAuth.ts - Functional auth hook with Google OAuth
+import { useState, useCallback, useEffect } from 'react';
+import { Session, User } from '@supabase/supabase-js';
+import { UserProfile, ExtendedAuthState, ProfileCompletionStatus } from '../types/profile';
+import { AuthResult } from '../types/auth';
+import supabaseService from '../services/SupabaseService';
 
-interface AuthState {
-    user: User | null;
-    session: Session | null;
-    loading: boolean;
-    isAuthenticated: boolean;
-    isAdmin: boolean;
-}
-
-interface AuthResult {
-    success: boolean;
-    error?: { message: string } | null;
-    data?: any;
-}
+// Using types from profile.ts for consistency
+type AuthState = ExtendedAuthState;
 
 export const useAuth = () => {
     const [authState, setAuthState] = useState<AuthState>({
@@ -24,49 +14,75 @@ export const useAuth = () => {
         session: null,
         loading: true,
         isAuthenticated: false,
-        isAdmin: false
+        isAdmin: false,
+        profile: null,
+        profileLoading: false,
+        profileCompleted: false,
+        profileCompletionPercentage: 0
     });
 
-    const notificationManager = NotificationManager.getInstance();
-
-    // Initialize auth state
+    // Debug state changes
     useEffect(() => {
-        let mounted = true;
+        console.log('🔄 AUTH STATE CHANGED:', {
+            loading: authState.loading,
+            isAuthenticated: authState.isAuthenticated,
+            hasUser: !!authState.user,
+            hasSession: !!authState.session,
+            userId: authState.user?.id || 'none'
+        });
+    }, [authState]);
+
+    // Initialize auth state and set up listener
+    useEffect(() => {
+        console.log('useAuth: Initializing...');
+        let isSubscribed = true;
+        let unsubscribe: (() => void) | null = null;
 
         const initializeAuth = async () => {
             try {
-                const { session, error } = await SupabaseService.getSession();
-
-                if (mounted) {
-                    if (session?.user) {
-                        const adminStatus = await SupabaseService.isAdmin(session.user.id);
-                        setAuthState({
-                            user: session.user,
-                            session,
-                            loading: false,
-                            isAuthenticated: true,
-                            isAdmin: adminStatus
-                        });
-                    } else {
-                        setAuthState({
-                            user: null,
-                            session: null,
-                            loading: false,
-                            isAuthenticated: false,
-                            isAdmin: false
-                        });
+                // Get initial session
+                const { session, error } = await supabaseService.getSession();
+                
+                if (error) {
+                    console.error('useAuth: Initial session error:', error);
+                    if (isSubscribed) {
+                        setAuthState(prev => ({ ...prev, loading: false }));
                     }
+                    return;
+                }
+
+                console.log('useAuth: Initial session:', session?.user?.id || 'none');
+                if (isSubscribed) {
+                    await updateAuthState(session);
+                }
+
+                // Only set up listener after initial session is processed
+                if (isSubscribed) {
+                    unsubscribe = supabaseService.onAuthStateChange(async (event, session) => {
+                        // Ignore INITIAL_SESSION events to prevent duplicate processing
+                        if (event === 'INITIAL_SESSION') {
+                            console.log('🎯 Ignoring INITIAL_SESSION event to prevent duplicates');
+                            return;
+                        }
+                        
+                        console.log('🎯 AUTH STATE CHANGE EVENT:', {
+                            event,
+                            userId: session?.user?.id || 'none',
+                            userEmail: session?.user?.email || 'none',
+                            timestamp: new Date().toISOString(),
+                            sessionExists: !!session,
+                            tokenExists: !!session?.access_token
+                        });
+                        
+                        if (isSubscribed) {
+                            await updateAuthState(session);
+                        }
+                    });
                 }
             } catch (error) {
-                console.error('Auth initialization error:', error);
-                if (mounted) {
-                    setAuthState({
-                        user: null,
-                        session: null,
-                        loading: false,
-                        isAuthenticated: false,
-                        isAdmin: false
-                    });
+                console.error('useAuth: Failed to initialize auth:', error);
+                if (isSubscribed) {
+                    setAuthState(prev => ({ ...prev, loading: false }));
                 }
             }
         };
@@ -74,214 +90,253 @@ export const useAuth = () => {
         initializeAuth();
 
         return () => {
-            mounted = false;
+            console.log('useAuth: Cleaning up listener');
+            isSubscribed = false;
+            if (unsubscribe) {
+                unsubscribe();
+            }
         };
+    }, [])
+
+    const updateAuthState = useCallback(async (session: Session | null) => {
+        console.log('🔄 updateAuthState called');
+        console.log('📋 Session details:', {
+            exists: !!session,
+            userId: session?.user?.id || 'none',
+            userEmail: session?.user?.email || 'none',
+            expiresAt: session?.expires_at ? new Date(session.expires_at * 1000) : 'none',
+            accessToken: session?.access_token ? '***EXISTS***' : 'none',
+            refreshToken: session?.refresh_token ? '***EXISTS***' : 'none'
+        });
+        
+        console.log('🔍 CHECKPOINT 1: About to process session...');
+        
+        try {
+            if (!session || !session.user) {
+                console.log('❌ No session or user - setting unauthenticated state');
+                const newState = {
+                    user: null,
+                    session: null,
+                    loading: false,
+                    isAuthenticated: false,
+                    isAdmin: false,
+                    profile: null,
+                    profileLoading: false,
+                    profileCompleted: false,
+                    profileCompletionPercentage: 0
+                };
+                console.log('🔒 Auth state set to:', newState);
+                setAuthState(newState);
+                return;
+            }
+
+            console.log('✅ Valid session found - updating authenticated state');
+            console.log('👤 User info:', {
+                id: session.user.id,
+                email: session.user.email,
+                emailVerified: session.user.email_confirmed_at,
+                lastSignIn: session.user.last_sign_in_at,
+                provider: session.user.app_metadata?.provider
+            });
+
+            console.log('🔍 CHECKPOINT 2: About to check admin status...');
+            
+            // Check admin status with error handling
+            console.log('🔍 Checking admin status...');
+            let isAdmin = false;
+            try {
+                isAdmin = await supabaseService.isAdmin(session.user.id);
+            } catch (adminError) {
+                console.warn('⚠️ Admin check failed, defaulting to false:', adminError);
+                isAdmin = false;
+            }
+            console.log('🛡️ Admin status:', isAdmin);
+            
+            console.log('🔍 CHECKPOINT 3: Admin check complete, ensuring profile...');
+            
+            // Ensure profile exists with error handling
+            console.log('📝 Ensuring user profile exists...');
+            let profileResult = { success: true, profileCompleted: false };
+            try {
+                profileResult = await supabaseService.ensureUserProfile(session.user.id);
+            } catch (profileError) {
+                console.warn('⚠️ Profile ensure failed, continuing with defaults:', profileError);
+            }
+            console.log('📝 Profile result:', profileResult);
+            
+            console.log('🔍 CHECKPOINT 4: Profile operations complete, setting final state...');
+
+            const newState = {
+                user: session.user,
+                session: session,
+                loading: false,
+                isAuthenticated: true,
+                isAdmin,
+                profile: null,
+                profileLoading: false,
+                profileCompleted: profileResult.profileCompleted || false,
+                profileCompletionPercentage: 0
+            };
+            
+            console.log('🔓 Auth state set to:', {
+                ...newState,
+                session: '***SESSION_OBJECT***',
+                user: {
+                    id: newState.user.id,
+                    email: newState.user.email
+                }
+            });
+            
+            console.log('🔍 CHECKPOINT 5: About to call setAuthState...');
+            setAuthState(newState);
+            console.log('🔍 CHECKPOINT 6: setAuthState called successfully - auth flow COMPLETE');
+
+        } catch (error) {
+            console.error('❌ useAuth: Failed to update auth state:', error);
+            console.log('🔄 Setting error state with loading: false');
+            setAuthState(prev => ({
+                ...prev,
+                loading: false
+            }));
+        }
+    }, []);
+    
+    const [profileStatus] = useState<ProfileCompletionStatus | null>(null);
+
+    // Functional auth methods
+    const loadUserProfile = useCallback(async (userId: string, forceRefresh: boolean = false): Promise<void> => {
+        // Profile loading implementation can be added later if needed
+        console.log('loadUserProfile called for:', userId);
+    }, []);
+    
+    const calculateProfileCompletionPercentage = useCallback((profile: UserProfile): number => {
+        // Simple profile completion calculation
+        if (!profile) return 0;
+        let completed = 0;
+        let total = 0;
+        
+        // Check required fields
+        if (profile.full_name) completed++;
+        total++;
+        
+        if (profile.email) completed++;
+        total++;
+        
+        return Math.round((completed / total) * 100);
     }, []);
 
-    // Listen for auth changes - FIXED: Properly handle the cleanup function
-    useEffect(() => {
-        const unsubscribe = SupabaseService.onAuthStateChange(
-            async (event: AuthChangeEvent, session: Session | null) => {
-                console.log('Auth state change:', event);
-
-                if (session?.user) {
-                    const adminStatus = await SupabaseService.isAdmin(session.user.id);
-                    setAuthState({
-                        user: session.user,
-                        session,
-                        loading: false,
-                        isAuthenticated: true,
-                        isAdmin: adminStatus
-                    });
-
-                    // Show welcome notification for sign in events
-                    if (event === 'SIGNED_IN') {
-                        const userName = session.user.user_metadata?.full_name ||
-                            session.user.user_metadata?.name ||
-                            session.user.email?.split('@')[0] ||
-                            'User';
-
-                        notificationManager.show(
-                            `Welcome back, ${userName}!`,
-                            'success',
-                            3000
-                        );
-                    }
-                } else {
-                    setAuthState({
-                        user: null,
-                        session: null,
-                        loading: false,
-                        isAuthenticated: false,
-                        isAdmin: false
-                    });
-
-                    // Show sign out notification
-                    if (event === 'SIGNED_OUT') {
-                        notificationManager.show(
-                            'You have been signed out',
-                            'info',
-                            2000
-                        );
-                    }
-                }
-            }
-        );
-
-        // FIXED: Return the unsubscribe function directly
-        return unsubscribe;
-    }, [notificationManager]);
-
-    // Google OAuth sign in
     const signInWithGoogle = useCallback(async (): Promise<AuthResult> => {
         try {
-            console.log('Starting Google OAuth sign in...');
-
-            const { data, error } = await SupabaseService.signInWithGoogle();
-
-            if (error) {
-                console.error('Google OAuth error:', error);
-                notificationManager.show(
-                    error.message || 'Google sign in failed',
-                    'error',
-                    5000
-                );
-                return { success: false, error };
+            console.log('useAuth: Initiating Google sign-in...');
+            setAuthState(prev => ({ ...prev, loading: true }));
+            
+            const result = await supabaseService.signInWithGoogle();
+            
+            if (result.error) {
+                console.error('useAuth: Google sign-in error:', result.error);
+                setAuthState(prev => ({ ...prev, loading: false }));
+                return { success: false, error: result.error };
             }
-
-            // OAuth redirect will handle the rest
-            console.log('Google OAuth redirect initiated');
-            return { success: true, data };
-
-        } catch (error: any) {
-            console.error('Google sign in error:', error);
-            const errorMessage = error?.message || 'Google sign in failed';
-            notificationManager.show(errorMessage, 'error', 5000);
-            return { success: false, error: { message: errorMessage } };
+            
+            // The auth state will be updated automatically via the listener
+            return { success: true };
+        } catch (error) {
+            console.error('useAuth: Google sign-in failed:', error);
+            setAuthState(prev => ({ ...prev, loading: false }));
+            return { success: false, error: { message: 'Sign-in failed' } };
         }
-    }, [notificationManager]);
+    }, []);
 
-    // Email/password sign in
     const signInWithEmail = useCallback(async (
         email: string,
         password: string,
         rememberMe: boolean = false
     ): Promise<AuthResult> => {
-        try {
-            const { data, error } = await SupabaseService.signInWithEmail(email, password, rememberMe);
+        return { success: false, error: { message: 'Email auth not implemented' } };
+    }, []);
 
-            if (error) {
-                notificationManager.show(
-                    error.message || 'Sign in failed',
-                    'error',
-                    5000
-                );
-                return { success: false, error };
-            }
-
-            return { success: true, data };
-
-        } catch (error: any) {
-            console.error('Email sign in error:', error);
-            const errorMessage = error?.message || 'Sign in failed';
-            notificationManager.show(errorMessage, 'error', 5000);
-            return { success: false, error: { message: errorMessage } };
-        }
-    }, [notificationManager]);
-
-    // Email/password sign up
     const signUpWithEmail = useCallback(async (
         email: string,
         password: string
     ): Promise<AuthResult> => {
-        try {
-            const { data, error } = await SupabaseService.signUpWithEmail(email, password);
+        return { success: false, error: { message: 'Email auth not implemented' } };
+    }, []);
 
-            if (error) {
-                notificationManager.show(
-                    error.message || 'Sign up failed',
-                    'error',
-                    5000
-                );
-                return { success: false, error };
-            }
-
-            notificationManager.show(
-                'Account created! Please check your email to verify.',
-                'success',
-                7000
-            );
-
-            return { success: true, data };
-
-        } catch (error: any) {
-            console.error('Email sign up error:', error);
-            const errorMessage = error?.message || 'Sign up failed';
-            notificationManager.show(errorMessage, 'error', 5000);
-            return { success: false, error: { message: errorMessage } };
-        }
-    }, [notificationManager]);
-
-    // Sign out
     const signOut = useCallback(async (): Promise<AuthResult> => {
         try {
-            const { error } = await SupabaseService.signOut();
-
+            console.log('useAuth: Signing out...');
+            setAuthState(prev => ({ ...prev, loading: true }));
+            
+            const { error } = await supabaseService.signOut();
+            
             if (error) {
-                notificationManager.show(
-                    error.message || 'Sign out failed',
-                    'error',
-                    5000
-                );
+                console.error('useAuth: Sign out error:', error);
+                setAuthState(prev => ({ ...prev, loading: false }));
                 return { success: false, error };
             }
-
+            
+            // Auth state will be updated via listener
             return { success: true };
-
-        } catch (error: any) {
-            console.error('Sign out error:', error);
-            const errorMessage = error?.message || 'Sign out failed';
-            notificationManager.show(errorMessage, 'error', 5000);
-            return { success: false, error: { message: errorMessage } };
+        } catch (error) {
+            console.error('useAuth: Sign out failed:', error);
+            setAuthState(prev => ({ ...prev, loading: false }));
+            return { success: false, error: { message: 'Sign out failed' } };
         }
-    }, [notificationManager]);
+    }, []);
 
-    // Handle OAuth callback
     const handleOAuthCallback = useCallback(async (): Promise<{ success: boolean; error?: string }> => {
         try {
-            console.log('Handling OAuth callback...');
-            const result = await SupabaseService.handleOAuthCallback();
-
-            if (result.success) {
-                notificationManager.show(
-                    'Successfully signed in with Google!',
-                    'success',
-                    3000
-                );
+            console.log('useAuth: Handling OAuth callback...');
+            const result = await supabaseService.handleOAuthCallback();
+            
+            if (!result.success) {
+                console.error('useAuth: OAuth callback failed:', result.error);
             } else {
-                notificationManager.show(
-                    result.error || 'OAuth authentication failed',
-                    'error',
-                    5000
-                );
+                console.log('useAuth: OAuth callback successful');
             }
-
+            
             return result;
-
-        } catch (error: any) {
-            console.error('OAuth callback error:', error);
-            const errorMessage = error?.message || 'OAuth callback failed';
-            notificationManager.show(errorMessage, 'error', 5000);
-            return { success: false, error: errorMessage };
+        } catch (error) {
+            console.error('useAuth: OAuth callback error:', error);
+            const errorMsg = error instanceof Error ? error.message : 'OAuth callback failed';
+            return { success: false, error: errorMsg };
         }
-    }, [notificationManager]);
+    }, []);
+
+    const refreshProfile = useCallback(async (): Promise<AuthResult> => {
+        if (!authState.user) {
+            return { success: false, error: { message: 'No user to refresh' } };
+        }
+        
+        try {
+            await updateAuthState(authState.session);
+            return { success: true };
+        } catch (error) {
+            console.error('useAuth: Profile refresh failed:', error);
+            return { success: false, error: { message: 'Profile refresh failed' } };
+        }
+    }, [authState.user, authState.session]);
+
+    const completeProfile = useCallback(async (additionalData?: Record<string, any>): Promise<AuthResult> => {
+        return { success: false, error: { message: 'Profile completion not implemented' } };
+    }, []);
+
+    const updateProfile = useCallback(async (updates: Record<string, any>): Promise<AuthResult> => {
+        return { success: false, error: { message: 'Profile update not implemented' } };
+    }, []);
 
     return {
         ...authState,
+        profileStatus,
         signInWithGoogle,
         signInWithEmail,
         signUpWithEmail,
         signOut,
-        handleOAuthCallback
+        handleOAuthCallback,
+        refreshProfile,
+        completeProfile,
+        updateProfile,
+        loadUserProfile,
+        calculateProfileCompletionPercentage
     };
 };

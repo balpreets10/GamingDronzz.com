@@ -10,8 +10,17 @@ export const developmentConfig = {
         auth: {
             autoRefreshToken: true,
             persistSession: true,
-            detectSessionInUrl: true
+            detectSessionInUrl: true,
+            redirectTo: `${window.location.origin}/auth/callback`
         }
+    },
+    google: {
+        clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID!,
+        redirectUri: `${window.location.origin}/auth/callback`
+    },
+    app: {
+        siteUrl: window.location.origin,
+        name: 'Gaming Dronzz - Development'
     },
     analytics: {
         enabled: false,

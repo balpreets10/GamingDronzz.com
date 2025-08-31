@@ -849,6 +849,101 @@
     }
 }
 
+/* ===== LOADING STATE ===== */
+.articles__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--gd-space-16) var(--gd-space-8);
+    text-align: center;
+    color: var(--gd-text-secondary);
+}
+
+.articles__loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--gd-border-subtle);
+    border-top: 3px solid var(--gd-color-primary);
+    border-radius: 50%;
+    margin-bottom: var(--gd-space-4);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== ERROR STATE ===== */
+.articles__error {
+    padding: var(--gd-space-8);
+    text-align: center;
+    color: var(--gd-text-warning);
+    background: rgba(var(--gd-color-warning-rgb), 0.1);
+    border: 1px solid rgba(var(--gd-color-warning-rgb), 0.2);
+    border-radius: var(--gd-border-radius-lg);
+    margin-bottom: var(--gd-space-8);
+}
+
+.articles__error p {
+    margin: 0;
+    margin-bottom: var(--gd-space-2);
+}
+
+.articles__error p:last-child {
+    margin-bottom: 0;
+    font-size: var(--gd-font-size-sm);
+    opacity: 0.8;
+}
+
+/* ===== EMPTY STATE ===== */
+.articles__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--gd-space-16) var(--gd-space-8);
+    text-align: center;
+    color: var(--gd-text-secondary);
+}
+
+.articles__empty-icon {
+    margin-bottom: var(--gd-space-6);
+    opacity: 0.6;
+    color: var(--gd-color-primary);
+}
+
+.articles__empty h3 {
+    font-size: var(--gd-font-size-xl);
+    font-weight: var(--gd-font-weight-semibold);
+    color: var(--gd-text-primary);
+    margin-bottom: var(--gd-space-4);
+}
+
+.articles__empty p {
+    font-size: var(--gd-font-size-base);
+    line-height: var(--gd-line-height-relaxed);
+    max-width: 500px;
+    margin: 0;
+}
+
+/* Responsive adjustments for states */
+@media (max-width: 768px) {
+    .articles__loading,
+    .articles__empty {
+        padding: var(--gd-space-12) var(--gd-space-4);
+    }
+    
+    .articles__empty h3 {
+        font-size: var(--gd-font-size-lg);
+    }
+    
+    .articles__empty p {
+        font-size: var(--gd-font-size-sm);
+    }
+}
+
 /* ===== ACCESSIBILITY IMPROVEMENTS ===== */
 @media (prefers-reduced-motion: reduce) {
 

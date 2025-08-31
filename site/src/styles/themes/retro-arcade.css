@@ -417,12 +417,12 @@ html[data-theme="retro-arcade"]::before {
     height: 100%;
     background: var(--gd-scanline);
     pointer-events: none;
-    z-index: 10000;
+    z-index: 1;
     opacity: 0.8;
 }
 
-/* CRT monitor effect */
-html[data-theme="retro-arcade"] body {
+/* CRT monitor effect - Applied to main content only to avoid breaking fixed positioning */
+html[data-theme="retro-arcade"] .app__main {
     filter: var(--gd-crt-flicker);
 }
 

@@ -52,6 +52,7 @@ class NavigationManager implements INavigationManager {
     private intersectionObserver: IntersectionObserver | null = null;
     private currentSections: Map<string, boolean> = new Map();
     private scrollTimeout: number | null = null;
+    private isProgrammaticScroll = false;
 
     // Optimized update batching
     private updateBatch: Partial<NavigationState> | null = null;
@@ -91,8 +92,8 @@ class NavigationManager implements INavigationManager {
         this.intersectionObserver = new IntersectionObserver(
             this.boundMethods.handleIntersection,
             {
-                threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
-                rootMargin: '-10% 0px -60% 0px' // More lenient detection
+                threshold: [0, 0.1, 0.3, 0.5, 0.7, 1],
+                rootMargin: '-20% 0px -20% 0px' // More balanced detection zone
             }
         );
 
@@ -120,12 +121,15 @@ class NavigationManager implements INavigationManager {
             this.intersectionObserver = new IntersectionObserver(
                 this.boundMethods.handleIntersection,
                 {
-                    threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
-                    rootMargin: '-10% 0px -60% 0px'
+                    threshold: [0, 0.1, 0.3, 0.5, 0.7, 1],
+                    rootMargin: '-20% 0px -20% 0px'
                 }
             );
         }
 
+        // Clear existing observations
+        this.currentSections.clear();
+        
         this.config.items.forEach(item => {
             if (item.href.startsWith('#')) {
                 const sectionId = item.href.substring(1);
@@ -141,6 +145,7 @@ class NavigationManager implements INavigationManager {
     private handleIntersection(entries: IntersectionObserverEntry[]): void {
         let activeSection: string | null = null;
         let maxRatio = 0;
+        let visibleSections: Array<{id: string, ratio: number, bounds: DOMRectReadOnly}> = [];
 
         entries.forEach(entry => {
             const sectionId = entry.target.id;
@@ -149,22 +154,49 @@ class NavigationManager implements INavigationManager {
             if (navItem) {
                 this.currentSections.set(navItem.id, entry.isIntersecting);
 
-                // Find the section with the highest intersection ratio
-                // Use a lower threshold for better detection
-                if (entry.isIntersecting && entry.intersectionRatio > maxRatio && entry.intersectionRatio >= 0.1) {
-                    maxRatio = entry.intersectionRatio;
-                    activeSection = navItem.id;
+                // Collect all visible sections with their intersection data
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
+                    visibleSections.push({
+                        id: navItem.id,
+                        ratio: entry.intersectionRatio,
+                        bounds: entry.boundingClientRect
+                    });
+                    
+                    // Track the section with highest intersection ratio
+                    if (entry.intersectionRatio > maxRatio) {
+                        maxRatio = entry.intersectionRatio;
+                        activeSection = navItem.id;
+                    }
                 }
             }
         });
+
+        // If multiple sections are visible, pick the one closest to viewport center
+        if (visibleSections.length > 1) {
+            const viewportCenter = window.innerHeight / 2;
+            let closestToCenter: string | null = null;
+            let minDistanceFromCenter = Infinity;
+
+            visibleSections.forEach(section => {
+                const sectionCenter = section.bounds.top + (section.bounds.height / 2);
+                const distanceFromCenter = Math.abs(sectionCenter - viewportCenter);
+                
+                if (distanceFromCenter < minDistanceFromCenter) {
+                    minDistanceFromCenter = distanceFromCenter;
+                    closestToCenter = section.id;
+                }
+            });
+
+            activeSection = closestToCenter;
+        }
 
         // If no section is intersecting significantly, find the closest one
         if (!activeSection) {
             activeSection = this.findClosestSection();
         }
 
-        // Update active item if it changed
-        if (activeSection && activeSection !== this.state.activeItem) {
+        // Update active item if it changed, but not during programmatic scroll
+        if (activeSection && activeSection !== this.state.activeItem && !this.isProgrammaticScroll) {
             this.setActiveItem(activeSection);
         }
     }
@@ -219,10 +251,18 @@ class NavigationManager implements INavigationManager {
             clearTimeout(this.scrollTimeout);
         }
 
-        // Additional scroll-based logic can go here
-        this.scrollTimeout = window.setTimeout(() => {
-            // Scroll ended
-        }, 150);
+        // If not programmatic scroll, ensure observer is active
+        if (!this.isProgrammaticScroll && this.intersectionObserver) {
+            // Scroll ended - re-evaluate active section if needed
+            this.scrollTimeout = window.setTimeout(() => {
+                if (!this.isProgrammaticScroll) {
+                    const closestSection = this.findClosestSection();
+                    if (closestSection && closestSection !== this.state.activeItem) {
+                        this.setActiveItem(closestSection);
+                    }
+                }
+            }, 150);
+        }
     }
 
     private setActiveItem(itemId: string): void {
@@ -426,23 +466,18 @@ class NavigationManager implements INavigationManager {
         if (item.href.startsWith('#')) {
             const target = document.querySelector(item.href);
             if (target) {
-                // Disable intersection observer temporarily during programmatic scroll
-                const observer = this.intersectionObserver;
-                if (observer) {
-                    observer.disconnect();
-                }
+                // Keep observer running but add a flag to ignore updates during programmatic scroll
+                this.isProgrammaticScroll = true;
                 
                 target.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
 
-                // Re-enable intersection observer after scroll animation completes
+                // Clear programmatic scroll flag after animation
                 setTimeout(() => {
-                    if (observer && !this.isDestroyed) {
-                        this.observeSections();
-                    }
-                }, 800); // Wait for scroll animation to complete
+                    this.isProgrammaticScroll = false;
+                }, 1000); // Wait for scroll animation to complete
             }
         } else {
             if (item.external) {
