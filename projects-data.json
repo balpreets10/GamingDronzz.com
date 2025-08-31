@@ -1,0 +1,836 @@
+{
+    "projects": [
+        {
+            "id": 1,
+            "title": "RS Fun",
+            "status": "Completed",
+            "category": [
+                "PC",
+                "Web",
+                "Mobile",
+                "2D"
+            ],
+            "description": "An immersive and free casino slot game with over 70 games and a plethora of bonus opportunities, offering a vibrant gaming experience.",
+            "client": "Club 7",
+            "technologies": [
+                "Unity",
+                "C#",
+                "WebSockets",
+                "Dependency Injection",
+                "Addressables",
+                "DOTween",
+                "Factory Pattern",
+                "Scriptable Objects",
+                "Observer Pattern"
+            ],
+            "roles": [
+                "Lead Developer",
+                "System Architecture",
+                "LiveOPS",
+                "Performance Optimization",
+                "Team Leadership",
+                "UI/UX Integration",
+                "CI CD Pipelines"
+            ],
+            "images": [
+                "/src/assets/images/projects/rsfun/rsfun-0.png",
+                "/src/assets/images/projects/rsfun/rsfun-1.png",
+                "/src/assets/images/projects/rsfun/rsfun-2.png",
+                "/src/assets/images/projects/rsfun/rsfun-3.png",
+                "/src/assets/images/projects/rsfun/rsfun-4.png"
+            ],
+            "links": {
+                "ios": "https://apps.apple.com/in/app/rsfun/id1495582389",
+                "web": "https://playriverathome.net/",
+                "android": "https://play.google.com/store/apps/details?id=com.club7.rsfun"
+            },
+            "stats": {
+                "downloads": "1M+",
+                "rating": "4.8/5",
+                "duration": "11 months"
+            },
+            "achievements": [
+                "Best Casino Game 2020",
+                "Editor's Choice",
+                "1M+ Downloads"
+            ],
+            "features": [
+                "Real-time Casino Experience",
+                "Advanced Minigames",
+                "RNG based Slot Mechanics",
+                "Cross-platform Compatibility",
+                "Custom GUI Skins and Animations"
+            ],
+            "challenges": [
+                "Optimizing for 60fps on modern mobile devices",
+                "Compatibility for old devices",
+                "Implementing real-time API's",
+                "Ensuring smooth animations and transitions"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Bingo Blast",
+            "status": "Completed",
+            "category": [
+                "Multiplayer",
+                "Web",
+                "Mobile",
+                "2D"
+            ],
+            "description": "A fun and enjoyable real time multiplayer Bingo game with multiple game rooms, minigames and backgdrops, supporting up to 16 players.",
+            "client": "Lucky Strike Games",
+            "technologies": [
+                "IOC+",
+                "C#",
+                "SFS Smartfox Server",
+                "Unity 3D",
+                "Animators",
+                "Asset Bundles",
+                "Unity Analytics"
+            ],
+            "roles": [
+                "Game Developer",
+                "Architecture",
+                "Minigame Implementation",
+                "UI/UX Integration",
+                "Debugging"
+            ],
+            "images": [
+                "/src/assets/images/projects/bingo/bingo-0.png"
+            ],
+            "links": {
+                "android": "https://appadvice.com/app/bingo-blast-1-party-game-app/1376466608"
+            },
+            "stats": {
+                "downloads": "100K+",
+                "rating": "4.3/5",
+                "duration": "10 months"
+            },
+            "achievements": [
+                "Top Rated Bingo in 2018",
+                "IGN Editor's Choice",
+                "Card Game of the Year"
+            ],
+            "features": [
+                "Multiple game rooms with unique themes",
+                "Real-time multiplayer with up to 16 players",
+                "Engaging minigames between rounds",
+                "Customizable bingo cards",
+                "16-player competitive multiplayer"
+            ],
+            "challenges": [
+                "Responsive UI for various screen sizes",
+                "Real-time multiplayer synchronization",
+                "Implementing engaging minigames",
+                "Ensuring smooth animations and transitions",
+                "Optimizing for low-end devices"
+            ]
+        },
+        {
+            "id": 3,
+            "title": "balpreet.com",
+            "status": "Completed",
+            "category": [
+                "Web",
+                "JavaScript"
+            ],
+            "description": "A personal portfolio website showcasing my skills, projects and achievements in game development and software engineering.",
+            "client": "Balpreet Singh",
+            "technologies": [
+                "HTML",
+                "JavaScript",
+                "CSS",
+                "Agentic AI",
+                "Claude",
+                "S.O.L.I.D"
+            ],
+            "roles": [
+                "Full Stack Developer",
+                "System Architecture",
+                "Performance Optimization",
+                "UI/UX Integration",
+                "Hosting Setup",
+                "FTP Setup"
+            ],
+            "images": [
+                "/src/assets/images/projects/website/website-0.png",
+                "/src/assets/images/projects/website/website-1.png",
+                "/src/assets/images/projects/website/website-2.png",
+                "/src/assets/images/projects/website/website-3.png",
+                "/src/assets/images/projects/website/website-4.png",
+                "/src/assets/images/projects/website/website-5.png",
+                "/src/assets/images/projects/website/website-6.png",
+                "/src/assets/images/projects/website/website-7.png"
+            ],
+            "links": {},
+            "stats": {
+                "downloads": "N/A",
+                "rating": "N/A",
+                "duration": "2 Days"
+            },
+            "achievements": [
+                "Hyper AI Development",
+                "Gamified Web Design"
+            ],
+            "features": [
+                "Responsive design for all devices",
+                "Real-time updates with Claude AI",
+                "Cross-browser compatibility",
+                "Interactive animations and transitions"
+            ],
+            "challenges": [
+                "Ensuring compatibility across all browsers",
+                "Creating engaging and interactive content",
+                "Responsive design for various screen sizes",
+                "Performance Optimization"
+            ]
+        },
+        {
+            "id": 4,
+            "title": "ABC Rule of 3",
+            "category": [
+                "Web",
+                "Mobile",
+                "2D",
+                "JavaScript"
+            ],
+            "status": "Partially Deployed",
+            "description": "An Online Learning Academy created to establish equity for English Learners by providing a fun filled environment to learn English and Math.",
+            "client": "Project Moving Forward",
+            "technologies": [
+                "Unity 3D",
+                "Phaser.JS",
+                "C#",
+                "JavaScript",
+                "Addressables",
+                "WebSockets"
+            ],
+            "roles": [
+                "Technical Lead",
+                "Architecture Design",
+                "Team Management",
+                "Stakeholder Collaboration",
+                "Performance Optimization",
+                "Inter-Department Coordination"
+            ],
+            "images": [
+                "/src/assets/images/projects/ruleof3/ruleof3-0.png",
+                "/src/assets/images/projects/ruleof3/ruleof3-1.png",
+                "/src/assets/images/projects/ruleof3/ruleof3-2.png",
+                "/src/assets/images/projects/ruleof3/ruleof3-3.png"
+            ],
+            "links": {
+                "web": "https://abcruleof3.com/"
+            },
+            "stats": {
+                "downloads": "1M+",
+                "rating": "4.9/5",
+                "duration": "22 months"
+            },
+            "achievements": [
+                "Deployed to 100+ Schools",
+                "Best E-Learning Game",
+                "Community Choice",
+                "Educational Excellence Award"
+            ],
+            "features": [
+                "Simple and engaging learning modules",
+                "Interactive quizzes and games",
+                "Real-time progress tracking",
+                "Progression system with rewards"
+            ],
+            "challenges": [
+                "Ensuring accessibility for all students",
+                "Creating engaging and educational content",
+                "Browser compatibility and performance",
+                "Responsive design for various devices"
+            ]
+        },
+        {
+            "id": 5,
+            "title": "Race for the White House",
+            "status": "In Development",
+            "category": [
+                "Multiplayer",
+                "Web",
+                "Mobile",
+                "2D"
+            ],
+            "description": "A 2D Strategy based Multiplayer Game where players take turns to try and win the Elections",
+            "client": "ArdentInfo Solutions",
+            "technologies": [
+                "Unity",
+                "C#",
+                "Photon Pun2/Fusion",
+                "Dependency Injection",
+                "Addressables",
+                "PlayFab",
+                "Factory Pattern",
+                "Scriptable Objects",
+                "Observer Pattern"
+            ],
+            "roles": [
+                "Technical Lead",
+                "Architecture Design",
+                "Performance Optimization",
+                "Team Management",
+                "Matchmaking",
+                "UI/UX Integration",
+                "CI CD Pipelines"
+            ],
+            "images": [
+                "/src/assets/images/projects/raceforwhitehouse/raceforwhitehouse-0.png",
+                "/src/assets/images/projects/raceforwhitehouse/raceforwhitehouse-1.png",
+                "/src/assets/images/projects/raceforwhitehouse/raceforwhitehouse-2.png",
+                "/src/assets/images/projects/raceforwhitehouse/raceforwhitehouse-3.png"
+            ],
+            "links": {},
+            "stats": {
+                "downloads": "N/A",
+                "rating": "N/A",
+                "duration": "8 Months"
+            },
+            "achievements": [
+                "In Development",
+                "N/A"
+            ],
+            "features": [
+                "Turn-based multiplayer gameplay",
+                "Strategic decision-making",
+                "Multiple game modes",
+                "Dynamic AI opponents",
+                "Cross-platform compatibility"
+            ],
+            "challenges": [
+                "Matchmaking and player synchronization",
+                "Implementing real-time multiplayer features",
+                "Ensuring smooth animations and transitions",
+                "Optimizing for low-end devices",
+                "Creating engaging AI opponents"
+            ]
+        },
+        {
+            "id": 6,
+            "title": "F7 Fun",
+            "status": "Completed",
+            "category": [
+                "Multiplayer",
+                "PC",
+                "Web",
+                "Mobile",
+                "2D"
+            ],
+            "description": "An immersive casino slot game with over 70 games and a plethora of bonus opportunities, offering a vibrant gaming experience.",
+            "client": "Club 7",
+            "technologies": [
+                "Unity",
+                "C#",
+                "WebSockets",
+                "Dependency Injection",
+                "Addressables",
+                "DOTween",
+                "Factory Pattern",
+                "Scriptable Objects",
+                "Observer Pattern"
+            ],
+            "roles": [
+                "Lead Developer",
+                "System Architecture",
+                "LiveOPS",
+                "Performance Optimization",
+                "Team Leadership",
+                "UI/UX Integration",
+                "CI CD Pipelines"
+            ],
+            "images": [
+                "/src/assets/images/projects/f7fun/f7fun-0.png",
+                "/src/assets/images/projects/f7fun/f7fun-1.png",
+                "/src/assets/images/projects/f7fun/f7fun-2.png"
+            ],
+            "links": {
+                "ios": "https://apps.apple.com/gr/app/f7fun-latest-casino-games/id1569168650"
+            },
+            "stats": {
+                "downloads": "1M+",
+                "rating": "4.8/5",
+                "duration": "10 months"
+            },
+            "achievements": [
+                "Best Casino Game 2021",
+                "Editor's Choice",
+                "1M+ Downloads"
+            ],
+            "features": [
+                "Real-time Casino Experience",
+                "Advanced Minigames",
+                "RNG based Slot Mechanics",
+                "Cross-platform Compatibility",
+                "Custom GUI Skins and Animations"
+            ],
+            "challenges": [
+                "Optimizing for 60fps on modern mobile devices",
+                "Compatibility for old devices",
+                "Implementing real-time API's",
+                "Ensuring smooth animations and transitions"
+            ]
+        },
+        {
+            "id": 7,
+            "title": "Hyike Ludo",
+            "status": "Completed",
+            "category": [
+                "Mobile",
+                "Multiplayer",
+                "Mobile",
+                "2D"
+            ],
+            "description": "A Multiplayer Board Game for 4 players. It is a modern take on the classic Ludo game with real-time multiplayer features.",
+            "client": "Hyike Games",
+            "technologies": [
+                "Unity",
+                "C#",
+                "Rest API's",
+                "Asset Bundles",
+                "Lean Tween",
+                "Observer Pattern"
+            ],
+            "roles": [
+                "Lead Developer",
+                "System Architecture",
+                "Performance Optimization",
+                "UI/UX Integration",
+                "Audio Integration",
+                "Matchmaking"
+            ],
+            "images": [
+                "/src/assets/images/projects/hyike/hyike-0.png"
+            ],
+            "links": {
+                "android": "https://download.cnet.com/developer/hyike-games/i-11069882/"
+            },
+            "stats": {
+                "downloads": "1M+",
+                "rating": "4.2/5",
+                "duration": "9 months"
+            },
+            "achievements": [
+                "Fastest Growing Game March",
+                "1M+ Downloads"
+            ],
+            "features": [
+                "Turn based multiplayer gameplay",
+                "Real-time player synchronization",
+                "Customizable game boards and pieces",
+                "Engaging animations and sound effects"
+            ],
+            "challenges": [
+                "Optimizing for 60fps on modern mobile devices",
+                "Compatibility for old devices",
+                "Ensuring smooth animations and transitions",
+                "Implementing real-time API's",
+                "Creating engaging AI opponents"
+            ]
+        },
+        {
+            "id": 8,
+            "title": "Match-O-Mania",
+            "status": "Completed",
+            "category": [
+                "Mobile",
+                "3D"
+            ],
+            "description": "An immersive and free match Game where you pair matching objects for fun. Great Time Killer and brain teaser with hand eye coordination.",
+            "client": "Gaming Dronzz",
+            "technologies": [
+                "Unity",
+                "C#",
+                "Addressables",
+                "Lean Tween",
+                "MVC Pattern",
+                "Observer Pattern"
+            ],
+            "roles": [
+                "Lead Developer",
+                "System Architecture",
+                "Performance Optimization",
+                "UI/UX Integration",
+                "Audio Integration",
+                "Matchmaking",
+                "Technical Documentation"
+            ],
+            "images": [
+                "/src/assets/images/projects/match/match-0.png",
+                "/src/assets/images/projects/match/match-1.png",
+                "/src/assets/images/projects/match/match-2.png",
+                "/src/assets/images/projects/match/match-3.png"
+            ],
+            "links": {
+                "web": "https://balpreets7.itch.io/match-o-mania"
+            },
+            "stats": {
+                "downloads": "100K+",
+                "rating": "4.2/5",
+                "duration": "6 months"
+            },
+            "achievements": [
+                "100K+ Downloads"
+            ],
+            "features": [
+                "Simple and engaging gameplay",
+                "Multiple levels with increasing difficulty",
+                "Unlockable themes and objects",
+                "Engaging animations and sound effects"
+            ],
+            "challenges": [
+                "Optimizing for 60fps on modern mobile devices",
+                "Compatibility for old devices",
+                "Ensuring smooth animations and transitions",
+                "Implementing real-time API's",
+                "Creating engaging AI opponents"
+            ]
+        },
+        {
+            "id": 9,
+            "title": "Ludo Ultimate",
+            "status": "Side Project",
+            "category": [
+                "2D",
+                "Multiplayer",
+                "Mobile"
+            ],
+            "description": "A free Multiplayer Board Game for 4 players. It is a modern take on the classic Ludo game with real-time multiplayer features.",
+            "client": "Gaming Dronzz",
+            "technologies": [
+                "Unity",
+                "C#",
+                "Rest API's",
+                "Asset Bundles",
+                "Lean Tween",
+                "Reflex Dependency Injection",
+                "Strategy Pattern",
+                "Observer Pattern"
+            ],
+            "roles": [
+                "Lead Developer",
+                "System Architecture",
+                "Performance Optimization",
+                "UI/UX Integration",
+                "Audio Integration",
+                "Matchmaking"
+            ],
+            "images": [
+                "/src/assets/images/projects/ludo/ludo-0.png",
+                "/src/assets/images/projects/ludo/ludo-1.png",
+                "/src/assets/images/projects/ludo/ludo-2.png",
+                "/src/assets/images/projects/ludo/ludo-3.png"
+            ],
+            "links": {
+                "web": "https://balpreets7.itch.io/ludo-ultimate"
+            },
+            "stats": {
+                "downloads": "N/A",
+                "rating": "4.2/5",
+                "duration": "7 months"
+            },
+            "achievements": [
+                "New and Innovative Game Modes"
+            ],
+            "features": [
+                "Turn based multiplayer and Offline gameplay",
+                "Real-time player synchronization",
+                "Game Board Themes and Pieces",
+                "Engaging animations and sound effects"
+            ],
+            "challenges": [
+                "Optimizing for 60fps on modern mobile devices",
+                "Compatibility for old devices",
+                "Ensuring smooth animations and transitions",
+                "Implementing real-time API's",
+                "Creating engaging AI opponents"
+            ]
+        },
+        {
+            "id": 10,
+            "title": "Resume Game",
+            "status": "Partially Deployed",
+            "category": [
+                "3D",
+                "Mobile",
+                "PC",
+                "Web"
+            ],
+            "description": "A 3D Adventure game where you get to traverse through the world of my resume and explore my skills, projects in a fun and interactive way.",
+            "client": "Self Project",
+            "technologies": [
+                "Unity",
+                "C#",
+                "DoTween",
+                "Reflex Dependency Injection",
+                "Strategy Pattern",
+                "Observer Pattern",
+                "Factory Pattern",
+                "Scriptable Objects",
+                "Cinemachine",
+                "Shader Graph"
+            ],
+            "roles": [
+                "Lead Developer",
+                "System Architecture",
+                "Performance Optimization",
+                "UI/UX Integration",
+                "Audio Integration",
+                "Matchmaking"
+            ],
+            "images": [
+                "/src/assets/images/projects/resume/resume-0.png",
+                "/src/assets/images/projects/resume/resume-1.png",
+                "/src/assets/images/projects/resume/resume-2.png",
+                "/src/assets/images/projects/resume/resume-3.png"
+            ],
+            "links": {
+                "web": "https://balpreets7.itch.io/resume-game"
+            },
+            "stats": {
+                "downloads": "N/A",
+                "rating": "N/A",
+                "duration": "2 Weeks"
+            },
+            "achievements": [
+                "AI Augmentation for Hyper Development",
+                "Innovative Game Design"
+            ],
+            "features": [
+                "Interactive 3D environment",
+                "Real-time animations and transitions",
+                "Custom shaders and visual effects",
+                "Cross-platform compatibility",
+                "Skill showcase through gameplay"
+            ],
+            "challenges": [
+                "Optimizing for all platforms including Mobile",
+                "Creating engaging and interactive content",
+                "World Building without a level editor",
+                "UX and UI Design without a designer",
+                "Shader and Visual Effects Designs without a designer"
+            ]
+        },
+        {
+            "id": 11,
+            "title": "DUI Cop Stop",
+            "status": "Completed",
+            "category": [
+                "2D",
+                "Mobile"
+            ],
+            "description": "DUA 2D Dialogue System game where you play as a driver who has been stopped by a cop for DUI. You have to answer the questions asked by the cop and try to get out of the situation.",
+            "client": "ArdentInfo Solutions",
+            "technologies": [
+                "Unity",
+                "C#",
+                "DoTween",
+                "Dialogue System",
+                "Observer Pattern"
+            ],
+            "roles": [
+                "System Architecture",
+                "Performance Optimization",
+                "UI/UX Integration",
+                "Audio Integration",
+                "Dialogue System Integration"
+            ],
+            "images": [
+                "/src/assets/images/projects/dui/dui-0.png"
+            ],
+            "links": {},
+            "stats": {
+                "downloads": "50K+",
+                "rating": "4.2",
+                "duration": "3 Months"
+            },
+            "achievements": [
+                "Innovative Dialogue system",
+                "Best Dialogue Game 2018"
+            ],
+            "features": [
+                "Interactive dialogue system",
+                "Multiple endings based on choices",
+                "Engaging animations and sound effects"
+            ],
+            "challenges": [
+                "Creating a realistic dialogue system",
+                "Multiple choice implementation",
+                "Responsive UI for various screen sizes",
+                "Lip sync and character animations"
+            ]
+        },
+        {
+            "id": 12,
+            "title": "CCA",
+            "status": "Completed",
+            "category": [
+                "Mobile",
+                "Android Studio",
+                "Java"
+            ],
+            "description": "A Mobile Application for the Controller of Communication Accounts, India. It is used to store and manage the data input by the employees while on the field with low internet connectivity.",
+            "client": "Government of India",
+            "technologies": [
+                "Android Studio",
+                "Java",
+                "SQLite",
+                "Gson",
+                "Material Design"
+            ],
+            "roles": [
+                "System Architecture",
+                "UI/UX Integration",
+                "Database Integration",
+                "Server Setup and Integration"
+            ],
+            "images": [
+                "/src/assets/images/projects/cca/cca-0.png"
+            ],
+            "links": {
+                "android": "https://apkpure.com/my-cca/com.mycca/"
+            },
+            "stats": {
+                "downloads": "10K+",
+                "rating": "4.6/5",
+                "duration": "6 Months"
+            },
+            "achievements": [
+                "Successfully Deployed in 10+ Offices",
+                "Government of India Approval"
+            ],
+            "features": [
+                "Offline data entry and management",
+                "Real-time data synchronization when online",
+                "User-friendly interface with Material Design",
+                "Secure data storage with SQLite",
+                "Role-based access control"
+            ],
+            "challenges": [
+                "Ensuring data integrity with low internet connectivity",
+                "Implementing secure data storage",
+                "Creating a user-friendly interface",
+                "Handling large datasets efficiently",
+                "Testing on various Android devices"
+            ]
+        },
+        {
+            "id": 13,
+            "title": "African-BIB",
+            "status": "Completed",
+            "category": [
+                "Mobile",
+                "Android Studio",
+                "Java"
+            ],
+            "description": "A Mobile Application for the African Business Information Bank. It is used to store and manage the data input by the employees while on the field with low internet connectivity.",
+            "client": "African Business Information Bank",
+            "technologies": [
+                "Android Studio",
+                "Java",
+                "SQLite",
+                "Gson",
+                "Material Design",
+                "Compression Libraries"
+            ],
+            "roles": [
+                "System Architecture",
+                "UI/UX Integration",
+                "Database Integration",
+                "Server Setup and Integration"
+            ],
+            "images": [
+                "/src/assets/images/projects/africanbib/africanbib-0.png",
+                "/src/assets/images/projects/africanbib/africanbib-1.png",
+                "/src/assets/images/projects/africanbib/africanbib-2.png",
+                "/src/assets/images/projects/africanbib/africanbib-3.png"
+            ],
+            "links": {},
+            "stats": {
+                "downloads": "10K+",
+                "rating": "4.6/5",
+                "duration": "4 Months"
+            },
+            "achievements": [
+                "Successfully Deployed in 3 Offices",
+                "ABIB Approval"
+            ],
+            "features": [
+                "Offline data entry and management",
+                "Real-time data synchronization when online",
+                "User-friendly interface with Material Design",
+                "Secure data storage with SQLite",
+                "Data compression for efficient storage",
+                "Role-based access control"
+            ],
+            "challenges": [
+                "Ensuring data integrity with low internet connectivity",
+                "Implementing secure data storage",
+                "Creating a user-friendly interface",
+                "Handling large datasets efficiently",
+                "Testing on various Android devices"
+            ]
+        },
+        {
+            "id": 14,
+            "title": "UNT",
+            "status": "Completed",
+            "category": [
+                "Mobile",
+                "Android Studio",
+                "Java"
+            ],
+            "description": "A Mobile Application for the Universal News Timeline. It is an extension of their website for journalists to update news on the go.",
+            "client": "Universal News Timeline",
+            "technologies": [
+                "Android Studio",
+                "Java",
+                "SQLite",
+                "Material Design",
+                "Compression Libraries"
+            ],
+            "roles": [
+                "System Architecture",
+                "UI/UX Integration",
+                "Website Integration",
+                "Server Connectivity and Integration"
+            ],
+            "images": [
+                "/src/assets/images/projects/unt/unt-0.png",
+                "/src/assets/images/projects/unt/unt-1.png",
+                "/src/assets/images/projects/unt/unt-2.png"
+            ],
+            "links": {
+                "android": "https://apkpure.com/universal-news-timeline-unt/com.unt.universalnewstimeline/"
+            },
+            "stats": {
+                "downloads": "10K+",
+                "rating": "4.6/5",
+                "duration": "4 Months"
+            },
+            "achievements": [
+                "Journalist's Choice",
+                "Best News App 2016"
+            ],
+            "features": [
+                "Offline data entry and management",
+                "Real-time data synchronization when online",
+                "User-friendly interface with Material Design",
+                "Secure data storage with SQLite",
+                "Data compression for efficient storage",
+                "Role-based access control"
+            ],
+            "challenges": [
+                "Ensuring data integrity with low internet connectivity",
+                "Implementing secure data storage",
+                "Creating a user-friendly interface",
+                "Handling large datasets efficiently",
+                "Testing on various Android devices"
+            ]
+        }
+    ]
+}

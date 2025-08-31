@@ -1,0 +1,802 @@
+[
+  {
+    "table_name": "articles",
+    "column_name": "id",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": "gen_random_uuid()",
+    "constraint_type": "PRIMARY KEY"
+  },
+  {
+    "table_name": "articles",
+    "column_name": "title",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "slug",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": "UNIQUE"
+  },
+  {
+    "table_name": "articles",
+    "column_name": "excerpt",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "content",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "featured_image",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "image_alt",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "tags",
+    "data_type": "ARRAY",
+    "is_nullable": "YES",
+    "column_default": "'{}'::text[]",
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "category",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "published",
+    "data_type": "boolean",
+    "is_nullable": "YES",
+    "column_default": "false",
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "featured",
+    "data_type": "boolean",
+    "is_nullable": "YES",
+    "column_default": "false",
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "view_count",
+    "data_type": "integer",
+    "is_nullable": "YES",
+    "column_default": "0",
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "reading_time_minutes",
+    "data_type": "integer",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "seo_title",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "seo_description",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "published_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "now()",
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "now()",
+    "constraint_type": null
+  },
+  {
+    "table_name": "articles",
+    "column_name": "author_id",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": "FOREIGN KEY"
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "id",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": "gen_random_uuid()",
+    "constraint_type": "PRIMARY KEY"
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "name",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "email",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "company",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "phone",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "subject",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "message",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "service_interest",
+    "data_type": "uuid",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": "FOREIGN KEY"
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "project_budget",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "timeline",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "status",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": "'new'::text",
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "priority",
+    "data_type": "integer",
+    "is_nullable": "YES",
+    "column_default": "0",
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "notes",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "now()",
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "now()",
+    "constraint_type": null
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "assigned_to",
+    "data_type": "uuid",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": "FOREIGN KEY"
+  },
+  {
+    "table_name": "media_files",
+    "column_name": "id",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": "gen_random_uuid()",
+    "constraint_type": "PRIMARY KEY"
+  },
+  {
+    "table_name": "media_files",
+    "column_name": "filename",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "media_files",
+    "column_name": "original_filename",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "media_files",
+    "column_name": "file_path",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "media_files",
+    "column_name": "file_size",
+    "data_type": "integer",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "media_files",
+    "column_name": "mime_type",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "media_files",
+    "column_name": "width",
+    "data_type": "integer",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "media_files",
+    "column_name": "height",
+    "data_type": "integer",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "media_files",
+    "column_name": "alt_text",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "media_files",
+    "column_name": "description",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "media_files",
+    "column_name": "uploaded_by",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": "FOREIGN KEY"
+  },
+  {
+    "table_name": "media_files",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "now()",
+    "constraint_type": null
+  },
+  {
+    "table_name": "migration_log",
+    "column_name": "id",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": "nextval('migration_log_id_seq'::regclass)",
+    "constraint_type": "PRIMARY KEY"
+  },
+  {
+    "table_name": "migration_log",
+    "column_name": "migration_name",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "migration_log",
+    "column_name": "executed_at",
+    "data_type": "timestamp without time zone",
+    "is_nullable": "YES",
+    "column_default": "now()",
+    "constraint_type": null
+  },
+  {
+    "table_name": "migration_log",
+    "column_name": "rollback_executed_at",
+    "data_type": "timestamp without time zone",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "migration_log",
+    "column_name": "rollback_script",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "migration_log",
+    "column_name": "notes",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "page_views",
+    "column_name": "id",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": "gen_random_uuid()",
+    "constraint_type": "PRIMARY KEY"
+  },
+  {
+    "table_name": "page_views",
+    "column_name": "page_path",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "page_views",
+    "column_name": "page_title",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "page_views",
+    "column_name": "referrer",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "page_views",
+    "column_name": "user_agent",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "page_views",
+    "column_name": "ip_address",
+    "data_type": "inet",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "page_views",
+    "column_name": "session_id",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "page_views",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": "FOREIGN KEY"
+  },
+  {
+    "table_name": "page_views",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES",
+    "column_default": "now()",
+    "constraint_type": null
+  },
+  {
+    "table_name": "policy_backups_20250830_143022",
+    "column_name": "schemaname",
+    "data_type": "name",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "policy_backups_20250830_143022",
+    "column_name": "tablename",
+    "data_type": "name",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "policy_backups_20250830_143022",
+    "column_name": "policyname",
+    "data_type": "name",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "policy_backups_20250830_143022",
+    "column_name": "permissive",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "policy_backups_20250830_143022",
+    "column_name": "roles",
+    "data_type": "ARRAY",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "policy_backups_20250830_143022",
+    "column_name": "cmd",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "policy_backups_20250830_143022",
+    "column_name": "qual",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "policy_backups_20250830_143022",
+    "column_name": "with_check",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "id",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": "gen_random_uuid()",
+    "constraint_type": "PRIMARY KEY"
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": "UNIQUE"
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": "FOREIGN KEY"
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "email",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "full_name",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "avatar_url",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "role",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": "'user'::text",
+    "constraint_type": null
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO",
+    "column_default": "now()",
+    "constraint_type": null
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO",
+    "column_default": "now()",
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "id",
+    "data_type": "uuid",
+    "is_nullable": "NO",
+    "column_default": "gen_random_uuid()",
+    "constraint_type": "PRIMARY KEY"
+  },
+  {
+    "table_name": "projects",
+    "column_name": "title",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "slug",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": "UNIQUE"
+  },
+  {
+    "table_name": "projects",
+    "column_name": "description",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "detailed_description",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "image_url",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "image_alt",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "technologies",
+    "data_type": "ARRAY",
+    "is_nullable": "YES",
+    "column_default": "'{}'::text[]",
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "category",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "status",
+    "data_type": "text",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "client_name",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "client_id",
+    "data_type": "uuid",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "year",
+    "data_type": "integer",
+    "is_nullable": "NO",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "featured",
+    "data_type": "boolean",
+    "is_nullable": "YES",
+    "column_default": "false",
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "published",
+    "data_type": "boolean",
+    "is_nullable": "YES",
+    "column_default": "true",
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "external_link",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "case_study_url",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "github_url",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "demo_url",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "screenshots",
+    "data_type": "ARRAY",
+    "is_nullable": "YES",
+    "column_default": "'{}'::text[]",
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "team_size",
+    "data_type": "integer",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  }
+]

@@ -1,0 +1,503 @@
+/* src/styles/themes/retro-arcade.css - 🎮 Complete Retro Arcade Theme */
+
+html[data-theme="retro-arcade"] {
+    /* ===== PRIMARY COLOR SYSTEM ===== */
+    /* Hot magenta pink - classic 80s arcade primary */
+    --gd-color-primary: #ff0080;
+    --gd-color-primary-50: #fff0f8;
+    --gd-color-primary-100: #ffe0f0;
+    --gd-color-primary-200: #ffb3d9;
+    --gd-color-primary-300: #ff80c2;
+    --gd-color-primary-400: #ff4dab;
+    --gd-color-primary-500: #ff0080;
+    --gd-color-primary-600: #e6006b;
+    --gd-color-primary-700: #cc0059;
+    --gd-color-primary-800: #b30047;
+    --gd-color-primary-900: #800033;
+
+    /* ===== SECONDARY COLOR SYSTEM ===== */
+    /* Electric lime green - classic arcade secondary */
+    --gd-color-secondary: #00ff80;
+    --gd-color-secondary-50: #f0fff8;
+    --gd-color-secondary-100: #e0fff0;
+    --gd-color-secondary-200: #b3ffd9;
+    --gd-color-secondary-300: #80ffc2;
+    --gd-color-secondary-400: #4dffab;
+    --gd-color-secondary-500: #00ff80;
+    --gd-color-secondary-600: #00e673;
+    --gd-color-secondary-700: #00cc66;
+    --gd-color-secondary-800: #00b359;
+    --gd-color-secondary-900: #008040;
+
+    /* ===== ACCENT COLOR SYSTEM ===== */
+    /* Electric yellow - synthwave accent */
+    --gd-color-accent: #ffff00;
+    --gd-color-accent-50: #fffff0;
+    --gd-color-accent-100: #ffffe0;
+    --gd-color-accent-200: #ffffb3;
+    --gd-color-accent-300: #ffff80;
+    --gd-color-accent-400: #ffff4d;
+    --gd-color-accent-500: #ffff00;
+    --gd-color-accent-600: #e6e600;
+    --gd-color-accent-700: #cccc00;
+    --gd-color-accent-800: #b3b300;
+    --gd-color-accent-900: #808000;
+
+    /* ===== INTELLIGENT BACKGROUND SYSTEM ===== */
+    /* Dark neon-friendly backgrounds */
+    --gd-bg-primary: #0a0a0a;
+    --gd-bg-secondary: #1a0a1a;
+    --gd-bg-tertiary: #2a0a2a;
+    --gd-bg-quaternary: #3a0a3a;
+    --gd-bg-elevated: #1a0a1a;
+    --gd-bg-overlay: rgba(255, 0, 128, 0.15);
+
+    /* Background variants based on primary colors */
+    --gd-bg-primary-subtle: rgba(255, 0, 128, 0.05);
+    --gd-bg-secondary-subtle: rgba(0, 255, 128, 0.05);
+    --gd-bg-accent-subtle: rgba(255, 255, 0, 0.05);
+
+    /* ===== INTELLIGENT TEXT SYSTEM ===== */
+    /* Bright text for dark backgrounds */
+    --gd-text-primary: #ffffff;
+    --gd-text-secondary: #ff80c0;
+    --gd-text-tertiary: #80ff80;
+    --gd-text-quaternary: #8080ff;
+    --gd-text-disabled: #404040;
+    --gd-text-inverse: #0a0a0a;
+    --gd-text-muted: #cc66ff;
+
+    /* Text on colored backgrounds */
+    --gd-text-on-primary: #ffffff;
+    --gd-text-on-secondary: #000000;
+    --gd-text-on-accent: #000000;
+
+    /* ===== SEMANTIC COLORS ===== */
+    /* Status colors with neon flair */
+    --gd-color-success: #00ff80;
+    --gd-color-success-light: rgba(0, 255, 128, 0.1);
+    --gd-color-success-dark: #00cc66;
+
+    --gd-color-warning: #ffff00;
+    --gd-color-warning-light: rgba(255, 255, 0, 0.1);
+    --gd-color-warning-dark: #cccc00;
+
+    --gd-color-danger: #ff0080;
+    --gd-color-danger-light: rgba(255, 0, 128, 0.1);
+    --gd-color-danger-dark: #cc0066;
+
+    --gd-color-info: #0080ff;
+    --gd-color-info-light: rgba(0, 128, 255, 0.1);
+    --gd-color-info-dark: #0066cc;
+
+    /* ===== BORDER SYSTEM ===== */
+    /* Neon-style borders */
+    --gd-border-light: rgba(255, 0, 128, 0.2);
+    --gd-border-medium: rgba(255, 0, 128, 0.4);
+    --gd-border-strong: rgba(255, 0, 128, 0.6);
+    --gd-border-primary: var(--gd-color-primary-500);
+    --gd-border-focus: var(--gd-color-primary-500);
+
+    /* ===== SURFACE COLORS ===== */
+    /* Layered dark surfaces */
+    --gd-surface-1: #0a0a0a;
+    --gd-surface-2: #1a0a1a;
+    --gd-surface-3: #2a0a2a;
+    --gd-surface-4: #3a0a3a;
+    --gd-surface-raised: #1a0a1a;
+    --gd-surface-overlay: rgba(255, 0, 128, 0.15);
+
+    /* ===== GRADIENTS ===== */
+    /* Synthwave-inspired gradients */
+    --gd-gradient-primary: linear-gradient(135deg,
+            var(--gd-color-primary-400) 0%,
+            var(--gd-color-primary-600) 50%,
+            var(--gd-color-primary-800) 100%);
+
+    --gd-gradient-secondary: linear-gradient(135deg,
+            var(--gd-color-secondary-400) 0%,
+            var(--gd-color-secondary-600) 50%,
+            var(--gd-color-secondary-800) 100%);
+
+    --gd-gradient-accent: linear-gradient(135deg,
+            var(--gd-color-accent-400) 0%,
+            var(--gd-color-accent-600) 50%,
+            var(--gd-color-accent-800) 100%);
+
+    --gd-gradient-hero: linear-gradient(135deg,
+            #ff0080 0%,
+            #00ff80 35%,
+            #ffff00 70%,
+            #0080ff 100%);
+
+    --gd-gradient-subtle: linear-gradient(135deg,
+            var(--gd-bg-primary) 0%,
+            var(--gd-bg-secondary) 50%,
+            var(--gd-bg-tertiary) 100%);
+
+    /* ===== SHADOWS ===== */
+    /* Neon glow shadows */
+    --gd-shadow-sm: 0 1px 2px 0 rgba(255, 0, 128, 0.1);
+    --gd-shadow-base: 0 1px 3px 0 rgba(255, 0, 128, 0.2), 0 1px 2px 0 rgba(255, 0, 128, 0.1);
+    --gd-shadow-md: 0 4px 6px -1px rgba(255, 0, 128, 0.2), 0 2px 4px -1px rgba(255, 0, 128, 0.1);
+    --gd-shadow-lg: 0 10px 15px -3px rgba(255, 0, 128, 0.3), 0 4px 6px -2px rgba(255, 0, 128, 0.2);
+    --gd-shadow-xl: 0 20px 25px -5px rgba(255, 0, 128, 0.4), 0 10px 10px -5px rgba(255, 0, 128, 0.3);
+    --gd-shadow-2xl: 0 25px 50px -12px rgba(255, 0, 128, 0.5);
+    --gd-shadow-inner: inset 0 2px 4px 0 rgba(255, 0, 128, 0.2);
+
+    /* Colored neon shadows for special elements */
+    --gd-shadow-primary: 0 0 20px rgba(255, 0, 128, 0.6);
+    --gd-shadow-secondary: 0 0 20px rgba(0, 255, 128, 0.6);
+    --gd-shadow-accent: 0 0 20px rgba(255, 255, 0, 0.6);
+
+    /* ===== TYPOGRAPHY ===== */
+    --gd-font-family-primary: "Orbitron", "Courier New", monospace;
+    --gd-font-family-mono: "Fira Code", "Courier New", monospace;
+
+    --gd-font-size-xs: 0.75rem;
+    --gd-font-size-sm: 0.875rem;
+    --gd-font-size-base: 1rem;
+    --gd-font-size-lg: 1.125rem;
+    --gd-font-size-xl: 1.25rem;
+    --gd-font-size-2xl: 1.5rem;
+    --gd-font-size-3xl: 1.875rem;
+    --gd-font-size-4xl: 2.25rem;
+    --gd-font-size-5xl: 3rem;
+    --gd-font-size-6xl: 4rem;
+
+    --gd-font-weight-light: 300;
+    --gd-font-weight-normal: 400;
+    --gd-font-weight-medium: 500;
+    --gd-font-weight-semibold: 600;
+    --gd-font-weight-bold: 700;
+    --gd-font-weight-black: 900;
+
+    --gd-line-height-tight: 1.25;
+    --gd-line-height-normal: 1.5;
+    --gd-line-height-relaxed: 1.625;
+    --gd-line-height-loose: 2;
+
+    /* ===== SPACING SYSTEM ===== */
+    --gd-space-0: 0;
+    --gd-space-px: 1px;
+    --gd-space-0_5: 0.125rem;
+    --gd-space-1: 0.25rem;
+    --gd-space-1_5: 0.375rem;
+    --gd-space-2: 0.5rem;
+    --gd-space-2_5: 0.625rem;
+    --gd-space-3: 0.75rem;
+    --gd-space-3_5: 0.875rem;
+    --gd-space-4: 1rem;
+    --gd-space-5: 1.25rem;
+    --gd-space-6: 1.5rem;
+    --gd-space-7: 1.75rem;
+    --gd-space-8: 2rem;
+    --gd-space-9: 2.25rem;
+    --gd-space-10: 2.5rem;
+    --gd-space-11: 2.75rem;
+    --gd-space-12: 3rem;
+    --gd-space-14: 3.5rem;
+    --gd-space-16: 4rem;
+    --gd-space-20: 5rem;
+    --gd-space-24: 6rem;
+    --gd-space-28: 7rem;
+    --gd-space-32: 8rem;
+
+    /* ===== BORDER RADIUS ===== */
+    --gd-radius-none: 0;
+    --gd-radius-sm: 0.125rem;
+    --gd-radius-base: 0.25rem;
+    --gd-radius-md: 0.375rem;
+    --gd-radius-lg: 0.5rem;
+    --gd-radius-xl: 0.75rem;
+    --gd-radius-2xl: 1rem;
+    --gd-radius-3xl: 1.5rem;
+    --gd-radius-full: 9999px;
+
+    /* ===== TRANSITIONS ===== */
+    --gd-transition-fast: all 0.15s ease;
+    --gd-transition-base: all 0.2s ease;
+    --gd-transition-slow: all 0.3s ease;
+    --gd-transition-slowest: all 0.5s ease;
+
+    --gd-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --gd-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --gd-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --gd-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* ===== Z-INDEX SCALE ===== */
+    --gd-z-dropdown: 1000;
+    --gd-z-sticky: 1020;
+    --gd-z-fixed: 1030;
+    --gd-z-modal-backdrop: 1040;
+    --gd-z-modal: 1050;
+    --gd-z-popover: 1060;
+    --gd-z-tooltip: 1070;
+    --gd-z-toast: 1080;
+    --gd-z-preloader: 9999;
+
+    /* ===== LAYOUT ===== */
+    --gd-container-max-width: 1200px;
+    --gd-container-max-width-sm: 640px;
+    --gd-container-max-width-md: 768px;
+    --gd-container-max-width-lg: 1024px;
+    --gd-container-max-width-xl: 1280px;
+    --gd-container-padding: var(--gd-space-8);
+    --gd-section-padding: var(--gd-space-20) 0;
+    --gd-header-height: 4.375rem;
+
+    /* ===== BREAKPOINTS (for reference) ===== */
+    --gd-breakpoint-sm: 640px;
+    --gd-breakpoint-md: 768px;
+    --gd-breakpoint-lg: 1024px;
+    --gd-breakpoint-xl: 1280px;
+    --gd-breakpoint-2xl: 1536px;
+
+    /* ===== COMPONENT SPECIFIC VARIABLES ===== */
+
+    /* Navigation */
+    --gd-nav-height: var(--gd-header-height);
+    --gd-nav-bg: rgba(10, 10, 10, 0.95);
+    --gd-nav-bg-solid: var(--gd-bg-elevated);
+    --gd-nav-backdrop-blur: 20px;
+    --gd-nav-border: rgba(255, 0, 128, 0.3);
+    --gd-nav-shadow: 0 4px 20px rgba(255, 0, 128, 0.4);
+    --gd-nav-link-color: var(--gd-text-secondary);
+    --gd-nav-link-hover: var(--gd-color-primary-400);
+    --gd-nav-link-active: var(--gd-color-accent-500);
+
+    /* Buttons */
+    --gd-btn-padding-sm: var(--gd-space-2) var(--gd-space-4);
+    --gd-btn-padding-base: var(--gd-space-3) var(--gd-space-6);
+    --gd-btn-padding-lg: var(--gd-space-4) var(--gd-space-8);
+    --gd-btn-radius: var(--gd-radius-lg);
+    --gd-btn-font-weight: var(--gd-font-weight-bold);
+    --gd-btn-transition: var(--gd-transition-base);
+
+    /* Cards */
+    --gd-card-bg: var(--gd-surface-2);
+    --gd-card-border: rgba(255, 0, 128, 0.3);
+    --gd-card-radius: var(--gd-radius-xl);
+    --gd-card-shadow: 0 4px 20px rgba(255, 0, 128, 0.2);
+    --gd-card-shadow-hover: 0 8px 30px rgba(255, 0, 128, 0.4);
+    --gd-card-padding-sm: var(--gd-space-4);
+    --gd-card-padding-base: var(--gd-space-6);
+    --gd-card-padding-lg: var(--gd-space-8);
+
+    /* Forms */
+    --gd-input-bg: rgba(26, 10, 26, 0.8);
+    --gd-input-border: rgba(255, 0, 128, 0.3);
+    --gd-input-border-hover: rgba(255, 0, 128, 0.5);
+    --gd-input-border-focus: var(--gd-color-primary-500);
+    --gd-input-radius: var(--gd-radius-md);
+    --gd-input-padding-sm: var(--gd-space-2) var(--gd-space-3);
+    --gd-input-padding-base: var(--gd-space-3) var(--gd-space-4);
+    --gd-input-padding-lg: var(--gd-space-4) var(--gd-space-5);
+    --gd-input-shadow-focus: 0 0 0 3px rgba(255, 0, 128, 0.2), 0 0 20px rgba(255, 0, 128, 0.4);
+
+    /* Overlays & Modals */
+    --gd-overlay-bg: rgba(10, 10, 10, 0.8);
+    --gd-modal-bg: var(--gd-surface-2);
+    --gd-modal-radius: var(--gd-radius-2xl);
+    --gd-modal-shadow: 0 25px 50px -12px rgba(255, 0, 128, 0.5);
+    --gd-backdrop-blur: 20px;
+
+    /* Tooltips */
+    --gd-tooltip-bg: var(--gd-surface-4);
+    --gd-tooltip-color: var(--gd-text-primary);
+    --gd-tooltip-radius: var(--gd-radius-md);
+    --gd-tooltip-shadow: 0 0 20px rgba(255, 0, 128, 0.6);
+
+    /* Loading & Progress */
+    --gd-loading-primary: var(--gd-color-primary-500);
+    --gd-loading-secondary: var(--gd-color-primary-300);
+    --gd-progress-bg: rgba(255, 0, 128, 0.2);
+    --gd-progress-fill: var(--gd-color-primary-500);
+
+    /* ===== SPECIAL NEON ARCADE EFFECTS ===== */
+    --gd-neon-glow: 0 0 20px rgba(255, 0, 128, 0.8);
+    --gd-neon-text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 40px currentColor;
+    --gd-neon-border-glow: 0 0 15px rgba(255, 0, 128, 0.8), 0 0 30px rgba(255, 0, 128, 0.6);
+    --gd-scanline: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px);
+    --gd-crt-flicker: brightness(1) contrast(1.1) saturate(1.2);
+}
+
+/* ===== RETRO ARCADE THEME SPECIFIC ENHANCEMENTS ===== */
+
+html[data-theme="retro-arcade"] .app__brand {
+    text-shadow: var(--gd-neon-text-shadow);
+    filter: drop-shadow(var(--gd-neon-glow));
+    animation: neon-flicker 2s ease-in-out infinite alternate;
+    font-family: var(--gd-font-family-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+html[data-theme="retro-arcade"] .app__button--primary {
+    box-shadow: var(--gd-neon-glow), var(--gd-shadow-md);
+    border: 2px solid var(--gd-color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: var(--gd-font-family-primary);
+    background: linear-gradient(135deg, var(--gd-color-primary-500), var(--gd-color-primary-700));
+}
+
+html[data-theme="retro-arcade"] .app__button--primary:hover {
+    box-shadow: var(--gd-neon-border-glow), var(--gd-shadow-lg);
+    text-shadow: var(--gd-neon-text-shadow);
+    transform: translateY(-2px);
+}
+
+html[data-theme="retro-arcade"] .app__button--secondary {
+    border: 2px solid var(--gd-color-secondary);
+    background: linear-gradient(135deg, var(--gd-color-secondary-500), var(--gd-color-secondary-700));
+    box-shadow: 0 0 15px rgba(0, 255, 128, 0.6);
+}
+
+html[data-theme="retro-arcade"] .app__button--secondary:hover {
+    box-shadow: 0 0 20px rgba(0, 255, 128, 0.8), 0 0 40px rgba(0, 255, 128, 0.6);
+    text-shadow: 0 0 10px rgba(0, 255, 128, 1);
+}
+
+html[data-theme="retro-arcade"] .app__project-card {
+    border: 1px solid var(--gd-border-medium);
+    background: var(--gd-card-bg);
+    backdrop-filter: blur(10px);
+}
+
+html[data-theme="retro-arcade"] .app__project-card:hover {
+    border: 2px solid var(--gd-color-primary);
+    box-shadow: var(--gd-neon-border-glow), var(--gd-shadow-xl);
+    transform: translateY(-4px) scale(1.02);
+}
+
+html[data-theme="retro-arcade"] .modern-nav__link {
+    font-family: var(--gd-font-family-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+html[data-theme="retro-arcade"] .modern-nav__link:hover {
+    text-shadow: var(--gd-neon-text-shadow);
+    color: var(--gd-color-primary-400);
+}
+
+html[data-theme="retro-arcade"] .modern-nav__link::after {
+    box-shadow: var(--gd-neon-border-glow);
+    background: var(--gd-gradient-primary);
+}
+
+html[data-theme="retro-arcade"] input,
+html[data-theme="retro-arcade"] textarea {
+    background: var(--gd-input-bg);
+    border: 1px solid var(--gd-input-border);
+    color: var(--gd-text-primary);
+    font-family: var(--gd-font-family-mono);
+}
+
+html[data-theme="retro-arcade"] input:focus,
+html[data-theme="retro-arcade"] textarea:focus {
+    border-color: var(--gd-input-border-focus);
+    box-shadow: var(--gd-input-shadow-focus);
+    outline: none;
+}
+
+html[data-theme="retro-arcade"] input::placeholder,
+html[data-theme="retro-arcade"] textarea::placeholder {
+    color: var(--gd-text-tertiary);
+}
+
+/* Add scanline effect to the entire theme */
+html[data-theme="retro-arcade"]::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gd-scanline);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.8;
+}
+
+/* CRT monitor effect - Applied to main content only to avoid breaking fixed positioning */
+html[data-theme="retro-arcade"] .app__main {
+    filter: var(--gd-crt-flicker);
+}
+
+/* Grid background effect */
+html[data-theme="retro-arcade"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(255, 0, 128, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 128, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+/* Neon flicker animation */
+@keyframes neon-flicker {
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        text-shadow: var(--gd-neon-text-shadow);
+        filter: drop-shadow(var(--gd-neon-glow));
+    }
+
+    20%,
+    24%,
+    55% {
+        text-shadow: none;
+        filter: none;
+    }
+}
+
+/* Glitch effect for special elements */
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(-2px, 2px);
+    }
+
+    40% {
+        transform: translate(-2px, -2px);
+    }
+
+    60% {
+        transform: translate(2px, 2px);
+    }
+
+    80% {
+        transform: translate(2px, -2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+html[data-theme="retro-arcade"] .app__glitch {
+    animation: glitch 0.3s ease-in-out infinite;
+}
+
+/* Arcade button press effect */
+html[data-theme="retro-arcade"] .app__button:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 0 0 10px rgba(255, 0, 128, 0.8);
+}
