@@ -166,3 +166,58 @@ COMMIT;
 5. Store rollback script in version control
 
 This is NON-NEGOTIABLE - no SQL operation should be executed without proper rollback procedures in place.
+
+## Chat Logging System - MANDATORY FOR ALL CONVERSATIONS
+
+### Automatic Chat Logging - CRITICAL REQUIREMENT
+MANDATORY: Every conversation with Claude MUST be logged to maintain a record of all development discussions and decisions.
+
+**Required Actions for ALL Conversations:**
+1. **Auto-Log Every Chat**: All conversations must be automatically logged to `info/chats/` directory
+2. **Proper Naming Convention**: Use format: `DD-MM-YYYY-HH-MM-SS-context-description.md`
+3. **Real-Time Logging**: Messages should be logged as the conversation progresses
+4. **Context Identification**: Each chat must include proper context/topic identification
+
+**Chat Logging Requirements:**
+- **File Location**: All chat logs stored in `info/chats/` directory
+- **File Format**: Markdown format with structured message blocks
+- **Filename Pattern**: `DD-MM-YYYY-HH-MM-SS-[context-description].md`
+- **Content Structure**: Include timestamps, roles, and full message content
+- **Message Tracking**: Log both user queries and assistant responses
+
+**Chat Log Structure Template:**
+```markdown
+# Chat Log: [Context Description]
+
+**Date:** [Date and Time]
+**Context:** [Conversation Topic/Context]
+
+---
+
+## Message [Number]
+**Role:** [user/assistant]
+**Timestamp:** [Date and Time]
+
+[Message Content]
+
+---
+```
+
+**Logging Mechanism:**
+- Use existing ChatLogger utility in `site/src/utils/chatLogger.js`
+- Logger automatically handles directory creation and file management
+- Supports both complete conversation logging and incremental message appending
+- Includes sanitization for filename safety
+
+**Process:**
+1. Initialize ChatLogger at conversation start
+2. Log each message exchange in real-time
+3. Use proper context identification for filename
+4. Ensure all conversations are preserved for future reference
+
+**Integration Points:**
+- ChatLogger class provides `logChat()` and `appendToChat()` methods
+- CLI utility available for manual chat management
+- Example usage provided in `chatLoggerExample.js`
+
+This is NON-NEGOTIABLE - every conversation must be logged to maintain project development history and decision tracking.

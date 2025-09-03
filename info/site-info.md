@@ -110,6 +110,7 @@ npm run analyze      # Bundle size analysis
 - **Image Optimization**: Responsive images with lazy loading
 - **Bundle Analysis**: Built-in bundle size monitoring
 - **Caching Strategy**: Strategic caching for static assets
+- **Intersection Observer**: Advanced visibility detection and lazy loading (see `info/site/intersectionObserver.md`)
 
 ## Development Workflow
 1. Read this `site-info.md` for current state
