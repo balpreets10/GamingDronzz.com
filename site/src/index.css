@@ -5,6 +5,7 @@
 @import './styles/themes/dark-cyber.css';
 /* Add other theme imports here */
 
+/* Root variables are still available globally */
 :root {
   font-family: var(--gd-font-family-primary);
   line-height: var(--gd-line-height-relaxed);
@@ -20,24 +21,25 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
+/* Isolate styles from Terraceon3 page */
+body:not(.terrace-page) a {
   font-weight: var(--gd-font-weight-medium);
   color: var(--gd-color-primary);
   text-decoration: inherit;
   transition: var(--gd-transition-fast);
 }
 
-a:hover {
+body:not(.terrace-page) a:hover {
   color: var(--gd-color-primary-hover);
 }
 
-a:focus-visible {
+body:not(.terrace-page) a:focus-visible {
   outline: 2px solid var(--gd-border-focus);
   outline-offset: 2px;
   border-radius: var(--gd-radius-sm);
 }
 
-body {
+body:not(.terrace-page) {
   margin: 0;
   display: flex;
   place-items: center;
@@ -47,14 +49,27 @@ body {
   color: var(--gd-text-primary);
 }
 
-h1 {
+/* Reset styles for Terrace page */
+body.terrace-page {
+  margin: 0;
+  display: block;
+  min-width: 320px;
+  min-height: 100vh;
+  background: initial;
+  color: initial;
+  font-family: initial;
+  line-height: initial;
+  font-weight: initial;
+}
+
+body:not(.terrace-page) h1 {
   font-size: var(--gd-font-size-5xl);
   line-height: var(--gd-line-height-tight);
   font-weight: var(--gd-font-weight-bold);
   color: var(--gd-text-primary);
 }
 
-button {
+body:not(.terrace-page) button {
   border-radius: var(--gd-radius-lg);
   border: 1px solid transparent;
   padding: var(--gd-space-3) var(--gd-space-5);
@@ -68,24 +83,24 @@ button {
   box-shadow: var(--gd-shadow-sm);
 }
 
-button:hover {
+body:not(.terrace-page) button:hover {
   border-color: var(--gd-color-primary);
   background-color: var(--gd-surface-3);
   box-shadow: var(--gd-shadow-md);
 }
 
-button:focus,
-button:focus-visible {
+body:not(.terrace-page) button:focus,
+body:not(.terrace-page) button:focus-visible {
   outline: 2px solid var(--gd-border-focus);
   outline-offset: 2px;
 }
 
-button:active {
+body:not(.terrace-page) button:active {
   transform: translateY(1px);
   box-shadow: var(--gd-shadow-sm);
 }
 
-button:disabled {
+body:not(.terrace-page) button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   background-color: var(--gd-surface-1);
@@ -94,32 +109,32 @@ button:disabled {
 
 /* Dark mode specific adjustments */
 @media (prefers-color-scheme: dark) {
-  :root {
+  body:not(.terrace-page) {
     color: var(--gd-text-primary);
     background-color: var(--gd-bg-primary);
   }
 
-  a:hover {
+  body:not(.terrace-page) a:hover {
     color: var(--gd-color-primary-hover);
   }
 
-  button {
+  body:not(.terrace-page) button {
     background-color: var(--gd-surface-2);
     color: var(--gd-text-primary);
   }
 
-  button:hover {
+  body:not(.terrace-page) button:hover {
     background-color: var(--gd-surface-3);
   }
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  button {
+  body:not(.terrace-page) button {
     border: 2px solid var(--gd-text-primary);
   }
 
-  button:hover {
+  body:not(.terrace-page) button:hover {
     background: var(--gd-text-primary);
     color: var(--gd-bg-primary);
   }
@@ -127,7 +142,7 @@ button:disabled {
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  * {
+  body:not(.terrace-page) * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -136,12 +151,12 @@ button:disabled {
 
 /* Print styles */
 @media print {
-  :root {
+  body:not(.terrace-page) {
     color: #000000;
     background-color: #ffffff;
   }
 
-  button {
+  body:not(.terrace-page) button {
     border: 1px solid #000000;
     background: #ffffff;
     color: #000000;

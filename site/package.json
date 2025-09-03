@@ -1,6 +1,7 @@
 {
   "name": "site",
   "version": "1.0.0",
+  "type": "module",
   "description": "High-performance React app for game development consultancy",
   "scripts": {
     "dev": "vite --mode development",
