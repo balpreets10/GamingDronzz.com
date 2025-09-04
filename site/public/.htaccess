@@ -45,7 +45,7 @@ RewriteRule . /index.html [L]
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
     
     # Strict CSP - blocks all external scripts including GoDaddy injection
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://api.gamingdronzz.com; object-src 'none'; base-uri 'self'; form-action 'self';"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com https://api.gamingdronzz.com https://kjntsckfsktefmfydlfm.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self';"
     
     # Remove any GoDaddy injected headers
     Header unset X-GoDaddy-Site-Type

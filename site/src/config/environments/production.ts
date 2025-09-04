@@ -1,6 +1,6 @@
 export const productionConfig = {
     api: {
-        baseURL: 'https://api.gamingdronzz.com',
+        baseURL: import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_SUPABASE_URL!,
         timeout: 10000,
         retries: 2
     },

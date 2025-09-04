@@ -43,23 +43,28 @@ let supabaseClient: SupabaseClient<Database> | null = null;
 
 export const getSupabaseClient = (): SupabaseClient<Database> => {
     if (!supabaseClient) {
-        supabaseClient = createClient<Database>(
-            config.supabase.url,
-            config.supabase.anonKey,
-            {
-                auth: {
-                    ...config.supabase.auth,
-                    flowType: 'pkce',
-                    autoRefreshToken: true,
-                    persistSession: true,
-                    detectSessionInUrl: true
+        try {
+            supabaseClient = createClient<Database>(
+                config.supabase.url,
+                config.supabase.anonKey,
+                {
+                    auth: {
+                        ...config.supabase.auth,
+                        flowType: 'pkce',
+                        autoRefreshToken: true,
+                        persistSession: true,
+                        detectSessionInUrl: true
+                    }
                 }
-            }
-        );
+            );
 
-        console.log('Shared Supabase client initialized');
-        console.log('URL:', config.supabase.url);
-        console.log('Redirect URL base:', window.location.origin);
+            console.log('Shared Supabase client initialized');
+            console.log('URL:', config.supabase.url);
+            console.log('Redirect URL base:', window.location.origin);
+        } catch (error) {
+            console.error('Failed to initialize Supabase client:', error);
+            throw new Error(`Supabase initialization failed: ${error}`);
+        }
     }
 
     return supabaseClient;
