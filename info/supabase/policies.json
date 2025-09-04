@@ -1,0 +1,101 @@
+[
+    {
+        "schemaname": "public",
+        "tablename": "projects",
+        "policyname": "Published projects are viewable by everyone",
+        "permissive": "PERMISSIVE",
+        "cmd": "SELECT",
+        "qual": "(published = true)",
+        "with_check": null
+    },
+    {
+        "schemaname": "public",
+        "tablename": "services",
+        "policyname": "Published services are viewable by everyone",
+        "permissive": "PERMISSIVE",
+        "cmd": "SELECT",
+        "qual": "(published = true)",
+        "with_check": null
+    },
+    {
+        "schemaname": "public",
+        "tablename": "articles",
+        "policyname": "Published articles are viewable by everyone",
+        "permissive": "PERMISSIVE",
+        "cmd": "SELECT",
+        "qual": "(published = true)",
+        "with_check": null
+    },
+    {
+        "schemaname": "public",
+        "tablename": "inquiries",
+        "policyname": "Anyone can submit inquiries",
+        "permissive": "PERMISSIVE",
+        "cmd": "INSERT",
+        "qual": null,
+        "with_check": "true"
+    },
+    {
+        "schemaname": "public",
+        "tablename": "testimonials",
+        "policyname": "Published testimonials are viewable by everyone",
+        "permissive": "PERMISSIVE",
+        "cmd": "SELECT",
+        "qual": "(published = true)",
+        "with_check": null
+    },
+    {
+        "schemaname": "public",
+        "tablename": "page_views",
+        "policyname": "Anyone can insert page views",
+        "permissive": "PERMISSIVE",
+        "cmd": "INSERT",
+        "qual": null,
+        "with_check": "true"
+    },
+    {
+        "schemaname": "public",
+        "tablename": "media_files",
+        "policyname": "Media files are viewable by everyone",
+        "permissive": "PERMISSIVE",
+        "cmd": "SELECT",
+        "qual": "true",
+        "with_check": null
+    },
+    {
+        "schemaname": "public",
+        "tablename": "profiles",
+        "policyname": "users_view_own_profile",
+        "permissive": "PERMISSIVE",
+        "cmd": "SELECT",
+        "qual": "(auth.uid() = id)",
+        "with_check": null
+    },
+    {
+        "schemaname": "public",
+        "tablename": "profiles",
+        "policyname": "users_insert_own_profile",
+        "permissive": "PERMISSIVE",
+        "cmd": "INSERT",
+        "qual": null,
+        "with_check": "(auth.uid() = id)"
+    },
+    {
+        "schemaname": "public",
+        "tablename": "profiles",
+        "policyname": "users_update_own_profile",
+        "permissive": "PERMISSIVE",
+        "cmd": "UPDATE",
+        "qual": "(auth.uid() = id)",
+        "with_check": "(auth.uid() = id)"
+    },
+    {
+        "schemaname": "public",
+        "tablename": "profiles",
+        "policyname": "Users can update their own profile",
+        "permissive": "PERMISSIVE",
+        "cmd": "UPDATE",
+        "qual": "(auth.uid() = id)",
+        "with_check": null
+    }
+]

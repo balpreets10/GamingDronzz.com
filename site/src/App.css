@@ -1,0 +1,216 @@
+/* App.css - App-level layout and footer styles only */
+/* Isolated to not affect Terrace page */
+
+body:not(.terrace-page) .app {
+  min-height: 100vh;
+  width: 100vw;
+  background: var(--gd-bg-primary);
+  font-family: var(--gd-font-family-primary);
+  line-height: var(--gd-line-height-normal);
+  color: var(--gd-text-primary);
+}
+
+body:not(.terrace-page) .app__main {
+  padding-top: var(--gd-nav-height);
+}
+
+/* Container utility for app-level elements */
+body:not(.terrace-page) .app__container {
+  max-width: var(--gd-container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--gd-container-padding);
+}
+
+/* Theme indicator in footer */
+body:not(.terrace-page) .app__theme-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--gd-space-2);
+  margin-top: var(--gd-space-3);
+  padding: var(--gd-space-2) var(--gd-space-4);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--gd-radius-lg);
+  backdrop-filter: blur(10px);
+}
+
+body:not(.terrace-page) .app__theme-emoji {
+  font-size: var(--gd-font-size-sm);
+}
+
+body:not(.terrace-page) .app__theme-name {
+  font-size: var(--gd-font-size-xs);
+  font-weight: var(--gd-font-weight-medium);
+  color: var(--gd-text-secondary);
+}
+
+/* Footer */
+body:not(.terrace-page) .app__footer {
+  background: var(--gd-bg-darker);
+  padding: var(--gd-space-16) 0 var(--gd-space-8);
+  margin-top: var(--gd-space-20);
+}
+
+body:not(.terrace-page) .app__footer-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--gd-space-12);
+  margin-bottom: var(--gd-space-12);
+}
+
+body:not(.terrace-page) .app__footer-brand h3 {
+  font-size: var(--gd-font-size-2xl);
+  font-weight: var(--gd-font-weight-bold);
+  margin-bottom: var(--gd-space-3);
+  color: var(--gd-color-primary);
+}
+
+body:not(.terrace-page) .app__footer-brand p {
+  color: var(--gd-text-secondary);
+  margin: 0;
+}
+
+body:not(.terrace-page) .app__footer-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--gd-space-8);
+}
+
+body:not(.terrace-page) .app__footer-section h4 {
+  font-size: var(--gd-font-size-lg);
+  font-weight: var(--gd-font-weight-semibold);
+  margin-bottom: var(--gd-space-4);
+  color: var(--gd-text-primary);
+}
+
+body:not(.terrace-page) .app__footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+body:not(.terrace-page) .app__footer-section li {
+  margin-bottom: var(--gd-space-2);
+}
+
+body:not(.terrace-page) .app__footer-section a {
+  color: var(--gd-text-secondary);
+  text-decoration: none;
+  transition: var(--gd-transition-base);
+  cursor: pointer;
+}
+
+body:not(.terrace-page) .app__footer-section a:hover {
+  color: var(--gd-color-primary);
+}
+
+body:not(.terrace-page) .app__footer-bottom {
+  text-align: center;
+  padding-top: var(--gd-space-8);
+  border-top: 1px solid var(--gd-border-light);
+  color: var(--gd-text-muted);
+}
+
+/* Debug Panel */
+body:not(.terrace-page) .app__debug {
+  position: fixed;
+  bottom: var(--gd-space-4);
+  right: var(--gd-space-4);
+  background: var(--gd-surface-raised);
+  padding: var(--gd-space-4);
+  border-radius: var(--gd-radius-lg);
+  box-shadow: var(--gd-shadow-xl);
+  z-index: var(--gd-z-tooltip);
+  max-width: 300px;
+  font-size: var(--gd-font-size-xs);
+}
+
+body:not(.terrace-page) .app__debug details {
+  margin-bottom: var(--gd-space-2);
+}
+
+body:not(.terrace-page) .app__debug summary {
+  cursor: pointer;
+  font-weight: var(--gd-font-weight-medium);
+  color: var(--gd-color-primary);
+}
+
+body:not(.terrace-page) .app__debug pre {
+  background: var(--gd-surface-1);
+  padding: var(--gd-space-2);
+  border-radius: var(--gd-radius-base);
+  overflow: auto;
+  max-height: 200px;
+  margin: var(--gd-space-2) 0 0;
+}
+
+/* Theme transition class */
+body:not(.terrace-page) .theme-transition {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body:not(.terrace-page) .app-loaded {
+  /* Add any post-load styling here */
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  body:not(.terrace-page) .app__container {
+    padding: 0 var(--gd-space-6);
+  }
+
+  body:not(.terrace-page) .app__footer-content {
+    grid-template-columns: 1fr;
+    gap: var(--gd-space-8);
+  }
+}
+
+@media (max-width: 768px) {
+  body:not(.terrace-page) .app__container {
+    padding: 0 var(--gd-space-4);
+  }
+
+  body:not(.terrace-page) .app__footer-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  body:not(.terrace-page) .app__theme-indicator {
+    flex-direction: column;
+    gap: var(--gd-space-1);
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  body:not(.terrace-page) .app__footer-links {
+    grid-template-columns: 1fr;
+  }
+
+  body:not(.terrace-page) .app__debug {
+    bottom: var(--gd-space-2);
+    right: var(--gd-space-2);
+    left: var(--gd-space-2);
+    max-width: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  body:not(.terrace-page) .app__footer-section a {
+    border-bottom: 1px solid transparent;
+  }
+
+  body:not(.terrace-page) .app__footer-section a:hover {
+    border-bottom-color: var(--gd-color-primary);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  body:not(.terrace-page) .theme-transition {
+    transition: none;
+  }
+
+  body:not(.terrace-page) .app__footer-section a {
+    transition: none;
+  }
+}

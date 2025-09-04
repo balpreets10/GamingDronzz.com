@@ -1,0 +1,110 @@
+{
+  "schema_name": "public",
+  "function_count": 13,
+  "functions": [
+    {
+      "schema_name": "public",
+      "function_name": "check_email_exists",
+      "arguments": "email_input text",
+      "return_type": "boolean",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.check_email_exists(email_input text)\n RETURNS boolean\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nBEGIN\r\n    RETURN EXISTS (\r\n        SELECT 1 FROM auth.users WHERE email = email_input\r\n    );\r\nEND;\r\n$function$\n"
+    },
+    {
+      "schema_name": "public",
+      "function_name": "create_missing_profiles",
+      "arguments": "",
+      "return_type": "jsonb",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.create_missing_profiles()\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    missing_users UUID[];\r\n    user_id UUID;\r\n    created_count INTEGER := 0;\r\n    error_count INTEGER := 0;\r\n    result JSONB;\r\nBEGIN\r\n    SELECT public.get_users_without_profiles() INTO missing_users;\r\n    \r\n    IF array_length(missing_users, 1) IS NULL THEN\r\n        RETURN jsonb_build_object('success', true, 'message', 'No missing profiles found', 'created_count', 0, 'error_count', 0, 'total_users', 0);\r\n    END IF;\r\n    \r\n    FOREACH user_id IN ARRAY missing_users LOOP\r\n        BEGIN\r\n            SELECT public.ensure_user_profile(user_id) INTO result;\r\n            IF (result->>'success')::boolean THEN\r\n                created_count := created_count + 1;\r\n            ELSE\r\n                error_count := error_count + 1;\r\n            END IF;\r\n        EXCEPTION WHEN OTHERS THEN\r\n            error_count := error_count + 1;\r\n        END;\r\n    END LOOP;\r\n    \r\n    RETURN jsonb_build_object(\r\n        'success', true,\r\n        'message', format('Profile creation complete: %s created, %s errors', created_count, error_count),\r\n        'created_count', created_count,\r\n        'error_count', error_count,\r\n        'total_users', array_length(missing_users, 1)\r\n    );\r\nEND;\r\n$function$\n"
+    },
+    {
+      "schema_name": "public",
+      "function_name": "get_profile_analytics",
+      "arguments": "",
+      "return_type": "jsonb",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.get_profile_analytics()\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    analytics JSONB;\r\n    thirty_days_ago TIMESTAMPTZ := NOW() - INTERVAL '30 days';\r\nBEGIN\r\n    SELECT jsonb_build_object(\r\n        'total_users', COUNT(*),\r\n        'verified_users', COUNT(*) FILTER (WHERE is_verified = true),\r\n        'completed_profiles', COUNT(*) FILTER (WHERE profile_completed = true),\r\n        'google_users', COUNT(*) FILTER (WHERE provider = 'google'),\r\n        'email_users', COUNT(*) FILTER (WHERE provider = 'email'),\r\n        'recent_signups', COUNT(*) FILTER (WHERE created_at >= thirty_days_ago),\r\n        'active_users_30d', COUNT(*) FILTER (WHERE last_login_at >= thirty_days_ago),\r\n        'completion_rate', ROUND((COUNT(*) FILTER (WHERE profile_completed = true)::float / NULLIF(COUNT(*), 0) * 100), 2)\r\n    ) INTO analytics\r\n    FROM public.profiles\r\n    WHERE is_active = true;\r\n    \r\n    RETURN analytics;\r\nEND;\r\n$function$\n"
+    },
+    {
+      "schema_name": "public",
+      "function_name": "get_user_role",
+      "arguments": "user_id_input uuid DEFAULT auth.uid()",
+      "return_type": "jsonb",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.get_user_role(user_id_input uuid DEFAULT auth.uid())\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    profile RECORD;\r\nBEGIN\r\n    SELECT role INTO profile FROM public.profiles WHERE id = user_id_input;\r\n    \r\n    IF NOT FOUND THEN\r\n        RETURN jsonb_build_object(\r\n            'is_admin', false,\r\n            'role', null,\r\n            'error', 'Profile not found'\r\n        );\r\n    END IF;\r\n    \r\n    RETURN jsonb_build_object(\r\n        'is_admin', profile.role = 'admin',\r\n        'role', profile.role\r\n    );\r\nEND;\r\n$function$\n"
+    },
+    {
+      "schema_name": "public",
+      "function_name": "get_user_role",
+      "arguments": "user_id_input uuid DEFAULT auth.uid(), return_format text DEFAULT 'simple'::text",
+      "return_type": "jsonb",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.get_user_role(user_id_input uuid DEFAULT auth.uid(), return_format text DEFAULT 'simple'::text)\n RETURNS jsonb\n LANGUAGE plpgsql\n STABLE SECURITY DEFINER\nAS $function$DECLARE\r\n    user_profile RECORD;\r\n    result JSONB;\r\nBEGIN\r\n    SELECT p.role, p.is_verified, p.is_active\r\n    INTO user_profile\r\n    FROM public.profiles p\r\n    WHERE p.id = user_id_input;\r\n\r\n    IF NOT FOUND THEN\r\n        IF return_format = 'simple' THEN\r\n            RETURN jsonb_build_object('is_admin', false);\r\n        ELSE\r\n            RETURN jsonb_build_object(\r\n                'role', 'user',\r\n                'is_admin', false,\r\n                'is_verified', false,\r\n                'is_active', false,\r\n                'exists', false\r\n            );\r\n        END IF;\r\n    END IF;\r\n\r\n    IF return_format = 'simple' THEN\r\n        RETURN jsonb_build_object('is_admin', (user_profile.role = 'admin'));\r\n    ELSE\r\n        RETURN jsonb_build_object(\r\n            'role', user_profile.role,\r\n            'is_admin', (user_profile.role = 'admin'),\r\n            'is_verified', user_profile.is_verified,\r\n            'is_active', user_profile.is_active,\r\n            'exists', true\r\n        );\r\n    END IF;\r\nEND;$function$\n"
+    },
+    {
+      "schema_name": "public",
+      "function_name": "get_users_without_profiles",
+      "arguments": "",
+      "return_type": "uuid[]",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.get_users_without_profiles()\n RETURNS uuid[]\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    result UUID[];\r\nBEGIN\r\n    SELECT ARRAY(\r\n        SELECT au.id FROM auth.users au \r\n        LEFT JOIN public.profiles p ON au.id = p.id \r\n        WHERE p.id IS NULL AND au.deleted_at IS NULL AND au.email IS NOT NULL\r\n    ) INTO result;\r\n    RETURN result;\r\nEND;\r\n$function$\n"
+    },
+    {
+      "schema_name": "public",
+      "function_name": "handle_new_user",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.handle_new_user()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    user_provider TEXT;\r\n    profile_data JSONB;\r\n    is_google_user BOOLEAN;\r\n    user_role user_role;\r\nBEGIN\r\n    -- Extract provider information\r\n    user_provider := COALESCE(\r\n        NEW.raw_user_meta_data->>'provider',\r\n        NEW.raw_app_meta_data->>'provider',\r\n        'email'\r\n    );\r\n    \r\n    -- Get profile metadata\r\n    profile_data := COALESCE(NEW.raw_user_meta_data, '{}'::jsonb);\r\n    is_google_user := user_provider = 'google';\r\n    \r\n    -- Determine role (check if user is admin based on email or other criteria)\r\n    -- For now, default to 'user' - you can add admin logic here\r\n    user_role := 'user'::user_role;\r\n    \r\n    -- Create profile automatically\r\n    INSERT INTO public.profiles (\r\n        id, \r\n        email, \r\n        full_name,\r\n        avatar_url,\r\n        provider,\r\n        provider_id,\r\n        oauth_metadata,\r\n        is_verified,\r\n        profile_completed,\r\n        profile_completion_date,\r\n        last_login_at,\r\n        login_count,\r\n        role,\r\n        public_profile,\r\n        email_notifications,\r\n        marketing_emails,\r\n        is_active,\r\n        created_at,\r\n        updated_at\r\n    ) VALUES (\r\n        NEW.id,\r\n        NEW.email,\r\n        COALESCE(\r\n            profile_data->>'full_name',\r\n            profile_data->>'name',\r\n            split_part(NEW.email, '@', 1)\r\n        ),\r\n        COALESCE(profile_data->>'avatar_url', profile_data->>'picture'),\r\n        user_provider::auth_provider,\r\n        profile_data->>'sub',\r\n        profile_data,\r\n        COALESCE(NEW.email_confirmed_at IS NOT NULL, FALSE),\r\n        is_google_user, -- Google users are considered complete initially\r\n        CASE WHEN is_google_user THEN NOW() ELSE NULL END,\r\n        NOW(),\r\n        1,\r\n        user_role,\r\n        TRUE,\r\n        TRUE,\r\n        FALSE,\r\n        TRUE,\r\n        NOW(),\r\n        NOW()\r\n    );\r\n    \r\n    RETURN NEW;\r\nEND;\r\n$function$\n"
+    },
+    {
+      "schema_name": "public",
+      "function_name": "increment_view_count",
+      "arguments": "table_type text, record_id uuid",
+      "return_type": "jsonb",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.increment_view_count(table_type text, record_id uuid)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\n  DECLARE\r\n      updated_count integer;\r\n  BEGIN\r\n      -- Validate table type to prevent SQL injection\r\n      IF table_type NOT IN ('projects', 'articles') THEN\r\n          RETURN jsonb_build_object(\r\n              'success', false,\r\n              'error', 'Invalid table type'\r\n          );\r\n      END IF;\r\n\r\n      IF table_type = 'projects' THEN\r\n          UPDATE public.projects\r\n          SET view_count = view_count + 1\r\n          WHERE id = record_id\r\n          RETURNING view_count INTO updated_count;\r\n      ELSIF table_type = 'articles' THEN\r\n          UPDATE public.articles\r\n          SET view_count = view_count + 1\r\n          WHERE id = record_id\r\n          RETURNING view_count INTO updated_count;\r\n      END IF;\r\n\r\n      IF FOUND THEN\r\n          RETURN jsonb_build_object(\r\n              'success', true,\r\n              'new_count', updated_count\r\n          );\r\n      ELSE\r\n          RETURN jsonb_build_object(\r\n              'success', false,\r\n              'error', 'Record not found'\r\n          );\r\n      END IF;\r\n  END;\r\n  $function$\n"
+    },
+    {
+      "schema_name": "public",
+      "function_name": "is_admin_user",
+      "arguments": "user_id_input uuid DEFAULT auth.uid()",
+      "return_type": "boolean",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.is_admin_user(user_id_input uuid DEFAULT auth.uid())\n RETURNS boolean\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$DECLARE\r\n    user_role TEXT;\r\nBEGIN\r\n    SELECT role INTO user_role FROM public.profiles WHERE user_id = user_id_input;\r\n    RETURN COALESCE(user_role = 'admin', FALSE);\r\nEND;$function$\n"
+    },
+    {
+      "schema_name": "public",
+      "function_name": "update_updated_at_column",
+      "arguments": "",
+      "return_type": "trigger",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.update_updated_at_column()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n    NEW.updated_at = NOW();\r\n    RETURN NEW;\r\nEND;\r\n$function$\n"
+    },
+    {
+      "schema_name": "public",
+      "function_name": "update_user_login",
+      "arguments": "user_id_input uuid DEFAULT auth.uid()",
+      "return_type": "jsonb",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.update_user_login(user_id_input uuid DEFAULT auth.uid())\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nBEGIN\r\n    UPDATE public.profiles \r\n    SET \r\n        last_login_at = NOW(),\r\n        login_count = login_count + 1,\r\n        updated_at = NOW()\r\n    WHERE id = user_id_input;\r\n    \r\n    IF FOUND THEN\r\n        RETURN jsonb_build_object('success', true);\r\n    ELSE\r\n        RETURN jsonb_build_object('success', false, 'error', 'Profile not found');\r\n    END IF;\r\nEND;\r\n$function$\n"
+    },
+    {
+      "schema_name": "public",
+      "function_name": "verify_profiles_schema",
+      "arguments": "",
+      "return_type": "TABLE(check_name text, status text, details text)",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.verify_profiles_schema()\n RETURNS TABLE(check_name text, status text, details text)\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nBEGIN\r\n    RETURN QUERY\r\n    SELECT 'profiles_table_exists'::TEXT,\r\n           CASE WHEN EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'profiles') \r\n                THEN 'PASS' ELSE 'FAIL' END::TEXT,\r\n           'Profiles table existence check'::TEXT;\r\n    \r\n    RETURN QUERY\r\n    SELECT 'required_columns'::TEXT,\r\n           CASE WHEN (SELECT count(*) FROM information_schema.columns WHERE table_name = 'profiles' \r\n                     AND column_name IN ('id', 'email', 'role', 'provider', 'profile_completed', 'oauth_metadata', 'preferences')) = 7 \r\n                THEN 'PASS' ELSE 'FAIL' END::TEXT,\r\n           'Required columns presence check'::TEXT;\r\n    \r\n    RETURN QUERY\r\n    SELECT 'rls_enabled'::TEXT,\r\n           CASE WHEN (SELECT rowsecurity FROM pg_tables WHERE tablename = 'profiles' AND schemaname = 'public') \r\n                THEN 'PASS' ELSE 'FAIL' END::TEXT,\r\n           'Row Level Security enabled check'::TEXT;\r\n    \r\n    RETURN QUERY\r\n    SELECT 'rls_policies'::TEXT,\r\n           CASE WHEN (SELECT count(*) FROM pg_policies WHERE tablename = 'profiles' AND schemaname = 'public') >= 5 \r\n                THEN 'PASS' ELSE 'FAIL' END::TEXT,\r\n           'RLS policies existence check'::TEXT;\r\nEND;\r\n$function$\n"
+    },
+    {
+      "schema_name": "public",
+      "function_name": "verify_rpc_functions",
+      "arguments": "",
+      "return_type": "TABLE(function_name text, exists_check text)",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION public.verify_rpc_functions()\n RETURNS TABLE(function_name text, exists_check text)\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nBEGIN\r\n    RETURN QUERY\r\n    SELECT expected_functions.name::TEXT,\r\n           CASE WHEN routines.routine_name IS NOT NULL THEN 'EXISTS' ELSE 'MISSING' END::TEXT\r\n    FROM (VALUES \r\n        ('ensure_user_profile'),\r\n        ('check_profile_completion'),\r\n        ('complete_user_profile'),\r\n        ('handle_user_login'),\r\n        ('get_users_without_profiles'),\r\n        ('create_missing_profiles'),\r\n        ('get_profile_analytics')\r\n    ) AS expected_functions(name)\r\n    LEFT JOIN information_schema.routines \r\n        ON routines.routine_name = expected_functions.name\r\n        AND routines.routine_schema = 'public'\r\n    ORDER BY expected_functions.name;\r\nEND;\r\n$function$\n"
+    }
+  ]
+}

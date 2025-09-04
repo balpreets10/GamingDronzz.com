@@ -21,7 +21,7 @@ on:
 
 env:
   NODE_VERSION: '18'
-  WORKING_DIRECTORY: './gamingdronzz-website'
+  WORKING_DIRECTORY: './site'
 
 jobs:
   build:
@@ -108,7 +108,6 @@ jobs:
           server-dir: ./
           clean: true
           clean-exclude: |
-            .htaccess
             .well-known/**
             error_log
             
@@ -143,7 +142,6 @@ jobs:
           server-dir: ./
           clean: true
           clean-exclude: |
-            .htaccess
             .well-known/**
             error_log
             robots.txt

@@ -1,0 +1,68 @@
+{
+  "name": "supabase-functions-splitter",
+  "displayName": "Supabase Functions Splitter",
+  "description": "Split Supabase functions.json into separate files by schema_name for better organization",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "supabase-functions-splitter.splitFunctions",
+        "title": "Split Functions by Schema",
+        "category": "Supabase"
+      },
+      {
+        "command": "supabase-functions-splitter.mergeFunctions",
+        "title": "Merge Schema Files Back",
+        "category": "Supabase"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "supabase-functions-splitter.splitFunctions",
+          "when": "resourceFilename == functions.json",
+          "group": "supabase"
+        },
+        {
+          "command": "supabase-functions-splitter.mergeFunctions",
+          "when": "resourcePath =~ /.*functions_split.*\\.json$/",
+          "group": "supabase"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Supabase Functions Splitter",
+      "properties": {
+        "supabaseFunctionsSplitter.outputDirectory": {
+          "type": "string",
+          "default": "functions_split",
+          "description": "Directory name where split files will be created"
+        },
+        "supabaseFunctionsSplitter.filePrefix": {
+          "type": "string",
+          "default": "functions",
+          "description": "Prefix for split files"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@vscode/vsce": "^3.6.0",
+    "typescript": "^4.9.4"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "created_at": "2025-09-04T13:50:44.218Z",
+  "original_file": "functions.json",
+  "total_functions": 120,
+  "schemas": [
+    {
+      "schema_name": "auth",
+      "function_count": 4,
+      "file_name": "functions_auth.json"
+    },
+    {
+      "schema_name": "extensions",
+      "function_count": 55,
+      "file_name": "functions_extensions.json"
+    },
+    {
+      "schema_name": "graphql",
+      "function_count": 6,
+      "file_name": "functions_graphql.json"
+    },
+    {
+      "schema_name": "graphql_public",
+      "function_count": 1,
+      "file_name": "functions_graphql_public.json"
+    },
+    {
+      "schema_name": "pgbouncer",
+      "function_count": 1,
+      "file_name": "functions_pgbouncer.json"
+    },
+    {
+      "schema_name": "public",
+      "function_count": 13,
+      "file_name": "functions_public.json"
+    },
+    {
+      "schema_name": "realtime",
+      "function_count": 12,
+      "file_name": "functions_realtime.json"
+    },
+    {
+      "schema_name": "storage",
+      "function_count": 23,
+      "file_name": "functions_storage.json"
+    },
+    {
+      "schema_name": "vault",
+      "function_count": 5,
+      "file_name": "functions_vault.json"
+    }
+  ],
+  "files_created": [
+    "functions_auth.json",
+    "functions_extensions.json",
+    "functions_graphql.json",
+    "functions_graphql_public.json",
+    "functions_pgbouncer.json",
+    "functions_public.json",
+    "functions_realtime.json",
+    "functions_storage.json",
+    "functions_vault.json"
+  ]
+}
