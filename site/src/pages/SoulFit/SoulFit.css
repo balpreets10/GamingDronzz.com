@@ -1,0 +1,726 @@
+/* SoulFit Gym Website Styles */
+
+/* CSS Isolation - All styles scoped to soulfit-page body class */
+body.soulfit-page {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* Container */
+.soulfit-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Navigation */
+.soulfit-navbar {
+  position: fixed;
+  top: -80px;
+  left: 0;
+  right: 0;
+  background: rgba(30, 60, 114, 0.95);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  transition: top 0.3s ease-in-out;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.soulfit-navbar-visible {
+  top: 0;
+}
+
+.soulfit-navbar-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.soulfit-logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ff6b35;
+}
+
+.soulfit-nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2rem;
+}
+
+.soulfit-nav-links li {
+  margin: 0;
+}
+
+.soulfit-nav-links button {
+  background: none;
+  border: none;
+  color: #e0e8f0;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.soulfit-nav-links button:hover,
+.soulfit-nav-links button.soulfit-active {
+  color: #ff6b35;
+  background: rgba(255, 107, 53, 0.1);
+}
+
+/* Section Styles */
+.soulfit-home-section,
+.soulfit-about-section,
+.soulfit-equipment-section,
+.soulfit-packages-section,
+.soulfit-contact-section {
+  min-height: 100vh;
+  padding: 6rem 2rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.soulfit-section-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.soulfit-section-header,
+.soulfit-about-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.soulfit-section-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #fff;
+  font-weight: bold;
+}
+
+.soulfit-section-subtitle {
+  font-size: 1.2rem;
+  color: #e0e8f0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Home Section */
+.soulfit-hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-bottom: 6rem;
+}
+
+.soulfit-hero-text h1.soulfit-hero-title {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.soulfit-hero-subtitle {
+  font-size: 1.5rem;
+  color: #ff6b35;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.soulfit-hero-description {
+  font-size: 1.1rem;
+  color: #e0e8f0;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.soulfit-hero-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.soulfit-cta-primary,
+.soulfit-cta-secondary {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.soulfit-cta-primary {
+  background: linear-gradient(45deg, #ff6b35, #f7931e);
+  color: #fff;
+}
+
+.soulfit-cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+}
+
+.soulfit-cta-secondary {
+  background: transparent;
+  color: #e0e8f0;
+  border: 2px solid #e0e8f0;
+}
+
+.soulfit-cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.soulfit-hero-image img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Features Preview */
+.soulfit-features-preview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.soulfit-feature-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.soulfit-feature-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.soulfit-feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.soulfit-feature-card h3 {
+  color: #ff6b35;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.soulfit-feature-card p {
+  color: #e0e8f0;
+  line-height: 1.6;
+}
+
+/* About Section */
+.soulfit-about-section {
+  background: linear-gradient(135deg, rgba(30, 60, 114, 0.8) 0%, rgba(42, 82, 152, 0.8) 100%);
+}
+
+.soulfit-about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 4rem;
+}
+
+.soulfit-about-story h3,
+.soulfit-about-mission h3 {
+  color: #ff6b35;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.soulfit-about-story p,
+.soulfit-mission-list {
+  color: #e0e8f0;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.soulfit-mission-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.soulfit-mission-list li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.soulfit-mission-list li:before {
+  content: "";
+  color: #ff6b35;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+/* Stats */
+.soulfit-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.soulfit-stat-item {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(20px);
+}
+
+.soulfit-stat-number {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ff6b35;
+  margin-bottom: 0.5rem;
+}
+
+.soulfit-stat-label {
+  color: #e0e8f0;
+  font-size: 1rem;
+}
+
+/* Equipment Section */
+.soulfit-equipment-section {
+  background: linear-gradient(135deg, rgba(42, 82, 152, 0.8) 0%, rgba(30, 60, 114, 0.8) 100%);
+}
+
+.soulfit-equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+}
+
+.soulfit-equipment-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.soulfit-equipment-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.soulfit-equipment-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.soulfit-equipment-content {
+  padding: 2rem;
+}
+
+.soulfit-equipment-content h3 {
+  color: #ff6b35;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.soulfit-equipment-content ul {
+  list-style: none;
+  padding: 0;
+  color: #e0e8f0;
+}
+
+.soulfit-equipment-content li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.soulfit-equipment-content li:before {
+  content: "";
+  color: #ff6b35;
+  position: absolute;
+  left: 0;
+}
+
+/* Packages Section */
+.soulfit-packages-section {
+  background: linear-gradient(135deg, rgba(30, 60, 114, 0.9) 0%, rgba(42, 82, 152, 0.9) 100%);
+}
+
+.soulfit-packages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.soulfit-package-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.soulfit-package-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+.soulfit-package-featured {
+  border: 2px solid #ff6b35;
+  transform: scale(1.05);
+}
+
+.soulfit-package-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(45deg, #ff6b35, #f7931e);
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.soulfit-package-header h3 {
+  color: #ff6b35;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.soulfit-package-price {
+  margin-bottom: 2rem;
+}
+
+.soulfit-price {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.soulfit-period {
+  color: #e0e8f0;
+  font-size: 1rem;
+}
+
+.soulfit-package-features ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.soulfit-package-features li {
+  padding: 0.8rem 0;
+  color: #e0e8f0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.soulfit-package-features li:last-child {
+  border-bottom: none;
+}
+
+.soulfit-package-btn {
+  width: 100%;
+  padding: 1rem;
+  background: transparent;
+  border: 2px solid #ff6b35;
+  color: #ff6b35;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.soulfit-package-btn:hover {
+  background: #ff6b35;
+  color: #fff;
+}
+
+.soulfit-package-btn-featured {
+  background: linear-gradient(45deg, #ff6b35, #f7931e);
+  color: #fff;
+  border: none;
+}
+
+.soulfit-package-note {
+  text-align: center;
+  color: #e0e8f0;
+  font-style: italic;
+  margin-top: 2rem;
+}
+
+/* Contact Section */
+.soulfit-contact-section {
+  background: linear-gradient(135deg, rgba(42, 82, 152, 0.9) 0%, rgba(30, 60, 114, 0.9) 100%);
+}
+
+.soulfit-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.soulfit-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.soulfit-contact-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 15px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.soulfit-contact-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.soulfit-contact-card h3 {
+  color: #ff6b35;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.soulfit-contact-card p {
+  color: #e0e8f0;
+  line-height: 1.6;
+}
+
+/* Contact Form */
+.soulfit-contact-form {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 3rem;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.soulfit-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.soulfit-form-input {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.soulfit-form-input:focus {
+  outline: none;
+  border-color: #ff6b35;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.soulfit-form-input::placeholder {
+  color: #b0c4de;
+}
+
+.soulfit-form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.soulfit-form-submit {
+  width: 100%;
+  padding: 1rem 2rem;
+  background: linear-gradient(45deg, #ff6b35, #f7931e);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.soulfit-form-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+}
+
+/* Social Links */
+.soulfit-social-links {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.soulfit-social-links h3 {
+  color: #ff6b35;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.soulfit-social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.soulfit-social-link {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e0e8f0;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.soulfit-social-link:hover {
+  background: #ff6b35;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+}
+
+/* Animations */
+.soulfit-animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.soulfit-animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Add staggered animation delays */
+.soulfit-animate-on-scroll:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.soulfit-animate-on-scroll:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.soulfit-animate-on-scroll:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+.soulfit-animate-on-scroll:nth-child(4) {
+  transition-delay: 0.4s;
+}
+
+.soulfit-animate-on-scroll:nth-child(5) {
+  transition-delay: 0.5s;
+}
+
+.soulfit-animate-on-scroll:nth-child(6) {
+  transition-delay: 0.6s;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .soulfit-navbar-content {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .soulfit-nav-links {
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .soulfit-hero-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .soulfit-hero-text h1.soulfit-hero-title {
+    font-size: 2.5rem;
+  }
+
+  .soulfit-section-title {
+    font-size: 2rem;
+  }
+
+  .soulfit-features-preview,
+  .soulfit-equipment-grid,
+  .soulfit-packages-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .soulfit-about-grid,
+  .soulfit-contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .soulfit-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .soulfit-hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .soulfit-social-icons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .soulfit-home-section,
+  .soulfit-about-section,
+  .soulfit-equipment-section,
+  .soulfit-packages-section,
+  .soulfit-contact-section {
+    padding: 4rem 1rem 3rem;
+  }
+
+  .soulfit-package-featured {
+    transform: none;
+  }
+
+  .soulfit-contact-form {
+    padding: 2rem;
+  }
+}

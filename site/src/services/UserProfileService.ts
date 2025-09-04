@@ -1,10 +1,10 @@
 // services/UserProfileService.ts - User Profile Management Service
 import { SupabaseClient } from '@supabase/supabase-js';
 import supabaseService from './SupabaseService';
-import { 
-    UserProfile, 
-    ProfileCompletionStatus, 
-    ProfileCreationResult, 
+import {
+    UserProfile,
+    ProfileCompletionStatus,
+    ProfileCreationResult,
     ProfileUpdateData,
     UserRole,
     AuthProvider
@@ -31,8 +31,8 @@ class UserProfileService {
 
             if (error) {
                 console.error('Profile creation/update error:', error);
-                return { 
-                    success: false, 
+                return {
+                    success: false,
                     error: error.message,
                     action: 'created',
                     profile_completed: false
@@ -42,8 +42,8 @@ class UserProfileService {
             return data as ProfileCreationResult;
         } catch (error: any) {
             console.error('Profile service error:', error);
-            return { 
-                success: false, 
+            return {
+                success: false,
                 error: error.message || 'Failed to create/update profile',
                 action: 'created',
                 profile_completed: false
@@ -57,12 +57,12 @@ class UserProfileService {
     async handleUserLogin(userId: string): Promise<ProfileCreationResult> {
         try {
             const { data, error } = await this.client
-                .rpc('handle_user_login', { user_id: userId });
+                .rpc('ensure_user_profile', { user_id: userId, action: 'login' })
 
             if (error) {
                 console.error('Login profile handling error:', error);
-                return { 
-                    success: false, 
+                return {
+                    success: false,
                     error: error.message,
                     action: 'created',
                     profile_completed: false
@@ -72,8 +72,8 @@ class UserProfileService {
             return data as ProfileCreationResult;
         } catch (error: any) {
             console.error('Login profile service error:', error);
-            return { 
-                success: false, 
+            return {
+                success: false,
                 error: error.message || 'Failed to handle user login profile',
                 action: 'created',
                 profile_completed: false
@@ -193,7 +193,7 @@ class UserProfileService {
      * Updates a user's profile data
      */
     async updateUserProfile(
-        userId: string, 
+        userId: string,
         updates: ProfileUpdateData
     ): Promise<{ success: boolean; error?: string; profile?: UserProfile }> {
         try {
@@ -223,7 +223,7 @@ class UserProfileService {
      * Marks a user's profile as completed with optional additional data
      */
     async completeUserProfile(
-        userId: string, 
+        userId: string,
         additionalData?: Record<string, any>
     ): Promise<{ success: boolean; error?: string; message?: string }> {
         try {
@@ -311,10 +311,10 @@ class UserProfileService {
     /**
      * Creates profiles for users who don't have them using the new RPC function
      */
-    async createMissingProfiles(): Promise<{ 
-        created: number; 
-        errors: number; 
-        details: string[]; 
+    async createMissingProfiles(): Promise<{
+        created: number;
+        errors: number;
+        details: string[];
         total_users?: number;
         message?: string;
     }> {
@@ -324,9 +324,9 @@ class UserProfileService {
 
             if (error) {
                 console.error('Bulk profile creation error:', error);
-                return { 
-                    created: 0, 
-                    errors: 1, 
+                return {
+                    created: 0,
+                    errors: 1,
                     details: [error.message],
                     message: 'Failed to create missing profiles'
                 };
@@ -341,9 +341,9 @@ class UserProfileService {
             };
         } catch (error: any) {
             console.error('Bulk profile creation service error:', error);
-            return { 
-                created: 0, 
-                errors: 1, 
+            return {
+                created: 0,
+                errors: 1,
                 details: [error.message || 'Failed to create missing profiles'],
                 message: 'Service error occurred'
             };
@@ -410,12 +410,12 @@ class UserProfileService {
      * Update user role (admin only function)
      */
     async updateUserRole(
-        targetUserId: string, 
-        newRole: UserRole, 
+        targetUserId: string,
+        newRole: UserRole,
         adminUserId?: string
-    ): Promise<{ 
-        success: boolean; 
-        error?: string; 
+    ): Promise<{
+        success: boolean;
+        error?: string;
         message?: string;
         oldRole?: UserRole;
         newRole?: UserRole;
@@ -429,9 +429,9 @@ class UserProfileService {
 
             if (error) {
                 console.error('Role update error:', error);
-                return { 
-                    success: false, 
-                    error: error.message 
+                return {
+                    success: false,
+                    error: error.message
                 };
             }
 
@@ -444,9 +444,9 @@ class UserProfileService {
             };
         } catch (error: any) {
             console.error('Role update service error:', error);
-            return { 
-                success: false, 
-                error: error.message || 'Failed to update user role' 
+            return {
+                success: false,
+                error: error.message || 'Failed to update user role'
             };
         }
     }
@@ -454,8 +454,8 @@ class UserProfileService {
     /**
      * Get detailed profile with activity information
      */
-    async getDetailedProfile(userId: string): Promise<{ 
-        profile: UserProfile | null; 
+    async getDetailedProfile(userId: string): Promise<{
+        profile: UserProfile | null;
         activitySummary?: {
             loginCount: number;
             lastLogin?: string;
@@ -467,7 +467,7 @@ class UserProfileService {
         try {
             // Get basic profile
             const { profile, error: profileError } = await this.getUserProfile(userId);
-            
+
             if (profileError || !profile) {
                 return { profile: null, error: profileError };
             }
@@ -483,9 +483,9 @@ class UserProfileService {
             return { profile, activitySummary };
         } catch (error: any) {
             console.error('Detailed profile retrieval error:', error);
-            return { 
-                profile: null, 
-                error: error.message || 'Failed to retrieve detailed profile' 
+            return {
+                profile: null,
+                error: error.message || 'Failed to retrieve detailed profile'
             };
         }
     }
@@ -517,7 +517,7 @@ class UserProfileService {
      * Safely updates profile with validation
      */
     async safeUpdateProfile(
-        userId: string, 
+        userId: string,
         updates: ProfileUpdateData
     ): Promise<{ success: boolean; error?: string; profile?: UserProfile }> {
         // Validate data first

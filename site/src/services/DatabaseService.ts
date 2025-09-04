@@ -16,7 +16,25 @@ export interface IQueryOptions {
     offset?: number;
     orderBy?: string;
     ascending?: boolean;
-    filters?: Record<string, any>;
+    filters?: Record<string, unknown>;
+}
+
+export interface IPaginationResult<T> {
+    data: T[];
+    totalCount: number;
+    currentPage: number;
+    totalPages: number;
+    itemsPerPage: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+}
+
+export interface IPaginationOptions {
+    page?: number;
+    itemsPerPage?: number;
+    orderBy?: string;
+    ascending?: boolean;
+    filters?: Record<string, unknown>;
 }
 
 export interface ISearchOptions extends IQueryOptions {
@@ -61,7 +79,7 @@ export interface DatabaseProject {
     created_by?: string;
 }
 
-export interface DatabaseService {
+export interface IDatabaseService {
     id: string;
     title: string;
     slug: string;
@@ -274,6 +292,77 @@ abstract class BaseRepository<T> implements IRepository<T> {
             throw error;
         }
     }
+
+    async getPaginated(options: IPaginationOptions = {}): Promise<IPaginationResult<T>> {
+        try {
+            const {
+                page = 1,
+                itemsPerPage = 10,
+                orderBy,
+                ascending = false,
+                filters
+            } = options;
+
+            // Calculate offset
+            const offset = (page - 1) * itemsPerPage;
+
+            // Build base query for count
+            let countQuery = this.client
+                .from(this.tableName)
+                .select('*', { count: 'exact', head: true });
+
+            // Build base query for data
+            let dataQuery = this.client
+                .from(this.tableName)
+                .select('*');
+
+            // Apply filters to both queries
+            if (filters) {
+                Object.entries(filters).forEach(([key, value]) => {
+                    countQuery = countQuery.eq(key, value);
+                    dataQuery = dataQuery.eq(key, value);
+                });
+            }
+
+            // Get total count
+            const { count: totalCount, error: countError } = await countQuery;
+
+            if (countError) {
+                console.error(`Error counting ${this.tableName}:`, countError);
+                throw new Error(`Failed to count ${this.tableName}: ${countError.message}`);
+            }
+
+            // Apply ordering, pagination to data query
+            if (orderBy) {
+                dataQuery = dataQuery.order(orderBy, { ascending });
+            }
+
+            dataQuery = dataQuery.range(offset, offset + itemsPerPage - 1);
+
+            // Execute data query
+            const { data, error: dataError } = await dataQuery;
+
+            if (dataError) {
+                console.error(`Error fetching paginated ${this.tableName}:`, dataError);
+                throw new Error(`Failed to fetch paginated ${this.tableName}: ${dataError.message}`);
+            }
+
+            const totalPages = Math.ceil((totalCount || 0) / itemsPerPage);
+
+            return {
+                data: data as T[],
+                totalCount: totalCount || 0,
+                currentPage: page,
+                totalPages,
+                itemsPerPage,
+                hasNextPage: page < totalPages,
+                hasPreviousPage: page > 1
+            };
+        } catch (error) {
+            console.error(`Repository error in getPaginated for ${this.tableName}:`, error);
+            throw error;
+        }
+    }
 }
 
 // ===== SPECIALIZED REPOSITORIES =====
@@ -328,10 +417,14 @@ class ProjectsRepository extends BaseRepository<DatabaseProject> {
 
     async incrementViewCount(id: string): Promise<void> {
         try {
-            await this.client.rpc('increment_view_count', {
-                table_name: 'projects',
+            const { data, error } = await this.client.rpc('increment_view_count', {
+                table_type: 'projects',
                 record_id: id
             });
+            
+            if (error || !data?.success) {
+                console.warn('Failed to increment view count:', error || data?.error);
+            }
         } catch (error) {
             console.warn('Failed to increment view count:', error);
         }
@@ -371,6 +464,33 @@ class ProjectsRepository extends BaseRepository<DatabaseProject> {
             console.error('Repository error in search:', error);
             throw error;
         }
+    }
+
+    async getPublishedPaginated(options: IPaginationOptions = {}): Promise<IPaginationResult<DatabaseProject>> {
+        return this.getPaginated({
+            ...options,
+            filters: { published: true, ...options.filters },
+            orderBy: options.orderBy || 'created_at',
+            ascending: options.ascending ?? false
+        });
+    }
+
+    async getFeaturedPaginated(options: IPaginationOptions = {}): Promise<IPaginationResult<DatabaseProject>> {
+        return this.getPaginated({
+            ...options,
+            filters: { published: true, featured: true, ...options.filters },
+            orderBy: options.orderBy || 'created_at',
+            ascending: options.ascending ?? false
+        });
+    }
+
+    async getByCategoryPaginated(category: string, options: IPaginationOptions = {}): Promise<IPaginationResult<DatabaseProject>> {
+        return this.getPaginated({
+            ...options,
+            filters: { published: true, category, ...options.filters },
+            orderBy: options.orderBy || 'year',
+            ascending: options.ascending ?? false
+        });
     }
 }
 
@@ -470,10 +590,14 @@ class ArticlesRepository extends BaseRepository<DatabaseArticle> {
 
     async incrementViewCount(id: string): Promise<void> {
         try {
-            await this.client.rpc('increment_view_count', {
-                table_name: 'articles',
+            const { data, error } = await this.client.rpc('increment_view_count', {
+                table_type: 'articles',
                 record_id: id
             });
+            
+            if (error || !data?.success) {
+                console.warn('Failed to increment view count:', error || data?.error);
+            }
         } catch (error) {
             console.warn('Failed to increment view count:', error);
         }
@@ -490,7 +614,7 @@ class InquiriesRepository extends BaseRepository<DatabaseInquiry> {
             ...data,
             status: 'new',
             priority: 0
-        } as any);
+        } as Omit<DatabaseInquiry, 'id' | 'created_at' | 'updated_at'>);
     }
 
     async getByStatus(status: string): Promise<DatabaseInquiry[]> {

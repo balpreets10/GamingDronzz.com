@@ -10,29 +10,11 @@
     },
     {
         "schemaname": "public",
-        "tablename": "projects",
-        "policyname": "Authenticated users can view all projects",
-        "permissive": "PERMISSIVE",
-        "cmd": "SELECT",
-        "qual": "true",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
         "tablename": "services",
         "policyname": "Published services are viewable by everyone",
         "permissive": "PERMISSIVE",
         "cmd": "SELECT",
         "qual": "(published = true)",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "services",
-        "policyname": "Authenticated users can view all services",
-        "permissive": "PERMISSIVE",
-        "cmd": "SELECT",
-        "qual": "true",
         "with_check": null
     },
     {
@@ -43,24 +25,6 @@
         "cmd": "SELECT",
         "qual": "(published = true)",
         "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "articles",
-        "policyname": "Authenticated users can view all articles",
-        "permissive": "PERMISSIVE",
-        "cmd": "SELECT",
-        "qual": "true",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "articles",
-        "policyname": "Authors can insert their own articles",
-        "permissive": "PERMISSIVE",
-        "cmd": "INSERT",
-        "qual": null,
-        "with_check": "(auth.uid() = author_id)"
     },
     {
         "schemaname": "public",
@@ -82,15 +46,6 @@
     },
     {
         "schemaname": "public",
-        "tablename": "testimonials",
-        "policyname": "Authenticated users can view all testimonials",
-        "permissive": "PERMISSIVE",
-        "cmd": "SELECT",
-        "qual": "true",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
         "tablename": "page_views",
         "policyname": "Anyone can insert page views",
         "permissive": "PERMISSIVE",
@@ -106,15 +61,6 @@
         "cmd": "SELECT",
         "qual": "true",
         "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "media_files",
-        "policyname": "Authenticated users can upload files",
-        "permissive": "PERMISSIVE",
-        "cmd": "INSERT",
-        "qual": null,
-        "with_check": "(auth.uid() = uploaded_by)"
     },
     {
         "schemaname": "public",
@@ -142,177 +88,6 @@
         "cmd": "UPDATE",
         "qual": "(auth.uid() = id)",
         "with_check": "(auth.uid() = id)"
-    },
-    {
-        "schemaname": "public",
-        "tablename": "profiles",
-        "policyname": "service_role_full_access",
-        "permissive": "PERMISSIVE",
-        "cmd": "ALL",
-        "qual": "true",
-        "with_check": "true"
-    },
-    {
-        "schemaname": "public",
-        "tablename": "profiles",
-        "policyname": "admins_view_all_profiles",
-        "permissive": "PERMISSIVE",
-        "cmd": "SELECT",
-        "qual": "is_admin_user()",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "profiles",
-        "policyname": "admins_update_all_profiles",
-        "permissive": "PERMISSIVE",
-        "cmd": "UPDATE",
-        "qual": "is_admin_user()",
-        "with_check": "is_admin_user()"
-    },
-    {
-        "schemaname": "public",
-        "tablename": "profiles",
-        "policyname": "admins_delete_profiles",
-        "permissive": "PERMISSIVE",
-        "cmd": "DELETE",
-        "qual": "is_admin_user()",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "projects",
-        "policyname": "admins_insert_projects",
-        "permissive": "PERMISSIVE",
-        "cmd": "INSERT",
-        "qual": null,
-        "with_check": "is_admin_user()"
-    },
-    {
-        "schemaname": "public",
-        "tablename": "projects",
-        "policyname": "admins_update_projects",
-        "permissive": "PERMISSIVE",
-        "cmd": "UPDATE",
-        "qual": "is_admin_user()",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "projects",
-        "policyname": "admins_delete_projects",
-        "permissive": "PERMISSIVE",
-        "cmd": "DELETE",
-        "qual": "is_admin_user()",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "services",
-        "policyname": "admins_insert_services",
-        "permissive": "PERMISSIVE",
-        "cmd": "INSERT",
-        "qual": null,
-        "with_check": "is_admin_user()"
-    },
-    {
-        "schemaname": "public",
-        "tablename": "services",
-        "policyname": "admins_update_services",
-        "permissive": "PERMISSIVE",
-        "cmd": "UPDATE",
-        "qual": "is_admin_user()",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "services",
-        "policyname": "admins_delete_services",
-        "permissive": "PERMISSIVE",
-        "cmd": "DELETE",
-        "qual": "is_admin_user()",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "articles",
-        "policyname": "authors_update_own_or_admin_any",
-        "permissive": "PERMISSIVE",
-        "cmd": "UPDATE",
-        "qual": "((auth.uid() = author_id) OR is_admin_user())",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "articles",
-        "policyname": "authors_delete_own_or_admin_any",
-        "permissive": "PERMISSIVE",
-        "cmd": "DELETE",
-        "qual": "((auth.uid() = author_id) OR is_admin_user())",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "inquiries",
-        "policyname": "admins_view_inquiries",
-        "permissive": "PERMISSIVE",
-        "cmd": "SELECT",
-        "qual": "is_admin_user()",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "inquiries",
-        "policyname": "admins_update_inquiries",
-        "permissive": "PERMISSIVE",
-        "cmd": "UPDATE",
-        "qual": "is_admin_user()",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "testimonials",
-        "policyname": "admins_manage_testimonials",
-        "permissive": "PERMISSIVE",
-        "cmd": "ALL",
-        "qual": "is_admin_user()",
-        "with_check": "is_admin_user()"
-    },
-    {
-        "schemaname": "public",
-        "tablename": "page_views",
-        "policyname": "admins_view_page_views",
-        "permissive": "PERMISSIVE",
-        "cmd": "SELECT",
-        "qual": "is_admin_user()",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "media_files",
-        "policyname": "users_update_own_or_admin_any_media",
-        "permissive": "PERMISSIVE",
-        "cmd": "UPDATE",
-        "qual": "((auth.uid() = uploaded_by) OR is_admin_user())",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "media_files",
-        "policyname": "users_delete_own_or_admin_any_media",
-        "permissive": "PERMISSIVE",
-        "cmd": "DELETE",
-        "qual": "((auth.uid() = uploaded_by) OR is_admin_user())",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "profiles",
-        "policyname": "Admins can view all profiles",
-        "permissive": "PERMISSIVE",
-        "cmd": "ALL",
-        "qual": "(EXISTS ( SELECT 1\n   FROM profiles p\n  WHERE ((p.user_id = auth.uid()) AND (p.role = 'admin'::text))))",
-        "with_check": null
     },
     {
         "schemaname": "public",

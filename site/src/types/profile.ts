@@ -18,32 +18,32 @@ export interface UserProfile {
     phone?: string;
     location?: string;
     timezone?: string;
-    
+
     // OAuth provider information
     provider: AuthProvider;
     provider_id?: string;
-    
+
     // Profile completion tracking
     profile_completed: boolean;
     profile_completion_date?: string;
-    
+
     // Metadata from OAuth providers
     oauth_metadata: Record<string, any>;
-    
+
     // User preferences
     preferences: UserPreferences;
-    
+
     // Profile visibility
     public_profile: boolean;
-    
+
     // Notification preferences
     email_notifications: boolean;
     marketing_emails: boolean;
-    
+
     // Profile status
     is_active: boolean;
     is_verified: boolean;
-    
+
     // Tracking
     last_login_at?: string;
     login_count: number;
@@ -115,6 +115,7 @@ export interface ProfileUpdateData {
     timezone?: string;
     public_profile?: boolean;
     email_notifications?: boolean;
+    email?: string;
     marketing_emails?: boolean;
     preferences?: Partial<UserPreferences>;
 }

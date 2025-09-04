@@ -1,0 +1,1652 @@
+.terrace * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.terrace {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #e0e0e0;
+    width: 100%;
+    background: #1a1a1a;
+}
+
+.terrace-bg-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2c2c2c 0%, #1f1f1f 50%, #141414 100%);
+    z-index: -2;
+}
+
+.terrace-bg-pattern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at 25% 25%, rgba(97, 218, 251, 0.08) 2px, transparent 2px),
+        radial-gradient(circle at 75% 75%, rgba(97, 218, 251, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px, 40px 40px;
+    animation: terrace-drift 20s ease-in-out infinite alternate;
+}
+
+@keyframes terrace-drift {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+
+    100% {
+        transform: translateX(10px) translateY(10px);
+    }
+}
+
+.terrace-hero {
+    min-height: 85vh;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
+        url('https://cdndailyexcelsior.b-cdn.net/wp-content/uploads/2023/06/e.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.terrace-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.terrace-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    color: white;
+    padding-top: 80px;
+}
+
+.terrace-hero-logo {
+    width: 80px;
+    height: 80px;
+    margin: 0;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    flex-shrink: 0;
+}
+
+.terrace-hero-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.terrace-hero h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 0.8rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.terrace-hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    font-weight: 300;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.terrace-hero-description {
+    font-size: 0.85rem;
+    margin-bottom: 0;
+    opacity: 0.9;
+    max-width: 500px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.terrace-hero-main {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.terrace-hero-text {
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.terrace-hero-text-content {
+    flex: 1;
+}
+
+.terrace-hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 280px;
+}
+
+.terrace-cta-btn {
+    padding: 1rem 2.2rem;
+    font-size: 0.85rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    min-width: 200px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+}
+
+.terrace-cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.terrace-cta-btn:hover::before {
+    left: 100%;
+}
+
+.terrace-cta-primary {
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    color: #1a1a1a;
+    box-shadow: 0 6px 20px rgba(97, 218, 251, 0.4);
+    border: 2px solid transparent;
+    font-weight: 700;
+}
+
+.terrace-cta-primary::after {
+    content: '→';
+    font-size: 1.2rem;
+    font-weight: 900;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.terrace-cta-primary:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.terrace-cta-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.terrace-cta-secondary::after {
+    content: '✉';
+    font-size: 1.1rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.terrace-cta-secondary:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.terrace-cta-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+}
+
+.terrace-cta-primary:hover {
+    background: linear-gradient(135deg, #87e8ff 0%, #3bb5d8 100%);
+    box-shadow: 0 12px 35px rgba(97, 218, 251, 0.6);
+}
+
+.terrace-cta-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: white;
+    color: white;
+}
+
+.terrace-cta-btn:active {
+    transform: translateY(-2px) scale(0.98);
+    transition: all 0.1s ease;
+}
+
+/* Hero Restaurant Preview Cards */
+.terrace-hero-restaurants {
+    margin-top: 2rem;
+}
+
+.terrace-restaurants-preview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.terrace-restaurant-preview-card {
+    background: rgba(45, 45, 45, 0.95);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    color: #e0e0e0;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(97, 218, 251, 0.2);
+}
+
+.terrace-restaurant-preview-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+    border-color: rgba(97, 218, 251, 0.4);
+}
+
+.terrace-preview-image {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.terrace-preview-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.terrace-restaurant-preview-card h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.terrace-restaurant-preview-card p {
+    font-size: 0.75rem;
+    color: #61dafb;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* About Section */
+.terrace-about-section {
+    padding: 6rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 50%, #2a2a2a 100%);
+    position: relative;
+}
+
+.terrace-about-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 15% 25%, rgba(97, 218, 251, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 85% 75%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.terrace-about-content {
+    position: relative;
+    z-index: 2;
+}
+
+.terrace-about-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.terrace-about-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.terrace-about-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    border-radius: 2px;
+}
+
+.terrace-about-subtitle {
+    font-size: 1.3rem;
+    color: #b0b0b0;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.terrace-about-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.terrace-about-story {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.terrace-about-text h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.terrace-about-text h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    border-radius: 1px;
+}
+
+.terrace-about-text p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #c0c0c0;
+    margin-bottom: 1.5rem;
+}
+
+.terrace-about-text p:last-child {
+    margin-bottom: 0;
+}
+
+.terrace-about-image {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.terrace-about-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(211, 47, 47, 0.1) 0%, rgba(44, 62, 80, 0.1) 100%);
+    z-index: 1;
+}
+
+.terrace-about-image img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.terrace-about-image:hover img {
+    transform: scale(1.05);
+}
+
+.terrace-about-highlights {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.terrace-about-highlight-card {
+    background: rgba(45, 45, 45, 0.8);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(97, 218, 251, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.terrace-about-highlight-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.terrace-about-highlight-card:hover::before {
+    transform: translateX(0);
+}
+
+.terrace-about-highlight-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    border-color: rgba(97, 218, 251, 0.4);
+}
+
+.terrace-highlight-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.terrace-about-highlight-card h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.terrace-about-highlight-card p {
+    font-size: 0.9rem;
+    color: #b0b0b0;
+    line-height: 1.6;
+}
+
+.terrace-about-vision {
+    background: linear-gradient(135deg, #333333 0%, #2a2a2a 100%);
+    border-radius: 20px;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(97, 218, 251, 0.2);
+}
+
+.terrace-about-vision::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(97, 218, 251, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.terrace-about-vision h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.terrace-about-vision h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    border-radius: 1px;
+}
+
+.terrace-about-vision > p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #c0c0c0;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.terrace-about-values {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.terrace-value-item {
+    background: rgba(45, 45, 45, 0.8);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(97, 218, 251, 0.2);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #c0c0c0;
+    transition: all 0.3s ease;
+}
+
+.terrace-value-item:hover {
+    background: rgba(55, 55, 55, 0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    border-color: rgba(97, 218, 251, 0.4);
+}
+
+.terrace-value-item strong {
+    color: #61dafb;
+    font-weight: 600;
+}
+
+.terrace-restaurants-section {
+    padding: 6rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.terrace-section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.terrace-section-header h2 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.terrace-section-header p {
+    font-size: 1rem;
+    color: #b0b0b0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.terrace-restaurants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+.terrace-restaurant-card {
+    background: rgba(45, 45, 45, 0.95);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(97, 218, 251, 0.2);
+}
+
+.terrace-restaurant-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(97, 218, 251, 0.4);
+}
+
+.terrace-card-image {
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+}
+
+.terrace-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.terrace-restaurant-card:hover .terrace-card-image img {
+    transform: scale(1.05);
+}
+
+.terrace-card-logo {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.terrace-card-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.terrace-card-content {
+    padding: 2rem;
+}
+
+.terrace-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.terrace-card-type {
+    color: #61dafb;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.terrace-card-description {
+    color: #b0b0b0;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.terrace-card-features {
+    list-style: none;
+}
+
+.terrace-card-features li {
+    padding: 0.4rem 0;
+    color: #c0c0c0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(97, 218, 251, 0.2);
+}
+
+.terrace-card-features li:last-child {
+    border-bottom: none;
+}
+
+.terrace-card-features li::before {
+    content: "";
+    color: #61dafb;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.terrace-specialties-section {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 50%, #333333 100%);
+    color: white;
+    padding: 8rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.terrace-specialties-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(211, 47, 47, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(52, 73, 94, 0.2) 0%, transparent 50%),
+        url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVKaRliWGCKolepaXMQSC5hhf4TKqLiUzCcg&s');
+    background-size:
+        600px 600px,
+        800px 800px,
+        cover;
+    background-position:
+        left top,
+        right bottom,
+        center;
+    opacity: 0.15;
+    z-index: 1;
+    animation: terrace-float 15s ease-in-out infinite;
+}
+
+@keyframes terrace-float {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(1deg);
+    }
+}
+
+.terrace-specialties-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        linear-gradient(45deg, transparent 49%, rgba(255, 255, 255, 0.02) 50%, transparent 51%),
+        linear-gradient(-45deg, transparent 49%, rgba(255, 255, 255, 0.02) 50%, transparent 51%);
+    background-size: 80px 80px;
+    z-index: 1;
+    opacity: 0.6;
+}
+
+.terrace-specialties-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.terrace-specialties-header {
+    margin-bottom: 4rem;
+    position: relative;
+}
+
+.terrace-specialties-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #ecf0f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    letter-spacing: -1px;
+    position: relative;
+}
+
+.terrace-specialties-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(97, 218, 251, 0.4);
+}
+
+.terrace-specialties-subtitle {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #ecf0f1;
+}
+
+.terrace-specialties-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    margin-top: 4rem;
+}
+
+.terrace-specialty-item {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+    padding: 2.5rem 2rem;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: left;
+}
+
+.terrace-specialty-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(97, 218, 251, 0.1) 0%, rgba(33, 160, 196, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 20px;
+}
+
+.terrace-specialty-item:hover::before {
+    opacity: 1;
+}
+
+.terrace-specialty-item:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.terrace-specialty-icon {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.terrace-specialty-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 50%;
+}
+
+.terrace-specialty-item:hover .terrace-specialty-icon::before {
+    opacity: 0.8;
+}
+
+.terrace-specialty-icon span {
+    position: relative;
+    z-index: 2;
+    transition: all 0.4s ease;
+}
+
+.terrace-specialty-item:hover .terrace-specialty-icon {
+    transform: rotate(10deg) scale(1.1);
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 25px rgba(97, 218, 251, 0.4);
+}
+
+.terrace-specialty-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.terrace-specialty-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.8rem;
+    transition: color 0.3s ease;
+    line-height: 1.3;
+}
+
+.terrace-specialty-item:hover .terrace-specialty-title {
+    color: #f8f9fa;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.terrace-specialty-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    transition: color 0.3s ease;
+}
+
+.terrace-specialty-item:hover .terrace-specialty-description {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.terrace-contact-section {
+    padding: 4rem 2rem 3rem;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 50%, #2c2c2c 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.terrace-contact-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23f1f3f4" fill-opacity="0.3"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>') repeat;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.terrace-contact-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.terrace-contact-header {
+    margin-bottom: 2.5rem;
+}
+
+.terrace-contact-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    position: relative;
+}
+
+.terrace-contact-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    border-radius: 2px;
+}
+
+.terrace-contact-subtitle {
+    font-size: 1.3rem;
+    color: #b0b0b0;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.terrace-contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.terrace-contact-card {
+    background: rgba(45, 45, 45, 0.95);
+    border-radius: 16px;
+    padding: 1.8rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(97, 218, 251, 0.2);
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+}
+
+.terrace-contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    transition: height 0.3s ease;
+}
+
+.terrace-contact-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    border-color: rgba(97, 218, 251, 0.4);
+}
+
+.terrace-contact-card:hover::before {
+    height: 6px;
+}
+
+.terrace-main-location::before {
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+}
+
+.terrace-lush-location::before {
+    background: linear-gradient(135deg, #87e8ff 0%, #3bb5d8 100%);
+}
+
+.terrace-contact-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f1f3f4;
+}
+
+.terrace-contact-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+    font-weight: 600;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(97, 218, 251, 0.3);
+}
+
+.terrace-main-location .terrace-contact-icon {
+    border-color: rgba(97, 218, 251, 0.3);
+}
+
+.terrace-contact-card h3 {
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.terrace-contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.terrace-contact-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    background: rgba(35, 35, 35, 0.5);
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.terrace-contact-detail:hover {
+    background: rgba(45, 45, 45, 0.8);
+    border-left-color: #61dafb;
+    transform: translateX(5px);
+}
+
+.terrace-main-location .terrace-contact-detail:hover {
+    border-left-color: #61dafb;
+}
+
+.terrace-detail-icon {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.terrace-contact-detail div {
+    flex: 1;
+}
+
+.terrace-contact-detail strong {
+    display: block;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.terrace-contact-detail p {
+    color: #b0b0b0;
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.terrace-contact-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.terrace-contact-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.6rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    justify-content: center;
+}
+
+.terrace-contact-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    transition: left 0.5s ease;
+}
+
+.terrace-contact-btn:hover::before {
+    left: 0;
+}
+
+.terrace-contact-primary {
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    color: #1a1a1a;
+    font-weight: 700;
+}
+
+.terrace-contact-primary:hover {
+    background: linear-gradient(135deg, #87e8ff 0%, #3bb5d8 100%);
+    box-shadow: 0 15px 40px rgba(97, 218, 251, 0.4);
+    transform: translateY(-3px);
+}
+
+.terrace-contact-secondary {
+    background: linear-gradient(135deg, #87e8ff 0%, #3bb5d8 100%);
+    color: #1a1a1a;
+    font-weight: 700;
+}
+
+.terrace-contact-secondary:hover {
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    box-shadow: 0 15px 40px rgba(97, 218, 251, 0.4);
+    transform: translateY(-3px);
+}
+
+.terrace-btn-icon {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.terrace-contact-btn:hover .terrace-btn-icon {
+    transform: scale(1.2);
+}
+
+.terrace-btn-text {
+    font-weight: 600;
+}
+
+.terrace-navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 0;
+    z-index: 100;
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(97, 218, 251, 0.2);
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 1;
+}
+
+.terrace-navbar.visible {
+    transform: translateY(0);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    opacity: 1;
+}
+
+.terrace-navbar-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 3rem;
+    position: relative;
+}
+
+.terrace-navbar-logo {
+    font-weight: 800;
+    color: #61dafb;
+    font-size: 1.3rem;
+    letter-spacing: -0.5px;
+    position: relative;
+    text-transform: uppercase;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.terrace-navbar-logo::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.terrace-navbar-logo:hover::after {
+    width: 100%;
+}
+
+.terrace-navbar-links {
+    display: flex;
+    gap: 0;
+    background: rgba(45, 45, 45, 0.8);
+    border-radius: 50px;
+    padding: 0.5rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(97, 218, 251, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.terrace-navbar-links a {
+    color: #c0c0c0;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 0.7rem 1.3rem;
+    border-radius: 25px;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+.terrace-navbar-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #61dafb 0%, #21a0c4 100%);
+    border-radius: 25px;
+    transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: -1;
+}
+
+.terrace-navbar-links a:hover::before {
+    left: 0;
+}
+
+.terrace-navbar-links a:hover {
+    color: #1a1a1a;
+    font-weight: 700;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(97, 218, 251, 0.3);
+}
+
+.terrace-navbar-links a:active {
+    transform: translateY(-1px);
+    transition: all 0.1s ease;
+}
+
+/* Elegant separator between nav items */
+.terrace-navbar-links a:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -0.5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 20px;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1), transparent);
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.terrace-navbar-links a:hover::after,
+.terrace-navbar-links a:hover+a::after {
+    opacity: 0;
+}
+
+.terrace {
+    scroll-behavior: smooth;
+}
+
+@media (max-width: 768px) {
+    .terrace-hero {
+        padding: 1rem;
+    }
+
+    .terrace-hero-content {
+        padding-top: 100px;
+    }
+
+    .terrace-hero h1 {
+        font-size: 1.7rem;
+    }
+
+    .terrace-hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .terrace-hero-description {
+        font-size: 0.8rem;
+    }
+
+    .terrace-hero-main {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .terrace-hero-text {
+        text-align: center;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .terrace-hero-logo {
+        margin: 0 auto;
+    }
+
+    .terrace-hero-actions {
+        min-width: auto;
+        align-items: center;
+    }
+
+    .terrace-restaurants-preview {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .terrace-restaurant-preview-card {
+        padding: 1rem;
+    }
+
+    .terrace-restaurants-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .terrace-contact-section {
+        padding: 3rem 1rem 2rem;
+    }
+
+    .terrace-contact-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .terrace-contact-title {
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .terrace-contact-subtitle {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
+    .terrace-contact-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        margin: 1.5rem 0;
+    }
+
+    .terrace-contact-card {
+        padding: 1.5rem;
+    }
+
+    .terrace-contact-card-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .terrace-contact-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .terrace-contact-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .terrace-contact-detail {
+        padding: 0.75rem;
+    }
+
+    .terrace-contact-detail strong {
+        font-size: 0.8rem;
+    }
+
+    .terrace-contact-detail p {
+        font-size: 0.85rem;
+    }
+
+    .terrace-contact-actions {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1.5rem;
+        gap: 0.8rem;
+    }
+
+    .terrace-contact-btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 0.9rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .terrace-specialties-section {
+        padding: 4rem 1rem;
+    }
+
+    .terrace-specialties-title {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+
+    .terrace-specialties-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+
+    .terrace-specialties-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 3rem;
+    }
+
+    .terrace-specialty-item {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        text-align: center;
+        padding: 2rem 1.5rem;
+        gap: 1.2rem;
+        justify-items: center;
+    }
+
+    .terrace-specialty-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+    }
+
+    .terrace-specialty-title {
+        font-size: 1.2rem;
+    }
+
+    .terrace-specialty-description {
+        font-size: 0.9rem;
+    }
+
+    .terrace-navbar-content {
+        padding: 0.6rem 1.5rem;
+    }
+
+    .terrace-navbar-logo {
+        font-size: 1.1rem;
+    }
+
+    .terrace-navbar-links {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 0.3rem;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .terrace-navbar-links a {
+        padding: 0.6rem 1rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.3px;
+    }
+
+    .terrace-navbar-links a:not(:last-child)::after {
+        display: none;
+    }
+
+    /* About Section Mobile */
+    .terrace-about-section {
+        padding: 4rem 1rem;
+    }
+
+    .terrace-about-header {
+        margin-bottom: 3rem;
+    }
+
+    .terrace-about-title {
+        font-size: 2.2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .terrace-about-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+
+    .terrace-about-main {
+        gap: 3rem;
+    }
+
+    .terrace-about-story {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .terrace-about-text h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .terrace-about-text p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 1.2rem;
+    }
+
+    .terrace-about-image img {
+        height: 250px;
+    }
+
+    .terrace-about-highlights {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin: 2rem 0 1rem;
+    }
+
+    .terrace-about-highlight-card {
+        padding: 1.5rem;
+    }
+
+    .terrace-highlight-icon {
+        font-size: 2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .terrace-about-highlight-card h4 {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .terrace-about-highlight-card p {
+        font-size: 0.85rem;
+    }
+
+    .terrace-about-vision {
+        padding: 2rem 1.5rem;
+    }
+
+    .terrace-about-vision h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .terrace-about-vision > p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+    }
+
+    .terrace-about-values {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .terrace-value-item {
+        padding: 1.2rem;
+        font-size: 0.85rem;
+    }
+}

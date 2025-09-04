@@ -59,7 +59,7 @@ export const currentEnvironment = getEnvironment();
 const getConfig = (): EnvironmentConfig => {
     const env = currentEnvironment as keyof typeof configs;
 
-    // Debug logging for development
+    // Debug logging for development only
     if (currentEnvironment === 'development') {
         console.log('🔍 Environment Detection Debug:', {
             detected: env,
@@ -116,6 +116,10 @@ export const shouldEnableDebug = () =>
 export const shouldEnableLogging = () =>
     config.performance?.enableLogging || config.features?.performanceLogging;
 
+// Debug component visibility (development only)
+export const shouldShowDebugComponents = () =>
+    isDevelopment && import.meta.env.MODE === 'development';
+
 // Build info extraction (now properly typed and safe)
 const getBuildInfo = (): BuildInfo => {
     const globalScope = typeof window !== 'undefined' ? window : globalThis;
@@ -134,8 +138,8 @@ const getBuildInfo = (): BuildInfo => {
     };
 };
 
-// Debug information (enhanced logging)
-if (shouldEnableDebug()) {
+// Debug information (development only)
+if (isDevelopment) {
     const buildInfo = getBuildInfo();
 
     console.group('🎮 GamingDronzz Configuration');

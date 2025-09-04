@@ -1,5 +1,5 @@
 // components/auth/OAuthCallback.tsx - Handle OAuth callback and redirect
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
@@ -11,9 +11,18 @@ const OAuthCallback = () => {
     const { handleOAuthCallback } = useAuth();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    const hasProcessed = useRef(false);
 
     useEffect(() => {
         const processCallback = async () => {
+            // Prevent multiple executions in React Strict Mode
+            if (hasProcessed.current) {
+                console.log('OAuth callback already processed, skipping...');
+                return;
+            }
+            
+            hasProcessed.current = true;
+            
             try {
                 console.log('Processing OAuth callback...');
                 
@@ -45,6 +54,7 @@ const OAuthCallback = () => {
                 console.error('OAuth callback processing error:', error);
                 setStatus('error');
                 setErrorMessage(error?.message || 'An unexpected error occurred');
+                hasProcessed.current = false; // Allow retry on error
             }
         };
 

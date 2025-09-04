@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { useContentManager } from '../../hooks/useContentManager';
 import { StatisticsService, type HeroStatistics } from '../../services/StatisticsService';
+import { Theme } from '../../managers/ThemeManager';
 import './Hero.css';
 
 interface HeroProps {
@@ -14,6 +15,7 @@ interface HeroProps {
     showParticles?: boolean;
     showAchievements?: boolean;
     autoScroll?: boolean;
+    currentTheme?: Theme | null;
 }
 
 interface Achievement {
@@ -53,7 +55,8 @@ const Hero: React.FC<HeroProps> = ({
     onSecondaryCtaClick,
     showParticles = true,
     showAchievements = true,
-    autoScroll = true
+    autoScroll = true,
+    currentTheme = null
 }) => {
     // Refs
     const heroRef = useRef<HTMLElement>(null);
@@ -167,14 +170,28 @@ const Hero: React.FC<HeroProps> = ({
         { name: "Cloud", icon: "☁️", ariaLabel: "Cloud technologies" }
     ], []);
 
-    // Today's theme
+    // Today's theme - use currentTheme if available, otherwise fallback to daily theme
     const todaysTheme = useMemo(() => {
         const today = new Date();
-        const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+        const formattedDate = today.toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
         
+        if (currentTheme) {
+            return {
+                theme: `${currentTheme.icon} ${currentTheme.name}`,
+                date: formattedDate
+            };
+        }
+        
+        // Fallback to daily theme rotation if no currentTheme
+        const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
         const themes = [
             "🎮 Innovation in Gaming",
-            "🚀 Future-Ready Development",
+            "🚀 Future-Ready Development", 
             "🌟 Creative Excellence",
             "⚡ Performance & Precision",
             "🎯 Player-Centric Design",
@@ -186,18 +203,12 @@ const Hero: React.FC<HeroProps> = ({
         ];
         
         const selectedTheme = themes[dayOfYear % themes.length];
-        const formattedDate = today.toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        });
         
         return {
             theme: selectedTheme,
             date: formattedDate
         };
-    }, []);
+    }, [currentTheme]);
 
     // Generate particles data
     const particlesData: ParticleData[] = useMemo(() => {

@@ -79,7 +79,8 @@ Located in `src/services/SupabaseService.ts`:
 
 #### Database Operations
 - `ensureUserProfile()`: Creates profile if doesn't exist (calls RPC `ensure_user_profile`)
-- `handleUserLogin()`: Manages login flow with profile creation (calls RPC `handle_user_login`)
+- `handleUserLogin()`: Manages login flow with profile creation (calls RPC `ensure_user_profile` with action='login')
+- `isAdmin()`: Checks admin status (calls RPC `get_user_role` with return_format='simple')
 - `isAdmin()`: Checks user role for admin privileges
 - `updateUserProfile()`: Updates user profile information
 
@@ -141,8 +142,21 @@ CREATE POLICY "Admins can view all profiles" ON profiles
 2. `002_test_auth_functions.sql`: Test script to verify authentication functions work correctly
 
 ### RPC Functions
-- `ensure_user_profile(user_id UUID)`: Creates user profile if it doesn't exist
-- `handle_user_login(user_id UUID)`: Handles login flow with automatic profile creation
+**Enhanced Functions (Post-Optimization):**
+- `ensure_user_profile(user_id UUID, action TEXT DEFAULT 'ensure')`: Multi-purpose profile function
+  - `action='ensure'`: Creates profile if doesn't exist
+  - `action='login'`: Creates profile and updates login timestamp
+  - `action='create'`: Force creates new profile
+- `get_user_role(user_id_input UUID DEFAULT auth.uid(), return_format TEXT DEFAULT 'simple')`: Role checking function
+  - `return_format='simple'`: Returns `{is_admin: boolean}`
+  - `return_format='detailed'`: Returns full role info with verification status
+- `increment_view_count(table_type TEXT, record_id UUID)`: Secured view counter
+  - `table_type` limited to 'projects' or 'articles' (SQL injection protection)
+  - Returns success status and new count
+
+**Deprecated Functions (Removed):**
+- ~~`handle_user_login`~~ → Merged into `ensure_user_profile`
+- ~~`check_user_role`~~ → Replaced by `get_user_role`
 - `check_email_exists(email TEXT)`: Helper function to check if email exists in auth.users
 
 ## Error Handling

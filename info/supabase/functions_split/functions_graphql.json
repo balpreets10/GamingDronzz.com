@@ -1,0 +1,54 @@
+{
+  "schema_name": "graphql",
+  "function_count": 6,
+  "functions": [
+    {
+      "schema_name": "graphql",
+      "function_name": "_internal_resolve",
+      "arguments": "query text, variables jsonb DEFAULT '{}'::jsonb, \"operationName\" text DEFAULT NULL::text, extensions jsonb DEFAULT NULL::jsonb",
+      "return_type": "jsonb",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION graphql._internal_resolve(query text, variables jsonb DEFAULT '{}'::jsonb, \"operationName\" text DEFAULT NULL::text, extensions jsonb DEFAULT NULL::jsonb)\n RETURNS jsonb\n LANGUAGE c\nAS '$libdir/pg_graphql', $function$resolve_wrapper$function$\n"
+    },
+    {
+      "schema_name": "graphql",
+      "function_name": "comment_directive",
+      "arguments": "comment_ text",
+      "return_type": "jsonb",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION graphql.comment_directive(comment_ text)\n RETURNS jsonb\n LANGUAGE sql\n IMMUTABLE\nAS $function$\n    /*\n    comment on column public.account.name is '@graphql.name: myField'\n    */\n    select\n        coalesce(\n            (\n                regexp_match(\n                    comment_,\n                    '@graphql\\((.+)\\)'\n                )\n            )[1]::jsonb,\n            jsonb_build_object()\n        )\n$function$\n"
+    },
+    {
+      "schema_name": "graphql",
+      "function_name": "exception",
+      "arguments": "message text",
+      "return_type": "text",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION graphql.exception(message text)\n RETURNS text\n LANGUAGE plpgsql\nAS $function$\nbegin\n    raise exception using errcode='22000', message=message;\nend;\n$function$\n"
+    },
+    {
+      "schema_name": "graphql",
+      "function_name": "get_schema_version",
+      "arguments": "",
+      "return_type": "integer",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION graphql.get_schema_version()\n RETURNS integer\n LANGUAGE sql\n SECURITY DEFINER\nAS $function$\n    select last_value from graphql.seq_schema_version;\n$function$\n"
+    },
+    {
+      "schema_name": "graphql",
+      "function_name": "increment_schema_version",
+      "arguments": "",
+      "return_type": "event_trigger",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION graphql.increment_schema_version()\n RETURNS event_trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\nbegin\n    perform pg_catalog.nextval('graphql.seq_schema_version');\nend;\n$function$\n"
+    },
+    {
+      "schema_name": "graphql",
+      "function_name": "resolve",
+      "arguments": "query text, variables jsonb DEFAULT '{}'::jsonb, \"operationName\" text DEFAULT NULL::text, extensions jsonb DEFAULT NULL::jsonb",
+      "return_type": "jsonb",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION graphql.resolve(query text, variables jsonb DEFAULT '{}'::jsonb, \"operationName\" text DEFAULT NULL::text, extensions jsonb DEFAULT NULL::jsonb)\n RETURNS jsonb\n LANGUAGE plpgsql\nAS $function$\ndeclare\n    res jsonb;\n    message_text text;\nbegin\n  begin\n    select graphql._internal_resolve(\"query\" := \"query\",\n                                     \"variables\" := \"variables\",\n                                     \"operationName\" := \"operationName\",\n                                     \"extensions\" := \"extensions\") into res;\n    return res;\n  exception\n    when others then\n    get stacked diagnostics message_text = message_text;\n    return\n    jsonb_build_object('data', null,\n                       'errors', jsonb_build_array(jsonb_build_object('message', message_text)));\n  end;\nend;\n$function$\n"
+    }
+  ]
+}

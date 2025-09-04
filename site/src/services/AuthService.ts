@@ -1,13 +1,12 @@
 // services/AuthService.ts - Comprehensive Authentication Service
 import { 
-    createClient, 
     SupabaseClient, 
     Session, 
     User, 
     AuthError, 
     AuthChangeEvent 
 } from '@supabase/supabase-js';
-import { config } from '../config';
+import { getSupabaseClient } from './supabaseClient';
 import { UserProfile } from '../types/profile';
 import { 
     AuthResult, 
@@ -26,36 +25,22 @@ interface Database {
             };
         };
         Functions: {
-            ensure_user_profile: {
-                Args: { user_id: string };
+            is_admin_user: {
+                Args: { user_id_input?: string };
+                Returns: boolean;
+            };
+            update_user_login: {
+                Args: { user_id_input?: string };
                 Returns: {
                     success: boolean;
-                    action?: 'created' | 'updated';
-                    profile_completed?: boolean;
                     error?: string;
                 };
             };
-            complete_user_profile: {
-                Args: { 
-                    user_id: string; 
-                    additional_data?: Record<string, any> 
-                };
+            get_user_role: {
+                Args: { user_id_input?: string };
                 Returns: {
-                    success: boolean;
-                    message?: string;
-                    error?: string;
-                };
-            };
-            check_profile_completion: {
-                Args: { user_id: string };
-                Returns: {
-                    exists: boolean;
-                    completed: boolean;
-                    needs_creation: boolean;
-                    has_full_name?: boolean;
-                    has_avatar?: boolean;
-                    is_verified?: boolean;
-                    provider?: string;
+                    is_admin: boolean;
+                    role: string;
                 };
             };
         };
@@ -67,23 +52,8 @@ class AuthService {
     private sessionCheckInterval: NodeJS.Timeout | null = null;
 
     constructor() {
-        this.client = createClient<Database>(
-            config.supabase.url,
-            config.supabase.anonKey,
-            {
-                auth: {
-                    ...config.supabase.auth,
-                    flowType: 'pkce',
-                    autoRefreshToken: true,
-                    persistSession: true,
-                    detectSessionInUrl: true
-                }
-            }
-        );
-
-        console.log('AuthService initialized');
-        console.log('URL:', config.supabase.url);
-        console.log('Redirect URL base:', window.location.origin);
+        this.client = getSupabaseClient();
+        console.log('AuthService initialized using shared client');
     }
 
     // ===== GOOGLE OAUTH AUTHENTICATION =====
@@ -146,8 +116,15 @@ class AuthService {
             if (data.session?.user) {
                 console.log('Email sign-in successful for:', data.session.user.email);
 
-                // Ensure profile is created/updated
-                const profileResult = await this.ensureUserProfile(data.session.user.id);
+                // Check user role for role-based adjustments
+                const isUserAdmin = await this.isAdmin(data.session.user.id);
+                
+                // Update login tracking
+                try {
+                    await this.client.rpc('update_user_login', { user_id_input: data.session.user.id });
+                } catch (error) {
+                    console.warn('Failed to update login tracking:', error);
+                }
                 
                 if (rememberMe) {
                     await this.extendSessionDuration(data.session);
@@ -156,8 +133,9 @@ class AuthService {
                 return { 
                     success: true, 
                     data, 
-                    profileCreated: profileResult.profileCreated,
-                    profileCompleted: profileResult.profileCompleted
+                    profileCreated: true, // Profile already exists or created by trigger
+                    profileCompleted: true, // Email users can complete profile later
+                    isAdmin: isUserAdmin
                 };
             }
 
@@ -300,24 +278,21 @@ class AuthService {
             if (data.session?.user) {
                 console.log('OAuth callback successful for user:', data.session.user.email);
                 
-                // Ensure user profile is created/updated with OAuth data
-                const profileResult = await this.ensureUserProfile(data.session.user.id);
-
-                if (!profileResult.success) {
-                    console.warn('Profile creation/update failed during OAuth:', profileResult.error);
-                    // Don't fail the auth, but note the issue
-                    return { 
-                        success: true, 
-                        profileCreated: false,
-                        profileCompleted: false,
-                        error: `Authentication successful but profile setup failed: ${profileResult.error}`
-                    };
+                // Check user role for role-based adjustments
+                const isUserAdmin = await this.isAdmin(data.session.user.id);
+                
+                // Update login tracking
+                try {
+                    await this.client.rpc('update_user_login', { user_id_input: data.session.user.id });
+                } catch (error) {
+                    console.warn('Failed to update login tracking:', error);
                 }
 
                 return { 
                     success: true,
-                    profileCreated: profileResult.profileCreated,
-                    profileCompleted: profileResult.profileCompleted
+                    profileCreated: true, // Profile created automatically by trigger
+                    profileCompleted: true, // Google users are considered complete
+                    isAdmin: isUserAdmin
                 };
             } else {
                 console.error('OAuth callback: No session found');
@@ -337,183 +312,34 @@ class AuthService {
         }
     }
 
-    // ===== PROFILE MANAGEMENT =====
+    // ===== PROFILE MANAGEMENT (DEPRECATED) =====
+    // NOTE: Profile creation is now handled automatically by database triggers
+    // This function is kept for backward compatibility but is no longer used
+    
+    /* DEPRECATED: Profile creation now handled automatically by database triggers
     async ensureUserProfile(userId: string): Promise<ProfileCreationResult> {
-        try {
-            console.log('Ensuring user profile exists for:', userId);
-
-            // Try to use the database function first
-            try {
-                const { data, error } = await this.client.rpc('ensure_user_profile', {
-                    user_id: userId
-                });
-
-                if (error) {
-                    console.warn('RPC ensure_user_profile failed, falling back to manual creation:', error);
-                    return await this.createProfileManually(userId);
-                }
-
-                console.log('Profile ensured via RPC function:', data);
-                return {
-                    success: data.success,
-                    profileCreated: data.action === 'created',
-                    profileCompleted: data.profile_completed || false,
-                    error: data.error
-                };
-
-            } catch (rpcError) {
-                console.warn('RPC function not available, creating profile manually:', rpcError);
-                return await this.createProfileManually(userId);
-            }
-
-        } catch (err) {
-            console.error('Profile ensuring failed:', err);
-            const errorMessage = (err as Error)?.message || 'Failed to ensure user profile';
-            return { 
-                success: false, 
-                error: errorMessage,
-                profileCreated: false,
-                profileCompleted: false
-            };
-        }
+        console.warn('ensureUserProfile is deprecated - profiles are created automatically');
+        return {
+            success: true,
+            profileCreated: true,
+            profileCompleted: true
+        };
     }
-
-    private async createProfileManually(userId: string): Promise<ProfileCreationResult> {
-        try {
-            // Get user data from auth
-            const { user } = await this.getUser();
-            if (!user || user.id !== userId) {
-                return {
-                    success: false,
-                    error: 'User not found or ID mismatch',
-                    profileCreated: false,
-                    profileCompleted: false
-                };
-            }
-
-            // Check if profile already exists
-            const { data: existingProfile, error: selectError } = await this.client
-                .from('profiles')
-                .select('*')
-                .eq('id', userId)
-                .maybeSingle();
-
-            if (selectError && selectError.code !== 'PGRST116') {
-                throw selectError;
-            }
-
-            // Determine provider and extract metadata
-            const provider = user.app_metadata?.provider || 'email';
-            const metadata = user.user_metadata || {};
-            const isGoogleUser = provider === 'google';
-
-            if (!existingProfile) {
-                // Create new profile
-                console.log('Creating new profile for user:', userId);
-
-                const newProfile = {
-                    id: userId,
-                    email: user.email!,
-                    full_name: metadata.full_name || metadata.name || user.email?.split('@')[0],
-                    avatar_url: metadata.avatar_url || metadata.picture,
-                    provider: provider as 'google' | 'email' | 'github' | 'facebook',
-                    provider_id: metadata.sub,
-                    oauth_metadata: metadata,
-                    is_verified: !!user.email_confirmed_at,
-                    profile_completed: isGoogleUser, // Google users are considered complete
-                    profile_completion_date: isGoogleUser ? new Date().toISOString() : null,
-                    last_login_at: new Date().toISOString(),
-                    login_count: 1,
-                    role: 'user' as const,
-                    public_profile: true,
-                    email_notifications: true,
-                    marketing_emails: false,
-                    is_active: true
-                };
-
-                const { error: insertError } = await this.client
-                    .from('profiles')
-                    .insert(newProfile);
-
-                if (insertError) {
-                    throw insertError;
-                }
-
-                console.log('Profile created successfully');
-                return {
-                    success: true,
-                    profileCreated: true,
-                    profileCompleted: isGoogleUser
-                };
-
-            } else {
-                // Update existing profile
-                console.log('Updating existing profile for user:', userId);
-
-                const updates: Partial<UserProfile> = {
-                    last_login_at: new Date().toISOString(),
-                    login_count: (existingProfile.login_count || 0) + 1,
-                    updated_at: new Date().toISOString()
-                };
-
-                // Update OAuth metadata if empty or missing
-                if (!existingProfile.oauth_metadata || 
-                    Object.keys(existingProfile.oauth_metadata).length === 0) {
-                    updates.oauth_metadata = metadata;
-                }
-
-                // Update missing profile data from OAuth
-                if (!existingProfile.avatar_url && metadata.avatar_url) {
-                    updates.avatar_url = metadata.avatar_url;
-                }
-
-                if (!existingProfile.full_name && (metadata.full_name || metadata.name)) {
-                    updates.full_name = metadata.full_name || metadata.name;
-                }
-
-                const { error: updateError } = await this.client
-                    .from('profiles')
-                    .update(updates)
-                    .eq('id', userId);
-
-                if (updateError) {
-                    throw updateError;
-                }
-
-                console.log('Profile updated successfully');
-                return {
-                    success: true,
-                    profileCreated: false,
-                    profileCompleted: existingProfile.profile_completed || false
-                };
-            }
-
-        } catch (error) {
-            console.error('Manual profile creation failed:', error);
-            return {
-                success: false,
-                error: (error as Error)?.message || 'Failed to create profile manually',
-                profileCreated: false,
-                profileCompleted: false
-            };
-        }
-    }
+    */
 
     // ===== ADMIN ROLE CHECKING =====
     async isAdmin(userId: string): Promise<boolean> {
         try {
-            const { data, error } = await this.client
-                .from('profiles')
-                .select('role')
-                .eq('id', userId)
-                .maybeSingle();
+            const { data, error } = await this.client.rpc('is_admin_user', {
+                user_id_input: userId
+            });
 
             if (error) {
-                console.warn('Admin check error:', error);
+                console.warn('Admin check RPC error:', error);
                 return false;
             }
 
-            return data?.role === 'admin';
+            return Boolean(data);
         } catch (error) {
             console.warn('Failed to check admin status:', error);
             return false;
@@ -574,12 +400,12 @@ class AuthService {
         const { data: { subscription } } = this.client.auth.onAuthStateChange(async (event, session) => {
             console.log('Auth state changed:', event, session?.user?.email || 'No user');
 
-            // Automatically ensure profile exists on sign-in events
+            // Update login tracking on sign-in events (profile already created by trigger)
             if (session?.user && (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED')) {
                 try {
-                    await this.ensureUserProfile(session.user.id);
+                    await this.client.rpc('update_user_login', { user_id_input: session.user.id });
                 } catch (error) {
-                    console.warn('Failed to ensure profile during auth state change:', error);
+                    console.warn('Failed to update login tracking during auth state change:', error);
                 }
             }
 

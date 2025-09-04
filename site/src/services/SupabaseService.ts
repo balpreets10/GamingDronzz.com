@@ -1,6 +1,6 @@
 // services/SupabaseService.ts
-import { createClient, SupabaseClient, Session, User, AuthError, AuthChangeEvent } from '@supabase/supabase-js';
-import { config } from '../config';
+import { SupabaseClient, Session, User, AuthError, AuthChangeEvent } from '@supabase/supabase-js';
+import { getSupabaseClient } from './supabaseClient';
 
 interface AuthResponse {
     data?: any;
@@ -27,23 +27,8 @@ class SupabaseService {
             return SupabaseService.instance;
         }
 
-        this.client = createClient(
-            config.supabase.url,
-            config.supabase.anonKey,
-            {
-                auth: {
-                    ...config.supabase.auth,
-                    flowType: 'pkce',
-                    autoRefreshToken: true,
-                    persistSession: true,
-                    detectSessionInUrl: true
-                }
-            }
-        );
-
-        console.log('SupabaseService initialized');
-        console.log('URL:', config.supabase.url);
-        console.log('Redirect URL will be:', window.location.origin);
+        this.client = getSupabaseClient();
+        console.log('SupabaseService initialized using shared client');
 
         SupabaseService.instance = this;
     }
@@ -273,14 +258,13 @@ class SupabaseService {
                 return cached.result;
             }
 
-            console.log('🔍 ADMIN CHECK: Querying profiles table for userId:', userId);
-            const { data, error } = await this.client
-                .from('profiles')
-                .select('role')
-                .eq('id', userId)
-                .maybeSingle();
+            console.log('🔍 ADMIN CHECK: Calling get_user_role function with user_id_input:', userId);
+            const { data, error } = await this.client.rpc('get_user_role', {
+                user_id_input: userId,
+                return_format: 'simple'
+            });
 
-            console.log('🔍 ADMIN CHECK: Query result:', { data, error: error?.message || 'none' });
+            console.log('🔍 ADMIN CHECK: RPC result:', { data, error: error?.message || 'none' });
 
             if (error) {
                 // Handle specific database recursion error
@@ -290,12 +274,13 @@ class SupabaseService {
                     this.adminCheckCache.set(userId, { result, timestamp: now });
                     return result;
                 }
-                console.warn('❌ Admin check error:', error);
+                console.warn('❌ Admin check RPC error:', error);
                 return false;
             }
 
-            const isAdminUser = data?.role === 'admin';
-            console.log('🔍 ADMIN CHECK: Final result:', { isAdmin: isAdminUser, role: data?.role || 'none' });
+            // Handle jsonb response from get_user_role function
+            const isAdminUser = Boolean(data?.is_admin);
+            console.log('🔍 ADMIN CHECK: Final result:', { isAdmin: isAdminUser });
             
             // Cache the result
             this.adminCheckCache.set(userId, { result: isAdminUser, timestamp: now });
@@ -447,7 +432,9 @@ class SupabaseService {
 
             console.log('🔍 PROFILE ENSURE: Calling ensure_user_profile RPC for userId:', targetUserId);
             const { data, error } = await this.client
-                .rpc('ensure_user_profile', { user_id: targetUserId });
+                .rpc('ensure_user_profile', { 
+                    user_id: targetUserId
+                });
 
             console.log('🔍 PROFILE ENSURE: RPC result:', { data, error: error?.message || 'none' });
 
@@ -499,7 +486,9 @@ class SupabaseService {
             }
 
             const { data, error } = await this.client
-                .rpc('handle_user_login', { user_id: targetUserId });
+                .rpc('ensure_user_profile', { 
+                    user_id: targetUserId
+                });
 
             if (error) {
                 console.error('Login handling error:', error);

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terrace On 3 | Jammu's Premier Rooftop Dining Destination</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+        }
+
+        /* Modern geometric background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            z-index: -2;
+        }
+
+        .bg-pattern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.3) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+            background-size: 60px 60px, 40px 40px;
+            animation: drift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+
+            100% {
+                transform: translateX(10px) translateY(10px);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
+                url('https://cdndailyexcelsior.b-cdn.net/wp-content/uploads/2023/06/e.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            color: white;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            border-radius: 20px;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-primary {
+            background: #d32f2f;
+            color: white;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Restaurants Section */
+        .restaurants-section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .restaurants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        /* Classic Restaurant Cards */
+        .restaurant-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-image {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .restaurant-card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        .card-logo {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .card-content {
+            padding: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-type {
+            color: #d32f2f;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-features {
+            list-style: none;
+        }
+
+        .card-features li {
+            padding: 0.4rem 0;
+            color: #555;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-features li:last-child {
+            border-bottom: none;
+        }
+
+        .card-features li::before {
+            content: "✓";
+            color: #d32f2f;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .specialties-section {
+            background: #2c3e50;
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .specialties-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVKaRliWGCKolepaXMQSC5hhf4TKqLiUzCcg&s');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .specialties-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .specialties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .specialty-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-section {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .contact-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #d32f2f;
+        }
+
+        .contact-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .contact-info {
+            text-align: left;
+            line-height: 2;
+        }
+
+        .contact-info p {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .restaurants-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .specialties-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-subtitle {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .navbar.visible {
+            transform: translateY(0);
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            font-weight: 700;
+            color: #d32f2f;
+            font-size: 1.2rem;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .navbar-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-pattern"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-content">
+            <div class="navbar-logo">TERRACE ON 3</div>
+            <div class="navbar-links">
+                <a href="#home">Home</a>
+                <a href="#restaurants">Restaurants</a>
+                <a href="#specialties">Specialties</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvnvdtV15AJY-YKfA26sor_Nqth8MtmmRmqw&s"
+                    alt="Terrace On 3 Logo">
+            </div>
+            <h1>TERRACE ON 3</h1>
+            <p class="hero-subtitle">Jammu's Premier Rooftop Dining Destination</p>
+            <p class="hero-description">
+                Experience elevated dining at 10,000 sq ft of breathtaking rooftop luxury with panoramic city views,
+                featuring three distinctive culinary concepts under one roof.
+            </p>
+            <div class="cta-buttons">
+                <button class="cta-btn cta-primary" onclick="scrollTo('restaurants')">Explore Our Restaurants</button>
+                <button class="cta-btn cta-secondary" onclick="scrollTo('contact')">Make Reservation</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Restaurants Section -->
+    <section id="restaurants" class="restaurants-section">
+        <div class="section-header">
+            <h2>Our Restaurant Collection</h2>
+            <p>Three unique dining experiences, each crafted to perfection under the Terrace On 3 umbrella</p>
+        </div>
+
+        <div class="restaurants-grid">
+            <!-- Lush Gourmet Kitchen -->
+            <div class="restaurant-card">
+                <div class="card-image">
+                    <img src="https://content3.jdmagicbox.com/comp/jammu/s3/9999px191.x191.220901201512.l8s3/catalogue/lush-gourmet-kitchen-gandhinagar-jammu-jammu-restaurants-0eawvsyt0f.jpg"
+                        alt="Lush Gourmet Kitchen">
+                    <div class="card-logo">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5lsZJusGXbnrOshE6FkCaimXlteN1eWDdrw&s"
+                            alt="Lush Gourmet Logo">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">LUSH GOURMET KITCHEN</h3>
+                    <p class="card-type">Social Locale Eatery</p>
+                    <p class="card-description">
+                        Elegant social dining with sophisticated gourmet cuisine. Perfect for intimate gatherings
+                        and culinary adventures in a refined setting.
+                    </p>
+                    <ul class="card-features">
+                        <li>Gourmet Chinese & International Cuisine</li>
+                        <li>Signature Mocktails & Beverages</li>
+                        <li>Elegant 2nd Floor Setting</li>
+                        <li>QR Menu & Modern Service</li>
+                        <li>Specializes in Dimsums & Tacos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tamarind Kitchen -->
+            <div class="restaurant-card">
+                <div class="card-image">
+                    <img src="https://b.zmtcdn.com/data/pictures/5/20077495/204fa0d5be208643bf43e5db264d153c.jpg?fit=around|960:500&crop=960:500;*,*"
+                        alt="Tamarind Kitchen">
+                    <div class="card-logo">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmD5lnfGqAcwEFkMbjDuYONMaAbxBbtarUrg&s"
+                            alt="Tamarind Kitchen Logo">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">TAMARIND KITCHEN</h3>
+                    <p class="card-type">Authentic Indian Cuisine</p>
+                    <p class="card-description">
+                        Authentic Indian flavors with modern refinement. From tandoor specialties to regional curries,
+                        experience the true essence of Indian hospitality.
+                    </p>
+                    <ul class="card-features">
+                        <li>Northern & South Indian Specialties</li>
+                        <li>Traditional Tandoor Cooking</li>
+                        <li>Indo-Chinese Fusion Menu</li>
+                        <li>Vegetarian & Vegan Options</li>
+                        <li>Craft Cocktails & Fine Wines</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- The White Plate Catering -->
+            <div class="restaurant-card">
+                <div class="card-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAF-Tl3Z5xnHXW4-QzvdfOx-fOLApOfBWxeA&s"
+                        alt="The White Plate Catering">
+                    <div class="card-logo">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1aNxNtWDUOu2gpuyA6uFd505SbVeKVXagzQ&s"
+                            alt="White Plate Logo">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">THE WHITE PLATE</h3>
+                    <p class="card-type">Premium Catering Services</p>
+                    <p class="card-description">
+                        Professional catering services for all occasions. From intimate gatherings to grand
+                        celebrations,
+                        we bring restaurant-quality cuisine to your events.
+                    </p>
+                    <ul class="card-features">
+                        <li>Corporate Event Catering</li>
+                        <li>Wedding & Celebration Menus</li>
+                        <li>Custom Menu Planning</li>
+                        <li>Professional Service Staff</li>
+                        <li>Setup & Event Management</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialties Section -->
+    <section id="specialties" class="specialties-section">
+        <div class="specialties-content">
+            <h2 style="font-size: 3rem; margin-bottom: 2rem;">Signature Experiences</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 3rem; opacity: 0.9;">
+                Discover what makes Terrace On 3 Jammu's most celebrated dining destination
+            </p>
+
+            <div class="specialties-grid">
+                <div class="specialty-item">
+                    <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #fff;">🏢 Panoramic Views</h4>
+                    <p>Breathtaking 360° city views from Jammu's largest rooftop restaurant</p>
+                </div>
+                <div class="specialty-item">
+                    <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #fff;">🍽️ 330+ Menu Items</h4>
+                    <p>Six diverse cuisines spanning international flavors and local favorites</p>
+                </div>
+                <div class="specialty-item">
+                    <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #fff;">🎵 Live Entertainment</h4>
+                    <p>Wine tastings, live music, and curated dining experiences</p>
+                </div>
+                <div class="specialty-item">
+                    <h4 style="font-size: 1.3rem; margin-bottom: 1rem; color: #fff;">🌿 Ambient Setting</h4>
+                    <p>Lush greenery, ambient lighting, and enchanting gazebo atmosphere</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="contact-content">
+            <h2 style="font-size: 3rem; margin-bottom: 2rem; color: #2c3e50;">Visit Us</h2>
+            <p style="font-size: 1.2rem; color: #666; margin-bottom: 3rem;">
+                Experience elevated dining at Jammu's premier rooftop destination
+            </p>
+
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h3>MAIN RESTAURANT</h3>
+                    <div class="contact-info">
+                        <p><strong>📍 Location:</strong> Gandhi Nagar, Jammu</p>
+                        <p><strong>🏢 Floor:</strong> 3rd Floor (Glass Lift Access)</p>
+                        <p><strong>🍽️ Seating:</strong> 190+ Guests</p>
+                        <p><strong>🌅 Experience:</strong> Rooftop Dining</p>
+                        <p><strong>📞 Contact:</strong> Premium Reservations</p>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <h3>LUSH GOURMET KITCHEN</h3>
+                    <div class="contact-info">
+                        <p><strong>📍 Location:</strong> OM Tower, 2nd Floor</p>
+                        <p><strong>🏢 Address:</strong> Bahu Plaza, Gandhi Nagar</p>
+                        <p><strong>⏰ Hours:</strong> 12:00 PM - 11:30 PM</p>
+                        <p><strong>📞 Reservations:</strong> 88999 53033</p>
+                        <p><strong>🚚 Delivery:</strong> WhatsApp 88999 17033</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <button class="cta-btn cta-primary" onclick="window.open('tel:+918899953033', '_self')"
+                    style="margin-right: 1rem;">
+                    Call for Reservations
+                </button>
+                <button class="cta-btn cta-secondary">
+                    Book Table Online
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function scrollTo(elementId) {
+            document.getElementById(elementId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide navbar on scroll
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > 100) {
+                if (scrollTop > lastScrollTop) {
+                    navbar.classList.remove('visible');
+                } else {
+                    navbar.classList.add('visible');
+                }
+            } else {
+                navbar.classList.remove('visible');
+            }
+            lastScrollTop = scrollTop;
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Initialize animations
+        window.addEventListener('load', function () {
+            const cards = document.querySelectorAll('.restaurant-card, .specialty-item, .contact-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+
+</html>
