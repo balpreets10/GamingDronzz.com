@@ -1,0 +1,264 @@
+/* components/ui/Pagination.css - Pagination component styles */
+
+.pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    font-family: var(--font-body, 'Inter', sans-serif);
+}
+
+.pagination--loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Info Section */
+.pagination__info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination__text {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary, #6B7280);
+    font-weight: 500;
+}
+
+/* Controls Container */
+.pagination__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Page Numbers Container */
+.pagination__pages {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 0 0.5rem;
+}
+
+/* Buttons Base Styles */
+.pagination__button,
+.pagination__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-border, #E5E7EB);
+    border-radius: 0.5rem;
+    background: var(--color-background, #ffffff);
+    color: var(--color-text, #1F2937);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    outline: none;
+    position: relative;
+}
+
+.pagination__button:hover:not(.pagination__button--disabled),
+.pagination__number:hover:not(.pagination__number--current) {
+    background: var(--color-primary-50, #EFF6FF);
+    border-color: var(--color-primary-200, #BFDBFE);
+    color: var(--color-primary-600, #2563EB);
+    transform: translateY(-1px);
+}
+
+.pagination__button:focus-visible,
+.pagination__number:focus-visible {
+    outline: 2px solid var(--color-primary-500, #3B82F6);
+    outline-offset: 2px;
+}
+
+/* Previous/Next Buttons */
+.pagination__button--prev,
+.pagination__button--next {
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+}
+
+.pagination__button--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--color-gray-50, #F9FAFB);
+    color: var(--color-gray-400, #9CA3AF);
+}
+
+.pagination__button--disabled:hover {
+    background: var(--color-gray-50, #F9FAFB);
+    transform: none;
+}
+
+/* Arrows */
+.pagination__arrow {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.pagination__label {
+    font-size: 0.875rem;
+}
+
+/* Page Numbers */
+.pagination__number {
+    min-width: 2.5rem;
+    padding: 0.5rem;
+}
+
+.pagination__number--current {
+    background: var(--color-primary-500, #3B82F6);
+    border-color: var(--color-primary-500, #3B82F6);
+    color: white;
+    font-weight: 600;
+    cursor: default;
+}
+
+.pagination__number--current:hover {
+    background: var(--color-primary-500, #3B82F6);
+    transform: none;
+}
+
+/* Ellipsis */
+.pagination__ellipsis {
+    padding: 0.5rem;
+    color: var(--color-text-secondary, #6B7280);
+    font-weight: 500;
+    user-select: none;
+}
+
+/* Loading State */
+.pagination__loading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-background, #ffffff);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border, #E5E7EB);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.pagination__spinner {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--color-gray-200, #E5E7EB);
+    border-top: 2px solid var(--color-primary-500, #3B82F6);
+    border-radius: 50%;
+    animation: pagination-spin 1s linear infinite;
+}
+
+.pagination__loading-text {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary, #6B7280);
+    font-weight: 500;
+}
+
+/* Animations */
+@keyframes pagination-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pagination {
+        padding: 1.5rem 0;
+        gap: 1rem;
+    }
+    
+    .pagination__controls {
+        gap: 0.25rem;
+    }
+    
+    .pagination__button {
+        padding: 0.4rem 0.6rem;
+        min-width: 2.25rem;
+        height: 2.25rem;
+        font-size: 0.8rem;
+    }
+    
+    .pagination__button--prev,
+    .pagination__button--next {
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .pagination__label {
+        display: none;
+    }
+    
+    .pagination__number {
+        min-width: 2.25rem;
+        height: 2.25rem;
+        padding: 0.4rem;
+        font-size: 0.8rem;
+    }
+    
+    .pagination__text {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination__pages {
+        margin: 0 0.25rem;
+    }
+    
+    .pagination__button,
+    .pagination__number {
+        min-width: 2rem;
+        height: 2rem;
+        font-size: 0.75rem;
+    }
+    
+    .pagination__button--prev,
+    .pagination__button--next {
+        padding: 0.4rem 0.6rem;
+    }
+}
+
+/* Dark Theme Support */
+@media (prefers-color-scheme: dark) {
+    .pagination__button,
+    .pagination__number {
+        background: var(--color-dark-surface, #1F2937);
+        border-color: var(--color-dark-border, #374151);
+        color: var(--color-dark-text, #F9FAFB);
+    }
+    
+    .pagination__button:hover:not(.pagination__button--disabled),
+    .pagination__number:hover:not(.pagination__number--current) {
+        background: var(--color-dark-hover, #374151);
+        border-color: var(--color-primary-400, #60A5FA);
+        color: var(--color-primary-300, #93C5FD);
+    }
+    
+    .pagination__text {
+        color: var(--color-dark-text-secondary, #D1D5DB);
+    }
+    
+    .pagination__button--disabled {
+        background: var(--color-dark-disabled, #111827);
+        color: var(--color-dark-text-muted, #6B7280);
+    }
+    
+    .pagination__loading {
+        background: var(--color-dark-surface, #1F2937);
+        border-color: var(--color-dark-border, #374151);
+    }
+}

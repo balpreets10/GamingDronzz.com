@@ -35,7 +35,12 @@ BEGIN
     
     -- Extract metadata and determine provider
     profile_data := COALESCE(auth_user.raw_user_meta_data, '{}'::jsonb);
-    user_provider := COALESCE(auth_user.app_metadata->>'provider', 'email');
+    user_provider := COALESCE(
+        -- Try raw_user_meta_data first, then raw_app_meta_data, fallback to email
+        profile_data->>'provider',
+        auth_user.raw_app_meta_data->>'provider',
+        'email'
+    );
     is_google_user := user_provider = 'google';
     
     IF existing_profile IS NULL THEN

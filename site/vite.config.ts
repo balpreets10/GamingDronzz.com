@@ -44,7 +44,7 @@ export default defineConfig(({ mode }) => {
 
     // ESBuild configuration
     esbuild: {
-      drop: isProduction ? ['console', 'debugger'] : [], // Remove console/debugger only in production
+      drop: (isProduction || isStaging) ? ['console', 'debugger'] : [], // Remove console/debugger in staging and production
       legalComments: 'none',
     },
 

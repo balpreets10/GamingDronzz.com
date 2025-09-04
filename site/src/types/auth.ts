@@ -22,6 +22,7 @@ export interface AuthResult {
     profile?: UserProfile;
     profileCreated?: boolean;
     profileCompleted?: boolean;
+    isAdmin?: boolean;
 }
 
 // ===== BASIC TYPES FOR UI COMPATIBILITY =====
@@ -29,6 +30,9 @@ export interface AuthResult {
 export interface OAuthCallbackResult {
     success: boolean;
     error?: string;
+    profileCreated?: boolean;
+    profileCompleted?: boolean;
+    isAdmin?: boolean;
 }
 
 export interface ProfileUpdateResult {

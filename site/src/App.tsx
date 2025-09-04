@@ -3,7 +3,7 @@ import ModernNavigation from './components/navigation/ModernNavigation';
 import Preloader from './components/ui/Preloader';
 import Hero from './components/sections/Hero';
 import About from './components/sections/About';
-import Projects from './components/sections/Projects';
+import PaginatedProjects from './components/sections/PaginatedProjects';
 import Services from './components/sections/Services';
 import Articles from './components/sections/Articles';
 import Contact from './components/sections/Contact';
@@ -12,6 +12,7 @@ import { useAuth } from './hooks/useAuth';
 import ScrollManager from './managers/ScrollManager';
 import PerformanceManager from './managers/PerformanceManager';
 import { initializeThemeSystem, type Theme } from './managers/ThemeManager';
+import { shouldShowDebugComponents } from './config';
 import './App.css';
 
 function App() {
@@ -19,7 +20,16 @@ function App() {
   const [currentTheme, setCurrentTheme] = useState<Theme | null>(null);
   const [preloaderCompleted, setPreloaderCompleted] = useState(false);
 
-  const { loading: authLoading } = useAuth();
+  const { 
+    loading: authLoading, 
+    user, 
+    session, 
+    isAuthenticated, 
+    isAdmin,
+    profile,
+    profileLoading,
+    profileCompleted 
+  } = useAuth();
   const { state: navState, actions: navActions } = useNavigation({
     customConfig: {
       items: [
@@ -104,15 +114,17 @@ function App() {
           subtitle="Professional Game Development Consultancy & Services"
           primaryCtaText="Get Started"
           onPrimaryCtaClick={() => handleNavigate('contact')}
+          currentTheme={currentTheme}
         />
 
         {/* About Section */}
         <About />
 
-        {/* Projects Section */}
-        <Projects
+        {/* Projects Section with Pagination */}
+        <PaginatedProjects
           showFeaturedOnly={false}
-          maxProjects={6}
+          itemsPerPage={4}
+          showPagination={true}
         />
 
         {/* Services Section */}
@@ -182,18 +194,35 @@ function App() {
         </div>
       </footer>
 
-      {import.meta.env.DEV && (
+      {shouldShowDebugComponents() && (
         <div className="app__debug">
           <details>
-            <summary>Navigation Debug</summary>
-            <pre>{JSON.stringify(navState, null, 2)}</pre>
+            <summary>Auth Debug</summary>
+            <pre>{JSON.stringify({
+              loading: authLoading,
+              isAuthenticated,
+              isAdmin,
+              profileLoading,
+              profileCompleted,
+              user: user ? {
+                id: user.id,
+                email: user.email,
+                emailVerified: user.email_confirmed_at,
+                lastSignIn: user.last_sign_in_at,
+                provider: user.app_metadata?.provider
+              } : null,
+              session: session ? {
+                expiresAt: session.expires_at ? new Date(session.expires_at * 1000).toISOString() : null,
+                hasAccessToken: !!session.access_token,
+                hasRefreshToken: !!session.refresh_token
+              } : null,
+              profile: profile ? {
+                id: profile.id,
+                fullName: profile.full_name,
+                email: profile.email
+              } : null
+            }, null, 2)}</pre>
           </details>
-          {currentTheme && (
-            <details>
-              <summary>Theme Debug</summary>
-              <pre>{JSON.stringify(currentTheme, null, 2)}</pre>
-            </details>
-          )}
         </div>
       )}
     </div>

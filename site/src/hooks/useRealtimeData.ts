@@ -8,7 +8,9 @@ import type {
     DatabaseService as DBService, 
     DatabaseArticle,
     DatabaseTestimonial,
-    IQueryOptions 
+    IQueryOptions,
+    IPaginationResult,
+    IPaginationOptions 
 } from '../services/DatabaseService';
 
 // ===== GENERIC REALTIME HOOK =====
@@ -173,6 +175,235 @@ export const useRealtimeProjects = (options?: {
         initialFetch: fetchFunction,
         enabled: options?.enabled
     });
+};
+
+// ===== PAGINATED PROJECTS HOOK =====
+interface UsePaginatedProjectsOptions {
+    featuredOnly?: boolean;
+    category?: string;
+    itemsPerPage?: number;
+    enabled?: boolean;
+}
+
+interface UsePaginatedProjectsReturn {
+    data: DatabaseProject[];
+    pagination: {
+        currentPage: number;
+        totalPages: number;
+        totalItems: number;
+        itemsPerPage: number;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+    };
+    loading: boolean;
+    error: string | null;
+    setPage: (page: number) => void;
+    refresh: () => Promise<void>;
+}
+
+export const usePaginatedProjects = (options: UsePaginatedProjectsOptions = {}): UsePaginatedProjectsReturn => {
+    const {
+        featuredOnly = false,
+        category,
+        itemsPerPage = 4,
+        enabled = true
+    } = options;
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [paginationResult, setPaginationResult] = useState<IPaginationResult<DatabaseProject> | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const channelRef = useRef<RealtimeChannel | null>(null);
+
+    // Reset page when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [featuredOnly, category, itemsPerPage]);
+
+    const fetchData = useCallback(async (page: number = currentPage) => {
+        if (!enabled) return;
+
+        try {
+            setLoading(true);
+            setError(null);
+
+            const paginationOptions: IPaginationOptions = {
+                page,
+                itemsPerPage,
+                orderBy: 'created_at',
+                ascending: false
+            };
+
+            let result: IPaginationResult<DatabaseProject>;
+
+            if (featuredOnly) {
+                result = await databaseService.projects.getFeaturedPaginated(paginationOptions);
+            } else if (category) {
+                result = await databaseService.projects.getByCategoryPaginated(category, paginationOptions);
+            } else {
+                result = await databaseService.projects.getPublishedPaginated(paginationOptions);
+            }
+
+            setPaginationResult(result);
+        } catch (err) {
+            const errorMessage = err instanceof Error ? err.message : 'Failed to fetch projects';
+            setError(errorMessage);
+            console.error('Error fetching paginated projects:', err);
+        } finally {
+            setLoading(false);
+        }
+    }, [currentPage, itemsPerPage, featuredOnly, category, enabled]);
+
+    const setPage = useCallback((page: number) => {
+        if (page === currentPage) return;
+        setCurrentPage(page);
+    }, [currentPage]);
+
+    const refresh = useCallback(async () => {
+        await fetchData(currentPage);
+    }, [fetchData, currentPage]);
+
+    // Handle real-time updates
+    const handleInsert = useCallback((payload: RealtimePostgresChangesPayload<DatabaseProject>) => {
+        const newProject = payload.new as DatabaseProject;
+        
+        // Check if the new project matches current filters
+        const matchesFilter = 
+            (!featuredOnly || newProject.featured) &&
+            (!category || newProject.category === category) &&
+            newProject.published;
+
+        if (matchesFilter) {
+            // Refresh data to maintain pagination integrity
+            refresh();
+        }
+    }, [featuredOnly, category, refresh]);
+
+    const handleUpdate = useCallback((payload: RealtimePostgresChangesPayload<DatabaseProject>) => {
+        const updatedProject = payload.new as DatabaseProject;
+        
+        setPaginationResult(prev => {
+            if (!prev) return prev;
+            
+            const projectIndex = prev.data.findIndex(p => p.id === updatedProject.id);
+            
+            // Check if updated project matches current filters
+            const matchesFilter = 
+                (!featuredOnly || updatedProject.featured) &&
+                (!category || updatedProject.category === category) &&
+                updatedProject.published;
+
+            if (projectIndex !== -1) {
+                if (matchesFilter) {
+                    // Update existing project
+                    const newData = [...prev.data];
+                    newData[projectIndex] = updatedProject;
+                    return { ...prev, data: newData };
+                } else {
+                    // Project no longer matches filter, refresh to maintain pagination
+                    refresh();
+                    return prev;
+                }
+            } else if (matchesFilter) {
+                // New project matches filter, refresh to maintain pagination
+                refresh();
+            }
+            
+            return prev;
+        });
+    }, [featuredOnly, category, refresh]);
+
+    const handleDelete = useCallback((payload: RealtimePostgresChangesPayload<DatabaseProject>) => {
+        const deletedId = payload.old.id;
+        
+        setPaginationResult(prev => {
+            if (!prev) return prev;
+            
+            const projectExists = prev.data.some(p => p.id === deletedId);
+            
+            if (projectExists) {
+                // Refresh to maintain pagination integrity
+                refresh();
+            }
+            
+            return prev;
+        });
+    }, [refresh]);
+
+    // Initial fetch and real-time subscription
+    useEffect(() => {
+        if (!enabled) {
+            setPaginationResult(null);
+            setLoading(false);
+            return;
+        }
+
+        fetchData(currentPage);
+
+        // Set up real-time subscription
+        const client = supabaseService.getClient();
+        const channel = client
+            .channel('paginated_projects_changes')
+            .on(
+                'postgres_changes',
+                {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'projects'
+                },
+                handleInsert
+            )
+            .on(
+                'postgres_changes',
+                {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'projects'
+                },
+                handleUpdate
+            )
+            .on(
+                'postgres_changes',
+                {
+                    event: 'DELETE',
+                    schema: 'public',
+                    table: 'projects'
+                },
+                handleDelete
+            )
+            .subscribe((status) => {
+                if (status === 'SUBSCRIBED') {
+                    console.log('✅ Subscribed to paginated projects changes');
+                } else if (status === 'CHANNEL_ERROR') {
+                    console.error('❌ Failed to subscribe to paginated projects changes');
+                }
+            });
+
+        channelRef.current = channel;
+
+        return () => {
+            if (channelRef.current) {
+                client.removeChannel(channelRef.current);
+                channelRef.current = null;
+            }
+        };
+    }, [currentPage, fetchData, handleInsert, handleUpdate, handleDelete, enabled]);
+
+    return {
+        data: paginationResult?.data || [],
+        pagination: {
+            currentPage: paginationResult?.currentPage || 1,
+            totalPages: paginationResult?.totalPages || 0,
+            totalItems: paginationResult?.totalCount || 0,
+            itemsPerPage: paginationResult?.itemsPerPage || itemsPerPage,
+            hasNextPage: paginationResult?.hasNextPage || false,
+            hasPreviousPage: paginationResult?.hasPreviousPage || false
+        },
+        loading,
+        error,
+        setPage,
+        refresh
+    };
 };
 
 export const useRealtimeServices = (options?: { 

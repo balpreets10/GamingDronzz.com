@@ -80,6 +80,33 @@ This applies to:
 ### Working Directory
 The website is located in the `site` folder. All bash commands and npm commands must be run from within the `site` directory.
 
+### SQL Script Location Requirements - MANDATORY
+IMPORTANT: ALL SQL-related scripts and files MUST be created in the appropriate `info/backend` directory structure, NEVER in the `site` folder.
+
+**Required SQL File Organization:**
+- **Database Migrations**: `info/backend/database/migrations/` - All database migration scripts
+- **Database Queries**: `info/backend/database/queries/` - SQL queries, stored procedures, and database scripts (DEPRECATED - moved to migrations)
+- **Database Functions**: `info/backend/database/functions/` - RPC functions and stored procedures (DEPRECATED - moved to migrations) 
+- **Database Policies**: `info/backend/database/policies/` - Row Level Security policies
+- **Database Schema**: `info/backend/database/schema/` - Database schema definitions (DEPRECATED - moved to migrations)
+- **Database Rollbacks**: `info/backend/database/rollbacks/` - All rollback scripts and backups
+
+**Prohibited Locations for SQL Files:**
+- ❌ `site/src/database/` - Do NOT create SQL files here
+- ❌ `site/database/` - Do NOT create SQL files here  
+- ❌ `site/` - Do NOT create any SQL files in the site directory
+- ❌ Root project directory - Do NOT create SQL files in the root
+
+**SQL File Naming Conventions:**
+- **Migrations**: `001_migration_description.sql`, `002_migration_description.sql`, `003_execute_migration_name.sql`
+- **Functions**: `function_name_rpc.sql`, `utility_functions.sql` (DEPRECATED - include in migrations)
+- **Policies**: `table_name_policies.sql`, `rls_policies.sql`
+- **Rollbacks**: `rollback_migration_name.sql`
+- **Queries**: `descriptive_query_name.sql` (DEPRECATED - include in migrations)
+- **Testing**: `004_test_migration_name.sql` for verification scripts
+
+This ensures proper organization and separation of database code from frontend application code.
+
 ## Documentation Maintenance - CRITICAL REQUIREMENT
 
 ### Automatic Documentation Updates
@@ -102,8 +129,8 @@ MANDATORY: Whenever making any structural, system, or behavioral changes, Claude
 - Database/Backend → `info/backend/backend-info.md` 
 - Build/Deploy → `info/deployment-info.md`
 - Assets/Data → `info/data.md`
-- SQL Changes → `info/backend/database/queries/`
-- Database Rollbacks → `info/database-rollbacks.md`
+- SQL Changes → `info/backend/database/` (appropriate subdirectory)
+- Database Rollbacks → `info/backend/database/rollbacks/`
 
 **Process:**
 1. Make the requested change
@@ -130,14 +157,14 @@ MANDATORY: Every SQL operation MUST include rollback capabilities and be documen
 
 **Required Actions for ALL SQL Operations:**
 1. **Create Rollback Point**: Always create backup tables or rollback scripts before executing changes
-2. **Document Changes**: Update `info/database-rollbacks.md` with complete rollback information
+2. **Document Changes**: Update `info/backend/database/rollbacks/rollback-log.md` with complete rollback information
 3. **Test Rollback**: Verify rollback procedures work before considering migration complete
 4. **Use Transactions**: Wrap all operations in BEGIN/COMMIT blocks when possible
 
 **SQL Rollback Requirements:**
 - **Backup Creation**: Create backup tables with timestamp: `backup_[table]_YYYYMMDD_HHMMSS`
-- **Rollback Script**: Create corresponding `rollback_[migration_name].sql` file
-- **Documentation**: Log entry in `info/database-rollbacks.md` with timestamp, description, and rollback command
+- **Rollback Script**: Create corresponding `rollback_[migration_name].sql` file in `info/backend/database/rollbacks/`
+- **Documentation**: Log entry in `info/backend/database/rollbacks/rollback-log.md` with timestamp, description, and rollback command
 - **Transaction Safety**: Use `BEGIN;` and `COMMIT;` blocks for atomic operations
 
 **Rollback Script Template:**

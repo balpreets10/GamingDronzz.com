@@ -1,0 +1,14 @@
+{
+  "schema_name": "pgbouncer",
+  "function_count": 1,
+  "functions": [
+    {
+      "schema_name": "pgbouncer",
+      "function_name": "get_auth",
+      "arguments": "p_usename text",
+      "return_type": "TABLE(username text, password text)",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION pgbouncer.get_auth(p_usename text)\n RETURNS TABLE(username text, password text)\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\nbegin\n    raise debug 'PgBouncer auth request: %', p_usename;\n\n    return query\n    select \n        rolname::text, \n        case when rolvaliduntil < now() \n            then null \n            else rolpassword::text \n        end \n    from pg_authid \n    where rolname=$1 and rolcanlogin;\nend;\n$function$\n"
+    }
+  ]
+}

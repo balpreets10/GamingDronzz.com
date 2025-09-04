@@ -1,0 +1,14 @@
+{
+  "schema_name": "graphql_public",
+  "function_count": 1,
+  "functions": [
+    {
+      "schema_name": "graphql_public",
+      "function_name": "graphql",
+      "arguments": "\"operationName\" text DEFAULT NULL::text, query text DEFAULT NULL::text, variables jsonb DEFAULT NULL::jsonb, extensions jsonb DEFAULT NULL::jsonb",
+      "return_type": "jsonb",
+      "function_type": "Function",
+      "function_definition": "CREATE OR REPLACE FUNCTION graphql_public.graphql(\"operationName\" text DEFAULT NULL::text, query text DEFAULT NULL::text, variables jsonb DEFAULT NULL::jsonb, extensions jsonb DEFAULT NULL::jsonb)\n RETURNS jsonb\n LANGUAGE sql\nAS $function$\n            select graphql.resolve(\n                query := query,\n                variables := coalesce(variables, '{}'),\n                \"operationName\" := \"operationName\",\n                extensions := extensions\n            );\n        $function$\n"
+    }
+  ]
+}

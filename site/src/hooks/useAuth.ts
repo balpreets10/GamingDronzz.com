@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { UserProfile, ExtendedAuthState, ProfileCompletionStatus } from '../types/profile';
 import { AuthResult } from '../types/auth';
-import supabaseService from '../services/SupabaseService';
+import AuthService from '../services/AuthService';
 
 // Using types from profile.ts for consistency
 type AuthState = ExtendedAuthState;
@@ -41,7 +41,7 @@ export const useAuth = () => {
         const initializeAuth = async () => {
             try {
                 // Get initial session
-                const { session, error } = await supabaseService.getSession();
+                const { session, error } = await AuthService.getSession();
                 
                 if (error) {
                     console.error('useAuth: Initial session error:', error);
@@ -58,7 +58,7 @@ export const useAuth = () => {
 
                 // Only set up listener after initial session is processed
                 if (isSubscribed) {
-                    unsubscribe = supabaseService.onAuthStateChange(async (event, session) => {
+                    unsubscribe = AuthService.onAuthStateChange(async (event, session) => {
                         // Ignore INITIAL_SESSION events to prevent duplicate processing
                         if (event === 'INITIAL_SESSION') {
                             console.log('🎯 Ignoring INITIAL_SESSION event to prevent duplicates');
@@ -141,28 +141,28 @@ export const useAuth = () => {
 
             console.log('🔍 CHECKPOINT 2: About to check admin status...');
             
-            // Check admin status with error handling
+            // Check admin status - profiles are created automatically by database triggers
             console.log('🔍 Checking admin status...');
             let isAdmin = false;
+            
             try {
-                isAdmin = await supabaseService.isAdmin(session.user.id);
+                isAdmin = await AuthService.isAdmin(session.user.id);
+                console.log('🛡️ Admin status:', isAdmin);
+                console.log('✅ CHECKPOINT 3: Profile exists (created automatically by database trigger)');
+                
+                // Perform role-based adjustments
+                if (isAdmin) {
+                    console.log('👑 Admin user detected - applying admin adjustments');
+                    // Add any admin-specific initialization here
+                } else {
+                    console.log('👤 Regular user - applying user adjustments');
+                    // Add any user-specific initialization here
+                }
+                
             } catch (adminError) {
                 console.warn('⚠️ Admin check failed, defaulting to false:', adminError);
                 isAdmin = false;
             }
-            console.log('🛡️ Admin status:', isAdmin);
-            
-            console.log('🔍 CHECKPOINT 3: Admin check complete, ensuring profile...');
-            
-            // Ensure profile exists with error handling
-            console.log('📝 Ensuring user profile exists...');
-            let profileResult = { success: true, profileCompleted: false };
-            try {
-                profileResult = await supabaseService.ensureUserProfile(session.user.id);
-            } catch (profileError) {
-                console.warn('⚠️ Profile ensure failed, continuing with defaults:', profileError);
-            }
-            console.log('📝 Profile result:', profileResult);
             
             console.log('🔍 CHECKPOINT 4: Profile operations complete, setting final state...');
 
@@ -174,8 +174,8 @@ export const useAuth = () => {
                 isAdmin,
                 profile: null,
                 profileLoading: false,
-                profileCompleted: profileResult.profileCompleted || false,
-                profileCompletionPercentage: 0
+                profileCompleted: true, // Profiles are automatically created and considered complete
+                profileCompletionPercentage: 100 // Auto-created profiles are considered 100% complete
             };
             
             console.log('🔓 Auth state set to:', {
@@ -230,7 +230,7 @@ export const useAuth = () => {
             console.log('useAuth: Initiating Google sign-in...');
             setAuthState(prev => ({ ...prev, loading: true }));
             
-            const result = await supabaseService.signInWithGoogle();
+            const result = await AuthService.signInWithGoogle();
             
             if (result.error) {
                 console.error('useAuth: Google sign-in error:', result.error);
@@ -267,7 +267,7 @@ export const useAuth = () => {
             console.log('useAuth: Signing out...');
             setAuthState(prev => ({ ...prev, loading: true }));
             
-            const { error } = await supabaseService.signOut();
+            const { error } = await AuthService.signOut();
             
             if (error) {
                 console.error('useAuth: Sign out error:', error);
@@ -287,7 +287,7 @@ export const useAuth = () => {
     const handleOAuthCallback = useCallback(async (): Promise<{ success: boolean; error?: string }> => {
         try {
             console.log('useAuth: Handling OAuth callback...');
-            const result = await supabaseService.handleOAuthCallback();
+            const result = await AuthService.handleOAuthCallback();
             
             if (!result.success) {
                 console.error('useAuth: OAuth callback failed:', result.error);
