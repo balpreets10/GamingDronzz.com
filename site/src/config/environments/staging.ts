@@ -1,6 +1,6 @@
 export const stagingConfig = {
     api: {
-        baseURL: 'https://staging-api.gamingdronzz.com',
+        baseURL: import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_SUPABASE_URL!,
         timeout: 15000,
         retries: 2
     },
@@ -25,7 +25,7 @@ export const stagingConfig = {
     analytics: {
         enabled: true,
         debug: true,
-        trackingId: import.meta.env.VITE_GA_STAGING_TRACKING_ID || 'STAGING-TRACKING-ID'
+        trackingId: import.meta.env.VITE_GA_STAGING_TRACKING_ID || ''
     },
     features: {
         adminPanel: true,
