@@ -55,6 +55,15 @@
     },
     {
         "schemaname": "public",
+        "tablename": "profiles",
+        "policyname": "service_role_insert_profiles",
+        "permissive": "PERMISSIVE",
+        "cmd": "INSERT",
+        "qual": null,
+        "with_check": "true"
+    },
+    {
+        "schemaname": "public",
         "tablename": "media_files",
         "policyname": "Media files are viewable by everyone",
         "permissive": "PERMISSIVE",
@@ -68,7 +77,7 @@
         "policyname": "users_view_own_profile",
         "permissive": "PERMISSIVE",
         "cmd": "SELECT",
-        "qual": "(auth.uid() = id)",
+        "qual": "(auth.uid() = user_id)",
         "with_check": null
     },
     {
@@ -78,7 +87,7 @@
         "permissive": "PERMISSIVE",
         "cmd": "INSERT",
         "qual": null,
-        "with_check": "(auth.uid() = id)"
+        "with_check": "(auth.uid() = user_id)"
     },
     {
         "schemaname": "public",
@@ -86,16 +95,7 @@
         "policyname": "users_update_own_profile",
         "permissive": "PERMISSIVE",
         "cmd": "UPDATE",
-        "qual": "(auth.uid() = id)",
-        "with_check": "(auth.uid() = id)"
-    },
-    {
-        "schemaname": "public",
-        "tablename": "profiles",
-        "policyname": "Users can update their own profile",
-        "permissive": "PERMISSIVE",
-        "cmd": "UPDATE",
-        "qual": "(auth.uid() = id)",
-        "with_check": null
+        "qual": "(auth.uid() = user_id)",
+        "with_check": "(auth.uid() = user_id)"
     }
 ]

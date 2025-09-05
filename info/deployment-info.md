@@ -46,10 +46,10 @@ npm run preview
 - Production: `.env.production`
 
 ### Configuration Structure
-Environment-specific configuration through `src/config/`:
-- `src/config/environments/development.ts`
-- `src/config/environments/staging.ts`
-- `src/config/environments/production.ts`
+Environment-specific configuration through `site/src/config/`:
+- `site/src/config/environments/development.ts`
+- `site/src/config/environments/staging.ts`
+- `site/src/config/environments/production.ts`
 
 ### Required Environment Variables
 ```bash

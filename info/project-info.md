@@ -22,7 +22,6 @@ site/
 │   │   └── ui/             # UI utilities
 │   ├── config/             # Configuration files
 │   ├── data/               # Static data
-│   ├── database/           # Database migrations and schemas
 │   ├── hooks/              # Custom React hooks
 │   ├── managers/           # Business logic managers
 │   ├── services/           # API and external services
@@ -66,8 +65,9 @@ site/
 - Projects data stored in `src/data/projects-data.json`
 - Services configuration in `src/data/services.ts`
 - Company information in `src/data/company.ts`
-- Database functions reference in `info/supabase/functions.json`
-- Database functions split by schema available in `info/supabase/functions_split/`
+- Database schema reference in `info/supabase/db_schema.json`
+- Database functions by schema in `info/supabase/functions_split/`
+- Database migrations in `info/backend/database/migrations/`
 
 ### Dynamic Data
 - User profiles managed via Supabase
@@ -119,12 +119,13 @@ site/
 
 **Database Layer Changes:**
 - **Removed Functions**: `ensure_user_profile()`, `handle_user_login()`, `complete_user_profile()`, `safe_update_profile()`, `check_profile_completion()`, `get_user_profile_with_completion()`
-- **Added Functions**: 
+- **Active Functions**: 
   - `handle_new_user()` - Automatic profile creation via database trigger
-  - `get_user_role(user_id)` - Unified role checking with JSONB response
+  - `get_user_role(user_id)` - Role checking with JSONB response
   - `update_user_login(user_id)` - Login tracking and count updates
-  - `is_admin_user(user_id)` - Simple boolean admin check
-- **Updated Trigger**: `on_auth_user_created` trigger for automatic profile creation on user signup
+  - `is_admin_user(user_id)` - Boolean admin check
+  - `increment_view_count(table_type, record_id)` - Secure view counter
+- **Database Trigger**: `on_auth_user_created` trigger for automatic profile creation
 
 **Authentication Flow Improvements:**
 - **Automatic Profile Creation**: Profiles created via database triggers, no manual calls needed

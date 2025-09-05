@@ -10,7 +10,7 @@
 
 ### Database Schema
 
-#### Profiles Table (Simplified Auth Schema)
+#### Profiles Table (Current Schema)
 ```sql
 CREATE TABLE profiles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -20,15 +20,18 @@ CREATE TABLE profiles (
     avatar_url TEXT,
     role TEXT CHECK (role IN ('user', 'admin')) DEFAULT 'user' NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    is_verified BOOLEAN DEFAULT FALSE,
+    is_active BOOLEAN DEFAULT TRUE
 );
 ```
 
 **Key Features:**
-- Simplified from 25+ columns to 8 essential fields
-- Role-based access control with 'user' and 'admin' roles
-- Automatic profile creation via triggers
-- Proper foreign key constraints
+- Streamlined to 10 essential fields for optimal performance
+- Role-based access control with 'user' and 'admin' roles  
+- Automatic profile creation via `handle_new_user()` trigger
+- Proper foreign key constraints and user verification tracking
+- Complete schema reference available in `info/supabase/db_schema.json`
 
 #### Projects Table (if dynamic projects are needed)
 ```sql
@@ -78,11 +81,11 @@ Located in `src/services/SupabaseService.ts`:
 - `onAuthStateChange()`: Listens for auth state changes
 
 #### Database Operations
-- `ensureUserProfile()`: Creates profile if doesn't exist (calls RPC `ensure_user_profile`)
-- `handleUserLogin()`: Manages login flow with profile creation (calls RPC `ensure_user_profile` with action='login')
-- `isAdmin()`: Checks admin status (calls RPC `get_user_role` with return_format='simple')
-- `isAdmin()`: Checks user role for admin privileges
-- `updateUserProfile()`: Updates user profile information
+- `getUserRole()`: Checks user role and admin status (calls RPC `get_user_role`)
+- `updateUserLogin()`: Updates login tracking (calls RPC `update_user_login`)
+- `isAdminUser()`: Simple admin check (calls RPC `is_admin_user`)
+- `incrementViewCount()`: View tracking (calls RPC `increment_view_count`)
+- `updateUserProfile()`: Profile information updates
 
 ### Real-time Data
 - **Subscription Management**: Handled via custom hooks
@@ -109,6 +112,8 @@ CREATE POLICY "Admins can view all profiles" ON profiles
             AND p.role = 'admin'
         )
     );
+
+**Complete RLS policies are maintained in `info/backend/database/policies/` directory**
 ```
 
 ### API Security
@@ -133,31 +138,34 @@ CREATE POLICY "Admins can view all profiles" ON profiles
 ## Database Migrations
 
 ### Migration System
-- **Location**: `src/database/migrations/`
+- **Location**: `info/backend/database/migrations/`
 - **Naming Convention**: `001_initial_setup.sql`, `002_feature_name.sql`
 - **Execution**: Manual execution via Supabase dashboard
+- **Rollback System**: Complete rollback scripts in `info/backend/database/rollbacks/`
 
 ### Available Migrations
-1. `001_simplify_auth_schema.sql`: Authentication system fix - simplifies profiles table and adds RPC functions
-2. `002_test_auth_functions.sql`: Test script to verify authentication functions work correctly
+1. `002_streamlined_auth_system.sql`: Streamlined authentication system with automatic profile creation
+2. `003_execute_streamlined_auth.sql`: Execute streamlined authentication migration
+3. `004_test_streamlined_auth.sql`: Test and verify streamlined authentication system
 
-### RPC Functions
-**Enhanced Functions (Post-Optimization):**
-- `ensure_user_profile(user_id UUID, action TEXT DEFAULT 'ensure')`: Multi-purpose profile function
-  - `action='ensure'`: Creates profile if doesn't exist
-  - `action='login'`: Creates profile and updates login timestamp
-  - `action='create'`: Force creates new profile
-- `get_user_role(user_id_input UUID DEFAULT auth.uid(), return_format TEXT DEFAULT 'simple')`: Role checking function
+### Database Functions
+**Complete function reference available in `info/supabase/functions_split/functions_public.json`**
+
+**Active RPC Functions:**
+- `handle_new_user()`: Database trigger function for automatic profile creation
+- `get_user_role(user_id_input UUID, return_format TEXT)`: Role checking function
   - `return_format='simple'`: Returns `{is_admin: boolean}`
   - `return_format='detailed'`: Returns full role info with verification status
-- `increment_view_count(table_type TEXT, record_id UUID)`: Secured view counter
-  - `table_type` limited to 'projects' or 'articles' (SQL injection protection)
-  - Returns success status and new count
+- `update_user_login(user_id_input UUID)`: Updates login timestamp and count
+- `is_admin_user(user_id_input UUID)`: Simple boolean admin check
+- `increment_view_count(table_type TEXT, record_id UUID)`: Secure view counter
+  - Protected against SQL injection with table type validation
+  - Supports 'projects' and 'articles' tables
+- `check_email_exists(email TEXT)`: Email existence verification
+- `get_profile_analytics()`: Profile statistics and analytics
 
-**Deprecated Functions (Removed):**
-- ~~`handle_user_login`~~ → Merged into `ensure_user_profile`
-- ~~`check_user_role`~~ → Replaced by `get_user_role`
-- `check_email_exists(email TEXT)`: Helper function to check if email exists in auth.users
+**Function Documentation:**
+Complete function definitions and schemas are maintained in `info/supabase/functions_split/` directory, organized by database schema.
 
 ## Error Handling
 
