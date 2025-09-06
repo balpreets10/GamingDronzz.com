@@ -595,6 +595,233 @@ class SupabaseService {
             };
         }
     }
+
+    // ===== DATA CRUD OPERATIONS ===== //
+    
+    // Projects CRUD
+    async getProjects() {
+        const { data, error } = await this.client
+            .from('projects')
+            .select('*')
+            .order('created_at', { ascending: false });
+        
+        if (error) {
+            console.error('Error fetching projects:', error);
+            throw error;
+        }
+        
+        return data;
+    }
+    
+    async createProject(projectData: any) {
+        const { data, error } = await this.client
+            .from('projects')
+            .insert([projectData])
+            .select()
+            .single();
+        
+        if (error) {
+            console.error('Error creating project:', error);
+            throw error;
+        }
+        
+        return data;
+    }
+    
+    async updateProject(id: string, updates: any) {
+        const { data, error } = await this.client
+            .from('projects')
+            .update(updates)
+            .eq('id', id)
+            .select()
+            .single();
+        
+        if (error) {
+            console.error('Error updating project:', error);
+            throw error;
+        }
+        
+        return data;
+    }
+    
+    async deleteProject(id: string) {
+        const { error } = await this.client
+            .from('projects')
+            .delete()
+            .eq('id', id);
+        
+        if (error) {
+            console.error('Error deleting project:', error);
+            throw error;
+        }
+        
+        return true;
+    }
+    
+    // Articles CRUD
+    async getArticles() {
+        const { data, error } = await this.client
+            .from('articles')
+            .select('*')
+            .order('created_at', { ascending: false });
+        
+        if (error) {
+            console.error('Error fetching articles:', error);
+            throw error;
+        }
+        
+        return data;
+    }
+    
+    async createArticle(articleData: any) {
+        const { data, error } = await this.client
+            .from('articles')
+            .insert([articleData])
+            .select()
+            .single();
+        
+        if (error) {
+            console.error('Error creating article:', error);
+            throw error;
+        }
+        
+        return data;
+    }
+    
+    async updateArticle(id: string, updates: any) {
+        const { data, error } = await this.client
+            .from('articles')
+            .update(updates)
+            .eq('id', id)
+            .select()
+            .single();
+        
+        if (error) {
+            console.error('Error updating article:', error);
+            throw error;
+        }
+        
+        return data;
+    }
+    
+    async deleteArticle(id: string) {
+        const { error } = await this.client
+            .from('articles')
+            .delete()
+            .eq('id', id);
+        
+        if (error) {
+            console.error('Error deleting article:', error);
+            throw error;
+        }
+        
+        return true;
+    }
+    
+    // Inquiries CRUD
+    async getInquiries() {
+        const { data, error } = await this.client
+            .from('inquiries')
+            .select('*')
+            .order('created_at', { ascending: false });
+        
+        if (error) {
+            console.error('Error fetching inquiries:', error);
+            throw error;
+        }
+        
+        return data;
+    }
+    
+    async updateInquiry(id: string, updates: any) {
+        const { data, error } = await this.client
+            .from('inquiries')
+            .update(updates)
+            .eq('id', id)
+            .select()
+            .single();
+        
+        if (error) {
+            console.error('Error updating inquiry:', error);
+            throw error;
+        }
+        
+        return data;
+    }
+    
+    async deleteInquiry(id: string) {
+        const { error } = await this.client
+            .from('inquiries')
+            .delete()
+            .eq('id', id);
+        
+        if (error) {
+            console.error('Error deleting inquiry:', error);
+            throw error;
+        }
+        
+        return true;
+    }
+    
+    // Media Files CRUD
+    async getMediaFiles() {
+        const { data, error } = await this.client
+            .from('media_files')
+            .select('*')
+            .order('created_at', { ascending: false });
+        
+        if (error) {
+            console.error('Error fetching media files:', error);
+            throw error;
+        }
+        
+        return data;
+    }
+    
+    async updateMediaFile(id: string, updates: any) {
+        const { data, error } = await this.client
+            .from('media_files')
+            .update(updates)
+            .eq('id', id)
+            .select()
+            .single();
+        
+        if (error) {
+            console.error('Error updating media file:', error);
+            throw error;
+        }
+        
+        return data;
+    }
+    
+    async deleteMediaFile(id: string) {
+        const { error } = await this.client
+            .from('media_files')
+            .delete()
+            .eq('id', id);
+        
+        if (error) {
+            console.error('Error deleting media file:', error);
+            throw error;
+        }
+        
+        return true;
+    }
+    
+    // Page Views
+    async getPageViews() {
+        const { data, error } = await this.client
+            .from('page_views')
+            .select('*')
+            .order('created_at', { ascending: false });
+        
+        if (error) {
+            console.error('Error fetching page views:', error);
+            throw error;
+        }
+        
+        return data;
+    }
 }
 
 const supabaseService = SupabaseService.getInstance();

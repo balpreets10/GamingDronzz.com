@@ -1,7 +1,7 @@
 {
-  "created_at": "2025-09-05T07:29:26.211Z",
+  "created_at": "2025-09-05T16:32:14.354Z",
   "original_file": "functions.json",
-  "total_functions": 120,
+  "total_functions": 138,
   "schemas": [
     {
       "schema_name": "auth",
@@ -30,7 +30,7 @@
     },
     {
       "schema_name": "public",
-      "function_count": 13,
+      "function_count": 31,
       "file_name": "functions_public.json"
     },
     {

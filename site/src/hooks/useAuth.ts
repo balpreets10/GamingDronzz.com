@@ -51,7 +51,7 @@ export const useAuth = () => {
                     return;
                 }
 
-                console.log('useAuth: Initial session:', session?.user?.id || 'none');
+                console.log('useAuth: Initial session:', session?.user?.id || 'none', session ? 'EXISTS' : 'NULL');
                 if (isSubscribed) {
                     await updateAuthState(session);
                 }
@@ -109,6 +109,28 @@ export const useAuth = () => {
             refreshToken: session?.refresh_token ? '***EXISTS***' : 'none'
         });
         
+        // Add timeout protection for updateAuthState to prevent hanging
+        const updatePromise = new Promise(async (resolve) => {
+            try {
+                await processAuthState(session);
+                resolve(true);
+            } catch (error) {
+                console.error('❌ updateAuthState: Error in processAuthState:', error);
+                resolve(false);
+            }
+        });
+        
+        const timeoutPromise = new Promise((resolve) => {
+            setTimeout(() => {
+                console.warn('⚠️ updateAuthState: Timeout reached, continuing...');
+                resolve(false);
+            }, 5000);
+        });
+        
+        await Promise.race([updatePromise, timeoutPromise]);
+    }, []);
+
+    const processAuthState = async (session: Session | null) => {
         console.log('🔍 CHECKPOINT 1: About to process session...');
         
         try {
@@ -192,14 +214,14 @@ export const useAuth = () => {
             console.log('🔍 CHECKPOINT 6: setAuthState called successfully - auth flow COMPLETE');
 
         } catch (error) {
-            console.error('❌ useAuth: Failed to update auth state:', error);
+            console.error('❌ processAuthState: Failed to update auth state:', error);
             console.log('🔄 Setting error state with loading: false');
             setAuthState(prev => ({
                 ...prev,
                 loading: false
             }));
         }
-    }, []);
+    };
     
     const [profileStatus] = useState<ProfileCompletionStatus | null>(null);
 
@@ -275,7 +297,20 @@ export const useAuth = () => {
                 return { success: false, error };
             }
             
-            // Auth state will be updated via listener
+            // Immediately reset auth state to ensure clean logout
+            console.log('useAuth: Resetting auth state after successful logout');
+            setAuthState({
+                user: null,
+                session: null,
+                loading: false,
+                isAuthenticated: false,
+                isAdmin: false,
+                profile: null,
+                profileLoading: false,
+                profileCompleted: false,
+                profileCompletionPercentage: 0
+            });
+            
             return { success: true };
         } catch (error) {
             console.error('useAuth: Sign out failed:', error);

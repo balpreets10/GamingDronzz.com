@@ -4,12 +4,14 @@ import App from '../../App';
 import OAuthCallback from '../auth/OAuthCallback';
 import Terraceon3 from '../../pages/Terraceon3/Terraceon3';
 import SoulFit from '../../pages/SoulFit/SoulFit';
+import AdminDashboard from '../../pages/admin/AdminDashboard';
 
 const AppRouter = () => {
     return (
         <Router>
             <Routes>
                 <Route path="/auth/callback" element={<OAuthCallback />} />
+                <Route path="/admin/*" element={<AdminDashboard />} />
                 <Route path="/terraceon3" element={<Terraceon3 />} />
                 <Route path="/soulfit" element={<SoulFit />} />
                 <Route path="/*" element={<App />} />

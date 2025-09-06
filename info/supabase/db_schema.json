@@ -496,70 +496,6 @@
     "constraint_type": null
   },
   {
-    "table_name": "policy_backups_20250830_143022",
-    "column_name": "schemaname",
-    "data_type": "name",
-    "is_nullable": "YES",
-    "column_default": null,
-    "constraint_type": null
-  },
-  {
-    "table_name": "policy_backups_20250830_143022",
-    "column_name": "tablename",
-    "data_type": "name",
-    "is_nullable": "YES",
-    "column_default": null,
-    "constraint_type": null
-  },
-  {
-    "table_name": "policy_backups_20250830_143022",
-    "column_name": "policyname",
-    "data_type": "name",
-    "is_nullable": "YES",
-    "column_default": null,
-    "constraint_type": null
-  },
-  {
-    "table_name": "policy_backups_20250830_143022",
-    "column_name": "permissive",
-    "data_type": "text",
-    "is_nullable": "YES",
-    "column_default": null,
-    "constraint_type": null
-  },
-  {
-    "table_name": "policy_backups_20250830_143022",
-    "column_name": "roles",
-    "data_type": "ARRAY",
-    "is_nullable": "YES",
-    "column_default": null,
-    "constraint_type": null
-  },
-  {
-    "table_name": "policy_backups_20250830_143022",
-    "column_name": "cmd",
-    "data_type": "text",
-    "is_nullable": "YES",
-    "column_default": null,
-    "constraint_type": null
-  },
-  {
-    "table_name": "policy_backups_20250830_143022",
-    "column_name": "qual",
-    "data_type": "text",
-    "is_nullable": "YES",
-    "column_default": null,
-    "constraint_type": null
-  },
-  {
-    "table_name": "policy_backups_20250830_143022",
-    "column_name": "with_check",
-    "data_type": "text",
-    "is_nullable": "YES",
-    "column_default": null,
-    "constraint_type": null
-  },
-  {
     "table_name": "profiles",
     "column_name": "id",
     "data_type": "uuid",
@@ -794,6 +730,70 @@
   {
     "table_name": "projects",
     "column_name": "demo_url",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "screenshots",
+    "data_type": "ARRAY",
+    "is_nullable": "YES",
+    "column_default": "'{}'::text[]",
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "team_size",
+    "data_type": "integer",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "duration_months",
+    "data_type": "integer",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "budget_range",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "challenges",
+    "data_type": "ARRAY",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "achievements",
+    "data_type": "ARRAY",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "testimonial",
+    "data_type": "text",
+    "is_nullable": "YES",
+    "column_default": null,
+    "constraint_type": null
+  },
+  {
+    "table_name": "projects",
+    "column_name": "testimonial_author",
     "data_type": "text",
     "is_nullable": "YES",
     "column_default": null,

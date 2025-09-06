@@ -95,26 +95,129 @@ Located in `src/services/SupabaseService.ts`:
 ## Security Model
 
 ### Row Level Security (RLS)
+
+**RLS Configuration:**
+- All tables have RLS enabled with role-based access control
+- Admin users (role = 'admin') have full CRUD access to all tables
+- Public users have read access to published content only
+- Anonymous users can insert inquiries and page views for analytics
+
+**Current RLS Policies:**
+
+**Profiles Table:**
 ```sql
--- Enable RLS on profiles table
-ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+-- Users can access their own profile
+CREATE POLICY "users_view_own_profile" ON profiles
+    FOR SELECT USING (auth.uid() = user_id);
 
--- Policy: Users can access their own profile
-CREATE POLICY "Users can view own profile" ON profiles
-    FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "users_update_own_profile" ON profiles  
+    FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
--- Policy: Admins can access all profiles
-CREATE POLICY "Admins can view all profiles" ON profiles
-    FOR ALL USING (
-        EXISTS (
-            SELECT 1 FROM profiles p 
-            WHERE p.user_id = auth.uid() 
-            AND p.role = 'admin'
-        )
-    );
-
-**Complete RLS policies are maintained in `info/backend/database/policies/` directory**
+-- Admin users have full access to all profiles
+CREATE POLICY "admin_full_access_profiles" ON profiles
+    FOR ALL TO authenticated USING (is_current_user_admin());
 ```
+
+**Projects Table:**
+```sql
+-- Public can view published projects
+CREATE POLICY "public_view_published_projects" ON projects
+    FOR SELECT USING (published = true);
+
+-- Admins have full access
+CREATE POLICY "admin_full_access_projects" ON projects
+    FOR ALL TO authenticated USING (is_current_user_admin());
+```
+
+**Articles Table:**
+```sql
+-- Public can view published articles
+CREATE POLICY "public_view_published_articles" ON articles
+    FOR SELECT USING (published = true);
+
+-- Admins have full access
+CREATE POLICY "admin_full_access_articles" ON articles
+    FOR ALL TO authenticated USING (is_current_user_admin());
+```
+
+**Inquiries Table:**
+```sql
+-- Only admins can access inquiries (sensitive customer data)
+CREATE POLICY "admin_only_access_inquiries" ON inquiries
+    FOR ALL TO authenticated USING (is_current_user_admin());
+
+-- Allow anonymous users to insert inquiries (contact form)
+CREATE POLICY "allow_anonymous_inquiry_insert" ON inquiries
+    FOR INSERT TO anon WITH CHECK (true);
+```
+
+**Media Files Table:**
+```sql
+-- Public can view media files (for published content)
+CREATE POLICY "public_view_media_files" ON media_files
+    FOR SELECT USING (true);
+
+-- Only admins can manage media files
+CREATE POLICY "admin_full_access_media_files" ON media_files
+    FOR ALL TO authenticated USING (is_current_user_admin());
+```
+
+**Page Views Table:**
+```sql
+-- Only admins can access analytics data
+CREATE POLICY "admin_only_access_page_views" ON page_views
+    FOR ALL TO authenticated USING (is_current_user_admin());
+
+-- Allow insert for analytics tracking
+CREATE POLICY "allow_insert_page_views" ON page_views
+    FOR INSERT WITH CHECK (true);
+```
+
+**Complete RLS policies and migration scripts are maintained in `info/backend/database/` directory**
+
+## Admin Dashboard System
+
+### Admin Privileges
+- Admin users are identified by `role = 'admin'` in the profiles table
+- All admin functions include built-in privilege checking via `is_current_user_admin()`
+- Admin access is required for sensitive operations (analytics, content management, user data)
+
+### Admin Dashboard Features
+
+**Dashboard Overview:**
+- Complete site statistics via `get_admin_dashboard_stats()`
+- Real-time metrics for projects, articles, inquiries, users, and analytics
+- Comprehensive summary of all system activity
+
+**Content Management:**
+- Bulk publish/unpublish operations for projects and articles
+- Bulk featured status management
+- Content cleanup and maintenance tools
+- Media file management and orphan detection
+
+**Analytics & Reporting:**
+- Detailed analytics for projects, articles, inquiries, and page views
+- Time-based filtering (7d, 30d, 90d, 1y)
+- Traffic analysis and user behavior insights
+- Performance metrics and reading time statistics
+
+**Inquiry Management:**
+- Full inquiry lifecycle management
+- Status tracking (new, pending, in_progress, resolved, closed)
+- Priority levels and assignment management
+- Admin notes and communication history
+
+**User Management:**
+- Profile analytics and user statistics
+- Role management and access control
+- Active user tracking and verification status
+
+### Admin Security Features
+- All admin functions require explicit privilege verification
+- Row Level Security prevents unauthorized data access
+- Audit trail via `migration_log` table
+- Secure bulk operations with transaction safety
+- Input validation and SQL injection protection
 
 ### API Security
 - **Authentication Required**: All database operations require valid session
@@ -147,22 +250,50 @@ CREATE POLICY "Admins can view all profiles" ON profiles
 1. `002_streamlined_auth_system.sql`: Streamlined authentication system with automatic profile creation
 2. `003_execute_streamlined_auth.sql`: Execute streamlined authentication migration
 3. `004_test_streamlined_auth.sql`: Test and verify streamlined authentication system
+4. `004_admin_rls_policies.sql`: Comprehensive admin RLS policies for all tables
+5. `005_admin_statistics_functions.sql`: Admin dashboard and analytics functions
+6. `006_admin_operation_functions.sql`: Bulk operations and content management functions
 
 ### Database Functions
 **Complete function reference available in `info/supabase/functions_split/functions_public.json`**
 
 **Active RPC Functions:**
+
+**Authentication & User Management:**
 - `handle_new_user()`: Database trigger function for automatic profile creation
 - `get_user_role(user_id_input UUID, return_format TEXT)`: Role checking function
   - `return_format='simple'`: Returns `{is_admin: boolean}`
   - `return_format='detailed'`: Returns full role info with verification status
 - `update_user_login(user_id_input UUID)`: Updates login timestamp and count
 - `is_admin_user(user_id_input UUID)`: Simple boolean admin check
+- `is_current_user_admin()`: Helper function for admin privilege checking
+- `check_email_exists(email TEXT)`: Email existence verification
+- `get_profile_analytics()`: Profile statistics and analytics
+
+**Content & Analytics:**
 - `increment_view_count(table_type TEXT, record_id UUID)`: Secure view counter
   - Protected against SQL injection with table type validation
   - Supports 'projects' and 'articles' tables
-- `check_email_exists(email TEXT)`: Email existence verification
-- `get_profile_analytics()`: Profile statistics and analytics
+
+**Admin Dashboard Functions:**
+- `get_admin_dashboard_stats()`: Complete dashboard overview statistics
+- `get_projects_analytics(time_period TEXT)`: Detailed projects analytics
+- `get_articles_analytics(time_period TEXT)`: Comprehensive articles analytics
+- `get_inquiries_analytics(time_period TEXT)`: Inquiry management analytics
+- `get_page_views_analytics(time_period TEXT)`: Page views and traffic analytics
+
+**Admin Bulk Operations:**
+- `bulk_update_projects_published(project_ids UUID[], published_status BOOLEAN)`: Bulk publish/unpublish projects
+- `bulk_update_articles_published(article_ids UUID[], published_status BOOLEAN)`: Bulk publish/unpublish articles
+- `bulk_update_projects_featured(project_ids UUID[], featured_status BOOLEAN)`: Bulk feature/unfeature projects
+- `bulk_update_articles_featured(article_ids UUID[], featured_status BOOLEAN)`: Bulk feature/unfeature articles
+
+**Admin Content Management:**
+- `update_inquiry_status(inquiry_id UUID, new_status TEXT, admin_notes TEXT, priority_level INTEGER)`: Update inquiry status with notes
+- `bulk_update_inquiries_status(inquiry_ids UUID[], new_status TEXT, admin_notes TEXT)`: Bulk update inquiry status
+- `cleanup_unpublished_content(days_old INTEGER, dry_run BOOLEAN)`: Clean up old unpublished content
+- `reset_view_counts(content_type TEXT, confirm_reset BOOLEAN)`: Reset view counts for maintenance
+- `find_orphaned_media_files()`: Find media files not referenced in content
 
 **Function Documentation:**
 Complete function definitions and schemas are maintained in `info/supabase/functions_split/` directory, organized by database schema.

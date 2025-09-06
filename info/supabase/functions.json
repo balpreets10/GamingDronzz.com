@@ -34,18 +34,18 @@
     {
         "schema_name": "extensions",
         "function_name": "armor",
-        "arguments": "bytea, text[], text[]",
-        "return_type": "text",
-        "function_type": "Function",
-        "function_definition": "CREATE OR REPLACE FUNCTION extensions.armor(bytea, text[], text[])\n RETURNS text\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pg_armor$function$\n"
-    },
-    {
-        "schema_name": "extensions",
-        "function_name": "armor",
         "arguments": "bytea",
         "return_type": "text",
         "function_type": "Function",
         "function_definition": "CREATE OR REPLACE FUNCTION extensions.armor(bytea)\n RETURNS text\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pg_armor$function$\n"
+    },
+    {
+        "schema_name": "extensions",
+        "function_name": "armor",
+        "arguments": "bytea, text[], text[]",
+        "return_type": "text",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION extensions.armor(bytea, text[], text[])\n RETURNS text\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pg_armor$function$\n"
     },
     {
         "schema_name": "extensions",
@@ -170,18 +170,18 @@
     {
         "schema_name": "extensions",
         "function_name": "hmac",
-        "arguments": "text, text, text",
-        "return_type": "bytea",
-        "function_type": "Function",
-        "function_definition": "CREATE OR REPLACE FUNCTION extensions.hmac(text, text, text)\n RETURNS bytea\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pg_hmac$function$\n"
-    },
-    {
-        "schema_name": "extensions",
-        "function_name": "hmac",
         "arguments": "bytea, bytea, text",
         "return_type": "bytea",
         "function_type": "Function",
         "function_definition": "CREATE OR REPLACE FUNCTION extensions.hmac(bytea, bytea, text)\n RETURNS bytea\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pg_hmac$function$\n"
+    },
+    {
+        "schema_name": "extensions",
+        "function_name": "hmac",
+        "arguments": "text, text, text",
+        "return_type": "bytea",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION extensions.hmac(text, text, text)\n RETURNS bytea\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pg_hmac$function$\n"
     },
     {
         "schema_name": "extensions",
@@ -226,6 +226,14 @@
     {
         "schema_name": "extensions",
         "function_name": "pgp_pub_decrypt",
+        "arguments": "bytea, bytea",
+        "return_type": "text",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_pub_decrypt(bytea, bytea)\n RETURNS text\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_pub_decrypt_text$function$\n"
+    },
+    {
+        "schema_name": "extensions",
+        "function_name": "pgp_pub_decrypt",
         "arguments": "bytea, bytea, text, text",
         "return_type": "text",
         "function_type": "Function",
@@ -241,11 +249,11 @@
     },
     {
         "schema_name": "extensions",
-        "function_name": "pgp_pub_decrypt",
-        "arguments": "bytea, bytea",
-        "return_type": "text",
+        "function_name": "pgp_pub_decrypt_bytea",
+        "arguments": "bytea, bytea, text",
+        "return_type": "bytea",
         "function_type": "Function",
-        "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_pub_decrypt(bytea, bytea)\n RETURNS text\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_pub_decrypt_text$function$\n"
+        "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_pub_decrypt_bytea(bytea, bytea, text)\n RETURNS bytea\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_pub_decrypt_bytea$function$\n"
     },
     {
         "schema_name": "extensions",
@@ -262,14 +270,6 @@
         "return_type": "bytea",
         "function_type": "Function",
         "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_pub_decrypt_bytea(bytea, bytea)\n RETURNS bytea\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_pub_decrypt_bytea$function$\n"
-    },
-    {
-        "schema_name": "extensions",
-        "function_name": "pgp_pub_decrypt_bytea",
-        "arguments": "bytea, bytea, text",
-        "return_type": "bytea",
-        "function_type": "Function",
-        "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_pub_decrypt_bytea(bytea, bytea, text)\n RETURNS bytea\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_pub_decrypt_bytea$function$\n"
     },
     {
         "schema_name": "extensions",
@@ -306,18 +306,18 @@
     {
         "schema_name": "extensions",
         "function_name": "pgp_sym_decrypt",
-        "arguments": "bytea, text",
-        "return_type": "text",
-        "function_type": "Function",
-        "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_sym_decrypt(bytea, text)\n RETURNS text\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_sym_decrypt_text$function$\n"
-    },
-    {
-        "schema_name": "extensions",
-        "function_name": "pgp_sym_decrypt",
         "arguments": "bytea, text, text",
         "return_type": "text",
         "function_type": "Function",
         "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_sym_decrypt(bytea, text, text)\n RETURNS text\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_sym_decrypt_text$function$\n"
+    },
+    {
+        "schema_name": "extensions",
+        "function_name": "pgp_sym_decrypt",
+        "arguments": "bytea, text",
+        "return_type": "text",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_sym_decrypt(bytea, text)\n RETURNS text\n LANGUAGE c\n IMMUTABLE PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_sym_decrypt_text$function$\n"
     },
     {
         "schema_name": "extensions",
@@ -338,14 +338,6 @@
     {
         "schema_name": "extensions",
         "function_name": "pgp_sym_encrypt",
-        "arguments": "text, text",
-        "return_type": "bytea",
-        "function_type": "Function",
-        "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_sym_encrypt(text, text)\n RETURNS bytea\n LANGUAGE c\n PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_sym_encrypt_text$function$\n"
-    },
-    {
-        "schema_name": "extensions",
-        "function_name": "pgp_sym_encrypt",
         "arguments": "text, text, text",
         "return_type": "bytea",
         "function_type": "Function",
@@ -353,11 +345,11 @@
     },
     {
         "schema_name": "extensions",
-        "function_name": "pgp_sym_encrypt_bytea",
-        "arguments": "bytea, text, text",
+        "function_name": "pgp_sym_encrypt",
+        "arguments": "text, text",
         "return_type": "bytea",
         "function_type": "Function",
-        "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_sym_encrypt_bytea(bytea, text, text)\n RETURNS bytea\n LANGUAGE c\n PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_sym_encrypt_bytea$function$\n"
+        "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_sym_encrypt(text, text)\n RETURNS bytea\n LANGUAGE c\n PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_sym_encrypt_text$function$\n"
     },
     {
         "schema_name": "extensions",
@@ -366,6 +358,14 @@
         "return_type": "bytea",
         "function_type": "Function",
         "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_sym_encrypt_bytea(bytea, text)\n RETURNS bytea\n LANGUAGE c\n PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_sym_encrypt_bytea$function$\n"
+    },
+    {
+        "schema_name": "extensions",
+        "function_name": "pgp_sym_encrypt_bytea",
+        "arguments": "bytea, text, text",
+        "return_type": "bytea",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION extensions.pgp_sym_encrypt_bytea(bytea, text, text)\n RETURNS bytea\n LANGUAGE c\n PARALLEL SAFE STRICT\nAS '$libdir/pgcrypto', $function$pgp_sym_encrypt_bytea$function$\n"
     },
     {
         "schema_name": "extensions",
@@ -537,11 +537,67 @@
     },
     {
         "schema_name": "public",
+        "function_name": "auth_is_admin",
+        "arguments": "",
+        "return_type": "boolean",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.auth_is_admin()\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\r\n  SELECT COALESCE(\r\n    (SELECT role = 'admin' \r\n     FROM profiles \r\n     WHERE user_id = auth.uid() \r\n     AND is_active = true\r\n     LIMIT 1), \r\n    false\r\n  );\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "bulk_update_articles_featured",
+        "arguments": "article_ids uuid[], featured_status boolean",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.bulk_update_articles_featured(article_ids uuid[], featured_status boolean)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    updated_count integer;\r\n    failed_ids uuid[];\r\n    result jsonb;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Validate input\r\n    IF article_ids IS NULL OR array_length(article_ids, 1) IS NULL THEN\r\n        RAISE EXCEPTION 'Article IDs array cannot be empty.';\r\n    END IF;\r\n\r\n    -- Update articles\r\n    WITH updated_articles AS (\r\n        UPDATE articles \r\n        SET \r\n            featured = featured_status,\r\n            updated_at = NOW()\r\n        WHERE id = ANY(article_ids)\r\n        RETURNING id\r\n    )\r\n    SELECT COUNT(*) INTO updated_count FROM updated_articles;\r\n\r\n    -- Find any failed IDs\r\n    SELECT array_agg(id) INTO failed_ids\r\n    FROM unnest(article_ids) AS id\r\n    WHERE id NOT IN (SELECT articles.id FROM articles WHERE articles.id = id);\r\n\r\n    result := jsonb_build_object(\r\n        'success', true,\r\n        'updated_count', updated_count,\r\n        'requested_count', array_length(article_ids, 1),\r\n        'failed_ids', COALESCE(failed_ids, ARRAY[]::uuid[]),\r\n        'operation', CASE WHEN featured_status THEN 'feature' ELSE 'unfeature' END,\r\n        'executed_at', NOW()\r\n    );\r\n\r\n    RETURN result;\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "bulk_update_articles_published",
+        "arguments": "article_ids uuid[], published_status boolean, update_published_at boolean DEFAULT true",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.bulk_update_articles_published(article_ids uuid[], published_status boolean, update_published_at boolean DEFAULT true)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    updated_count integer;\r\n    failed_ids uuid[];\r\n    result jsonb;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Validate input\r\n    IF article_ids IS NULL OR array_length(article_ids, 1) IS NULL THEN\r\n        RAISE EXCEPTION 'Article IDs array cannot be empty.';\r\n    END IF;\r\n\r\n    -- Update articles with published_at timestamp handling\r\n    WITH updated_articles AS (\r\n        UPDATE articles \r\n        SET \r\n            published = published_status,\r\n            published_at = CASE \r\n                WHEN published_status = true AND update_published_at THEN NOW()\r\n                WHEN published_status = false THEN NULL\r\n                ELSE published_at\r\n            END,\r\n            updated_at = NOW()\r\n        WHERE id = ANY(article_ids)\r\n        RETURNING id\r\n    )\r\n    SELECT COUNT(*) INTO updated_count FROM updated_articles;\r\n\r\n    -- Find any failed IDs\r\n    SELECT array_agg(id) INTO failed_ids\r\n    FROM unnest(article_ids) AS id\r\n    WHERE id NOT IN (SELECT articles.id FROM articles WHERE articles.id = id);\r\n\r\n    result := jsonb_build_object(\r\n        'success', true,\r\n        'updated_count', updated_count,\r\n        'requested_count', array_length(article_ids, 1),\r\n        'failed_ids', COALESCE(failed_ids, ARRAY[]::uuid[]),\r\n        'operation', CASE WHEN published_status THEN 'publish' ELSE 'unpublish' END,\r\n        'executed_at', NOW()\r\n    );\r\n\r\n    RETURN result;\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "bulk_update_inquiries_status",
+        "arguments": "inquiry_ids uuid[], new_status text, admin_notes text DEFAULT NULL::text",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.bulk_update_inquiries_status(inquiry_ids uuid[], new_status text, admin_notes text DEFAULT NULL::text)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    updated_count integer;\r\n    failed_ids uuid[];\r\n    admin_user_id uuid;\r\n    result jsonb;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Validate input\r\n    IF inquiry_ids IS NULL OR array_length(inquiry_ids, 1) IS NULL THEN\r\n        RAISE EXCEPTION 'Inquiry IDs array cannot be empty.';\r\n    END IF;\r\n\r\n    -- Validate status\r\n    IF new_status NOT IN ('new', 'pending', 'in_progress', 'resolved', 'closed') THEN\r\n        RAISE EXCEPTION 'Invalid status. Must be one of: new, pending, in_progress, resolved, closed';\r\n    END IF;\r\n\r\n    -- Get admin user ID\r\n    SELECT user_id INTO admin_user_id FROM profiles WHERE user_id = auth.uid();\r\n\r\n    -- Update inquiries\r\n    WITH updated_inquiries AS (\r\n        UPDATE inquiries \r\n        SET \r\n            status = new_status,\r\n            notes = CASE \r\n                WHEN admin_notes IS NOT NULL THEN \r\n                    COALESCE(notes || E'\\n\\n', '') || '[' || NOW()::text || ' - Admin]: ' || admin_notes\r\n                ELSE notes\r\n            END,\r\n            assigned_to = CASE \r\n                WHEN new_status IN ('pending', 'in_progress') THEN admin_user_id\r\n                ELSE assigned_to\r\n            END,\r\n            updated_at = NOW()\r\n        WHERE id = ANY(inquiry_ids)\r\n        RETURNING id\r\n    )\r\n    SELECT COUNT(*) INTO updated_count FROM updated_inquiries;\r\n\r\n    -- Find any failed IDs\r\n    SELECT array_agg(id) INTO failed_ids\r\n    FROM unnest(inquiry_ids) AS id\r\n    WHERE id NOT IN (SELECT inquiries.id FROM inquiries WHERE inquiries.id = id);\r\n\r\n    result := jsonb_build_object(\r\n        'success', true,\r\n        'updated_count', updated_count,\r\n        'requested_count', array_length(inquiry_ids, 1),\r\n        'failed_ids', COALESCE(failed_ids, ARRAY[]::uuid[]),\r\n        'new_status', new_status,\r\n        'executed_at', NOW()\r\n    );\r\n\r\n    RETURN result;\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "bulk_update_projects_featured",
+        "arguments": "project_ids uuid[], featured_status boolean",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.bulk_update_projects_featured(project_ids uuid[], featured_status boolean)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    updated_count integer;\r\n    failed_ids uuid[];\r\n    result jsonb;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Validate input\r\n    IF project_ids IS NULL OR array_length(project_ids, 1) IS NULL THEN\r\n        RAISE EXCEPTION 'Project IDs array cannot be empty.';\r\n    END IF;\r\n\r\n    -- Update projects\r\n    WITH updated_projects AS (\r\n        UPDATE projects \r\n        SET \r\n            featured = featured_status,\r\n            updated_at = NOW()\r\n        WHERE id = ANY(project_ids)\r\n        RETURNING id\r\n    )\r\n    SELECT COUNT(*) INTO updated_count FROM updated_projects;\r\n\r\n    -- Find any failed IDs\r\n    SELECT array_agg(id) INTO failed_ids\r\n    FROM unnest(project_ids) AS id\r\n    WHERE id NOT IN (SELECT projects.id FROM projects WHERE projects.id = id);\r\n\r\n    result := jsonb_build_object(\r\n        'success', true,\r\n        'updated_count', updated_count,\r\n        'requested_count', array_length(project_ids, 1),\r\n        'failed_ids', COALESCE(failed_ids, ARRAY[]::uuid[]),\r\n        'operation', CASE WHEN featured_status THEN 'feature' ELSE 'unfeature' END,\r\n        'executed_at', NOW()\r\n    );\r\n\r\n    RETURN result;\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "bulk_update_projects_published",
+        "arguments": "project_ids uuid[], published_status boolean, update_published_at boolean DEFAULT true",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.bulk_update_projects_published(project_ids uuid[], published_status boolean, update_published_at boolean DEFAULT true)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    updated_count integer;\r\n    failed_ids uuid[];\r\n    result jsonb;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Validate input\r\n    IF project_ids IS NULL OR array_length(project_ids, 1) IS NULL THEN\r\n        RAISE EXCEPTION 'Project IDs array cannot be empty.';\r\n    END IF;\r\n\r\n    -- Update projects with error handling\r\n    WITH updated_projects AS (\r\n        UPDATE projects \r\n        SET \r\n            published = published_status,\r\n            updated_at = NOW()\r\n        WHERE id = ANY(project_ids)\r\n        RETURNING id\r\n    )\r\n    SELECT COUNT(*) INTO updated_count FROM updated_projects;\r\n\r\n    -- Find any failed IDs\r\n    SELECT array_agg(id) INTO failed_ids\r\n    FROM unnest(project_ids) AS id\r\n    WHERE id NOT IN (SELECT projects.id FROM projects WHERE projects.id = id);\r\n\r\n    result := jsonb_build_object(\r\n        'success', true,\r\n        'updated_count', updated_count,\r\n        'requested_count', array_length(project_ids, 1),\r\n        'failed_ids', COALESCE(failed_ids, ARRAY[]::uuid[]),\r\n        'operation', CASE WHEN published_status THEN 'publish' ELSE 'unpublish' END,\r\n        'executed_at', NOW()\r\n    );\r\n\r\n    RETURN result;\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
         "function_name": "check_email_exists",
         "arguments": "email_input text",
         "return_type": "boolean",
         "function_type": "Function",
         "function_definition": "CREATE OR REPLACE FUNCTION public.check_email_exists(email_input text)\n RETURNS boolean\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nBEGIN\r\n    RETURN EXISTS (\r\n        SELECT 1 FROM auth.users WHERE email = email_input\r\n    );\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "cleanup_unpublished_content",
+        "arguments": "days_old integer DEFAULT 90, dry_run boolean DEFAULT true",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.cleanup_unpublished_content(days_old integer DEFAULT 90, dry_run boolean DEFAULT true)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    cutoff_date timestamp with time zone;\r\n    projects_to_delete integer;\r\n    articles_to_delete integer;\r\n    deleted_projects integer := 0;\r\n    deleted_articles integer := 0;\r\n    result jsonb;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Validate input\r\n    IF days_old < 1 THEN\r\n        RAISE EXCEPTION 'Days old must be at least 1';\r\n    END IF;\r\n\r\n    cutoff_date := NOW() - INTERVAL '1 day' * days_old;\r\n\r\n    -- Count items to be deleted\r\n    SELECT COUNT(*) INTO projects_to_delete\r\n    FROM projects \r\n    WHERE published = false AND created_at < cutoff_date;\r\n\r\n    SELECT COUNT(*) INTO articles_to_delete\r\n    FROM articles \r\n    WHERE published = false AND created_at < cutoff_date;\r\n\r\n    -- If not dry run, perform deletions\r\n    IF NOT dry_run THEN\r\n        -- Delete unpublished projects\r\n        WITH deleted_proj AS (\r\n            DELETE FROM projects \r\n            WHERE published = false AND created_at < cutoff_date\r\n            RETURNING id\r\n        )\r\n        SELECT COUNT(*) INTO deleted_projects FROM deleted_proj;\r\n\r\n        -- Delete unpublished articles\r\n        WITH deleted_art AS (\r\n            DELETE FROM articles \r\n            WHERE published = false AND created_at < cutoff_date\r\n            RETURNING id\r\n        )\r\n        SELECT COUNT(*) INTO deleted_articles FROM deleted_art;\r\n    END IF;\r\n\r\n    result := jsonb_build_object(\r\n        'dry_run', dry_run,\r\n        'cutoff_date', cutoff_date,\r\n        'days_old', days_old,\r\n        'projects_affected', projects_to_delete,\r\n        'articles_affected', articles_to_delete,\r\n        'projects_deleted', deleted_projects,\r\n        'articles_deleted', deleted_articles,\r\n        'executed_at', NOW()\r\n    );\r\n\r\n    RETURN result;\r\nEND;\r\n$function$\n"
     },
     {
         "schema_name": "public",
@@ -553,11 +609,59 @@
     },
     {
         "schema_name": "public",
+        "function_name": "find_orphaned_media_files",
+        "arguments": "",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.find_orphaned_media_files()\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    orphaned_files jsonb;\r\n    orphaned_count integer;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Find media files not referenced in articles or projects\r\n    WITH orphaned AS (\r\n        SELECT mf.* FROM media_files mf\r\n        WHERE NOT EXISTS (\r\n            SELECT 1 FROM articles a \r\n            WHERE a.featured_image LIKE '%' || mf.filename || '%'\r\n               OR a.content LIKE '%' || mf.filename || '%'\r\n        )\r\n        AND NOT EXISTS (\r\n            SELECT 1 FROM projects p \r\n            WHERE p.image_url LIKE '%' || mf.filename || '%'\r\n        )\r\n        ORDER BY mf.created_at DESC\r\n    )\r\n    SELECT jsonb_agg(\r\n        jsonb_build_object(\r\n            'id', id,\r\n            'filename', filename,\r\n            'original_filename', original_filename,\r\n            'file_path', file_path,\r\n            'file_size', file_size,\r\n            'mime_type', mime_type,\r\n            'created_at', created_at\r\n        )\r\n    ), COUNT(*) \r\n    INTO orphaned_files, orphaned_count\r\n    FROM orphaned;\r\n\r\n    RETURN jsonb_build_object(\r\n        'orphaned_files', COALESCE(orphaned_files, '[]'::jsonb),\r\n        'count', COALESCE(orphaned_count, 0),\r\n        'generated_at', NOW()\r\n    );\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "get_admin_dashboard_stats",
+        "arguments": "",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.get_admin_dashboard_stats()\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    stats jsonb;\r\n    total_projects integer;\r\n    published_projects integer;\r\n    draft_projects integer;\r\n    featured_projects integer;\r\n    total_articles integer;\r\n    published_articles integer;\r\n    draft_articles integer;\r\n    featured_articles integer;\r\n    total_inquiries integer;\r\n    new_inquiries integer;\r\n    pending_inquiries integer;\r\n    resolved_inquiries integer;\r\n    total_page_views bigint;\r\n    total_users integer;\r\n    admin_users integer;\r\n    active_users integer;\r\n    total_media_files integer;\r\n    recent_page_views bigint;\r\nBEGIN\r\n    -- Check if user is admin\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Projects statistics\r\n    SELECT \r\n        COUNT(*) INTO total_projects \r\n    FROM projects;\r\n    \r\n    SELECT \r\n        COUNT(*) INTO published_projects \r\n    FROM projects WHERE published = true;\r\n    \r\n    SELECT \r\n        COUNT(*) INTO draft_projects \r\n    FROM projects WHERE published = false;\r\n    \r\n    SELECT \r\n        COUNT(*) INTO featured_projects \r\n    FROM projects WHERE featured = true;\r\n\r\n    -- Articles statistics\r\n    SELECT \r\n        COUNT(*) INTO total_articles \r\n    FROM articles;\r\n    \r\n    SELECT \r\n        COUNT(*) INTO published_articles \r\n    FROM articles WHERE published = true;\r\n    \r\n    SELECT \r\n        COUNT(*) INTO draft_articles \r\n    FROM articles WHERE published = false;\r\n    \r\n    SELECT \r\n        COUNT(*) INTO featured_articles \r\n    FROM articles WHERE featured = true;\r\n\r\n    -- Inquiries statistics\r\n    SELECT \r\n        COUNT(*) INTO total_inquiries \r\n    FROM inquiries;\r\n    \r\n    SELECT \r\n        COUNT(*) INTO new_inquiries \r\n    FROM inquiries WHERE status = 'new';\r\n    \r\n    SELECT \r\n        COUNT(*) INTO pending_inquiries \r\n    FROM inquiries WHERE status IN ('pending', 'in_progress');\r\n    \r\n    SELECT \r\n        COUNT(*) INTO resolved_inquiries \r\n    FROM inquiries WHERE status IN ('resolved', 'closed');\r\n\r\n    -- Page views statistics\r\n    SELECT \r\n        COUNT(*) INTO total_page_views \r\n    FROM page_views;\r\n    \r\n    SELECT \r\n        COUNT(*) INTO recent_page_views \r\n    FROM page_views \r\n    WHERE created_at >= NOW() - INTERVAL '30 days';\r\n\r\n    -- Users statistics\r\n    SELECT \r\n        COUNT(*) INTO total_users \r\n    FROM profiles;\r\n    \r\n    SELECT \r\n        COUNT(*) INTO admin_users \r\n    FROM profiles WHERE role = 'admin';\r\n    \r\n    SELECT \r\n        COUNT(*) INTO active_users \r\n    FROM profiles WHERE is_active = true;\r\n\r\n    -- Media files statistics\r\n    SELECT \r\n        COUNT(*) INTO total_media_files \r\n    FROM media_files;\r\n\r\n    -- Build comprehensive statistics object\r\n    stats := jsonb_build_object(\r\n        'projects', jsonb_build_object(\r\n            'total', total_projects,\r\n            'published', published_projects,\r\n            'drafts', draft_projects,\r\n            'featured', featured_projects\r\n        ),\r\n        'articles', jsonb_build_object(\r\n            'total', total_articles,\r\n            'published', published_articles,\r\n            'drafts', draft_articles,\r\n            'featured', featured_articles\r\n        ),\r\n        'inquiries', jsonb_build_object(\r\n            'total', total_inquiries,\r\n            'new', new_inquiries,\r\n            'pending', pending_inquiries,\r\n            'resolved', resolved_inquiries\r\n        ),\r\n        'analytics', jsonb_build_object(\r\n            'total_page_views', total_page_views,\r\n            'recent_page_views', recent_page_views\r\n        ),\r\n        'users', jsonb_build_object(\r\n            'total', total_users,\r\n            'admins', admin_users,\r\n            'active', active_users\r\n        ),\r\n        'media', jsonb_build_object(\r\n            'total_files', total_media_files\r\n        ),\r\n        'generated_at', NOW()\r\n    );\r\n\r\n    RETURN stats;\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "get_articles_analytics",
+        "arguments": "time_period text DEFAULT '30d'::text",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.get_articles_analytics(time_period text DEFAULT '30d'::text)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    result jsonb;\r\n    period_filter timestamp with time zone;\r\n    articles_by_category jsonb;\r\n    articles_by_author jsonb;\r\n    top_articles jsonb;\r\n    recent_articles jsonb;\r\n    reading_time_stats jsonb;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Set time period filter\r\n    CASE time_period\r\n        WHEN '7d' THEN period_filter := NOW() - INTERVAL '7 days';\r\n        WHEN '30d' THEN period_filter := NOW() - INTERVAL '30 days';\r\n        WHEN '90d' THEN period_filter := NOW() - INTERVAL '90 days';\r\n        WHEN '1y' THEN period_filter := NOW() - INTERVAL '1 year';\r\n        ELSE period_filter := NOW() - INTERVAL '30 days';\r\n    END CASE;\r\n\r\n    -- Articles by category\r\n    SELECT jsonb_object_agg(category, count) INTO articles_by_category\r\n    FROM (\r\n        SELECT COALESCE(category, 'uncategorized') as category, COUNT(*) as count\r\n        FROM articles\r\n        WHERE published = true\r\n        GROUP BY category\r\n        ORDER BY count DESC\r\n    ) cat_stats;\r\n\r\n    -- Articles by author\r\n    SELECT jsonb_object_agg(author_name, count) INTO articles_by_author\r\n    FROM (\r\n        SELECT COALESCE(p.full_name, p.email) as author_name, COUNT(*) as count\r\n        FROM articles a\r\n        JOIN profiles p ON a.author_id = p.user_id\r\n        WHERE a.published = true\r\n        GROUP BY p.user_id, p.full_name, p.email\r\n        ORDER BY count DESC\r\n    ) author_stats;\r\n\r\n    -- Top articles by view count\r\n    SELECT jsonb_agg(\r\n        jsonb_build_object(\r\n            'id', id,\r\n            'title', title,\r\n            'slug', slug,\r\n            'view_count', view_count,\r\n            'category', category,\r\n            'published_at', published_at\r\n        )\r\n    ) INTO top_articles\r\n    FROM (\r\n        SELECT * FROM articles\r\n        WHERE published = true\r\n        ORDER BY view_count DESC\r\n        LIMIT 10\r\n    ) top;\r\n\r\n    -- Recent articles\r\n    SELECT jsonb_agg(\r\n        jsonb_build_object(\r\n            'id', id,\r\n            'title', title,\r\n            'slug', slug,\r\n            'published', published,\r\n            'featured', featured,\r\n            'view_count', view_count,\r\n            'created_at', created_at,\r\n            'published_at', published_at\r\n        )\r\n    ) INTO recent_articles\r\n    FROM (\r\n        SELECT * FROM articles\r\n        WHERE created_at >= period_filter\r\n        ORDER BY created_at DESC\r\n        LIMIT 10\r\n    ) recent;\r\n\r\n    -- Reading time statistics\r\n    SELECT jsonb_build_object(\r\n        'avg_reading_time', COALESCE(AVG(reading_time_minutes), 0),\r\n        'min_reading_time', COALESCE(MIN(reading_time_minutes), 0),\r\n        'max_reading_time', COALESCE(MAX(reading_time_minutes), 0)\r\n    ) INTO reading_time_stats\r\n    FROM articles \r\n    WHERE published = true AND reading_time_minutes IS NOT NULL;\r\n\r\n    result := jsonb_build_object(\r\n        'time_period', time_period,\r\n        'articles_by_category', COALESCE(articles_by_category, '{}'::jsonb),\r\n        'articles_by_author', COALESCE(articles_by_author, '{}'::jsonb),\r\n        'top_articles', COALESCE(top_articles, '[]'::jsonb),\r\n        'recent_articles', COALESCE(recent_articles, '[]'::jsonb),\r\n        'reading_time_stats', COALESCE(reading_time_stats, '{}'::jsonb),\r\n        'generated_at', NOW()\r\n    );\r\n\r\n    RETURN result;\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "get_inquiries_analytics",
+        "arguments": "time_period text DEFAULT '30d'::text",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.get_inquiries_analytics(time_period text DEFAULT '30d'::text)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    result jsonb;\r\n    period_filter timestamp with time zone;\r\n    inquiries_by_status jsonb;\r\n    inquiries_by_priority jsonb;\r\n    recent_inquiries jsonb;\r\n    response_time_stats jsonb;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Set time period filter\r\n    CASE time_period\r\n        WHEN '7d' THEN period_filter := NOW() - INTERVAL '7 days';\r\n        WHEN '30d' THEN period_filter := NOW() - INTERVAL '30 days';\r\n        WHEN '90d' THEN period_filter := NOW() - INTERVAL '90 days';\r\n        WHEN '1y' THEN period_filter := NOW() - INTERVAL '1 year';\r\n        ELSE period_filter := NOW() - INTERVAL '30 days';\r\n    END CASE;\r\n\r\n    -- Inquiries by status\r\n    SELECT jsonb_object_agg(status, count) INTO inquiries_by_status\r\n    FROM (\r\n        SELECT status, COUNT(*) as count\r\n        FROM inquiries\r\n        WHERE created_at >= period_filter\r\n        GROUP BY status\r\n        ORDER BY count DESC\r\n    ) status_stats;\r\n\r\n    -- Inquiries by priority\r\n    SELECT jsonb_object_agg(priority::text, count) INTO inquiries_by_priority\r\n    FROM (\r\n        SELECT COALESCE(priority, 0) as priority, COUNT(*) as count\r\n        FROM inquiries\r\n        WHERE created_at >= period_filter\r\n        GROUP BY priority\r\n        ORDER BY priority DESC\r\n    ) priority_stats;\r\n\r\n    -- Recent inquiries\r\n    SELECT jsonb_agg(\r\n        jsonb_build_object(\r\n            'id', id,\r\n            'name', name,\r\n            'email', email,\r\n            'company', company,\r\n            'subject', subject,\r\n            'status', status,\r\n            'priority', priority,\r\n            'created_at', created_at,\r\n            'updated_at', updated_at\r\n        )\r\n    ) INTO recent_inquiries\r\n    FROM (\r\n        SELECT * FROM inquiries\r\n        WHERE created_at >= period_filter\r\n        ORDER BY created_at DESC\r\n        LIMIT 10\r\n    ) recent;\r\n\r\n    result := jsonb_build_object(\r\n        'time_period', time_period,\r\n        'inquiries_by_status', COALESCE(inquiries_by_status, '{}'::jsonb),\r\n        'inquiries_by_priority', COALESCE(inquiries_by_priority, '{}'::jsonb),\r\n        'recent_inquiries', COALESCE(recent_inquiries, '[]'::jsonb),\r\n        'total_inquiries_period', (\r\n            SELECT COUNT(*) FROM inquiries WHERE created_at >= period_filter\r\n        ),\r\n        'generated_at', NOW()\r\n    );\r\n\r\n    RETURN result;\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "get_page_views_analytics",
+        "arguments": "time_period text DEFAULT '30d'::text",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.get_page_views_analytics(time_period text DEFAULT '30d'::text)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    result jsonb;\r\n    period_filter timestamp with time zone;\r\n    views_by_page jsonb;\r\n    views_by_day jsonb;\r\n    top_referrers jsonb;\r\n    unique_visitors integer;\r\n    total_views integer;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Set time period filter\r\n    CASE time_period\r\n        WHEN '7d' THEN period_filter := NOW() - INTERVAL '7 days';\r\n        WHEN '30d' THEN period_filter := NOW() - INTERVAL '30 days';\r\n        WHEN '90d' THEN period_filter := NOW() - INTERVAL '90 days';\r\n        WHEN '1y' THEN period_filter := NOW() - INTERVAL '1 year';\r\n        ELSE period_filter := NOW() - INTERVAL '30 days';\r\n    END CASE;\r\n\r\n    -- Views by page\r\n    SELECT jsonb_object_agg(page_path, count) INTO views_by_page\r\n    FROM (\r\n        SELECT page_path, COUNT(*) as count\r\n        FROM page_views\r\n        WHERE created_at >= period_filter\r\n        GROUP BY page_path\r\n        ORDER BY count DESC\r\n        LIMIT 20\r\n    ) page_stats;\r\n\r\n    -- Views by day (for charts)\r\n    SELECT jsonb_object_agg(view_date, count) INTO views_by_day\r\n    FROM (\r\n        SELECT DATE(created_at) as view_date, COUNT(*) as count\r\n        FROM page_views\r\n        WHERE created_at >= period_filter\r\n        GROUP BY DATE(created_at)\r\n        ORDER BY view_date ASC\r\n    ) daily_stats;\r\n\r\n    -- Top referrers\r\n    SELECT jsonb_object_agg(referrer, count) INTO top_referrers\r\n    FROM (\r\n        SELECT COALESCE(referrer, 'direct') as referrer, COUNT(*) as count\r\n        FROM page_views\r\n        WHERE created_at >= period_filter\r\n        GROUP BY referrer\r\n        ORDER BY count DESC\r\n        LIMIT 10\r\n    ) referrer_stats;\r\n\r\n    -- Unique visitors (by session_id)\r\n    SELECT COUNT(DISTINCT session_id) INTO unique_visitors\r\n    FROM page_views\r\n    WHERE created_at >= period_filter AND session_id IS NOT NULL;\r\n\r\n    -- Total views in period\r\n    SELECT COUNT(*) INTO total_views\r\n    FROM page_views\r\n    WHERE created_at >= period_filter;\r\n\r\n    result := jsonb_build_object(\r\n        'time_period', time_period,\r\n        'total_views', total_views,\r\n        'unique_visitors', unique_visitors,\r\n        'views_by_page', COALESCE(views_by_page, '{}'::jsonb),\r\n        'views_by_day', COALESCE(views_by_day, '{}'::jsonb),\r\n        'top_referrers', COALESCE(top_referrers, '{}'::jsonb),\r\n        'generated_at', NOW()\r\n    );\r\n\r\n    RETURN result;\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
         "function_name": "get_profile_analytics",
         "arguments": "",
         "return_type": "jsonb",
         "function_type": "Function",
         "function_definition": "CREATE OR REPLACE FUNCTION public.get_profile_analytics()\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    analytics JSONB;\r\n    thirty_days_ago TIMESTAMPTZ := NOW() - INTERVAL '30 days';\r\nBEGIN\r\n    SELECT jsonb_build_object(\r\n        'total_users', COUNT(*),\r\n        'verified_users', COUNT(*) FILTER (WHERE is_verified = true),\r\n        'completed_profiles', COUNT(*) FILTER (WHERE profile_completed = true),\r\n        'google_users', COUNT(*) FILTER (WHERE provider = 'google'),\r\n        'email_users', COUNT(*) FILTER (WHERE provider = 'email'),\r\n        'recent_signups', COUNT(*) FILTER (WHERE created_at >= thirty_days_ago),\r\n        'active_users_30d', COUNT(*) FILTER (WHERE last_login_at >= thirty_days_ago),\r\n        'completion_rate', ROUND((COUNT(*) FILTER (WHERE profile_completed = true)::float / NULLIF(COUNT(*), 0) * 100), 2)\r\n    ) INTO analytics\r\n    FROM public.profiles\r\n    WHERE is_active = true;\r\n    \r\n    RETURN analytics;\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "get_projects_analytics",
+        "arguments": "time_period text DEFAULT '30d'::text",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.get_projects_analytics(time_period text DEFAULT '30d'::text)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    result jsonb;\r\n    period_filter timestamp with time zone;\r\n    projects_by_category jsonb;\r\n    projects_by_status jsonb;\r\n    projects_by_year jsonb;\r\n    recent_projects jsonb;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Set time period filter\r\n    CASE time_period\r\n        WHEN '7d' THEN period_filter := NOW() - INTERVAL '7 days';\r\n        WHEN '30d' THEN period_filter := NOW() - INTERVAL '30 days';\r\n        WHEN '90d' THEN period_filter := NOW() - INTERVAL '90 days';\r\n        WHEN '1y' THEN period_filter := NOW() - INTERVAL '1 year';\r\n        ELSE period_filter := NOW() - INTERVAL '30 days';\r\n    END CASE;\r\n\r\n    -- Projects by category\r\n    SELECT jsonb_object_agg(category, count) INTO projects_by_category\r\n    FROM (\r\n        SELECT category, COUNT(*) as count\r\n        FROM projects\r\n        GROUP BY category\r\n        ORDER BY count DESC\r\n    ) cat_stats;\r\n\r\n    -- Projects by status\r\n    SELECT jsonb_object_agg(status, count) INTO projects_by_status\r\n    FROM (\r\n        SELECT status, COUNT(*) as count\r\n        FROM projects\r\n        GROUP BY status\r\n        ORDER BY count DESC\r\n    ) status_stats;\r\n\r\n    -- Projects by year\r\n    SELECT jsonb_object_agg(year::text, count) INTO projects_by_year\r\n    FROM (\r\n        SELECT year, COUNT(*) as count\r\n        FROM projects\r\n        GROUP BY year\r\n        ORDER BY year DESC\r\n    ) year_stats;\r\n\r\n    -- Recent projects (within time period)\r\n    SELECT jsonb_agg(\r\n        jsonb_build_object(\r\n            'id', id,\r\n            'title', title,\r\n            'slug', slug,\r\n            'category', category,\r\n            'status', status,\r\n            'published', published,\r\n            'featured', featured,\r\n            'created_at', created_at,\r\n            'updated_at', updated_at\r\n        )\r\n    ) INTO recent_projects\r\n    FROM (\r\n        SELECT * FROM projects\r\n        WHERE created_at >= period_filter\r\n        ORDER BY created_at DESC\r\n        LIMIT 10\r\n    ) recent;\r\n\r\n    result := jsonb_build_object(\r\n        'time_period', time_period,\r\n        'projects_by_category', COALESCE(projects_by_category, '{}'::jsonb),\r\n        'projects_by_status', COALESCE(projects_by_status, '{}'::jsonb),\r\n        'projects_by_year', COALESCE(projects_by_year, '{}'::jsonb),\r\n        'recent_projects', COALESCE(recent_projects, '[]'::jsonb),\r\n        'generated_at', NOW()\r\n    );\r\n\r\n    RETURN result;\r\nEND;\r\n$function$\n"
     },
     {
         "schema_name": "public",
@@ -573,7 +677,7 @@
         "arguments": "user_id_input uuid DEFAULT auth.uid(), return_format text DEFAULT 'simple'::text",
         "return_type": "jsonb",
         "function_type": "Function",
-        "function_definition": "CREATE OR REPLACE FUNCTION public.get_user_role(user_id_input uuid DEFAULT auth.uid(), return_format text DEFAULT 'simple'::text)\n RETURNS jsonb\n LANGUAGE plpgsql\n STABLE SECURITY DEFINER\nAS $function$DECLARE\r\n    user_profile RECORD;\r\n    result JSONB;\r\nBEGIN\r\n    SELECT p.role, p.is_verified, p.is_active\r\n    INTO user_profile\r\n    FROM public.profiles p\r\n    WHERE p.id = user_id_input;\r\n\r\n    IF NOT FOUND THEN\r\n        IF return_format = 'simple' THEN\r\n            RETURN jsonb_build_object('is_admin', false);\r\n        ELSE\r\n            RETURN jsonb_build_object(\r\n                'role', 'user',\r\n                'is_admin', false,\r\n                'is_verified', false,\r\n                'is_active', false,\r\n                'exists', false\r\n            );\r\n        END IF;\r\n    END IF;\r\n\r\n    IF return_format = 'simple' THEN\r\n        RETURN jsonb_build_object('is_admin', (user_profile.role = 'admin'));\r\n    ELSE\r\n        RETURN jsonb_build_object(\r\n            'role', user_profile.role,\r\n            'is_admin', (user_profile.role = 'admin'),\r\n            'is_verified', user_profile.is_verified,\r\n            'is_active', user_profile.is_active,\r\n            'exists', true\r\n        );\r\n    END IF;\r\nEND;$function$\n"
+        "function_definition": "CREATE OR REPLACE FUNCTION public.get_user_role(user_id_input uuid DEFAULT auth.uid(), return_format text DEFAULT 'simple'::text)\n RETURNS jsonb\n LANGUAGE plpgsql\n STABLE SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    user_profile RECORD;\r\n    result JSONB;\r\nBEGIN\r\n    SELECT p.role, p.is_verified, p.is_active\r\n    INTO user_profile\r\n    FROM public.profiles p\r\n    WHERE p.user_id = user_id_input; -- Fixed: was using p.id = user_id_input\r\n\r\n    IF NOT FOUND THEN\r\n        IF return_format = 'simple' THEN\r\n            RETURN jsonb_build_object('is_admin', false);\r\n        ELSE\r\n            RETURN jsonb_build_object(\r\n                'role', 'user',\r\n                'is_admin', false,\r\n                'is_verified', false,\r\n                'is_active', false,\r\n                'exists', false\r\n            );\r\n        END IF;\r\n    END IF;\r\n\r\n    IF return_format = 'simple' THEN\r\n        RETURN jsonb_build_object('is_admin', (user_profile.role = 'admin'));\r\n    ELSE\r\n        RETURN jsonb_build_object(\r\n            'role', user_profile.role,\r\n            'is_admin', (user_profile.role = 'admin'),\r\n            'is_verified', user_profile.is_verified,\r\n            'is_active', user_profile.is_active,\r\n            'exists', true\r\n        );\r\n    END IF;\r\nEND;\r\n$function$\n"
     },
     {
         "schema_name": "public",
@@ -581,7 +685,7 @@
         "arguments": "",
         "return_type": "uuid[]",
         "function_type": "Function",
-        "function_definition": "CREATE OR REPLACE FUNCTION public.get_users_without_profiles()\n RETURNS uuid[]\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    result UUID[];\r\nBEGIN\r\n    SELECT ARRAY(\r\n        SELECT au.id FROM auth.users au \r\n        LEFT JOIN public.profiles p ON au.id = p.id \r\n        WHERE p.id IS NULL AND au.deleted_at IS NULL AND au.email IS NOT NULL\r\n    ) INTO result;\r\n    RETURN result;\r\nEND;\r\n$function$\n"
+        "function_definition": "CREATE OR REPLACE FUNCTION public.get_users_without_profiles()\n RETURNS uuid[]\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$DECLARE\r\n    result UUID[];\r\nBEGIN\r\n    SELECT ARRAY(\r\n        SELECT au.id FROM auth.users au \r\n        LEFT JOIN public.profiles p ON au.id = p.user_id \r\n        WHERE p.id IS NULL AND au.deleted_at IS NULL AND au.email IS NOT NULL\r\n    ) INTO result;\r\n    RETURN result;\r\nEND;$function$\n"
     },
     {
         "schema_name": "public",
@@ -609,6 +713,46 @@
     },
     {
         "schema_name": "public",
+        "function_name": "is_current_user_admin",
+        "arguments": "",
+        "return_type": "boolean",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.is_current_user_admin()\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\r\n  SELECT public.auth_is_admin();\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "reset_view_counts",
+        "arguments": "content_type text DEFAULT 'all'::text, confirm_reset boolean DEFAULT false",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.reset_view_counts(content_type text DEFAULT 'all'::text, confirm_reset boolean DEFAULT false)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    projects_reset integer := 0;\r\n    articles_reset integer := 0;\r\n    result jsonb;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Require explicit confirmation\r\n    IF NOT confirm_reset THEN\r\n        RAISE EXCEPTION 'Reset operation requires confirm_reset = true';\r\n    END IF;\r\n\r\n    -- Reset based on content type\r\n    IF content_type IN ('projects', 'all') THEN\r\n        UPDATE projects SET view_count = 0;\r\n        GET DIAGNOSTICS projects_reset = ROW_COUNT;\r\n    END IF;\r\n\r\n    IF content_type IN ('articles', 'all') THEN\r\n        UPDATE articles SET view_count = 0;\r\n        GET DIAGNOSTICS articles_reset = ROW_COUNT;\r\n    END IF;\r\n\r\n    result := jsonb_build_object(\r\n        'content_type', content_type,\r\n        'projects_reset', projects_reset,\r\n        'articles_reset', articles_reset,\r\n        'executed_at', NOW()\r\n    );\r\n\r\n    RETURN result;\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "safe_is_admin_user",
+        "arguments": "user_id_input uuid",
+        "return_type": "boolean",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.safe_is_admin_user(user_id_input uuid)\n RETURNS boolean\n LANGUAGE sql\n SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\r\n    SELECT COALESCE(\r\n        (SELECT role = 'admin' \r\n         FROM profiles \r\n         WHERE user_id = user_id_input \r\n         LIMIT 1), \r\n        false\r\n    );\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "safe_is_current_user_admin",
+        "arguments": "",
+        "return_type": "boolean",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.safe_is_current_user_admin()\n RETURNS boolean\n LANGUAGE sql\n SECURITY DEFINER\n SET search_path TO 'public'\nAS $function$\r\n    SELECT public.safe_is_admin_user(auth.uid());\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
+        "function_name": "update_inquiry_status",
+        "arguments": "inquiry_id uuid, new_status text, admin_notes text DEFAULT NULL::text, priority_level integer DEFAULT NULL::integer",
+        "return_type": "jsonb",
+        "function_type": "Function",
+        "function_definition": "CREATE OR REPLACE FUNCTION public.update_inquiry_status(inquiry_id uuid, new_status text, admin_notes text DEFAULT NULL::text, priority_level integer DEFAULT NULL::integer)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nDECLARE\r\n    updated_inquiry inquiries%ROWTYPE;\r\n    admin_user_id uuid;\r\nBEGIN\r\n    -- Check admin privileges\r\n    IF NOT public.is_current_user_admin() THEN\r\n        RAISE EXCEPTION 'Access denied. Admin privileges required.';\r\n    END IF;\r\n\r\n    -- Validate status\r\n    IF new_status NOT IN ('new', 'pending', 'in_progress', 'resolved', 'closed') THEN\r\n        RAISE EXCEPTION 'Invalid status. Must be one of: new, pending, in_progress, resolved, closed';\r\n    END IF;\r\n\r\n    -- Get admin user ID\r\n    SELECT user_id INTO admin_user_id FROM profiles WHERE user_id = auth.uid();\r\n\r\n    -- Update inquiry\r\n    UPDATE inquiries \r\n    SET \r\n        status = new_status,\r\n        notes = CASE \r\n            WHEN admin_notes IS NOT NULL THEN \r\n                COALESCE(notes || E'\\n\\n', '') || '[' || NOW()::text || ' - Admin]: ' || admin_notes\r\n            ELSE notes\r\n        END,\r\n        priority = COALESCE(priority_level, priority),\r\n        assigned_to = CASE \r\n            WHEN new_status IN ('pending', 'in_progress') THEN admin_user_id\r\n            ELSE assigned_to\r\n        END,\r\n        updated_at = NOW()\r\n    WHERE id = inquiry_id\r\n    RETURNING * INTO updated_inquiry;\r\n\r\n    IF NOT FOUND THEN\r\n        RAISE EXCEPTION 'Inquiry not found with ID: %', inquiry_id;\r\n    END IF;\r\n\r\n    RETURN jsonb_build_object(\r\n        'success', true,\r\n        'inquiry', row_to_json(updated_inquiry),\r\n        'updated_at', NOW()\r\n    );\r\nEND;\r\n$function$\n"
+    },
+    {
+        "schema_name": "public",
         "function_name": "update_updated_at_column",
         "arguments": "",
         "return_type": "trigger",
@@ -621,7 +765,7 @@
         "arguments": "user_id_input uuid DEFAULT auth.uid()",
         "return_type": "jsonb",
         "function_type": "Function",
-        "function_definition": "CREATE OR REPLACE FUNCTION public.update_user_login(user_id_input uuid DEFAULT auth.uid())\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$\r\nBEGIN\r\n    UPDATE public.profiles \r\n    SET \r\n        last_login_at = NOW(),\r\n        login_count = login_count + 1,\r\n        updated_at = NOW()\r\n    WHERE id = user_id_input;\r\n    \r\n    IF FOUND THEN\r\n        RETURN jsonb_build_object('success', true);\r\n    ELSE\r\n        RETURN jsonb_build_object('success', false, 'error', 'Profile not found');\r\n    END IF;\r\nEND;\r\n$function$\n"
+        "function_definition": "CREATE OR REPLACE FUNCTION public.update_user_login(user_id_input uuid DEFAULT auth.uid())\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\nAS $function$BEGIN\r\n    UPDATE public.profiles \r\n    SET \r\n        last_login_at = NOW(),\r\n        login_count = login_count + 1,\r\n        updated_at = NOW()\r\n    WHERE user_id = user_id_input;\r\n    \r\n    IF FOUND THEN\r\n        RETURN jsonb_build_object('success', true);\r\n    ELSE\r\n        RETURN jsonb_build_object('success', false, 'error', 'Profile not found');\r\n    END IF;\r\nEND;$function$\n"
     },
     {
         "schema_name": "public",

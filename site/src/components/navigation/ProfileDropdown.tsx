@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useAuthTransition, useReducedMotion } from '../../hooks/useAuthTransition';
 import './ProfileDropdown.css';
@@ -16,6 +17,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
     const [authLoading, setAuthLoading] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
+    const navigate = useNavigate();
     const { user, isAdmin, isAuthenticated, signOut, signInWithGoogle } = useAuth();
     
     // Authentication transition management
@@ -103,16 +105,9 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
     }, [signInWithGoogle, authLoading]);
 
 
-    const handleProfileClick = useCallback(() => {
-        setIsOpen(false);
-        // TODO: Navigate to profile page
-        console.log('Navigate to profile');
-    }, []);
-
     const handleDashboardClick = useCallback(() => {
         setIsOpen(false);
-        // TODO: Navigate to dashboard/admin
-        console.log('Navigate to dashboard');
+        window.open('/admin', '_blank', 'noopener,noreferrer');
     }, []);
 
     // Get user initials
@@ -235,27 +230,6 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
 
                     {/* Menu items */}
                     <div className="profile-dropdown__items">
-                        <button
-                            className="profile-dropdown__item"
-                            onClick={handleProfileClick}
-                            role="menuitem"
-                            type="button"
-                        >
-                            <span className="profile-dropdown__item-icon">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                    <path
-                                        d="M8 8C10.2091 8 12 6.20914 12 4C12 1.79086 10.2091 0 8 0C5.79086 0 4 1.79086 4 4C4 6.20914 5.79086 8 8 8Z"
-                                        fill="currentColor"
-                                    />
-                                    <path
-                                        d="M8 10C3.58172 10 0 13.5817 0 18H16C16 13.5817 12.4183 10 8 10Z"
-                                        fill="currentColor"
-                                    />
-                                </svg>
-                            </span>
-                            <span className="profile-dropdown__item-text">Profile</span>
-                        </button>
-
                         {isAdmin && (
                             <button
                                 className="profile-dropdown__item"

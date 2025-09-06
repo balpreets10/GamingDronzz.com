@@ -1,75 +1,12 @@
 [
     {
         "schemaname": "public",
-        "tablename": "projects",
-        "policyname": "Published projects are viewable by everyone",
-        "permissive": "PERMISSIVE",
-        "cmd": "SELECT",
-        "qual": "(published = true)",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "services",
-        "policyname": "Published services are viewable by everyone",
-        "permissive": "PERMISSIVE",
-        "cmd": "SELECT",
-        "qual": "(published = true)",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "articles",
-        "policyname": "Published articles are viewable by everyone",
-        "permissive": "PERMISSIVE",
-        "cmd": "SELECT",
-        "qual": "(published = true)",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "inquiries",
-        "policyname": "Anyone can submit inquiries",
-        "permissive": "PERMISSIVE",
-        "cmd": "INSERT",
-        "qual": null,
-        "with_check": "true"
-    },
-    {
-        "schemaname": "public",
-        "tablename": "testimonials",
-        "policyname": "Published testimonials are viewable by everyone",
-        "permissive": "PERMISSIVE",
-        "cmd": "SELECT",
-        "qual": "(published = true)",
-        "with_check": null
-    },
-    {
-        "schemaname": "public",
-        "tablename": "page_views",
-        "policyname": "Anyone can insert page views",
-        "permissive": "PERMISSIVE",
-        "cmd": "INSERT",
-        "qual": null,
-        "with_check": "true"
-    },
-    {
-        "schemaname": "public",
         "tablename": "profiles",
         "policyname": "service_role_insert_profiles",
         "permissive": "PERMISSIVE",
         "cmd": "INSERT",
         "qual": null,
         "with_check": "true"
-    },
-    {
-        "schemaname": "public",
-        "tablename": "media_files",
-        "policyname": "Media files are viewable by everyone",
-        "permissive": "PERMISSIVE",
-        "cmd": "SELECT",
-        "qual": "true",
-        "with_check": null
     },
     {
         "schemaname": "public",
@@ -83,6 +20,15 @@
     {
         "schemaname": "public",
         "tablename": "profiles",
+        "policyname": "users_update_own_profile",
+        "permissive": "PERMISSIVE",
+        "cmd": "UPDATE",
+        "qual": "(auth.uid() = user_id)",
+        "with_check": "(auth.uid() = user_id)"
+    },
+    {
+        "schemaname": "public",
+        "tablename": "profiles",
         "policyname": "users_insert_own_profile",
         "permissive": "PERMISSIVE",
         "cmd": "INSERT",
@@ -92,10 +38,127 @@
     {
         "schemaname": "public",
         "tablename": "profiles",
-        "policyname": "users_update_own_profile",
+        "policyname": "admin_bypass_profiles",
         "permissive": "PERMISSIVE",
-        "cmd": "UPDATE",
-        "qual": "(auth.uid() = user_id)",
-        "with_check": "(auth.uid() = user_id)"
+        "cmd": "ALL",
+        "qual": "(auth.role() = 'service_role'::text)",
+        "with_check": null
+    },
+    {
+        "schemaname": "public",
+        "tablename": "services",
+        "policyname": "public_read_services",
+        "permissive": "PERMISSIVE",
+        "cmd": "SELECT",
+        "qual": "true",
+        "with_check": null
+    },
+    {
+        "schemaname": "public",
+        "tablename": "testimonials",
+        "policyname": "public_read_testimonials",
+        "permissive": "PERMISSIVE",
+        "cmd": "SELECT",
+        "qual": "true",
+        "with_check": null
+    },
+    {
+        "schemaname": "public",
+        "tablename": "projects",
+        "policyname": "public_view_published_projects",
+        "permissive": "PERMISSIVE",
+        "cmd": "SELECT",
+        "qual": "(published = true)",
+        "with_check": null
+    },
+    {
+        "schemaname": "public",
+        "tablename": "projects",
+        "policyname": "admin_manage_projects",
+        "permissive": "PERMISSIVE",
+        "cmd": "ALL",
+        "qual": "auth_is_admin()",
+        "with_check": "auth_is_admin()"
+    },
+    {
+        "schemaname": "public",
+        "tablename": "articles",
+        "policyname": "public_view_published_articles",
+        "permissive": "PERMISSIVE",
+        "cmd": "SELECT",
+        "qual": "(published = true)",
+        "with_check": null
+    },
+    {
+        "schemaname": "public",
+        "tablename": "articles",
+        "policyname": "admin_manage_articles",
+        "permissive": "PERMISSIVE",
+        "cmd": "ALL",
+        "qual": "auth_is_admin()",
+        "with_check": "auth_is_admin()"
+    },
+    {
+        "schemaname": "public",
+        "tablename": "articles",
+        "policyname": "authors_manage_own_articles",
+        "permissive": "PERMISSIVE",
+        "cmd": "ALL",
+        "qual": "(auth.uid() = author_id)",
+        "with_check": "(auth.uid() = author_id)"
+    },
+    {
+        "schemaname": "public",
+        "tablename": "inquiries",
+        "policyname": "public_insert_inquiries",
+        "permissive": "PERMISSIVE",
+        "cmd": "INSERT",
+        "qual": null,
+        "with_check": "true"
+    },
+    {
+        "schemaname": "public",
+        "tablename": "inquiries",
+        "policyname": "admin_manage_inquiries",
+        "permissive": "PERMISSIVE",
+        "cmd": "ALL",
+        "qual": "auth_is_admin()",
+        "with_check": "auth_is_admin()"
+    },
+    {
+        "schemaname": "public",
+        "tablename": "media_files",
+        "policyname": "public_view_media_files",
+        "permissive": "PERMISSIVE",
+        "cmd": "SELECT",
+        "qual": "true",
+        "with_check": null
+    },
+    {
+        "schemaname": "public",
+        "tablename": "media_files",
+        "policyname": "admin_manage_media_files",
+        "permissive": "PERMISSIVE",
+        "cmd": "ALL",
+        "qual": "auth_is_admin()",
+        "with_check": "auth_is_admin()"
+    },
+    {
+        "schemaname": "public",
+        "tablename": "page_views",
+        "policyname": "public_insert_page_views",
+        "permissive": "PERMISSIVE",
+        "cmd": "INSERT",
+        "qual": null,
+        "with_check": "true"
+    },
+    {
+        "schemaname": "public",
+        "tablename": "page_views",
+        "policyname": "admin_view_page_views",
+        "permissive": "PERMISSIVE",
+        "cmd": "SELECT",
+        "qual": "auth_is_admin()",
+        "with_check": null
     }
 ]
