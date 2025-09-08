@@ -193,3 +193,45 @@ COMMIT;
 
 This is NON-NEGOTIABLE - no SQL operation should be executed without proper rollback procedures in place.
 
+## Database Error Analysis - MANDATORY INVESTIGATION PROCESS
+
+### Required Actions for Database Error Analysis
+MANDATORY: When encountering database-related errors (RPC failures, 400/500 errors, authentication issues), Claude MUST follow this comprehensive investigation process:
+
+**Step 1: Error Context Analysis**
+- Read the error logs completely to understand the exact failure point
+- Identify the failing RPC function, table operation, or authentication step
+- Determine the timing of the error (during auth state changes, user actions, etc.)
+
+**Step 2: Supabase Configuration Investigation**
+CRITICAL: ALWAYS examine the actual database configuration before making assumptions about potential causes:
+
+**Required Files to Check:**
+- `info/supabase/policies.json` - Row Level Security policies that may block operations
+- `info/supabase/functions.json` - RPC function definitions and implementations
+- `info/supabase/functions_split/` - Individual function files for detailed analysis
+- `info/backend/database/migrations/` - Recent schema changes that may affect operations
+- `info/backend/database/policies/` - Custom policy implementations
+
+**Step 3: Root Cause Elimination Process**
+- **Cause 1 (Timing Issues)**: Check authentication flow and profile creation timing
+- **Cause 2 (Missing Records)**: Verify profile creation triggers and user management
+- **Cause 3 (RLS Policies)**: MANDATORY - Read actual policies from Supabase config files
+- **Cause 4 (RPC Function Issues)**: MANDATORY - Read actual function implementations from Supabase config files
+- **Cause 5 (Parameter Issues)**: Check function signatures and parameter passing
+
+**Step 4: Evidence-Based Analysis**
+- Provide specific line references from actual policy and function files
+- Quote relevant policy conditions and function logic
+- Eliminate causes based on actual configuration rather than assumptions
+- Identify the definitive root cause with supporting evidence
+
+**Process Requirements:**
+1. Never assume database configuration - always verify by reading actual files
+2. Always cross-reference error logs with actual database policies and functions
+3. Provide specific file references and line numbers for all conclusions
+4. Eliminate potential causes systematically with evidence
+5. Offer solutions based on actual configuration findings
+
+This ensures accurate diagnosis and prevents overlooking critical database configuration details.
+

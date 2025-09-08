@@ -1,28 +1,25 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useAuthTransition, useReducedMotion } from '../../hooks/useAuthTransition';
+import NavigationManager from '../../managers/NavigationManager';
 import './ProfileDropdown.css';
 
 interface ProfileDropdownProps {
-    onLoginClick?: () => void;
     className?: string;
 }
 
 const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
-    onLoginClick,
     className = ''
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [authLoading, setAuthLoading] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const navigate = useNavigate();
     const { user, isAdmin, isAuthenticated, signOut, signInWithGoogle } = useAuth();
     
     // Authentication transition management
     const reducedMotion = useReducedMotion();
-    const { transitionState, isTransitioning, transitionClasses, getLoadingSpinnerClasses } = useAuthTransition(
+    const { isTransitioning, transitionClasses, getLoadingSpinnerClasses } = useAuthTransition(
         isAuthenticated, 
         { reducedMotion }
     );
@@ -107,7 +104,10 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
 
     const handleDashboardClick = useCallback(() => {
         setIsOpen(false);
-        window.open('/admin', '_blank', 'noopener,noreferrer');
+        
+        // Get NavigationManager instance and enter dashboard mode
+        const navManager = NavigationManager.getInstance();
+        navManager.enterDashboard();
     }, []);
 
     // Get user initials

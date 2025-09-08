@@ -6,6 +6,7 @@ import { usePaginatedProjects } from '../../hooks/useRealtimeData';
 import ResponsiveImage from '../common/ResponsiveImage';
 import Pagination from '../ui/Pagination';
 import ProjectDetailsModal from '../modals/ProjectDetailsModal';
+import { SmartSkeletonLoader, ProjectSkeletonGrid } from '../ui/SkeletonLoader';
 import { getProjectFolderName, hasProjectAssets } from '../../utils/projectImageMap';
 import type { DatabaseProject } from '../../services/DatabaseService';
 import './Projects.css';
@@ -87,8 +88,8 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
             fill: 'both'
         });
 
-        // Filters animation (if exists)
-        if (filtersRef.current && categories.length > 1) {
+        // Filters animation (if exists and projects are loaded)
+        if (filtersRef.current && categories.length > 1 && projects && projects.length > 0) {
             Array.from(filtersRef.current.children).forEach((child, index) => {
                 (child as HTMLElement).animate([
                     { opacity: 0, transform: 'translateY(30px)' },
@@ -121,7 +122,7 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
         }
 
         setTimeout(() => setHasAnimated(true), 1400);
-    }, [hasAnimated, categories.length]);
+    }, [hasAnimated, categories.length, projects]);
 
     const animateFilterChange = useCallback(() => {
         if (!gridRef.current) return;
@@ -337,7 +338,7 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
                     )}
                 </div>
 
-                {!showFeaturedOnly && categories.length > 1 && (
+                {!showFeaturedOnly && categories.length > 1 && projects.length > 0 && (
                     <div ref={filtersRef} className="projects__filters" style={{ opacity: hasAnimated ? 1 : 0 }}>
                         {categories.map(category => (
                             <button
@@ -353,37 +354,18 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
                     </div>
                 )}
 
-                {/* Loading state */}
-                {isLoading && projects.length === 0 ? (
-                    <div className="projects__loading">
-                        <div className="projects__skeleton-container">
-                            {Array.from({ length: itemsPerPage }, (_, index) => (
-                                <div key={`skeleton-${index}`} className="projects__skeleton-card">
-                                    <div className="projects__skeleton-image"></div>
-                                    <div className="projects__skeleton-content">
-                                        <div className="projects__skeleton-title"></div>
-                                        <div className="projects__skeleton-description"></div>
-                                        <div className="projects__skeleton-description projects__skeleton-description--short"></div>
-                                        <div className="projects__skeleton-tech">
-                                            <div className="projects__skeleton-tag"></div>
-                                            <div className="projects__skeleton-tag"></div>
-                                            <div className="projects__skeleton-tag"></div>
-                                        </div>
-                                        <div className="projects__skeleton-meta">
-                                            <div className="projects__skeleton-badge"></div>
-                                            <div className="projects__skeleton-year"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <p className="projects__loading-text">Loading projects from database...</p>
-                    </div>
-                ) : (
-                    <div ref={gridRef} className="projects__grid-container" style={{ opacity: hasAnimated ? 1 : 0 }}>
-                        <div className="projects__grid">
-                            {projects.length > 0 ? (
-                                projects.map((project, index) => (
+                {/* Enhanced loading state with modern skeleton - show during initial load or when no data */}
+                <SmartSkeletonLoader
+                    isLoading={isLoading}
+                    hasData={projects.length > 0}
+                    skeletonCount={itemsPerPage}
+                    className="projects__smart-loader"
+                    fadeTransition={true}
+                >
+                    {projects.length > 0 ? (
+                        <div ref={gridRef} className="projects__grid-container" style={{ opacity: hasAnimated ? 1 : 0 }}>
+                            <div className="projects__grid">
+                                {projects.map((project, index) => (
                                     <EnhancedProjectCard
                                         key={`${project.id}-${filter}-${pagination.currentPage}-${index}`}
                                         project={project}
@@ -392,66 +374,66 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
                                         isFilteringIn={isAnimating}
                                         onClick={handleProjectClick}
                                     />
-                                ))
-                            ) : (
-                                <div className="projects__empty">
-                                    <div className="projects__empty-icon">
-                                        <span role="img" aria-label="No projects">📁</span>
-                                    </div>
-                                    <h3 className="projects__empty-title">
-                                        {filter === 'all' 
-                                            ? 'No Projects Available' 
-                                            : `No ${filter.charAt(0).toUpperCase() + filter.slice(1)} Projects`}
-                                    </h3>
-                                    <p className="projects__empty-message">
-                                        {filter === 'all'
-                                            ? 'We\'re currently working on exciting new projects. Check back soon!'
-                                            : `We haven't completed any ${filter} projects yet, but we're always exploring new opportunities.`
-                                        }
-                                    </p>
-                                    <div className="projects__empty-actions">
-                                        {filter !== 'all' && (
-                                            <button
-                                                onClick={() => handleFilterChange('all')}
-                                                className="projects__show-all-button"
-                                            >
-                                                View All Projects
-                                            </button>
-                                        )}
-                                        <button
-                                            onClick={handleRefresh}
-                                            className="projects__refresh-button"
-                                            disabled={isLoading}
-                                        >
-                                            {isLoading ? 'Refreshing...' : 'Refresh'}
-                                        </button>
-                                    </div>
-                                </div>
+                                ))}
+                            </div>
+                            
+                            {/* Pagination */}
+                            {showPagination && pagination.totalPages > 1 && (
+                                <Pagination
+                                    currentPage={pagination.currentPage}
+                                    totalPages={pagination.totalPages}
+                                    itemsPerPage={pagination.itemsPerPage}
+                                    totalItems={pagination.totalItems}
+                                    onPageChange={handlePageChange}
+                                    isLoading={isLoading}
+                                    showInfo={true}
+                                    className="projects__pagination"
+                                />
                             )}
                         </div>
-                        
-                        {/* Pagination */}
-                        {showPagination && pagination.totalPages > 1 && (
-                            <Pagination
-                                currentPage={pagination.currentPage}
-                                totalPages={pagination.totalPages}
-                                itemsPerPage={pagination.itemsPerPage}
-                                totalItems={pagination.totalItems}
-                                onPageChange={handlePageChange}
-                                isLoading={isLoading}
-                                showInfo={true}
-                                className="projects__pagination"
-                            />
-                        )}
-                    </div>
-                )}
+                    ) : (
+                        <div className="projects__empty">
+                            <div className="projects__empty-icon">
+                                <span role="img" aria-label="No projects">📁</span>
+                            </div>
+                            <h3 className="projects__empty-title">
+                                {filter === 'all' 
+                                    ? 'No Projects Available' 
+                                    : `No ${filter.charAt(0).toUpperCase() + filter.slice(1)} Projects`}
+                            </h3>
+                            <p className="projects__empty-message">
+                                {filter === 'all'
+                                    ? 'We\'re currently working on exciting new projects. Check back soon!'
+                                    : `We haven't completed any ${filter} projects yet, but we're always exploring new opportunities.`
+                                }
+                            </p>
+                            <div className="projects__empty-actions">
+                                {filter !== 'all' && (
+                                    <button
+                                        onClick={() => handleFilterChange('all')}
+                                        className="projects__show-all-button"
+                                    >
+                                        View All Projects
+                                    </button>
+                                )}
+                                <button
+                                    onClick={handleRefresh}
+                                    className="projects__refresh-button"
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? 'Refreshing...' : 'Refresh'}
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </SmartSkeletonLoader>
 
-                {/* Show loading overlay during refresh */}
+                {/* Enhanced loading overlay during refresh with better UX */}
                 {isLoading && projects.length > 0 && (
-                    <div className="projects__refresh-overlay">
+                    <div className="projects__refresh-overlay projects__refresh-overlay--modern">
                         <div className="projects__refresh-indicator">
                             <div className="projects__spinner projects__spinner--small"></div>
-                            <span>Updating...</span>
+                            <span>Updating projects...</span>
                         </div>
                     </div>
                 )}

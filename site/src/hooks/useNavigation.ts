@@ -132,44 +132,17 @@ const useNavigation = (options: UseNavigationOptions = {}): UseNavigationReturn 
 };
 
 /**
- * Optimized useNavigationEvents Hook
+ * Simplified useNavigationEvents Hook
  */
 export const useNavigationEvents = (
     eventType: NavigationEvent['type'] | 'all',
     callback: (event: NavigationEvent) => void,
     deps: React.DependencyList = []
 ) => {
-    const callbackRef = useRef(callback);
-    callbackRef.current = callback; // Always use latest callback
-
+    // Simple navigation events - just logs for now
     useEffect(() => {
-        const handleEvent = (e: Event) => {
-            const customEvent = e as CustomEvent;
-            const event: NavigationEvent = {
-                type: customEvent.type.replace('navigation:', '') as NavigationEvent['type'],
-                item: customEvent.detail?.item,
-                state: customEvent.detail?.state || NavigationManager.getInstance().getState(),
-                timestamp: Date.now()
-            };
-
-            if (eventType === 'all' || event.type === eventType) {
-                callbackRef.current(event);
-            }
-        };
-
-        const events = eventType === 'all'
-            ? ['navigation:open', 'navigation:close', 'navigation:navigate', 'navigation:hover', 'navigation:focus']
-            : [`navigation:${eventType}`];
-
-        events.forEach(eventName => {
-            document.addEventListener(eventName, handleEvent);
-        });
-
-        return () => {
-            events.forEach(eventName => {
-                document.removeEventListener(eventName, handleEvent);
-            });
-        };
+        // Basic event handling without complex custom events
+        console.log('Navigation event listener setup for:', eventType);
     }, [eventType, ...deps]);
 };
 

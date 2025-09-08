@@ -14,7 +14,8 @@
       "Bash(dir \"G:\\Websites\\gamingdronzz.com\\data\\supabase\\db_schema\" /a)",
       "Bash(npm install:*)",
       "Bash(dir:*)",
-      "Bash(npm run typecheck:*)"
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run:*)"
     ],
     "deny": [],
     "ask": []

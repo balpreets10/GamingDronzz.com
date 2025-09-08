@@ -1,0 +1,466 @@
+/* SkeletonLoader.css - Modern skeletal loading animations with latest techniques */
+
+/* CSS Custom Properties for dynamic theming */
+:root {
+  --skeleton-bg: #f8fafc;
+  --skeleton-highlight: #e2e8f0;
+  --skeleton-shimmer: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  --skeleton-duration: 1.8s;
+  --skeleton-timing: cubic-bezier(0.4, 0, 0.6, 1);
+  --skeleton-border-radius: 8px;
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --skeleton-bg: #1e293b;
+    --skeleton-highlight: #334155;
+    --skeleton-shimmer: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+  }
+}
+
+/* Base skeleton component with latest animation techniques */
+.skeleton {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  background: var(--skeleton-bg);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s var(--skeleton-timing), transform 0.4s var(--skeleton-timing);
+  will-change: opacity, transform;
+  
+  /* Improved performance with contain */
+  contain: layout style paint;
+}
+
+.skeleton--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Modern wave animation using CSS transforms and GPU acceleration */
+.skeleton--wave::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--skeleton-shimmer);
+  animation: skeleton-wave var(--skeleton-duration) var(--skeleton-timing) infinite;
+  will-change: transform;
+}
+
+@keyframes skeleton-wave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+/* Pulse animation as fallback */
+.skeleton--pulse {
+  animation: skeleton-pulse var(--skeleton-duration) var(--skeleton-timing) infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    background-color: var(--skeleton-bg);
+  }
+  50% {
+    background-color: var(--skeleton-highlight);
+  }
+}
+
+/* No animation option */
+.skeleton--none {
+  background-color: var(--skeleton-bg);
+}
+
+/* Enhanced skeleton card with sophisticated animations */
+.project-skeleton-card {
+  background: var(--gd-surface-raised, white);
+  border-radius: var(--gd-radius-2xl, 16px);
+  overflow: hidden;
+  box-shadow: var(--gd-shadow-base, 0 1px 3px rgba(0, 0, 0, 0.1));
+  border: 1px solid var(--gd-border-light, #e5e7eb);
+  
+  /* Initial state */
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  
+  /* Improved performance */
+  contain: layout style paint;
+}
+
+.project-skeleton-card--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Staggered animation support */
+.project-skeleton-card:nth-child(1) {
+  transition-delay: 0ms;
+}
+
+.project-skeleton-card:nth-child(2) {
+  transition-delay: 150ms;
+}
+
+.project-skeleton-card:nth-child(3) {
+  transition-delay: 300ms;
+}
+
+.project-skeleton-card:nth-child(4) {
+  transition-delay: 450ms;
+}
+
+.project-skeleton-card:nth-child(n+5) {
+  transition-delay: calc(600ms + ((var(--index, 0) - 4) * 100ms));
+}
+
+/* Image skeleton with enhanced shimmer */
+.project-skeleton-card__image {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+.project-skeleton-card__image-skeleton {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+/* Metadata overlays with floating animation */
+.project-skeleton-card__metadata {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.project-skeleton-card__metadata .skeleton {
+  backdrop-filter: blur(8px);
+  background: rgba(15, 37, 78, 0.1);
+  animation: skeleton-float 3s ease-in-out infinite;
+}
+
+.project-skeleton-card__metadata .skeleton:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+@keyframes skeleton-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Content area with structured layout */
+.project-skeleton-card__content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Header with title and status */
+.project-skeleton-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Description with realistic line variations */
+.project-skeleton-card__description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Details grid with icons */
+.project-skeleton-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  background: var(--gd-bg-secondary, #f8fafc);
+  border-radius: 8px;
+  border-left: 3px solid var(--gd-primary-light, #dbeafe);
+}
+
+.project-skeleton-card__detail-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Tech tags with varied widths */
+.project-skeleton-card__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.project-skeleton-card__tech .skeleton:nth-child(1) { width: 50px; }
+.project-skeleton-card__tech .skeleton:nth-child(2) { width: 65px; }
+.project-skeleton-card__tech .skeleton:nth-child(3) { width: 45px; }
+.project-skeleton-card__tech .skeleton:nth-child(4) { width: 70px; }
+
+/* Meta footer */
+.project-skeleton-card__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--gd-border-light, #e5e7eb);
+}
+
+.project-skeleton-card__meta-left,
+.project-skeleton-card__meta-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Grid layout with responsive design */
+.project-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 32px;
+  padding: 16px 0;
+}
+
+/* Smart skeleton loader with smooth transitions */
+.smart-skeleton-loader {
+  position: relative;
+  min-height: 200px;
+}
+
+.smart-skeleton-loader__skeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 1;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+.smart-skeleton-loader__skeleton--fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.smart-skeleton-loader__content {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.smart-skeleton-loader__content--fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Advanced micro-animations */
+@keyframes skeleton-breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.project-skeleton-card:hover {
+  animation: skeleton-breathe 4s ease-in-out infinite;
+}
+
+/* Responsive design improvements */
+@media (max-width: 1200px) {
+  .project-skeleton-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+  }
+}
+
+@media (max-width: 992px) {
+  .project-skeleton-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  
+  .project-skeleton-card__content {
+    padding: 20px;
+  }
+  
+  .project-skeleton-card__image {
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-skeleton-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .project-skeleton-card__content {
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  .project-skeleton-card__image {
+    height: 180px;
+  }
+  
+  .project-skeleton-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .project-skeleton-card__meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .project-skeleton-card__details {
+    padding: 8px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-skeleton-card__content {
+    padding: 12px;
+  }
+  
+  .project-skeleton-card__metadata {
+    position: static;
+    justify-content: space-between;
+    background: var(--gd-bg-secondary, #f8fafc);
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+  }
+  
+  .project-skeleton-card__tech {
+    gap: 6px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton--wave::before {
+    animation: none;
+  }
+  
+  .skeleton--pulse {
+    animation: none;
+    background-color: var(--skeleton-highlight);
+  }
+  
+  .project-skeleton-card {
+    transition: opacity 0.3s ease;
+    transform: none;
+  }
+  
+  .project-skeleton-card--visible {
+    transform: none;
+  }
+  
+  .smart-skeleton-loader__content {
+    transition: opacity 0.3s ease;
+    transform: none;
+  }
+  
+  .smart-skeleton-loader__content--fade-in {
+    transform: none;
+  }
+  
+  @keyframes skeleton-float,
+  @keyframes skeleton-breathe {
+    from, to { transform: none; }
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --skeleton-bg: #e0e0e0;
+    --skeleton-highlight: #b0b0b0;
+  }
+  
+  .project-skeleton-card {
+    border-width: 2px;
+  }
+}
+
+/* Performance optimizations */
+.skeleton,
+.project-skeleton-card {
+  /* Enable hardware acceleration */
+  transform: translateZ(0);
+  
+  /* Optimize repaints */
+  backface-visibility: hidden;
+  
+  /* Optimize animations */
+  animation-fill-mode: both;
+}
+
+/* Loading state indicators */
+.skeleton[aria-label]::after {
+  content: attr(aria-label);
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* Enhanced focus states for accessibility */
+.smart-skeleton-loader:focus-within .project-skeleton-card {
+  outline: 2px solid var(--gd-color-primary-500, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* Container queries for dynamic layouts (progressive enhancement) */
+@supports (container-type: inline-size) {
+  .project-skeleton-grid {
+    container-type: inline-size;
+  }
+  
+  @container (max-width: 600px) {
+    .project-skeleton-card__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+}
