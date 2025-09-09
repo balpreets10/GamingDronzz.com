@@ -215,8 +215,8 @@ export const validateNavigation = async (): Promise<{ isValid: boolean; errors: 
 };
 
 // Legacy compatibility - populated asynchronously
-export let mainNavigationItems: NavigationItem[] = [];
-export let dashboardNavigationItems: NavigationItem[] = [];
+export const mainNavigationItems: NavigationItem[] = [];
+export const dashboardNavigationItems: NavigationItem[] = [];
 
 // Initialize legacy exports
 initializeNavigationData().then(data => {
