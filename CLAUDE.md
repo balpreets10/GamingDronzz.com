@@ -12,7 +12,7 @@ This project uses a structured documentation approach. All information is organi
 - **Project Information**: `info/project-info.md` - Application architecture, technology stack, components, and maintenance guidelines
 - **Deployment Information**: `info/deployment-info.md` - Build processes, environment configuration, and deployment procedures
 - **Backend Information**: `info/backend/backend-info.md` - Database system, authentication, API operations, and data management
-- **Database Queries**: `info/backend/database/queries/` - SQL queries, stored procedures, and database scripts
+- **Database Migrations**: `info/backend/database/migrations/` - SQL migration scripts and database updates
 - **Data and Assets**: `info/data.md` - Asset management, data files, and static resource handling
 
 ## Task Management - MANDATORY FOR ALL TASKS
@@ -48,13 +48,12 @@ IMPORTANT: Claude must end EVERY single response with token usage statistics, no
 Mandatory ending for ALL responses:
 - Count total words in current conversation
 - Estimate total tokens used
-- Always offer the clear option AND chat compaction option
-- Format: "📊 Conversation stats: [X] words, [Y] tokens used. Run `/clear` to optimize or `/compact` to continue? [C/c/n]"
+- Always offer the clear option for token optimization
+- Format: "📊 Conversation stats: [X] words, [Y] tokens used. Run `/clear` to optimize? [C/c]"
 
-**Chat Management Options:**
+**Conversation Management:**
 - `/clear` - Start fresh conversation (recommended for token optimization)
-- `/compact` - Summarize conversation context to reduce tokens while preserving important information
-- User chooses based on whether they want to continue the current conversation thread
+- Focus on efficient, concise responses to minimize token usage
 
 ### Query Optimization Tracking
 - When conversations exceed 2000 tokens, automatically log to `info/query-optimization/query-journal.md`
@@ -85,7 +84,7 @@ IMPORTANT: ALL SQL-related scripts and files MUST be created in the appropriate 
 
 **Required SQL File Organization:**
 - **Database Migrations**: `info/backend/database/migrations/` - All database migration scripts
-- **Database Queries**: `info/backend/database/queries/` - SQL queries, stored procedures, and database scripts (DEPRECATED - moved to migrations)
+- **Database Migrations**: `info/backend/database/migrations/` - SQL migration scripts and database updates (DEPRECATED - moved to migrations)
 - **Database Functions**: `info/backend/database/functions/` - RPC functions and stored procedures (DEPRECATED - moved to migrations) 
 - **Database Policies**: `info/backend/database/policies/` - Row Level Security policies
 - **Database Schema**: `info/backend/database/schema/` - Database schema definitions (DEPRECATED - moved to migrations)
@@ -194,57 +193,45 @@ COMMIT;
 
 This is NON-NEGOTIABLE - no SQL operation should be executed without proper rollback procedures in place.
 
-## Chat Logging System - MANDATORY FOR ALL CONVERSATIONS
+## Database Error Analysis - MANDATORY INVESTIGATION PROCESS
 
-### Automatic Chat Logging - CRITICAL REQUIREMENT
-MANDATORY: Every conversation with Claude MUST be logged to maintain a record of all development discussions and decisions.
+### Required Actions for Database Error Analysis
+MANDATORY: When encountering database-related errors (RPC failures, 400/500 errors, authentication issues), Claude MUST follow this comprehensive investigation process:
 
-**Required Actions for ALL Conversations:**
-1. **Auto-Log Every Chat**: All conversations must be automatically logged to `info/chats/` directory
-2. **Proper Naming Convention**: Use format: `DD-MM-YYYY-HH-MM-SS-context-description.md`
-3. **Real-Time Logging**: Messages should be logged as the conversation progresses
-4. **Context Identification**: Each chat must include proper context/topic identification
+**Step 1: Error Context Analysis**
+- Read the error logs completely to understand the exact failure point
+- Identify the failing RPC function, table operation, or authentication step
+- Determine the timing of the error (during auth state changes, user actions, etc.)
 
-**Chat Logging Requirements:**
-- **File Location**: All chat logs stored in `info/chats/` directory
-- **File Format**: Markdown format with structured message blocks
-- **Filename Pattern**: `DD-MM-YYYY-HH-MM-SS-[context-description].md`
-- **Content Structure**: Include timestamps, roles, and full message content
-- **Message Tracking**: Log both user queries and assistant responses
+**Step 2: Supabase Configuration Investigation**
+CRITICAL: ALWAYS examine the actual database configuration before making assumptions about potential causes:
 
-**Chat Log Structure Template:**
-```markdown
-# Chat Log: [Context Description]
+**Required Files to Check:**
+- `info/supabase/policies.json` - Row Level Security policies that may block operations
+- `info/supabase/functions.json` - RPC function definitions and implementations
+- `info/supabase/functions_split/` - Individual function files for detailed analysis
+- `info/backend/database/migrations/` - Recent schema changes that may affect operations
+- `info/backend/database/policies/` - Custom policy implementations
 
-**Date:** [Date and Time]
-**Context:** [Conversation Topic/Context]
+**Step 3: Root Cause Elimination Process**
+- **Cause 1 (Timing Issues)**: Check authentication flow and profile creation timing
+- **Cause 2 (Missing Records)**: Verify profile creation triggers and user management
+- **Cause 3 (RLS Policies)**: MANDATORY - Read actual policies from Supabase config files
+- **Cause 4 (RPC Function Issues)**: MANDATORY - Read actual function implementations from Supabase config files
+- **Cause 5 (Parameter Issues)**: Check function signatures and parameter passing
 
----
+**Step 4: Evidence-Based Analysis**
+- Provide specific line references from actual policy and function files
+- Quote relevant policy conditions and function logic
+- Eliminate causes based on actual configuration rather than assumptions
+- Identify the definitive root cause with supporting evidence
 
-## Message [Number]
-**Role:** [user/assistant]
-**Timestamp:** [Date and Time]
+**Process Requirements:**
+1. Never assume database configuration - always verify by reading actual files
+2. Always cross-reference error logs with actual database policies and functions
+3. Provide specific file references and line numbers for all conclusions
+4. Eliminate potential causes systematically with evidence
+5. Offer solutions based on actual configuration findings
 
-[Message Content]
+This ensures accurate diagnosis and prevents overlooking critical database configuration details.
 
----
-```
-
-**Logging Mechanism:**
-- Use existing ChatLogger utility in `site/src/utils/chatLogger.js`
-- Logger automatically handles directory creation and file management
-- Supports both complete conversation logging and incremental message appending
-- Includes sanitization for filename safety
-
-**Process:**
-1. Initialize ChatLogger at conversation start
-2. Log each message exchange in real-time
-3. Use proper context identification for filename
-4. Ensure all conversations are preserved for future reference
-
-**Integration Points:**
-- ChatLogger class provides `logChat()` and `appendToChat()` methods
-- CLI utility available for manual chat management
-- Example usage provided in `chatLoggerExample.js`
-
-This is NON-NEGOTIABLE - every conversation must be logged to maintain project development history and decision tracking.

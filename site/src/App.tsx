@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
 import ModernNavigation from './components/navigation/ModernNavigation';
-import Preloader from './components/ui/Preloader';
 import Hero from './components/sections/Hero';
 import About from './components/sections/About';
 import PaginatedProjects from './components/sections/PaginatedProjects';
 import Services from './components/sections/Services';
 import Articles from './components/sections/Articles';
 import Contact from './components/sections/Contact';
-import useNavigation, { useNavigationEvents } from './hooks/useNavigation';
+import AdminDashboard from './components/dashboard/AdminDashboard';
+import useNavigation from './hooks/useNavigation';
 import { useAuth } from './hooks/useAuth';
 import ScrollManager from './managers/ScrollManager';
 import PerformanceManager from './managers/PerformanceManager';
+import NavigationManager from './managers/NavigationManager';
 import { initializeThemeSystem, type Theme } from './managers/ThemeManager';
 import { shouldShowDebugComponents } from './config';
 import './App.css';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
   const [currentTheme, setCurrentTheme] = useState<Theme | null>(null);
-  const [preloaderCompleted, setPreloaderCompleted] = useState(false);
+  const [isDashboardMode, setIsDashboardMode] = useState(false);
 
   const { 
     loading: authLoading, 
@@ -30,7 +30,7 @@ function App() {
     profileLoading,
     profileCompleted 
   } = useAuth();
-  const { state: navState, actions: navActions } = useNavigation({
+  const { actions: navActions } = useNavigation({
     customConfig: {
       items: [
         { id: 'hero', label: 'Home', href: '#hero', position: 0 },
@@ -47,6 +47,7 @@ function App() {
   useEffect(() => {
     const scrollManager = ScrollManager.getInstance();
     const performanceManager = PerformanceManager.getInstance();
+    const navManager = NavigationManager.getInstance();
 
     performanceManager.startMark('app-init');
 
@@ -60,93 +61,98 @@ function App() {
     // Add smooth theme transition class to body
     document.body.classList.add('theme-transition');
 
+    // Subscribe to dashboard mode changes
+    const unsubscribe = navManager.subscribeToDashboard(setIsDashboardMode);
+
     // Cleanup function
     return () => {
       scrollManager.destroy();
       performanceManager.destroy();
       document.body.classList.remove('theme-transition');
+      unsubscribe();
     };
   }, []);
 
-  // Analytics tracking - stable callback
-  useNavigationEvents('navigate', (event) => {
-    console.log('Navigation event:', event);
-  }, []); // Empty deps array
 
-  const handlePreloaderComplete = () => {
-    setPreloaderCompleted(true);
-  };
-
-  // Handle transition to main app only when both preloader is done AND auth is ready
+  // Handle transition to main app when auth is ready
   useEffect(() => {
-    if (preloaderCompleted && !authLoading) {
-      setIsLoading(false);
+    if (!authLoading) {
       document.body.classList.add('app-loaded');
     }
-  }, [preloaderCompleted, authLoading]);
+  }, [authLoading]);
 
   const handleNavigate = (sectionId: string) => {
     navActions.navigate(sectionId);
   };
 
-  if (isLoading) {
+  // Show loading spinner while auth is loading
+  if (authLoading) {
     return (
-      <Preloader
-        onComplete={handlePreloaderComplete}
-        duration={1200} // Reduced from 2000ms
-        minDisplayTime={800} // Reduced from 1500ms
-      />
+      <div className="app-loading">
+        <div className="loading-spinner">
+          <div className="spinner"></div>
+          <p>Loading Gaming Dronzz...</p>
+        </div>
+      </div>
     );
   }
 
   return (
     <div className="app">
-      {/* Modern Navigation */}
-      <ModernNavigation
-        position="fixed-top"
-        onNavigate={handleNavigate}
-      />
+      {/* Conditional rendering based on dashboard mode */}
+      {isDashboardMode ? (
+        <AdminDashboard />
+      ) : (
+        <>
+          {/* Modern Navigation */}
+          <ModernNavigation
+            position="fixed-top"
+            onNavigate={handleNavigate}
+          />
 
-      <main className="app__main">
-        {/* Hero Section - Fixed props to match HeroProps interface */}
-        <Hero
-          title="Welcome to Gaming Dronzz"
-          subtitle="Professional Game Development Consultancy & Services"
-          primaryCtaText="Get Started"
-          onPrimaryCtaClick={() => handleNavigate('contact')}
-          currentTheme={currentTheme}
-        />
+          <main className="app__main">
+            {/* Hero Section - Fixed props to match HeroProps interface */}
+            <Hero
+              title="Welcome to Gaming Dronzz"
+              subtitle="Professional Game Development Consultancy & Services"
+              primaryCtaText="Get Started"
+              onPrimaryCtaClick={() => handleNavigate('contact')}
+              currentTheme={currentTheme}
+            />
 
-        {/* About Section */}
-        <About />
+            {/* About Section */}
+            <About />
 
-        {/* Projects Section with Pagination */}
-        <PaginatedProjects
-          showFeaturedOnly={false}
-          itemsPerPage={4}
-          showPagination={true}
-        />
+            {/* Projects Section with Pagination */}
+            <PaginatedProjects
+              showFeaturedOnly={false}
+              itemsPerPage={4}
+              showPagination={true}
+            />
 
-        {/* Services Section */}
-        <Services
-          showFeaturedOnly={false}
-          maxServices={6}
-        />
+            {/* Services Section */}
+            <Services
+              showFeaturedOnly={false}
+              maxServices={6}
+            />
 
-        {/* Articles Section */}
-        <Articles
-          showFeaturedOnly={false}
-          maxArticles={3}
-        />
+            {/* Articles Section */}
+            <Articles
+              showFeaturedOnly={false}
+              maxArticles={3}
+            />
 
-        {/* Contact Section */}
-        <Contact
-          showForm={true}
-        />
-      </main>
+            {/* Contact Section */}
+            <Contact
+              showForm={true}
+            />
+          </main>
+        </>
+      )}
 
-      {/* Footer */}
-      <footer className="app__footer">
+      {/* Footer - Only show when not in dashboard mode */}
+      {!isDashboardMode && (
+        <footer className="app__footer">
         <div className="app__container">
           <div className="app__footer-content">
             <div className="app__footer-brand">
@@ -192,7 +198,8 @@ function App() {
             <p>&copy; 2025 GamingDronzz. All rights reserved.</p>
           </div>
         </div>
-      </footer>
+        </footer>
+      )}
 
       {shouldShowDebugComponents() && (
         <div className="app__debug">

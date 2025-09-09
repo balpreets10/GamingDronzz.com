@@ -119,11 +119,12 @@ class AuthService {
                 // Check user role for role-based adjustments
                 const isUserAdmin = await this.isAdmin(data.session.user.id);
                 
-                // Update login tracking
+                // Update login tracking (optional - non-critical)
                 try {
                     await this.client.rpc('update_user_login', { user_id_input: data.session.user.id });
                 } catch (error) {
-                    console.warn('Failed to update login tracking:', error);
+                    console.warn('Login tracking failed (non-critical):', error);
+                    // Continue without failing authentication
                 }
                 
                 if (rememberMe) {
@@ -281,11 +282,12 @@ class AuthService {
                 // Check user role for role-based adjustments
                 const isUserAdmin = await this.isAdmin(data.session.user.id);
                 
-                // Update login tracking
+                // Update login tracking (optional - non-critical)
                 try {
                     await this.client.rpc('update_user_login', { user_id_input: data.session.user.id });
                 } catch (error) {
-                    console.warn('Failed to update login tracking:', error);
+                    console.warn('Login tracking failed (non-critical):', error);
+                    // Continue without failing authentication
                 }
 
                 return { 
@@ -400,12 +402,13 @@ class AuthService {
         const { data: { subscription } } = this.client.auth.onAuthStateChange(async (event, session) => {
             console.log('Auth state changed:', event, session?.user?.email || 'No user');
 
-            // Update login tracking on sign-in events (profile already created by trigger)
+            // Update login tracking on sign-in events (optional - non-critical)
             if (session?.user && (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED')) {
                 try {
                     await this.client.rpc('update_user_login', { user_id_input: session.user.id });
                 } catch (error) {
-                    console.warn('Failed to update login tracking during auth state change:', error);
+                    console.warn('Login tracking failed (non-critical):', error);
+                    // Continue without failing authentication
                 }
             }
 
