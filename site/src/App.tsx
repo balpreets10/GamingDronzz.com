@@ -20,15 +20,15 @@ function App() {
   const [currentTheme, setCurrentTheme] = useState<Theme | null>(null);
   const [isDashboardMode, setIsDashboardMode] = useState(false);
 
-  const { 
-    loading: authLoading, 
-    user, 
-    session, 
-    isAuthenticated, 
+  const {
+    loading: authLoading,
+    user,
+    session,
+    isAuthenticated,
     isAdmin,
     profile,
     profileLoading,
-    profileCompleted 
+    profileCompleted
   } = useAuth();
   const { actions: navActions } = useNavigation({
     customConfig: {
@@ -52,11 +52,21 @@ function App() {
     performanceManager.startMark('app-init');
 
     // Initialize optimized theme system - picks theme and applies immediately
-    const selectedTheme = initializeThemeSystem({
-      enableSessionConsistency: false, // Load new theme on every reload
-      enableLogging: import.meta.env.DEV
-    });
-    setCurrentTheme(selectedTheme);
+    const initializeTheme = async () => {
+      try {
+        const selectedTheme = await initializeThemeSystem({
+          enableSessionConsistency: false, // Load new theme on every reload
+          enableLogging: import.meta.env.DEV
+        });
+        setCurrentTheme(selectedTheme);
+      } catch (error) {
+        console.error('Failed to initialize theme system:', error);
+        // Set null theme which will trigger fallback behavior in Hero component
+        setCurrentTheme(null);
+      }
+    };
+
+    initializeTheme();
 
     // Add smooth theme transition class to body
     document.body.classList.add('theme-transition');
@@ -153,51 +163,51 @@ function App() {
       {/* Footer - Only show when not in dashboard mode */}
       {!isDashboardMode && (
         <footer className="app__footer">
-        <div className="app__container">
-          <div className="app__footer-content">
-            <div className="app__footer-brand">
-              <h3>GamingDronzz</h3>
-              <p>Crafting exceptional gaming experiences</p>
-              {currentTheme && (
-                <div className="app__theme-indicator">
-                  <span className="app__theme-emoji">{currentTheme.icon}</span>
-                  <span className="app__theme-name">
-                    Today's Theme: {currentTheme.name}
-                  </span>
+          <div className="app__container">
+            <div className="app__footer-content">
+              <div className="app__footer-brand">
+                <h3>GamingDronzz</h3>
+                <p>Crafting exceptional gaming experiences</p>
+                {currentTheme && (
+                  <div className="app__theme-indicator">
+                    <span className="app__theme-emoji">{currentTheme.icon}</span>
+                    <span className="app__theme-name">
+                      Today's Theme: {currentTheme.name}
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="app__footer-links">
+                <div className="app__footer-section">
+                  <h4>Services</h4>
+                  <ul>
+                    <li><a href="#services" onClick={() => handleNavigate('services')}>Game Design</a></li>
+                    <li><a href="#services" onClick={() => handleNavigate('services')}>Development</a></li>
+                    <li><a href="#services" onClick={() => handleNavigate('services')}>Consulting</a></li>
+                  </ul>
                 </div>
-              )}
-            </div>
-            <div className="app__footer-links">
-              <div className="app__footer-section">
-                <h4>Services</h4>
-                <ul>
-                  <li><a href="#services" onClick={() => handleNavigate('services')}>Game Design</a></li>
-                  <li><a href="#services" onClick={() => handleNavigate('services')}>Development</a></li>
-                  <li><a href="#services" onClick={() => handleNavigate('services')}>Consulting</a></li>
-                </ul>
-              </div>
-              <div className="app__footer-section">
-                <h4>Company</h4>
-                <ul>
-                  <li><a href="#about" onClick={() => handleNavigate('about')}>About</a></li>
-                  <li><a href="#projects" onClick={() => handleNavigate('projects')}>Projects</a></li>
-                  <li><a href="#articles" onClick={() => handleNavigate('articles')}>Blog</a></li>
-                </ul>
-              </div>
-              <div className="app__footer-section">
-                <h4>Connect</h4>
-                <ul>
-                  <li><a href="#contact" onClick={() => handleNavigate('contact')}>Contact</a></li>
-                  <li><a href="mailto:hello@gamingdronzz.com">Email</a></li>
-                  <li><a href="tel:+15551234567">Phone</a></li>
-                </ul>
+                <div className="app__footer-section">
+                  <h4>Company</h4>
+                  <ul>
+                    <li><a href="#about" onClick={() => handleNavigate('about')}>About</a></li>
+                    <li><a href="#projects" onClick={() => handleNavigate('projects')}>Projects</a></li>
+                    <li><a href="#articles" onClick={() => handleNavigate('articles')}>Blog</a></li>
+                  </ul>
+                </div>
+                <div className="app__footer-section">
+                  <h4>Connect</h4>
+                  <ul>
+                    <li><a href="#contact" onClick={() => handleNavigate('contact')}>Contact</a></li>
+                    <li><a href="mailto:social@gamingdronzz.com">Email</a></li>
+                    <li><a href="tel:+15551234567">Phone</a></li>
+                  </ul>
+                </div>
               </div>
             </div>
+            <div className="app__footer-bottom">
+              <p>&copy; 2025 GamingDronzz. All rights reserved.</p>
+            </div>
           </div>
-          <div className="app__footer-bottom">
-            <p>&copy; 2025 GamingDronzz. All rights reserved.</p>
-          </div>
-        </div>
         </footer>
       )}
 
