@@ -69,6 +69,18 @@ site/
 - Database functions by schema in `info/supabase/functions_split/`
 - Database migrations in `info/backend/database/migrations/`
 
+### Database Schema Organization
+- **Table Schemas**: Individual table definitions stored in `info/supabase/tables/`
+  - `articles.sql` - Article/blog post table structure
+  - `inquiries.sql` - Contact inquiry table structure  
+  - `media_files.sql` - File upload and media management
+  - `page_views.sql` - Analytics and page view tracking
+  - `profiles.sql` - User profile information
+  - `projects.sql` - Portfolio project data
+  - `services.sql` - Service offerings data
+  - `testimonials.sql` - Client testimonial data
+- **Database Views**: `info/supabase/user_roles_view.sql` - User role and admin status view
+
 ### Dynamic Data
 - User profiles managed via Supabase
 - Real-time data updates using Supabase subscriptions
