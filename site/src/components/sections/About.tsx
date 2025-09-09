@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { useContentManager } from '../../hooks/useContentManager';
-import { companyData } from '../../data/company';
+import { companyData, getCompanyDataAsync, type CompanyData } from '../../data/company';
 import './About.css';
 
 interface AboutProps {
-    customData?: typeof companyData;
+    customData?: CompanyData;
 }
 
 // Type guards for data validation
@@ -45,15 +45,43 @@ const About: React.FC<AboutProps> = ({ customData }) => {
     const [skillsVisible, setSkillsVisible] = useState(false);
     const [teamVisible, setTeamVisible] = useState(false);
     const [dataError, setDataError] = useState<string | null>(null);
+    const [asyncData, setAsyncData] = useState<CompanyData | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     // Safe hook usage with error handling
     const contentManager = useContentManager();
     const setCurrentSection = contentManager?.setCurrentSection;
 
+    // Load async company data
+    useEffect(() => {
+        const loadCompanyData = async () => {
+            try {
+                setIsLoading(true);
+                const data = await getCompanyDataAsync();
+                setAsyncData(data);
+                setDataError(null);
+            } catch (error) {
+                console.error('Failed to load company data:', error);
+                setDataError('Failed to load company data');
+                // Fallback to sync data
+                setAsyncData(companyData);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        if (!customData) {
+            loadCompanyData();
+        } else {
+            setAsyncData(customData);
+            setIsLoading(false);
+        }
+    }, [customData]);
+
     // Validate and safely access data
     const data = useMemo(() => {
         try {
-            const sourceData = customData || companyData;
+            const sourceData = asyncData || companyData;
 
             // Validate required data structure
             if (!sourceData || typeof sourceData !== 'object') {
@@ -91,7 +119,7 @@ const About: React.FC<AboutProps> = ({ customData }) => {
                 team: []
             };
         }
-    }, [customData]);
+    }, [asyncData]);
 
     // Safe intersection observer setup
     useEffect(() => {
@@ -244,6 +272,20 @@ const About: React.FC<AboutProps> = ({ customData }) => {
             console.error('Error handling image fallback:', error);
         }
     }, []);
+
+    // Loading state
+    if (isLoading) {
+        return (
+            <section className="about about--loading" aria-label="About section - Loading">
+                <div className="about__container">
+                    <div className="about__loading">
+                        <div className="about__spinner"></div>
+                        <p>Loading company information...</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     // Error boundary fallback for data errors
     if (dataError) {

@@ -28,15 +28,15 @@ const defaultContactMethods: ContactMethod[] = [
     {
         icon: '📧',
         title: 'Email',
-        value: 'hello@gamingdronzz.com',
-        action: 'mailto:hello@gamingdronzz.com?subject=Project Inquiry',
+        value: 'social@gamingdronzz.com',
+        action: 'mailto:social@gamingdronzz.com?subject=Project Inquiry',
         description: 'Drop us a line anytime'
     },
     {
         icon: '📞',
         title: 'Phone',
-        value: '+1 (555) 123-4567',
-        action: 'tel:+15551234567',
+        value: '+91-7006955241',
+        action: 'tel:01914001040',
         description: 'Mon-Fri 9AM-6PM EST'
     },
     {
