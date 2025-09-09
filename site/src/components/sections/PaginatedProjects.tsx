@@ -31,8 +31,10 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
     const [hasAnimated, setHasAnimated] = useState(false);
     const [selectedProject, setSelectedProject] = useState<DatabaseProject | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [enableDataLoading, setEnableDataLoading] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
-    // Use paginated projects hook
+    // Use paginated projects hook - disabled initially for skeleton animation
     const { 
         data: projects, 
         pagination,
@@ -44,7 +46,7 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
         featuredOnly: showFeaturedOnly,
         category: filter !== 'all' ? filter : undefined,
         itemsPerPage,
-        enabled: true 
+        enabled: enableDataLoading  // Control loading for skeleton animation
     });
 
     // Safe hook usage with error handling
@@ -162,18 +164,29 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
         });
     }, []);
 
-    // Safe intersection observer setup
+    // Safe intersection observer setup with data loading trigger
     useEffect(() => {
         if (!projectsRef.current) return;
 
         const observer = new IntersectionObserver(
             ([entry]) => {
                 try {
-                    if (entry?.isIntersecting) {
+                    if (entry?.isIntersecting && !isVisible) {
+                        setIsVisible(true);
+                        
                         if (setCurrentSection) {
                             setCurrentSection('projects');
                         }
-                        if (!hasAnimated && !isLoading) {
+                        
+                        // Enable data loading when section becomes visible with delay for skeleton animation
+                        if (!enableDataLoading) {
+                            // Add development delay similar to Services for skeleton animation
+                            setTimeout(() => {
+                                setEnableDataLoading(true);
+                            }, process.env.NODE_ENV === 'development' ? 800 : 300);
+                        }
+                        
+                        if (!hasAnimated && enableDataLoading) {
                             animateEntry();
                         }
                     }
@@ -198,6 +211,7 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
             }
         };
     }, [setCurrentSection, hasAnimated, isLoading, animateEntry]);
+
 
     // Enhanced filter change handler
     const handleFilterChange = useCallback((newFilter: 'all' | DatabaseProject['category']) => {
@@ -310,7 +324,7 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
             aria-label="Projects section"
         >
             <div className="projects__container">
-                <div ref={headerRef} className="projects__header" style={{ opacity: hasAnimated ? 1 : 0 }}>
+                <div ref={headerRef} className="projects__header" style={{ opacity: enableDataLoading ? 1 : 0 }}>
                     <h2 className="projects__title">
                         {showFeaturedOnly ? 'Featured Projects' : 'Our Projects'}
                     </h2>
@@ -339,7 +353,7 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
                 </div>
 
                 {!showFeaturedOnly && categories.length > 1 && projects.length > 0 && (
-                    <div ref={filtersRef} className="projects__filters" style={{ opacity: hasAnimated ? 1 : 0 }}>
+                    <div ref={filtersRef} className="projects__filters" style={{ opacity: enableDataLoading && projects.length > 0 ? 1 : 0 }}>
                         {categories.map(category => (
                             <button
                                 key={`filter-${category}`}
@@ -356,14 +370,14 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
 
                 {/* Enhanced loading state with modern skeleton - show during initial load or when no data */}
                 <SmartSkeletonLoader
-                    isLoading={isLoading}
-                    hasData={projects.length > 0}
-                    skeletonCount={itemsPerPage}
+                    isLoading={!enableDataLoading || isLoading}
+                    hasData={enableDataLoading && projects.length > 0}
+                    skeletonCount={2}
                     className="projects__smart-loader"
                     fadeTransition={true}
                 >
                     {projects.length > 0 ? (
-                        <div ref={gridRef} className="projects__grid-container" style={{ opacity: hasAnimated ? 1 : 0 }}>
+                        <div ref={gridRef} className="projects__grid-container" style={{ opacity: enableDataLoading && projects.length > 0 ? 1 : 0 }}>
                             <div className="projects__grid">
                                 {projects.map((project, index) => (
                                     <EnhancedProjectCard
