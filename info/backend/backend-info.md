@@ -235,7 +235,7 @@ CREATE POLICY "allow_insert_page_views" ON page_views
 
 ### Static Data Handling
 - **Projects Data**: Stored in `src/data/projects-data.json`
-- **Services Data**: Managed in `src/data/services.ts`
+- **Services Data**: Fetched from database via `get_services_data()` RPC function (previously `src/data/services.ts`)
 - **Company Info**: Centralized in `src/data/company.ts`
 
 ## Database Migrations
@@ -269,6 +269,12 @@ CREATE POLICY "allow_insert_page_views" ON page_views
 - `is_current_user_admin()`: Helper function for admin privilege checking
 - `check_email_exists(email TEXT)`: Email existence verification
 - `get_profile_analytics()`: Profile statistics and analytics
+
+**Services Management:**
+- `get_services_data(category_filter TEXT, featured_only BOOLEAN, limit_count INTEGER)`: Comprehensive services data retrieval
+  - Returns services, categories, and process steps in JSON format
+  - Supports filtering by category, featured status, and result limiting
+  - Used by frontend `useServicesData` hook for dynamic service loading
 
 **Content & Analytics:**
 - `increment_view_count(table_type TEXT, record_id UUID)`: Secure view counter
