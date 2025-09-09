@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getDashboardNavigation, type NavigationItem } from '../../utils/navigationData';
 import './DashboardSidebar.css';
 
 interface SidebarItem {
@@ -20,29 +21,38 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
     onSectionChange,
     onBackToApp
 }) => {
-    const sidebarItems: SidebarItem[] = [
-        {
-            id: 'overview',
-            label: 'Overview',
-            icon: '📊',
-            isActive: activeSection === 'overview',
-            onClick: () => onSectionChange('overview')
-        },
-        {
-            id: 'projects',
-            label: 'Projects',
-            icon: '🎮',
-            isActive: activeSection === 'projects',
-            onClick: () => onSectionChange('projects')
-        },
-        {
-            id: 'articles',
-            label: 'Articles',
-            icon: '📰',
-            isActive: activeSection === 'articles',
-            onClick: () => onSectionChange('articles')
-        }
-    ];
+    const [navigationItems, setNavigationItems] = useState<NavigationItem[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const loadNavigation = async () => {
+            try {
+                setIsLoading(true);
+                const navItems = await getDashboardNavigation();
+                setNavigationItems(navItems);
+            } catch (error) {
+                console.error('Failed to load dashboard navigation:', error);
+                // Fallback navigation
+                setNavigationItems([
+                    { id: 'overview', label: 'Overview', icon: '📊' },
+                    { id: 'projects', label: 'Projects', icon: '🎮' },
+                    { id: 'articles', label: 'Articles', icon: '📰' }
+                ]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadNavigation();
+    }, []);
+
+    const sidebarItems: SidebarItem[] = navigationItems.map(item => ({
+        id: item.id,
+        label: item.label,
+        icon: item.icon,
+        isActive: activeSection === item.id,
+        onClick: () => onSectionChange(item.id)
+    }));
 
     return (
         <aside className="dashboard-sidebar">

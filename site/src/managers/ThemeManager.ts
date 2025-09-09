@@ -5,7 +5,7 @@
  * Optimized for startup performance - no runtime switching, just load and apply
  */
 
-import { availableThemes, isValidThemeId, getThemeById, type Theme } from '../config/themes';
+import { getAvailableThemes, isValidThemeId, getThemeById, type Theme } from '../config/themes';
 
 interface ThemeManagerConfig {
     fallbackTheme?: string;
@@ -42,14 +42,14 @@ class ThemeManager {
      * Initialize theme system - should be called once at app startup
      * Returns the selected theme for immediate use (e.g., preloader integration)
      */
-    public initialize(): Theme {
+    public async initialize(): Promise<Theme> {
         if (this.isInitialized) {
             this.log('ThemeManager already initialized');
             return this.currentTheme!;
         }
 
-        const selectedTheme = this.selectStartupTheme();
-        this.applyTheme(selectedTheme);
+        const selectedTheme = await this.selectStartupTheme();
+        await this.applyTheme(selectedTheme);
         this.currentTheme = selectedTheme;
         this.isInitialized = true;
 
@@ -67,7 +67,7 @@ class ThemeManager {
     /**
      * Force reinitialize with new theme (for edge cases)
      */
-    public reinitialize(): Theme {
+    public async reinitialize(): Promise<Theme> {
         this.isInitialized = false;
         return this.initialize();
     }
@@ -86,7 +86,7 @@ class ThemeManager {
     /**
      * Select theme for startup based on session consistency
      */
-    private selectStartupTheme(): Theme {
+    private async selectStartupTheme(): Promise<Theme> {
         if (this.config.enableSessionConsistency) {
             return this.getSessionConsistentTheme();
         } else {
@@ -98,7 +98,7 @@ class ThemeManager {
      * Generate session-consistent theme to prevent flickering during development
      * but still provides variety across different sessions/days
      */
-    private getSessionConsistentTheme(): Theme {
+    private async getSessionConsistentTheme(): Promise<Theme> {
         const sessionKey = 'gd-session-theme-id';
         let sessionId = sessionStorage.getItem(sessionKey);
 
@@ -111,6 +111,7 @@ class ThemeManager {
         const currentHour = new Date().getHours();
         const sessionSeed = `${sessionId}-${Math.floor(currentHour / 6)}`; // Changes every 6 hours
 
+        const availableThemes = await getAvailableThemes();
         const themeIndex = this.generateHashFromString(sessionSeed) % availableThemes.length;
         return availableThemes[themeIndex];
     }
@@ -118,7 +119,8 @@ class ThemeManager {
     /**
      * Get completely random theme
      */
-    private getRandomTheme(): Theme {
+    private async getRandomTheme(): Promise<Theme> {
+        const availableThemes = await getAvailableThemes();
         const randomIndex = Math.floor(Math.random() * availableThemes.length);
         return availableThemes[randomIndex];
     }
@@ -126,11 +128,19 @@ class ThemeManager {
     /**
      * Apply theme to document immediately
      */
-    private applyTheme(theme: Theme): void {
-        if (!isValidThemeId(theme.id)) {
+    private async applyTheme(theme: Theme): Promise<void> {
+        const isValid = await isValidThemeId(theme.id);
+        if (!isValid) {
             this.log(`Invalid theme ID: ${theme.id}, falling back to ${this.config.fallbackTheme}`);
-            const fallbackTheme = getThemeById(this.config.fallbackTheme) || availableThemes[0];
-            document.documentElement.setAttribute('data-theme', fallbackTheme.id);
+            const fallbackTheme = await getThemeById(this.config.fallbackTheme);
+            if (fallbackTheme) {
+                document.documentElement.setAttribute('data-theme', fallbackTheme.id);
+            } else {
+                const availableThemes = await getAvailableThemes();
+                if (availableThemes.length > 0) {
+                    document.documentElement.setAttribute('data-theme', availableThemes[0].id);
+                }
+            }
             return;
         }
 
@@ -178,7 +188,7 @@ export default ThemeManager;
  * Initialize theme system - convenience function for App.tsx
  * Returns the selected theme for immediate use
  */
-export const initializeThemeSystem = (config?: ThemeManagerConfig): Theme => {
+export const initializeThemeSystem = async (config?: ThemeManagerConfig): Promise<Theme> => {
     const themeManager = ThemeManager.getInstance(config);
     return themeManager.initialize();
 };

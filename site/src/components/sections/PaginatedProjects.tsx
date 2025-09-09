@@ -7,7 +7,7 @@ import ResponsiveImage from '../common/ResponsiveImage';
 import Pagination from '../ui/Pagination';
 import ProjectDetailsModal from '../modals/ProjectDetailsModal';
 import { SmartSkeletonLoader, ProjectSkeletonGrid } from '../ui/SkeletonLoader';
-import { getProjectFolderName, hasProjectAssets } from '../../utils/projectImageMap';
+import { getProjectFolderNameSync, hasProjectAssetsSync } from '../../utils/projectImageMap';
 import type { DatabaseProject } from '../../services/DatabaseService';
 import './Projects.css';
 
@@ -655,8 +655,8 @@ const EnhancedProjectCard: React.FC<EnhancedProjectCardProps> = ({
         >
             <div className="projects__card-image">
                 {(() => {
-                    const projectFolderName = getProjectFolderName(project.title);
-                    const hasAssets = hasProjectAssets(project.title);
+                    const projectFolderName = getProjectFolderNameSync(project.title);
+                    const hasAssets = hasProjectAssetsSync(project.title);
                     
                     if (hasAssets && projectFolderName) {
                         return (
