@@ -160,7 +160,7 @@ const convertToLegacyFormat = (service: Service): ServiceData => ({
 /**
  * Legacy exports for backward compatibility
  */
-export let servicesData: ServiceData[] = [];
+export const servicesData: ServiceData[] = [];
 
 // Legacy functions with updated implementations
 export const getServicesByCategoryLegacy = async (category: ServiceData['category']): Promise<ServiceData[]> => {

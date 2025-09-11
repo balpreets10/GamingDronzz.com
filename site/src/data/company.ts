@@ -111,7 +111,7 @@ export const getCompanyValues = async (): Promise<string[] | undefined> => {
 };
 
 // Legacy export for backward compatibility
-export let companyData: CompanyData = {
+export const companyData: CompanyData = {
   title: '',
   subtitle: '',
   story: '',
