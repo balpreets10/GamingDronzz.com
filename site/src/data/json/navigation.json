@@ -1,0 +1,169 @@
+{
+  "mainNavigation": [
+    {
+      "id": "home",
+      "label": "Home",
+      "href": "#hero",
+      "icon": "🏠",
+      "position": 0
+    },
+    {
+      "id": "about",
+      "label": "About",
+      "href": "#about",
+      "icon": "👥",
+      "position": 1
+    },
+    {
+      "id": "services",
+      "label": "Services",
+      "href": "#services",
+      "icon": "⚙️",
+      "position": 2
+    },
+    {
+      "id": "projects",
+      "label": "Projects",
+      "href": "#projects",
+      "icon": "🎮",
+      "position": 3
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "href": "#contact",
+      "icon": "📧",
+      "position": 4
+    }
+  ],
+  "dashboardNavigation": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "href": "/dashboard/overview",
+      "icon": "📊"
+    },
+    {
+      "id": "projects",
+      "label": "Projects",
+      "href": "/dashboard/projects",
+      "icon": "🎮"
+    },
+    {
+      "id": "articles",
+      "label": "Articles",
+      "href": "/dashboard/articles",
+      "icon": "📰"
+    },
+    {
+      "id": "analytics",
+      "label": "Analytics",
+      "href": "/dashboard/analytics",
+      "icon": "📈"
+    },
+    {
+      "id": "settings",
+      "label": "Settings",
+      "href": "/dashboard/settings",
+      "icon": "⚙️"
+    }
+  ],
+  "footerNavigation": [
+    {
+      "id": "company",
+      "title": "Company",
+      "items": [
+        {
+          "id": "about-us",
+          "label": "About Us",
+          "href": "#about",
+          "icon": "ℹ️"
+        },
+        {
+          "id": "team",
+          "label": "Our Team",
+          "href": "#team",
+          "icon": "👥"
+        },
+        {
+          "id": "careers",
+          "label": "Careers",
+          "href": "#careers",
+          "icon": "💼"
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "items": [
+        {
+          "id": "game-dev",
+          "label": "Game Development",
+          "href": "#game-development",
+          "icon": "🎮"
+        },
+        {
+          "id": "consulting",
+          "label": "Consulting",
+          "href": "#consulting",
+          "icon": "💡"
+        },
+        {
+          "id": "support",
+          "label": "Support",
+          "href": "#support",
+          "icon": "🛠️"
+        }
+      ]
+    },
+    {
+      "id": "legal",
+      "title": "Legal",
+      "items": [
+        {
+          "id": "privacy",
+          "label": "Privacy Policy",
+          "href": "/privacy",
+          "icon": "🔒"
+        },
+        {
+          "id": "terms",
+          "label": "Terms of Service",
+          "href": "/terms",
+          "icon": "📋"
+        }
+      ]
+    }
+  ],
+  "socialLinks": [
+    {
+      "id": "twitter",
+      "label": "Twitter",
+      "href": "https://twitter.com/gamingdronzz",
+      "icon": "🐦",
+      "external": true
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "href": "https://linkedin.com/company/gamingdronzz",
+      "icon": "💼",
+      "external": true
+    },
+    {
+      "id": "github",
+      "label": "GitHub",
+      "href": "https://github.com/gamingdronzz",
+      "icon": "📦",
+      "external": true
+    },
+    {
+      "id": "discord",
+      "label": "Discord",
+      "href": "https://discord.gg/gamingdronzz",
+      "icon": "🎮",
+      "external": true
+    }
+  ]
+}

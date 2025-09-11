@@ -1,0 +1,202 @@
+{
+  "availableThemes": [
+    {
+      "id": "arctic-frost",
+      "name": "Arctic Frost",
+      "icon": "❄️",
+      "category": "light",
+      "colors": {
+        "primary": "#3b82f6",
+        "secondary": "#64748b",
+        "accent": "#06b6d4",
+        "background": "#f8fafc",
+        "surface": "#ffffff",
+        "text": "#0f172a",
+        "textSecondary": "#475569",
+        "border": "#e2e8f0",
+        "error": "#ef4444",
+        "warning": "#f59e0b",
+        "success": "#10b981",
+        "info": "#06b6d4"
+      }
+    },
+    {
+      "id": "dark-cyber",
+      "name": "Dark Cyber",
+      "icon": "🌙",
+      "category": "dark",
+      "colors": {
+        "primary": "#8b5cf6",
+        "secondary": "#6b7280",
+        "accent": "#06b6d4",
+        "background": "#0f172a",
+        "surface": "#1e293b",
+        "text": "#f8fafc",
+        "textSecondary": "#94a3b8",
+        "border": "#334155",
+        "error": "#ef4444",
+        "warning": "#f59e0b",
+        "success": "#10b981",
+        "info": "#06b6d4"
+      }
+    },
+    {
+      "id": "default",
+      "name": "Formal",
+      "icon": "☀️",
+      "category": "light",
+      "colors": {
+        "primary": "#007bff",
+        "secondary": "#6c757d",
+        "accent": "#007bff",
+        "background": "#ffffff",
+        "surface": "#f8f9fa",
+        "text": "#343a40",
+        "textSecondary": "#6c757d",
+        "border": "#dee2e6",
+        "error": "#dc3545",
+        "warning": "#ffc107",
+        "success": "#28a745",
+        "info": "#17a2b8"
+      }
+    },
+    {
+      "id": "electric-storm",
+      "name": "Electric Storm",
+      "icon": "⚡",
+      "category": "colorful",
+      "colors": {
+        "primary": "#f59e0b",
+        "secondary": "#6b7280",
+        "accent": "#06b6d4",
+        "background": "#1f2937",
+        "surface": "#374151",
+        "text": "#f9fafb",
+        "textSecondary": "#d1d5db",
+        "border": "#4b5563",
+        "error": "#ef4444",
+        "warning": "#f59e0b",
+        "success": "#10b981",
+        "info": "#06b6d4"
+      }
+    },
+    {
+      "id": "gaming-inferno",
+      "name": "Gaming Inferno",
+      "icon": "🔥",
+      "category": "dark",
+      "colors": {
+        "primary": "#ef4444",
+        "secondary": "#6b7280",
+        "accent": "#f59e0b",
+        "background": "#0c0a09",
+        "surface": "#1c1917",
+        "text": "#fafaf9",
+        "textSecondary": "#a8a29e",
+        "border": "#44403c",
+        "error": "#ef4444",
+        "warning": "#f59e0b",
+        "success": "#10b981",
+        "info": "#06b6d4"
+      }
+    },
+    {
+      "id": "minimal-green",
+      "name": "Minimal Green",
+      "icon": "🍃",
+      "category": "light",
+      "colors": {
+        "primary": "#22c55e",
+        "secondary": "#6b7280",
+        "accent": "#16a34a",
+        "background": "#ffffff",
+        "surface": "#f9fafb",
+        "text": "#111827",
+        "textSecondary": "#6b7280",
+        "border": "#e5e7eb",
+        "error": "#ef4444",
+        "warning": "#f59e0b",
+        "success": "#10b981",
+        "info": "#06b6d4"
+      }
+    },
+    {
+      "id": "ocean-deep",
+      "name": "Ocean Deep",
+      "icon": "🌊",
+      "category": "colorful",
+      "colors": {
+        "primary": "#06b6d4",
+        "secondary": "#6b7280",
+        "accent": "#0891b2",
+        "background": "#0c4a6e",
+        "surface": "#075985",
+        "text": "#f0f9ff",
+        "textSecondary": "#bae6fd",
+        "border": "#0284c7",
+        "error": "#ef4444",
+        "warning": "#f59e0b",
+        "success": "#10b981",
+        "info": "#06b6d4"
+      }
+    },
+    {
+      "id": "retro-arcade",
+      "name": "Retro Arcade",
+      "icon": "🎮",
+      "category": "colorful",
+      "colors": {
+        "primary": "#a855f7",
+        "secondary": "#6b7280",
+        "accent": "#d946ef",
+        "background": "#18181b",
+        "surface": "#27272a",
+        "text": "#fafafa",
+        "textSecondary": "#a1a1aa",
+        "border": "#3f3f46",
+        "error": "#ef4444",
+        "warning": "#f59e0b",
+        "success": "#10b981",
+        "info": "#06b6d4"
+      }
+    },
+    {
+      "id": "sakura-bloom",
+      "name": "Sakura Bloom",
+      "icon": "🌸",
+      "category": "light",
+      "colors": {
+        "primary": "#ec4899",
+        "secondary": "#6b7280",
+        "accent": "#f97316",
+        "background": "#fdf2f8",
+        "surface": "#ffffff",
+        "text": "#831843",
+        "textSecondary": "#9d174d",
+        "border": "#fbcfe8",
+        "error": "#ef4444",
+        "warning": "#f59e0b",
+        "success": "#10b981",
+        "info": "#06b6d4"
+      }
+    }
+  ],
+  "defaultTheme": "default",
+  "categoryMapping": {
+    "light": [
+      "arctic-frost",
+      "default",
+      "minimal-green",
+      "sakura-bloom"
+    ],
+    "dark": [
+      "dark-cyber",
+      "gaming-inferno"
+    ],
+    "colorful": [
+      "electric-storm",
+      "ocean-deep",
+      "retro-arcade"
+    ]
+  }
+}

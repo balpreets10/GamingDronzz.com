@@ -1,0 +1,87 @@
+{
+  "title": "About GamingDronzz",
+  "subtitle": "Crafting exceptional gaming experiences through innovative development",
+  "story": "Founded with a passion for creating immersive gaming worlds, GamingDronzz emerged from a team of dedicated developers who understood that great games require more than just code—they require vision, creativity, and technical excellence. Our journey began with a simple belief: every game has the potential to create unforgettable experiences.",
+  "mission": "To empower game developers and studios with cutting-edge solutions, expert consultation, and innovative technology that transforms creative visions into compelling gaming realities.",
+  "vision": "To become the leading force in game development innovation, setting new standards for immersive experiences and technical excellence.",
+  "values": [
+    "Innovation through creativity and technical mastery",
+    "Quality over quantity in every project",
+    "Collaboration and transparency with our clients",
+    "Continuous learning and adaptation to new technologies",
+    "Sustainable and ethical game development practices"
+  ],
+  "stats": [
+    {
+      "number": "50+",
+      "label": "Games Developed",
+      "description": "Successfully delivered games across mobile, PC, and console platforms"
+    },
+    {
+      "number": "5+",
+      "label": "Years Experience",
+      "description": "Proven track record in the gaming industry"
+    },
+    {
+      "number": "25+",
+      "label": "Happy Clients",
+      "description": "Satisfied clients who trust our expertise"
+    },
+    {
+      "number": "100%",
+      "label": "Project Success Rate",
+      "description": "Every project delivered on time and within budget"
+    }
+  ],
+  "team": [
+    {
+      "name": "Alex Chen",
+      "role": "Lead Game Developer",
+      "bio": "10+ years in game development with expertise in Unity and Unreal Engine. Specialized in creating immersive gameplay experiences and optimizing performance across multiple platforms.",
+      "avatar": "/images/team/alex-chen.jpg",
+      "skills": ["Unity", "Unreal Engine", "C#", "Performance Optimization"],
+      "social": {
+        "linkedin": "https://linkedin.com/in/alexchen-gamedev",
+        "github": "https://github.com/alexchen-dev"
+      }
+    },
+    {
+      "name": "Sarah Martinez",
+      "role": "Technical Director",
+      "bio": "Former AAA studio technical lead specializing in performance optimization and scalable game architecture. Expert in graphics programming and engine development.",
+      "avatar": "/images/team/sarah-martinez.jpg",
+      "skills": ["Graphics Programming", "Engine Development", "C++", "Optimization"],
+      "social": {
+        "linkedin": "https://linkedin.com/in/sarahmartinez-tech",
+        "github": "https://github.com/sarah-tech"
+      }
+    },
+    {
+      "name": "David Kim",
+      "role": "Creative Director",
+      "bio": "Award-winning game designer with focus on innovative gameplay mechanics and user experience design. Passionate about creating memorable gaming moments.",
+      "avatar": "/images/team/david-kim.jpg",
+      "skills": ["Game Design", "UX Design", "Prototyping", "Creative Direction"],
+      "social": {
+        "linkedin": "https://linkedin.com/in/davidkim-creative",
+        "twitter": "https://twitter.com/davidkim_games"
+      }
+    }
+  ],
+  "skills": [
+    { "name": "Unity", "icon": "🎮", "category": "gamedev", "proficiency": 95 },
+    { "name": "Unreal Engine", "icon": "🚀", "category": "gamedev", "proficiency": 90 },
+    { "name": "C#", "icon": "💻", "category": "backend", "proficiency": 92 },
+    { "name": "JavaScript", "icon": "⚡", "category": "frontend", "proficiency": 88 },
+    { "name": "Python", "icon": "🐍", "category": "backend", "proficiency": 85 },
+    { "name": "React", "icon": "⚛️", "category": "frontend", "proficiency": 87 },
+    { "name": "Node.js", "icon": "🟢", "category": "backend", "proficiency": 83 },
+    { "name": "MongoDB", "icon": "🍃", "category": "backend", "proficiency": 80 },
+    { "name": "Blender", "icon": "🎨", "category": "design", "proficiency": 78 },
+    { "name": "Photoshop", "icon": "🖼️", "category": "design", "proficiency": 82 },
+    { "name": "Git", "icon": "📝", "category": "tools", "proficiency": 90 },
+    { "name": "Docker", "icon": "🐳", "category": "tools", "proficiency": 75 }
+  ],
+  "founded": "2019",
+  "location": "Remote-First Global Team"
+}
