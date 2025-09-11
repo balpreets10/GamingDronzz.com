@@ -44,19 +44,19 @@ html[data-theme="space-explorer"] {
     --gd-color-accent-900: #7a5800;
 
     /* ===== INTELLIGENT BACKGROUND SYSTEM ===== */
-    /* Enhanced deep space backgrounds with better layering contrast */
-    --gd-bg-primary: #1a1a2e;
-    /* Lighter space void for better contrast */
-    --gd-bg-secondary: #2d2d44;
-    /* Lighter nebula with more distinction */
-    --gd-bg-tertiary: #404066;
-    /* Medium space depth with better separation */
-    --gd-bg-quaternary: #525288;
-    /* Lighter cosmic areas with more contrast */
-    --gd-bg-elevated: #6464aa;
-    /* Elevated surfaces with clear distinction */
-    --gd-bg-overlay: rgba(26, 26, 46, 0.85);
-    /* Lighter overlay for better separation */
+    /* Enhanced deep space backgrounds with maximum text readability */
+    --gd-bg-primary: #0f0f23;
+    /* Deep void - matches JSON theme for consistency, optimal text contrast */
+    --gd-bg-secondary: #1e1b4b;
+    /* Dark nebula - matches JSON surface, strong text readability */
+    --gd-bg-tertiary: #2d2a66;
+    /* Medium cosmic depth with clear text separation */
+    --gd-bg-quaternary: #3d3788;
+    /* Elevated cosmic areas with excellent contrast */
+    --gd-bg-elevated: #4a44aa;
+    /* Card/elevated surfaces with strong text visibility */
+    --gd-bg-overlay: rgba(15, 15, 35, 0.92);
+    /* Enhanced overlay for maximum text readability */
 
     /* Background variants for subtle effects */
     --gd-bg-primary-subtle: rgba(75, 0, 130, 0.05);
@@ -64,27 +64,27 @@ html[data-theme="space-explorer"] {
     --gd-bg-accent-subtle: rgba(255, 215, 0, 0.05);
 
     /* Additional background variants with enhanced contrast */
-    --gd-bg-dark: #151529;
-    /* Deepest void with subtle purple tint */
-    --gd-bg-darker: #0f0f1f;
-    /* Near absolute black with hint of depth */
+    --gd-bg-dark: #0a0a1f;
+    /* Deepest void - darker than primary for maximum text contrast */
+    --gd-bg-darker: #050515;
+    /* Near absolute black with cosmic depth - ultimate text readability */
 
     /* ===== INTELLIGENT TEXT SYSTEM ===== */
-    /* Enhanced text system with better contrast for cosmic readability */
+    /* Enhanced text system with maximum contrast for cosmic readability */
     --gd-text-primary: #ffffff;
-    /* Pure white - primary text */
-    --gd-text-secondary: #f0f0ff;
-    /* Ultra-bright lavender - secondary */
-    --gd-text-tertiary: #e6e6ff;
-    /* Bright lavender - tertiary */
-    --gd-text-quaternary: #d0d0f0;
-    /* Medium lavender - quaternary */
-    --gd-text-disabled: #a6a6d4;
-    /* Brighter disabled lavender for better visibility */
-    --gd-text-inverse: #1a1a2e;
-    /* Darker text for light backgrounds */
-    --gd-text-muted: #b8b8e8;
-    /* Much brighter muted cosmic blue */
+    /* Pure white - primary text with maximum contrast */
+    --gd-text-secondary: #f8faff;
+    /* Ultra-bright white-lavender - secondary with excellent readability */
+    --gd-text-tertiary: #e8ecff;
+    /* Bright white-lavender - tertiary with strong contrast */
+    --gd-text-quaternary: #d8dcf0;
+    /* Light lavender - quaternary with good visibility */
+    --gd-text-disabled: #b8bcd4;
+    /* Improved disabled text with better contrast */
+    --gd-text-inverse: #0f0f1f;
+    /* Very dark text for light backgrounds */
+    --gd-text-muted: #c8cce8;
+    /* Enhanced muted text with better visibility */
 
     /* Text on colored backgrounds */
     --gd-text-on-primary: #ffffff;
@@ -116,10 +116,10 @@ html[data-theme="space-explorer"] {
     --gd-color-info-dark: var(--gd-color-primary-700);
 
     /* ===== BORDER SYSTEM ===== */
-    /* Enhanced cosmic border system with better visibility */
-    --gd-border-light: rgba(75, 0, 130, 0.3);
-    --gd-border-medium: rgba(75, 0, 130, 0.5);
-    --gd-border-strong: rgba(75, 0, 130, 0.7);
+    /* Enhanced cosmic border system with maximum visibility and text separation */
+    --gd-border-light: rgba(102, 102, 241, 0.4);
+    --gd-border-medium: rgba(102, 102, 241, 0.6);
+    --gd-border-strong: rgba(102, 102, 241, 0.8);
     --gd-border-primary: var(--gd-color-primary-400);
     --gd-border-focus: var(--gd-color-accent-400);
 
@@ -250,4 +250,55 @@ html[data-theme="space-explorer"] {
             transparent 30%,
             rgba(255, 215, 0, 0.1) 50%,
             transparent 70%);
+
+    /* ===== TEXT READABILITY ENHANCEMENTS ===== */
+    /* Force better text visibility on all text elements */
+    --gd-text-shadow-readable: 0 1px 3px rgba(0, 0, 0, 0.8);
+    --gd-text-shadow-strong: 0 2px 4px rgba(0, 0, 0, 0.9);
+    --gd-backdrop-text: rgba(15, 15, 35, 0.7);
+}
+
+/* ===== SPACE EXPLORER TEXT READABILITY OVERRIDES ===== */
+html[data-theme="space-explorer"] {
+    
+    /* Enhance ALL text elements for maximum readability */
+    h1, h2, h3, h4, h5, h6,
+    p, span, div, a, button,
+    .text-primary, .text-secondary, .text-tertiary,
+    .card-title, .card-text, .nav-link {
+        text-shadow: var(--gd-text-shadow-readable) !important;
+        color: var(--gd-text-primary) !important;
+    }
+    
+    /* Specific overrides for secondary text */
+    .text-secondary, .text-muted,
+    .card-subtitle, .nav-secondary {
+        color: var(--gd-text-secondary) !important;
+        text-shadow: var(--gd-text-shadow-readable) !important;
+    }
+    
+    /* Enhanced card backgrounds for text separation */
+    .card, .modal, .dropdown-menu {
+        background: var(--gd-bg-elevated) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid var(--gd-border-medium) !important;
+    }
+    
+    /* Navigation text improvements */
+    .navbar, .nav {
+        background: var(--gd-bg-overlay) !important;
+        backdrop-filter: blur(20px) !important;
+    }
+    
+    /* Button text contrast */
+    .btn {
+        text-shadow: var(--gd-text-shadow-readable) !important;
+    }
+    
+    /* Form input improvements */
+    .form-control, .form-select, input, textarea {
+        background: var(--gd-bg-tertiary) !important;
+        color: var(--gd-text-primary) !important;
+        border: 1px solid var(--gd-border-strong) !important;
+    }
 }
