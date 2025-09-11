@@ -1,0 +1,192 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Gaming Tournament Platform",
+      "description": "A comprehensive platform for organizing and managing esports tournaments with real-time matchmaking, leaderboards, and streaming integration.",
+      "category": "Web Development",
+      "technologies": ["React", "Node.js", "Socket.io", "PostgreSQL", "AWS"],
+      "image": "/images/projects/tournament-platform.jpg",
+      "demoUrl": "https://demo-tournament.gamingdronzz.com",
+      "githubUrl": "https://github.com/gamingdronzz/tournament-platform",
+      "status": "completed",
+      "featured": true,
+      "startDate": "2024-01-15",
+      "completionDate": "2024-06-30",
+      "tags": ["Gaming", "Real-time", "Tournament", "Esports"]
+    },
+    {
+      "id": 2,
+      "title": "Mobile Gaming Analytics Dashboard",
+      "description": "Advanced analytics dashboard for mobile game developers to track player behavior, retention rates, and monetization metrics.",
+      "category": "Mobile Development",
+      "technologies": ["React Native", "Firebase", "Chart.js", "Redux", "TypeScript"],
+      "image": "/images/projects/analytics-dashboard.jpg",
+      "demoUrl": "https://analytics-demo.gamingdronzz.com",
+      "githubUrl": "https://github.com/gamingdronzz/gaming-analytics",
+      "status": "completed",
+      "featured": true,
+      "startDate": "2024-03-01",
+      "completionDate": "2024-08-15",
+      "tags": ["Analytics", "Mobile", "Dashboard", "Gaming Metrics"]
+    },
+    {
+      "id": 3,
+      "title": "AI-Powered Game Recommendation Engine",
+      "description": "Machine learning system that analyzes player preferences and gaming patterns to provide personalized game recommendations.",
+      "category": "AI/ML",
+      "technologies": ["Python", "TensorFlow", "FastAPI", "MongoDB", "Docker"],
+      "image": "/images/projects/ai-recommendations.jpg",
+      "demoUrl": null,
+      "githubUrl": "https://github.com/gamingdronzz/ai-game-recommendations",
+      "status": "in-progress",
+      "featured": true,
+      "startDate": "2024-07-01",
+      "completionDate": null,
+      "tags": ["AI", "Machine Learning", "Recommendations", "Gaming"]
+    },
+    {
+      "id": 4,
+      "title": "Multiplayer Racing Game",
+      "description": "3D multiplayer racing game built with Unity featuring custom physics, real-time networking, and cross-platform compatibility.",
+      "category": "Game Development",
+      "technologies": ["Unity", "C#", "Photon", "Blender", "WebGL"],
+      "image": "/images/projects/racing-game.jpg",
+      "demoUrl": "https://racing.gamingdronzz.com",
+      "githubUrl": null,
+      "status": "completed",
+      "featured": false,
+      "startDate": "2023-11-01",
+      "completionDate": "2024-04-20",
+      "tags": ["Unity", "3D", "Multiplayer", "Racing"]
+    },
+    {
+      "id": 5,
+      "title": "Gaming Community Social Platform",
+      "description": "Social networking platform specifically designed for gamers to connect, share gameplay clips, and organize gaming sessions.",
+      "category": "Web Development",
+      "technologies": ["Next.js", "Prisma", "PostgreSQL", "Cloudinary", "NextAuth"],
+      "image": "/images/projects/gaming-social.jpg",
+      "demoUrl": "https://social-demo.gamingdronzz.com",
+      "githubUrl": "https://github.com/gamingdronzz/gaming-social",
+      "status": "completed",
+      "featured": false,
+      "startDate": "2024-02-10",
+      "completionDate": "2024-07-25",
+      "tags": ["Social", "Community", "Gaming", "Video Sharing"]
+    },
+    {
+      "id": 6,
+      "title": "VR Gaming Experience Center Website",
+      "description": "Interactive website for a VR gaming center with booking system, virtual tours, and immersive 3D previews of available games.",
+      "category": "Web Development",
+      "technologies": ["Three.js", "React", "Node.js", "Stripe", "WebXR"],
+      "image": "/images/projects/vr-center.jpg",
+      "demoUrl": "https://vr-center.gamingdronzz.com",
+      "githubUrl": "https://github.com/gamingdronzz/vr-center-website",
+      "status": "completed",
+      "featured": false,
+      "startDate": "2024-04-01",
+      "completionDate": "2024-06-15",
+      "tags": ["VR", "3D", "Booking System", "Interactive"]
+    },
+    {
+      "id": 7,
+      "title": "Esports Team Management System",
+      "description": "Comprehensive management system for esports teams including player statistics, match scheduling, strategy planning, and performance tracking.",
+      "category": "Web Development",
+      "technologies": ["Vue.js", "Laravel", "MySQL", "Redis", "WebSockets"],
+      "image": "/images/projects/esports-management.jpg",
+      "demoUrl": null,
+      "githubUrl": "https://github.com/gamingdronzz/esports-management",
+      "status": "in-progress",
+      "featured": false,
+      "startDate": "2024-08-01",
+      "completionDate": null,
+      "tags": ["Esports", "Team Management", "Statistics", "Performance"]
+    },
+    {
+      "id": 8,
+      "title": "Gaming Hardware Review Platform",
+      "description": "Platform for comprehensive gaming hardware reviews, benchmarks, and user ratings with interactive comparison tools.",
+      "category": "Web Development",
+      "technologies": ["Nuxt.js", "Supabase", "Tailwind CSS", "Chart.js", "Algolia"],
+      "image": "/images/projects/hardware-reviews.jpg",
+      "demoUrl": "https://reviews.gamingdronzz.com",
+      "githubUrl": "https://github.com/gamingdronzz/hardware-reviews",
+      "status": "completed",
+      "featured": false,
+      "startDate": "2024-01-01",
+      "completionDate": "2024-05-30",
+      "tags": ["Reviews", "Hardware", "Benchmarks", "Comparison"]
+    }
+  ],
+  "categories": [
+    {
+      "id": "web-development",
+      "name": "Web Development",
+      "description": "Full-stack web applications and platforms",
+      "icon": "🌐"
+    },
+    {
+      "id": "mobile-development",
+      "name": "Mobile Development",
+      "description": "Mobile applications and cross-platform solutions",
+      "icon": "📱"
+    },
+    {
+      "id": "game-development",
+      "name": "Game Development",
+      "description": "Video games and interactive experiences",
+      "icon": "🎮"
+    },
+    {
+      "id": "ai-ml",
+      "name": "AI/ML",
+      "description": "Artificial Intelligence and Machine Learning projects",
+      "icon": "🤖"
+    }
+  ],
+  "technologies": [
+    {
+      "name": "React",
+      "category": "Frontend",
+      "color": "#61DAFB"
+    },
+    {
+      "name": "Node.js",
+      "category": "Backend",
+      "color": "#339933"
+    },
+    {
+      "name": "Unity",
+      "category": "Game Engine",
+      "color": "#000000"
+    },
+    {
+      "name": "Python",
+      "category": "Backend",
+      "color": "#3776AB"
+    },
+    {
+      "name": "TypeScript",
+      "category": "Language",
+      "color": "#3178C6"
+    },
+    {
+      "name": "PostgreSQL",
+      "category": "Database",
+      "color": "#336791"
+    },
+    {
+      "name": "AWS",
+      "category": "Cloud",
+      "color": "#FF9900"
+    },
+    {
+      "name": "Firebase",
+      "category": "Backend-as-a-Service",
+      "color": "#FFCA28"
+    }
+  ]
+}

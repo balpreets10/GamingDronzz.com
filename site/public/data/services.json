@@ -1,0 +1,227 @@
+{
+    "services": [
+        {
+            "id": "game-development",
+            "title": "Full Game Development",
+            "category": "development",
+            "description": "End-to-end game development from concept to launch. We handle everything including gameplay mechanics, art direction, and technical implementation.",
+            "features": [
+                "Complete game architecture",
+                "Custom gameplay systems",
+                "Art & audio integration",
+                "Platform optimization",
+                "Launch support"
+            ],
+            "pricing": "Starting at $25k",
+            "icon": "🎮",
+            "featured": true,
+            "priority": 1
+        },
+        {
+            "id": "unity-development",
+            "title": "Unity Development",
+            "category": "development",
+            "description": "Expert Unity development for 2D/3D games, mobile apps, and interactive experiences with performance optimization.",
+            "features": [
+                "Unity 2022+ expertise",
+                "Cross-platform deployment",
+                "Performance optimization",
+                "Custom tools & systems",
+                "Multiplayer integration"
+            ],
+            "pricing": "$80-150/hour",
+            "icon": "⚙️",
+            "featured": false,
+            "priority": 2
+        },
+        {
+            "id": "mobile-games",
+            "title": "Mobile Game Development",
+            "category": "development",
+            "description": "Native and cross-platform mobile games optimized for iOS and Android with monetization strategies.",
+            "features": [
+                "iOS & Android native",
+                "Cross-platform frameworks",
+                "Monetization integration",
+                "App store optimization",
+                "Analytics implementation"
+            ],
+            "pricing": "$15k - $50k",
+            "icon": "📱",
+            "featured": true,
+            "priority": 3
+        },
+        {
+            "id": "game-consulting",
+            "title": "Game Design Consulting",
+            "category": "consulting",
+            "description": "Strategic game design consultation to optimize gameplay, monetization, and user engagement.",
+            "features": [
+                "Gameplay analysis",
+                "Monetization strategy",
+                "User experience audit",
+                "Market research",
+                "Competitive analysis"
+            ],
+            "pricing": "$120-200/hour",
+            "icon": "💡",
+            "featured": false,
+            "priority": 4
+        },
+        {
+            "id": "performance-optimization",
+            "title": "Performance Optimization",
+            "category": "optimization",
+            "description": "Comprehensive performance auditing and optimization for existing games and applications.",
+            "features": [
+                "Performance profiling",
+                "Memory optimization",
+                "Rendering optimization",
+                "Asset optimization",
+                "Code refactoring"
+            ],
+            "pricing": "$100-180/hour",
+            "icon": "⚡",
+            "featured": false,
+            "priority": 5
+        },
+        {
+            "id": "ui-ux-design",
+            "title": "Game UI/UX Design",
+            "category": "design",
+            "description": "User interface and experience design specifically crafted for games and interactive applications.",
+            "features": [
+                "UI/UX wireframes",
+                "Interactive prototypes",
+                "Design systems",
+                "Accessibility compliance",
+                "Usability testing"
+            ],
+            "pricing": "$3k - $15k",
+            "icon": "🎨",
+            "featured": true,
+            "priority": 6
+        },
+        {
+            "id": "vr-ar-development",
+            "title": "VR/AR Development",
+            "category": "development",
+            "description": "Immersive virtual and augmented reality experiences for gaming, training, and enterprise applications.",
+            "features": [
+                "VR/AR platforms",
+                "Spatial interaction design",
+                "Performance optimization",
+                "Hardware integration",
+                "Cross-platform support"
+            ],
+            "pricing": "$20k - $80k",
+            "icon": "🥽",
+            "featured": false,
+            "priority": 7
+        },
+        {
+            "id": "multiplayer-systems",
+            "title": "Multiplayer Systems",
+            "category": "development",
+            "description": "Robust multiplayer networking solutions for real-time and turn-based multiplayer games.",
+            "features": [
+                "Real-time networking",
+                "Authoritative servers",
+                "Anti-cheat systems",
+                "Matchmaking systems",
+                "Cross-platform play"
+            ],
+            "pricing": "$10k - $40k",
+            "icon": "🌐",
+            "featured": false,
+            "priority": 8
+        },
+        {
+            "id": "game-porting",
+            "title": "Game Porting",
+            "category": "development",
+            "description": "Professional game porting services to expand your reach across multiple platforms and devices.",
+            "features": [
+                "Platform adaptation",
+                "Input system mapping",
+                "Performance optimization",
+                "Platform compliance",
+                "Store submission"
+            ],
+            "pricing": "$5k - $25k",
+            "icon": "🔄",
+            "featured": false,
+            "priority": 9
+        },
+        {
+            "id": "technical-audit",
+            "title": "Technical Audit",
+            "category": "consulting",
+            "description": "Comprehensive technical review of your game codebase, architecture, and development processes.",
+            "features": [
+                "Code quality analysis",
+                "Architecture review",
+                "Security assessment",
+                "Performance analysis",
+                "Best practices guide"
+            ],
+            "pricing": "$2k - $8k",
+            "icon": "🔍",
+            "featured": false,
+            "priority": 10
+        }
+    ],
+    "categories": [
+        {
+            "id": "all",
+            "label": "All Services",
+            "count": 10
+        },
+        {
+            "id": "development",
+            "label": "Development",
+            "count": 6
+        },
+        {
+            "id": "consulting",
+            "label": "Consulting",
+            "count": 2
+        },
+        {
+            "id": "optimization",
+            "label": "Optimization",
+            "count": 1
+        },
+        {
+            "id": "design",
+            "label": "Design",
+            "count": 1
+        }
+    ],
+    "process": [
+        {
+            "number": 1,
+            "title": "Discovery & Planning",
+            "description": "We analyze your requirements and create a comprehensive development roadmap",
+            "duration": "1-2 weeks"
+        },
+        {
+            "number": 2,
+            "title": "Design & Prototyping",
+            "description": "Create wireframes, mockups, and interactive prototypes for validation",
+            "duration": "2-3 weeks"
+        },
+        {
+            "number": 3,
+            "title": "Development & Testing",
+            "description": "Agile development process with continuous testing and quality assurance",
+            "duration": "4-12 weeks"
+        },
+        {
+            "number": 4,
+            "title": "Launch & Support",
+            "description": "Deployment assistance and ongoing support to ensure your success",
+            "duration": "Ongoing"
+        }
+    ]
+}

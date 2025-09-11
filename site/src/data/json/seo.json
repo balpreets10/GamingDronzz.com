@@ -1,0 +1,50 @@
+{
+  "siteName": "GamingDronzz",
+  "defaultTitle": "GamingDronzz - Expert Game Development Services",
+  "defaultDescription": "Transform your gaming ideas into reality with our expert development team. Specializing in mobile, PC, VR/AR games and technical consulting.",
+  "defaultKeywords": ["game development", "unity", "unreal engine", "mobile games", "VR", "AR", "gaming consulting"],
+  "defaultImage": "https://gamingdronzz.com/og-image.png",
+  "siteUrl": "https://gamingdronzz.com",
+  "twitterHandle": "@gamingdronzz",
+  "organizationSchema": {
+    "name": "GamingDronzz",
+    "url": "https://gamingdronzz.com",
+    "logo": "https://gamingdronzz.com/logo.png",
+    "description": "Expert game development consultancy and services",
+    "contactPoint": {
+      "telephone": "+1-555-GAMING",
+      "contactType": "customer service"
+    },
+    "sameAs": [
+      "https://twitter.com/gamingdronzz",
+      "https://linkedin.com/company/gamingdronzz"
+    ]
+  },
+  "sectionSEO": {
+    "hero": {
+      "title": "GamingDronzz - Expert Game Development Services",
+      "description": "Transform your gaming ideas into reality with our expert development team. Specializing in mobile, PC, VR/AR games and technical consulting.",
+      "keywords": ["game development", "unity", "unreal engine", "mobile games", "VR", "AR"]
+    },
+    "about": {
+      "title": "About GamingDronzz - Game Development Experts",
+      "description": "Learn about our experienced team of game developers, our mission, and our commitment to creating exceptional gaming experiences.",
+      "keywords": ["game developers", "team", "experience", "mission"]
+    },
+    "projects": {
+      "title": "Our Projects - GamingDronzz Portfolio",
+      "description": "Explore our portfolio of successful game development projects including mobile games, PC titles, and VR/AR experiences.",
+      "keywords": ["game portfolio", "projects", "case studies", "game examples"]
+    },
+    "services": {
+      "title": "Game Development Services - GamingDronzz",
+      "description": "Comprehensive game development services including full development, consulting, optimization, and UI/UX design.",
+      "keywords": ["game development services", "consulting", "optimization", "UI UX design"]
+    },
+    "contact": {
+      "title": "Contact GamingDronzz - Get Your Game Development Quote",
+      "description": "Ready to bring your game idea to life? Contact our expert team for a consultation and personalized quote.",
+      "keywords": ["contact", "game development quote", "consultation", "hire game developers"]
+    }
+  }
+}
