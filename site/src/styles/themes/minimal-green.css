@@ -104,19 +104,19 @@ html[data-theme="minimal-green"] {
 
     /* ===== GRADIENTS ===== */
     --gd-gradient-primary: linear-gradient(135deg,
-            var(--gd-color-primary-400) 0%,
-            var(--gd-color-primary-600) 50%,
-            var(--gd-color-primary-800) 100%);
+            var(--gd-color-primary-300) 0%,
+            var(--gd-color-primary-500) 50%,
+            var(--gd-color-primary-600) 100%);
 
     --gd-gradient-secondary: linear-gradient(135deg,
-            var(--gd-color-secondary-300) 0%,
-            var(--gd-color-secondary-500) 50%,
-            var(--gd-color-secondary-700) 100%);
+            var(--gd-color-secondary-200) 0%,
+            var(--gd-color-secondary-400) 50%,
+            var(--gd-color-secondary-600) 100%);
 
     --gd-gradient-accent: linear-gradient(135deg,
-            var(--gd-color-accent-300) 0%,
-            var(--gd-color-accent-500) 50%,
-            var(--gd-color-accent-700) 100%);
+            var(--gd-color-accent-200) 0%,
+            var(--gd-color-accent-400) 50%,
+            var(--gd-color-accent-600) 100%);
 
     --gd-gradient-hero: linear-gradient(135deg,
             var(--gd-color-primary-50) 0%,

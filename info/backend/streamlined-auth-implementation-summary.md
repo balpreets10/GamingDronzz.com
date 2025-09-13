@@ -17,9 +17,6 @@ Successfully implemented a streamlined authentication system that removes the `e
 
 ### 2. Backend Service Changes
 - **AuthService.ts**: 
-  - Removed `ensureUserProfile` calls from OAuth callback
-  - Removed `ensureUserProfile` calls from email sign-in
-  - Removed `ensureUserProfile` calls from auth state change listener
   - Updated admin checking to use `is_admin_user()`
   - Added role-based adjustments in authentication flow
   - Deprecated the `ensureUserProfile` function
@@ -70,20 +67,6 @@ Profile marked as complete
 
 ## 📁 File Structure
 
-### SQL Migration Files
-```
-info/backend/database/migrations/
-├── 002_streamlined_auth_system.sql          # Core migration
-├── 003_execute_streamlined_auth.sql         # Complete execution script
-└── 004_test_streamlined_auth.sql           # Testing and verification
-
-info/backend/database/rollbacks/
-└── rollback_002_streamlined_auth_system.sql # Rollback script
-
-info/backend/database/policies/
-└── streamlined_auth_policies.sql           # Updated RLS policies
-```
-
 ### Frontend Files Updated
 ```
 site/src/services/
@@ -94,20 +77,6 @@ site/src/hooks/
 
 site/src/types/
 └── auth.ts                                 # Updated type definitions
-```
-
-## 🧪 Testing Instructions
-
-### 1. Execute Database Migration
-```sql
--- Execute in Supabase SQL Editor
-\i 003_execute_streamlined_auth.sql
-```
-
-### 2. Verify Implementation
-```sql
--- Execute test script
-\i 004_test_streamlined_auth.sql
 ```
 
 ### 3. Frontend Testing

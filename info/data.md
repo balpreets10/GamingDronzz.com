@@ -113,11 +113,11 @@ JSON version of services data for API-like access.
 ## External Data Sources
 
 ### Google OAuth Configuration
-- **Client Secret**: `data/client_secret_515274851536-sqsed7sjrhdds1ne2rbv9o1vbv7uu3q3.apps.googleusercontent.com.json`
+- **Client Secret**: `project-data/client_secret_515274851536-sqsed7sjrhdds1ne2rbv9o1vbv7uu3q3.apps.googleusercontent.com.json`
 - **Security**: Not committed to version control in production
 
 ### Supabase Configuration
-- **Credentials**: `data/supa pass.txt` (development only)
+- **Credentials**: `project-data/supa pass.txt` (development only)
 - **Database Schema**: `info/supabase/` directory
 
 ## Data Processing
@@ -162,7 +162,7 @@ JSON version of services data for API-like access.
 
 ### Development Assets
 ```
-data/
+project-data/
 ├── Website Document.docx          # Project documentation
 ├── sample_script.fdx             # Sample scripts
 ├── client_secret_*.json          # OAuth credentials

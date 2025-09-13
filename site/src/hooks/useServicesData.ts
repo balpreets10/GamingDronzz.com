@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '../services/supabaseClient';
 
 export interface ServiceData {
     id: string;
@@ -41,13 +42,19 @@ interface UseServicesDataOptions {
     loadOnMount?: boolean;
     retryCount?: number;
     retryDelay?: number;
+    categoryFilter?: string;
+    featuredOnly?: boolean;
+    limitCount?: number;
 }
 
 export const useServicesData = (options: UseServicesDataOptions = {}) => {
     const {
         loadOnMount = false,
         retryCount = 3,
-        retryDelay = 1000
+        retryDelay = 1000,
+        categoryFilter = 'all',
+        featuredOnly = false,
+        limitCount = null
     } = options;
 
     const [state, setState] = useState<UseServicesDataState>({
@@ -65,27 +72,33 @@ export const useServicesData = (options: UseServicesDataOptions = {}) => {
                 await new Promise(resolve => setTimeout(resolve, 300));
             }
 
-            const response = await fetch('./data/services.json', {
-                headers: {
-                    'Accept': 'application/json',
-                    'Cache-Control': 'public, max-age=300' // 5 minute cache
-                }
-            });
+            // Call Supabase RPC function
+            const { data: rpcData, error: rpcError } = await supabase
+                .rpc('get_services_data', {
+                    category_filter: categoryFilter,
+                    featured_only: featuredOnly,
+                    limit_count: limitCount
+                });
 
-            if (!response.ok) {
-                throw new Error(`Failed to load services data: ${response.status} ${response.statusText}`);
+            if (rpcError) {
+                throw new Error(`Database error: ${rpcError.message}`);
             }
 
-            const data: ServicesDataResponse = await response.json();
+            if (!rpcData) {
+                throw new Error('No data returned from database');
+            }
+
+            // Parse the JSON response
+            const data: ServicesDataResponse = typeof rpcData === 'string' 
+                ? JSON.parse(rpcData) 
+                : rpcData;
 
             // Validate data structure
             if (!data.services || !Array.isArray(data.services)) {
                 throw new Error('Invalid services data structure');
             }
 
-            // Sort services by priority
-            data.services.sort((a, b) => a.priority - b.priority);
-
+            // Services are already sorted by priority in the database query
             setState({
                 data,
                 loading: false,
@@ -111,7 +124,7 @@ export const useServicesData = (options: UseServicesDataOptions = {}) => {
                 error: errorMessage
             });
         }
-    }, [retryCount, retryDelay]);
+    }, [retryCount, retryDelay, categoryFilter, featuredOnly, limitCount]);
 
     useEffect(() => {
         if (loadOnMount) {

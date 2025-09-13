@@ -12,7 +12,7 @@ This project uses a structured documentation approach. All information is organi
 - **Project Information**: `info/project-info.md` - Application architecture, technology stack, components, and maintenance guidelines
 - **Deployment Information**: `info/deployment-info.md` - Build processes, environment configuration, and deployment procedures
 - **Backend Information**: `info/backend/backend-info.md` - Database system, authentication, API operations, and data management
-- **Database Queries**: `info/backend/database/queries/` - SQL queries, stored procedures, and database scripts
+- **Database Migrations**: `info/backend/database/migrations/` - SQL migration scripts and database updates
 - **Data and Assets**: `info/data.md` - Asset management, data files, and static resource handling
 
 ## Task Management - MANDATORY FOR ALL TASKS
@@ -48,13 +48,12 @@ IMPORTANT: Claude must end EVERY single response with token usage statistics, no
 Mandatory ending for ALL responses:
 - Count total words in current conversation
 - Estimate total tokens used
-- Always offer the clear option AND chat compaction option
-- Format: "📊 Conversation stats: [X] words, [Y] tokens used. Run `/clear` to optimize or `/compact` to continue? [C/c/n]"
+- Always offer the clear option for token optimization
+- Format: "📊 Conversation stats: [X] words, [Y] tokens used. Run `/clear` to optimize? [C/c]"
 
-**Chat Management Options:**
+**Conversation Management:**
 - `/clear` - Start fresh conversation (recommended for token optimization)
-- `/compact` - Summarize conversation context to reduce tokens while preserving important information
-- User chooses based on whether they want to continue the current conversation thread
+- Focus on efficient, concise responses to minimize token usage
 
 ### Query Optimization Tracking
 - When conversations exceed 2000 tokens, automatically log to `info/query-optimization/query-journal.md`
@@ -72,10 +71,26 @@ This applies to:
 ## Important Instruction Reminders
 
 ### Core Principles
-- Do what has been asked; nothing more, nothing less
 - NEVER create files unless they're absolutely necessary for achieving your goal
 - ALWAYS prefer editing an existing file to creating a new one
 - NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User
+
+### Feature/Update/Fix Planning Process - MANDATORY
+IMPORTANT: For every feature, update, or fix request, Claude MUST:
+
+1. **Create Todo List**: Use TodoWrite tool to break down the request into specific, actionable steps
+2. **Present Proposed System**: Explain what Claude will do and how the implementation will work
+3. **Ask for User Input**: Always ask the user what changes they want to the proposed system before implementation
+4. **Wait for Approval**: Do not proceed with implementation until user confirms the approach
+
+**Example Process:**
+- User: "Add dark mode to the app"
+- Claude: Creates todo list with steps, explains proposed dark mode implementation approach
+- Claude: "What changes would you like to this proposed system before I start implementation?"
+- User: Provides feedback or approval
+- Claude: Proceeds with implementation
+
+This ensures alignment between user expectations and implementation approach.
 
 ### Working Directory
 The website is located in the `site` folder. All bash commands and npm commands must be run from within the `site` directory.
@@ -85,7 +100,7 @@ IMPORTANT: ALL SQL-related scripts and files MUST be created in the appropriate 
 
 **Required SQL File Organization:**
 - **Database Migrations**: `info/backend/database/migrations/` - All database migration scripts
-- **Database Queries**: `info/backend/database/queries/` - SQL queries, stored procedures, and database scripts (DEPRECATED - moved to migrations)
+- **Database Migrations**: `info/backend/database/migrations/` - SQL migration scripts and database updates (DEPRECATED - moved to migrations)
 - **Database Functions**: `info/backend/database/functions/` - RPC functions and stored procedures (DEPRECATED - moved to migrations) 
 - **Database Policies**: `info/backend/database/policies/` - Row Level Security policies
 - **Database Schema**: `info/backend/database/schema/` - Database schema definitions (DEPRECATED - moved to migrations)
@@ -132,6 +147,31 @@ MANDATORY: Whenever making any structural, system, or behavioral changes, Claude
 - SQL Changes → `info/backend/database/` (appropriate subdirectory)
 - Database Rollbacks → `info/backend/database/rollbacks/`
 
+## Feature Documentation Requirements - MANDATORY
+
+### Automatic Feature Documentation Creation
+MANDATORY: For every new feature, update, or fix implemented, Claude MUST create comprehensive documentation in the `info/docs/` folder:
+
+**Required Documentation for ALL Features/Updates/Fixes:**
+1. **Feature Document**: Create `[feature-name]-[YYYY-MM-DD].md` in `info/docs/`
+2. **Document Content**: Include implementation details, architecture decisions, user impact, and technical specifications
+3. **Cross-Reference**: Link to related files, components, and database changes
+
+**Document Template Structure:**
+- **Overview**: What was implemented and why
+- **Technical Implementation**: Architecture, components, database changes
+- **User Impact**: How it affects user experience and functionality
+- **Files Modified**: List of all files created/modified with brief descriptions
+- **Testing**: Any tests implemented or testing considerations
+- **Future Considerations**: Known limitations or future enhancement opportunities
+
+**Process:**
+1. Create feature documentation immediately after implementation
+2. Update existing documentation files as needed per Documentation Maintenance section
+3. Ensure all documentation stays synchronized with implementation
+
+This ensures comprehensive tracking of all feature development and system evolution.
+
 **Process:**
 1. Make the requested change
 2. Immediately identify affected documentation
@@ -150,6 +190,27 @@ When working on this project, always consult the relevant documentation files to
 
 This ensures consistency with established patterns and maintains the project's architectural integrity.
 
+## Database Tasks - MANDATORY CONFIGURATION REVIEW
+
+### Required Configuration Analysis for ALL Database Tasks
+MANDATORY: For ALL database-related tasks (migrations, queries, RPC functions, policies, troubleshooting), Claude MUST review the actual database configuration files:
+
+**Required Files to Check:**
+- `info/supabase/policies.json` - Row Level Security policies and access controls
+- `info/supabase/functions.json` - RPC function definitions and implementations  
+- `info/supabase/functions_split/` - Individual function files for detailed analysis
+- `info/backend/database/migrations/` - Database schema and migration history
+- `info/backend/database/policies/` - Custom policy implementations
+
+**Process Requirements:**
+1. Always read actual configuration files before making database assumptions
+2. Cross-reference current task with existing policies and functions
+3. Provide specific file references and line numbers for all database decisions
+4. Ensure new changes align with existing database architecture
+5. Verify compatibility with current RLS policies and function signatures
+
+This ensures all database work is informed by the actual current configuration rather than assumptions.
+
 ## Database Operations and Rollback Requirements - CRITICAL REQUIREMENT
 
 ### Mandatory Rollback System for ALL SQL Operations
@@ -157,14 +218,12 @@ MANDATORY: Every SQL operation MUST include rollback capabilities and be documen
 
 **Required Actions for ALL SQL Operations:**
 1. **Create Rollback Point**: Always create backup tables or rollback scripts before executing changes
-2. **Document Changes**: Update `info/backend/database/rollbacks/rollback-log.md` with complete rollback information
-3. **Test Rollback**: Verify rollback procedures work before considering migration complete
-4. **Use Transactions**: Wrap all operations in BEGIN/COMMIT blocks when possible
+2. **Test Rollback**: Verify rollback procedures work before considering migration complete
+3. **Use Transactions**: Wrap all operations in BEGIN/COMMIT blocks when possible
 
 **SQL Rollback Requirements:**
 - **Backup Creation**: Create backup tables with timestamp: `backup_[table]_YYYYMMDD_HHMMSS`
 - **Rollback Script**: Create corresponding `rollback_[migration_name].sql` file in `info/backend/database/rollbacks/`
-- **Documentation**: Log entry in `info/backend/database/rollbacks/rollback-log.md` with timestamp, description, and rollback command
 - **Transaction Safety**: Use `BEGIN;` and `COMMIT;` blocks for atomic operations
 
 **Rollback Script Template:**
@@ -178,9 +237,7 @@ BEGIN;
 -- Restore original state
 -- (specific rollback commands here)
 
--- Update rollback log
-INSERT INTO migration_log (migration_name, rollback_executed_at) 
-VALUES ('[migration_name]', NOW());
+-- Rollback completed
 
 COMMIT;
 ```
@@ -188,63 +245,33 @@ COMMIT;
 **Process:**
 1. Create rollback script BEFORE running migration
 2. Execute migration with transaction safety
-3. Update documentation immediately
-4. Test rollback procedure
-5. Store rollback script in version control
+3. Test rollback procedure
+4. Store rollback script in version control
 
 This is NON-NEGOTIABLE - no SQL operation should be executed without proper rollback procedures in place.
 
-## Chat Logging System - MANDATORY FOR ALL CONVERSATIONS
+## Database Error Analysis - MANDATORY INVESTIGATION PROCESS
 
-### Automatic Chat Logging - CRITICAL REQUIREMENT
-MANDATORY: Every conversation with Claude MUST be logged to maintain a record of all development discussions and decisions.
+### Required Actions for Database Error Analysis
+MANDATORY: When encountering database-related errors (RPC failures, 400/500 errors, authentication issues), Claude MUST follow this comprehensive investigation process:
 
-**Required Actions for ALL Conversations:**
-1. **Auto-Log Every Chat**: All conversations must be automatically logged to `info/chats/` directory
-2. **Proper Naming Convention**: Use format: `DD-MM-YYYY-HH-MM-SS-context-description.md`
-3. **Real-Time Logging**: Messages should be logged as the conversation progresses
-4. **Context Identification**: Each chat must include proper context/topic identification
+**Step 1: Error Context Analysis**
+- Read the error logs completely to understand the exact failure point
+- Identify the failing RPC function, table operation, or authentication step
+- Determine the timing of the error (during auth state changes, user actions, etc.)
 
-**Chat Logging Requirements:**
-- **File Location**: All chat logs stored in `info/chats/` directory
-- **File Format**: Markdown format with structured message blocks
-- **Filename Pattern**: `DD-MM-YYYY-HH-MM-SS-[context-description].md`
-- **Content Structure**: Include timestamps, roles, and full message content
-- **Message Tracking**: Log both user queries and assistant responses
+**Step 2: Root Cause Elimination Process**
+- **Cause 1 (Timing Issues)**: Check authentication flow and profile creation timing
+- **Cause 2 (Missing Records)**: Verify profile creation triggers and user management
+- **Cause 3 (RLS Policies)**: Analyze policies using database configuration files
+- **Cause 4 (RPC Function Issues)**: Review function implementations from configuration files
+- **Cause 5 (Parameter Issues)**: Check function signatures and parameter passing
 
-**Chat Log Structure Template:**
-```markdown
-# Chat Log: [Context Description]
+**Step 3: Evidence-Based Analysis**
+- Provide specific line references from actual policy and function files
+- Quote relevant policy conditions and function logic
+- Eliminate causes based on actual configuration rather than assumptions
+- Identify the definitive root cause with supporting evidence
 
-**Date:** [Date and Time]
-**Context:** [Conversation Topic/Context]
+This ensures accurate diagnosis and prevents overlooking critical database configuration details.
 
----
-
-## Message [Number]
-**Role:** [user/assistant]
-**Timestamp:** [Date and Time]
-
-[Message Content]
-
----
-```
-
-**Logging Mechanism:**
-- Use existing ChatLogger utility in `site/src/utils/chatLogger.js`
-- Logger automatically handles directory creation and file management
-- Supports both complete conversation logging and incremental message appending
-- Includes sanitization for filename safety
-
-**Process:**
-1. Initialize ChatLogger at conversation start
-2. Log each message exchange in real-time
-3. Use proper context identification for filename
-4. Ensure all conversations are preserved for future reference
-
-**Integration Points:**
-- ChatLogger class provides `logChat()` and `appendToChat()` methods
-- CLI utility available for manual chat management
-- Example usage provided in `chatLoggerExample.js`
-
-This is NON-NEGOTIABLE - every conversation must be logged to maintain project development history and decision tracking.

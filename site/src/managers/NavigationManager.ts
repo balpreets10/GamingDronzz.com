@@ -20,6 +20,8 @@ class NavigationManager implements INavigationManager {
         isAnimating: false
     };
 
+    private isDashboardMode = false;
+
     private config: NavigationConfig = {
         items: [
             { id: 'hero', label: 'Home', href: '#hero', position: 0 },
@@ -42,21 +44,15 @@ class NavigationManager implements INavigationManager {
     };
 
     private subscribers: Set<(state: NavigationState) => void> = new Set();
+    private dashboardSubscribers: Set<(isDashboardMode: boolean) => void> = new Set();
     private element: HTMLElement | null = null;
     private centerButton: HTMLElement | null = null;
     private closeTimeout: number | null = null;
     private isDestroyed = false;
 
-    // Scroll tracking properties
+    // Simple scroll tracking
     private isProgrammaticScroll = false;
-    private programmaticScrollStartTime = 0;
-    private lastScrollY = 0;
-    private scrollDirection: 'up' | 'down' | 'none' = 'none';
-
-    // Optimized update batching
-    private updateBatch: Partial<NavigationState> | null = null;
-    private batchTimeoutId: number | null = null;
-    private isNotifying = false;
+    private scrollTimeout: number | null = null;
 
     // Store bound methods for proper cleanup
     private boundMethods = {
@@ -83,123 +79,56 @@ class NavigationManager implements INavigationManager {
         this.setupKeyboardNavigation();
         this.setupFocusTracking();
         this.setupScrollTracking();
-        // Initialize scroll tracking
-        this.lastScrollY = window.pageYOffset;
     }
 
     private setupScrollTracking(): void {
-        // Simple scroll listener for 70% viewport coverage detection
-        let ticking = false;
-        const scrollHandler = () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    this.boundMethods.handleScroll();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-
-        window.addEventListener('scroll', scrollHandler, { passive: true });
+        window.addEventListener('scroll', this.boundMethods.handleScroll, { passive: true });
     }
 
-    // Removed observeSections method - no longer using intersection observer
+    private findActiveSection(): string | null {
+        const sections = this.config.items
+            .filter(item => item.href.startsWith('#'))
+            .map(item => ({
+                id: item.id,
+                element: document.getElementById(item.href.substring(1))
+            }))
+            .filter(section => section.element);
 
-    // Removed handleIntersection method - no longer using intersection observer
+        let activeSection: string | null = null;
+        let closestDistance = Infinity;
 
-    private findSectionWith70PercentCoverage(): string | null {
-        const windowHeight = window.innerHeight;
-        let bestSection: string | null = null;
-        let highestScore = 0;
-
-        this.config.items.forEach(item => {
-            if (item.href.startsWith('#')) {
-                const sectionId = item.href.substring(1);
-                const section = document.getElementById(sectionId);
-                if (section) {
-                    const rect = section.getBoundingClientRect();
-                    
-                    // Calculate how much of the section is visible in viewport
-                    const visibleTop = Math.max(0, rect.top);
-                    const visibleBottom = Math.min(windowHeight, rect.bottom);
-                    const visibleHeight = Math.max(0, visibleBottom - visibleTop);
-                    
-                    // Calculate coverage as percentage of viewport height
-                    const viewportCoverage = visibleHeight / windowHeight;
-                    
-                    // Calculate how much of the section itself is visible
-                    const sectionCoverage = rect.height > 0 ? visibleHeight / rect.height : 0;
-                    
-                    // Special handling for sections near the top of viewport
-                    const isNearTop = rect.top <= windowHeight * 0.1 && rect.bottom > windowHeight * 0.3;
-                    
-                    // Calculate a composite score favoring sections with good visibility
-                    let score = Math.max(viewportCoverage, sectionCoverage * 0.7);
-                    
-                    // Boost score for sections that are prominently displayed near top
-                    if (isNearTop) {
-                        score += 0.2;
-                    }
-                    
-                    // Minimum coverage threshold
-                    const minCoverage = 0.5; // Reduced from 0.7 to 0.5 for better responsiveness
-                    
-                    if (score >= minCoverage && score > highestScore) {
-                        highestScore = score;
-                        bestSection = item.id;
-                    }
-                }
+        for (const section of sections) {
+            const rect = section.element!.getBoundingClientRect();
+            const distance = Math.abs(rect.top);
+            
+            if (rect.top <= 100 && rect.bottom >= 100 && distance < closestDistance) {
+                closestDistance = distance;
+                activeSection = section.id;
             }
-        });
+        }
 
-        return bestSection;
-    }
-
-    private getScrollDirection(): 'up' | 'down' | 'none' {
-        const currentScrollY = window.pageYOffset;
-        const direction = currentScrollY > this.lastScrollY ? 'down' : 
-                         currentScrollY < this.lastScrollY ? 'up' : 'none';
-        
-        this.lastScrollY = currentScrollY;
-        this.scrollDirection = direction;
-        return direction;
+        return activeSection;
     }
 
     private handleScroll(): void {
-        // Update scroll direction
-        this.getScrollDirection();
+        if (this.isProgrammaticScroll) return;
         
-        // Allow scroll detection during programmatic scroll after a shorter delay
-        // and only if user is actively scrolling (scroll direction changed recently)
-        const timeSinceProgrammaticScroll = Date.now() - this.programmaticScrollStartTime;
-        const isUserScrolling = this.scrollDirection !== 'none';
-        
-        // Skip updates only during initial programmatic scroll (200ms) 
-        // or if no user scroll detected and still within grace period (500ms)
-        if (this.isProgrammaticScroll && 
-            (timeSinceProgrammaticScroll < 200 || 
-             (!isUserScrolling && timeSinceProgrammaticScroll < 500))) {
-            return;
+        if (this.scrollTimeout) {
+            clearTimeout(this.scrollTimeout);
         }
-
-        // Find section with 70% viewport coverage
-        const activeSection = this.findSectionWith70PercentCoverage();
         
-        if (activeSection && activeSection !== this.state.activeItem) {
-            // If user is scrolling, immediately update active section
-            if (isUserScrolling || !this.isProgrammaticScroll) {
-                this.isProgrammaticScroll = false; // Clear programmatic scroll flag
+        this.scrollTimeout = window.setTimeout(() => {
+            const activeSection = this.findActiveSection();
+            if (activeSection && activeSection !== this.state.activeItem) {
                 this.setActiveItem(activeSection);
             }
-        }
+        }, 100);
     }
 
     private setActiveItem(itemId: string): void {
         if (this.state.activeItem !== itemId) {
-            this.batchStateUpdate({ activeItem: itemId });
-            this.emit('navigation:activate', {
-                item: this.config.items.find(i => i.id === itemId)
-            });
+            this.state = { ...this.state, activeItem: itemId };
+            this.notifySubscribers();
         }
     }
 
@@ -217,7 +146,7 @@ class NavigationManager implements INavigationManager {
         if (this.isDestroyed) return;
 
         if (e.key === 'Tab') {
-            this.batchStateUpdate({ keyboardMode: true });
+            this.updateState({ keyboardMode: true });
         }
 
         if (!this.state.isOpen) return;
@@ -257,7 +186,7 @@ class NavigationManager implements INavigationManager {
     }
 
     private resetKeyboardMode(): void {
-        this.batchStateUpdate({ keyboardMode: false });
+        this.updateState({ keyboardMode: false });
     }
 
     private handleFocusIn(e: FocusEvent): void {
@@ -265,7 +194,7 @@ class NavigationManager implements INavigationManager {
         if (this.element?.contains(target)) {
             const itemId = target.getAttribute('data-nav-item');
             if (itemId) {
-                this.batchStateUpdate({ focusedItem: itemId });
+                this.updateState({ focusedItem: itemId });
             }
         }
     }
@@ -273,7 +202,7 @@ class NavigationManager implements INavigationManager {
     private handleFocusOut(): void {
         setTimeout(() => {
             if (!this.element?.contains(document.activeElement as HTMLElement)) {
-                this.batchStateUpdate({ focusedItem: null });
+                this.updateState({ focusedItem: null });
             }
         }, 0);
     }
@@ -303,7 +232,7 @@ class NavigationManager implements INavigationManager {
         const itemElement = this.element?.querySelector(`[data-nav-item="${itemId}"]`) as HTMLElement;
         if (itemElement) {
             itemElement.focus();
-            this.batchStateUpdate({ focusedItem: itemId });
+            this.updateState({ focusedItem: itemId });
         }
     }
 
@@ -333,34 +262,30 @@ class NavigationManager implements INavigationManager {
     public open(): void {
         if (this.state.isOpen) return;
 
-        this.batchStateUpdate({ isOpen: true, isAnimating: true });
+        this.updateState({ isOpen: true, isAnimating: true });
         this.clearCloseTimeout();
 
         if (this.state.keyboardMode && this.centerButton) {
             this.centerButton.focus();
         }
 
-        this.emit('navigation:open');
-
         setTimeout(() => {
-            this.batchStateUpdate({ isAnimating: false });
+            this.updateState({ isAnimating: false });
         }, this.config.animationDuration);
     }
 
     public close(): void {
         if (!this.state.isOpen) return;
 
-        this.batchStateUpdate({
+        this.updateState({
             isOpen: false,
             hoveredItem: null,
             focusedItem: null,
             isAnimating: true
         });
 
-        this.emit('navigation:close');
-
         setTimeout(() => {
-            this.batchStateUpdate({ isAnimating: false });
+            this.updateState({ isAnimating: false });
         }, this.config.animationDuration);
     }
 
@@ -369,7 +294,7 @@ class NavigationManager implements INavigationManager {
     }
 
     public setHoveredItem(itemId: string | null): void {
-        this.batchStateUpdate({ hoveredItem: itemId });
+        this.updateState({ hoveredItem: itemId });
 
         if (itemId && this.config.autoClose) {
             this.clearCloseTimeout();
@@ -377,38 +302,27 @@ class NavigationManager implements INavigationManager {
             this.scheduleAutoClose();
         }
 
-        this.emit('navigation:hover', {
-            item: itemId ? this.config.items.find(i => i.id === itemId) : null
-        });
     }
 
     public navigate(itemId: string): void {
         const item = this.config.items.find(i => i.id === itemId);
         if (!item) return;
 
-        // Immediately update activeItem for responsive UI feedback
         this.setActiveItem(itemId);
-        
-        this.emit('navigation:navigate', { item });
         this.close();
 
         if (item.href.startsWith('#')) {
             const target = document.querySelector(item.href);
             if (target) {
-                // Track programmatic scroll with timestamp for better control
                 this.isProgrammaticScroll = true;
-                this.programmaticScrollStartTime = Date.now();
-                
                 target.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
 
-                // Clear programmatic scroll flag after animation with shorter delay
                 setTimeout(() => {
                     this.isProgrammaticScroll = false;
-                    this.programmaticScrollStartTime = 0;
-                }, 600); // Further reduced to 600ms for better responsiveness
+                }, 1000);
             }
         } else {
             if (item.external) {
@@ -449,66 +363,30 @@ class NavigationManager implements INavigationManager {
         }
     }
 
-    // Optimized batching system
-    private batchStateUpdate(newState: Partial<NavigationState>): void {
-        if (this.isDestroyed || this.isNotifying) return;
+    // Simple state update
+    private updateState(newState: Partial<NavigationState>): void {
+        if (this.isDestroyed) return;
 
-        // Merge with existing batch
-        this.updateBatch = this.updateBatch ?
-            { ...this.updateBatch, ...newState } :
-            { ...newState };
-
-        // Clear existing timeout
-        if (this.batchTimeoutId) {
-            clearTimeout(this.batchTimeoutId);
-        }
-
-        // Schedule batch processing
-        this.batchTimeoutId = window.setTimeout(() => {
-            this.processBatch();
-        }, 0);
-    }
-
-    private processBatch(): void {
-        if (!this.updateBatch || this.isDestroyed || this.isNotifying) return;
-
-        const batch = this.updateBatch;
-        this.updateBatch = null;
-        this.batchTimeoutId = null;
-
-        // Check if state actually changed
-        const hasChanges = Object.keys(batch).some(
-            key => this.state[key as keyof NavigationState] !== batch[key as keyof NavigationState]
+        const hasChanges = Object.keys(newState).some(
+            key => this.state[key as keyof NavigationState] !== newState[key as keyof NavigationState]
         );
 
         if (!hasChanges) return;
 
-        // Apply changes
-        this.state = { ...this.state, ...batch };
+        this.state = { ...this.state, ...newState };
         this.notifySubscribers();
     }
 
     private notifySubscribers(): void {
-        if (this.isNotifying || this.isDestroyed) return;
+        if (this.isDestroyed) return;
 
-        this.isNotifying = true;
         const currentState = { ...this.state };
-
-        Promise.resolve().then(() => {
-            if (this.isDestroyed) {
-                this.isNotifying = false;
-                return;
+        this.subscribers.forEach(callback => {
+            try {
+                callback(currentState);
+            } catch (error) {
+                console.error('Navigation subscriber error:', error);
             }
-
-            this.subscribers.forEach(callback => {
-                try {
-                    callback(currentState);
-                } catch (error) {
-                    console.error('Navigation subscriber error:', error);
-                }
-            });
-
-            this.isNotifying = false;
         });
     }
 
@@ -525,11 +403,48 @@ class NavigationManager implements INavigationManager {
         return () => this.subscribers.delete(callback);
     }
 
-    private emit(event: string, data?: any): void {
-        const customEvent = new CustomEvent(event, {
-            detail: { ...data, state: { ...this.state } }
+    public subscribeToDashboard(callback: (isDashboardMode: boolean) => void): () => void {
+        this.dashboardSubscribers.add(callback);
+
+        // Immediate call with current state
+        try {
+            callback(this.isDashboardMode);
+        } catch (error) {
+            console.error('Dashboard subscriber initial call error:', error);
+        }
+
+        return () => this.dashboardSubscribers.delete(callback);
+    }
+
+    private notifyDashboardSubscribers(): void {
+        if (this.isDestroyed) return;
+
+        this.dashboardSubscribers.forEach(callback => {
+            try {
+                callback(this.isDashboardMode);
+            } catch (error) {
+                console.error('Dashboard subscriber error:', error);
+            }
         });
-        document.dispatchEvent(customEvent);
+    }
+
+    public enterDashboard(): void {
+        if (this.isDashboardMode) return;
+        
+        this.isDashboardMode = true;
+        this.close(); // Close navigation if open
+        this.notifyDashboardSubscribers();
+    }
+
+    public exitDashboard(): void {
+        if (!this.isDashboardMode) return;
+        
+        this.isDashboardMode = false;
+        this.notifyDashboardSubscribers();
+    }
+
+    public isDashboard(): boolean {
+        return this.isDashboardMode;
     }
 
     public getState(): NavigationState {
@@ -546,22 +461,22 @@ class NavigationManager implements INavigationManager {
 
     public destroy(): void {
         this.isDestroyed = true;
-        this.isNotifying = false;
 
-        if (this.batchTimeoutId) {
-            clearTimeout(this.batchTimeoutId);
-            this.batchTimeoutId = null;
+        if (this.scrollTimeout) {
+            clearTimeout(this.scrollTimeout);
+            this.scrollTimeout = null;
         }
 
-        this.updateBatch = null;
         this.clearCloseTimeout();
         this.subscribers.clear();
+        this.dashboardSubscribers.clear();
 
         // Remove event listeners
         document.removeEventListener('keydown', this.boundMethods.handleKeyDown);
         document.removeEventListener('keyup', this.boundMethods.handleKeyUp);
         document.removeEventListener('focusin', this.boundMethods.handleFocusIn);
         document.removeEventListener('focusout', this.boundMethods.handleFocusOut);
+        window.removeEventListener('scroll', this.boundMethods.handleScroll);
 
         this.element = null;
         this.centerButton = null;

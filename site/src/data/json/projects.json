@@ -1,0 +1,104 @@
+{
+  "mappings": [
+    {
+      "title": "African Bibliography",
+      "folderName": "africanbib",
+      "aliases": ["African Bib", "AfricanBib"],
+      "hasAssets": true
+    },
+    {
+      "title": "Bingo Game",
+      "folderName": "bingo",
+      "aliases": ["Bingo"],
+      "hasAssets": true
+    },
+    {
+      "title": "CCA Platform",
+      "folderName": "cca",
+      "aliases": ["CCA"],
+      "hasAssets": true
+    },
+    {
+      "title": "DUI Tracker",
+      "folderName": "dui",
+      "aliases": ["DUI"],
+      "hasAssets": true
+    },
+    {
+      "title": "F7 Fun",
+      "folderName": "f7fun",
+      "aliases": ["F7Fun"],
+      "hasAssets": true
+    },
+    {
+      "title": "Hyike",
+      "folderName": "hyike",
+      "aliases": ["Hyike App"],
+      "hasAssets": true
+    },
+    {
+      "title": "Ludo Game",
+      "folderName": "ludo",
+      "aliases": ["Ludo"],
+      "hasAssets": true
+    },
+    {
+      "title": "Match Game",
+      "folderName": "match",
+      "aliases": ["Match"],
+      "hasAssets": true
+    },
+    {
+      "title": "Race for White House",
+      "folderName": "raceforwhitehouse",
+      "aliases": ["Race for the White House", "Political Race"],
+      "hasAssets": true
+    },
+    {
+      "title": "Resume Builder",
+      "folderName": "resume",
+      "aliases": ["Resume"],
+      "hasAssets": true
+    },
+    {
+      "title": "RS Fun",
+      "folderName": "rsfun",
+      "aliases": ["RSFun"],
+      "hasAssets": true
+    },
+    {
+      "title": "Rule of 3",
+      "folderName": "ruleof3",
+      "aliases": ["Rule of Three"],
+      "hasAssets": true
+    },
+    {
+      "title": "UNT Project",
+      "folderName": "unt",
+      "aliases": ["UNT"],
+      "hasAssets": true
+    },
+    {
+      "title": "Website Portfolio",
+      "folderName": "website",
+      "aliases": ["Portfolio Website", "Website"],
+      "hasAssets": true
+    }
+  ],
+  "availableFolders": [
+    "africanbib",
+    "bingo",
+    "cca",
+    "dui",
+    "f7fun",
+    "hyike",
+    "ludo",
+    "match",
+    "raceforwhitehouse",
+    "resume",
+    "rsfun",
+    "ruleof3",
+    "unt",
+    "website"
+  ]
+}

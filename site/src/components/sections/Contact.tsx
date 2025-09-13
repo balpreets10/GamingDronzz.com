@@ -28,15 +28,15 @@ const defaultContactMethods: ContactMethod[] = [
     {
         icon: '📧',
         title: 'Email',
-        value: 'hello@gamingdronzz.com',
-        action: 'mailto:hello@gamingdronzz.com?subject=Project Inquiry',
+        value: 'social@gamingdronzz.com',
+        action: 'mailto:social@gamingdronzz.com?subject=Project Inquiry',
         description: 'Drop us a line anytime'
     },
     {
         icon: '📞',
         title: 'Phone',
-        value: '+1 (555) 123-4567',
-        action: 'tel:+15551234567',
+        value: '+91-7006955241',
+        action: 'tel:01914001040',
         description: 'Mon-Fri 9AM-6PM EST'
     },
     {
@@ -217,42 +217,45 @@ const Contact: React.FC<ContactProps> = ({
                             <form className="contact__form" onSubmit={handleSubmit}>
                                 <div className="contact__form-grid">
                                     <div className="contact__form-group">
-                                        <label className="contact__form-label">Full Name *</label>
+                                        <label className="contact__form-label">Full Name</label>
                                         <input
                                             type="text"
                                             name="name"
                                             value={formData.name}
                                             onChange={handleInputChange}
                                             className="contact__form-input"
+                                            placeholder="Enter your full name"
                                             required
                                         />
                                     </div>
 
                                     <div className="contact__form-group">
-                                        <label className="contact__form-label">Email Address *</label>
+                                        <label className="contact__form-label">Email Address</label>
                                         <input
                                             type="email"
                                             name="email"
                                             value={formData.email}
                                             onChange={handleInputChange}
                                             className="contact__form-input"
+                                            placeholder="Enter your email address"
                                             required
                                         />
                                     </div>
 
-                                    <div className="contact__form-group">
-                                        <label className="contact__form-label">Company</label>
+                                    <div className="contact__form-group" data-optional>
+                                        <label className="contact__form-label" data-optional>Company (Optional)</label>
                                         <input
                                             type="text"
                                             name="company"
                                             value={formData.company}
                                             onChange={handleInputChange}
                                             className="contact__form-input"
+                                            placeholder="Your company or organization"
                                         />
                                     </div>
 
                                     <div className="contact__form-group">
-                                        <label className="contact__form-label">Project Type *</label>
+                                        <label className="contact__form-label">Project Type</label>
                                         <select
                                             name="projectType"
                                             value={formData.projectType}
@@ -270,8 +273,8 @@ const Contact: React.FC<ContactProps> = ({
                                         </select>
                                     </div>
 
-                                    <div className="contact__form-group">
-                                        <label className="contact__form-label">Budget Range</label>
+                                    <div className="contact__form-group" data-optional>
+                                        <label className="contact__form-label" data-optional>Budget Range (Optional)</label>
                                         <select
                                             name="budget"
                                             value={formData.budget}
@@ -279,6 +282,8 @@ const Contact: React.FC<ContactProps> = ({
                                             className="contact__form-select"
                                         >
                                             <option value="">Select budget range</option>
+                                            <option value="below-3k">Below $3,000</option>
+                                            <option value="3k-10k">$3,000 to $10,000</option>
                                             <option value="under-10k">Under $10,000</option>
                                             <option value="10k-50k">$10,000 - $50,000</option>
                                             <option value="50k-100k">$50,000 - $100,000</option>
@@ -288,7 +293,7 @@ const Contact: React.FC<ContactProps> = ({
                                     </div>
 
                                     <div className="contact__form-group contact__form-group--full">
-                                        <label className="contact__form-label">Project Description *</label>
+                                        <label className="contact__form-label">Project Description</label>
                                         <textarea
                                             name="message"
                                             value={formData.message}
@@ -357,7 +362,7 @@ const Contact: React.FC<ContactProps> = ({
                         <div className="contact__cta-actions">
                             <button
                                 className="contact__cta-button contact__cta-button--primary"
-                                onClick={() => handleContactMethod('mailto:hello@gamingdronzz.com?subject=Project Inquiry')}
+                                onClick={() => handleContactMethod('mailto:social@gamingdronzz.com?subject=Project Inquiry')}
                             >
                                 <span>Start Your Project</span>
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">

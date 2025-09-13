@@ -1,0 +1,167 @@
+{
+  "categories": ["development", "consulting", "optimization", "design"],
+  "services": [
+    {
+      "id": "game-development",
+      "title": "Full Game Development",
+      "description": "End-to-end game development from concept to deployment",
+      "icon": "🎮",
+      "category": "development",
+      "pricing": {
+        "type": "project",
+        "min": 10000,
+        "max": 100000,
+        "currency": "USD"
+      },
+      "features": [
+        "Custom game engine development",
+        "Cross-platform compatibility", 
+        "Performance optimization",
+        "Quality assurance testing",
+        "Post-launch support"
+      ],
+      "deliverables": [
+        "Fully functional game",
+        "Source code and documentation",
+        "Deployment packages",
+        "User manual and guides"
+      ],
+      "timeline": "3-12 months"
+    },
+    {
+      "id": "technical-consulting",
+      "title": "Technical Consulting",
+      "description": "Expert guidance on game architecture and technology decisions",
+      "icon": "💡",
+      "category": "consulting",
+      "pricing": {
+        "type": "hourly",
+        "min": 100,
+        "max": 200,
+        "currency": "USD"
+      },
+      "features": [
+        "Technology stack selection",
+        "Architecture design review",
+        "Performance analysis",
+        "Code review and optimization",
+        "Team training and mentoring"
+      ],
+      "deliverables": [
+        "Technical recommendations report",
+        "Architecture documentation",
+        "Performance analysis",
+        "Training materials"
+      ],
+      "timeline": "1-4 weeks"
+    },
+    {
+      "id": "mobile-games",
+      "title": "Mobile Game Development",
+      "description": "Native and cross-platform mobile gaming solutions",
+      "icon": "📱",
+      "category": "development",
+      "pricing": {
+        "type": "project",
+        "min": 5000,
+        "max": 50000,
+        "currency": "USD"
+      },
+      "features": [
+        "iOS and Android development",
+        "Unity and React Native expertise",
+        "App store optimization",
+        "Monetization strategy",
+        "Analytics integration"
+      ],
+      "deliverables": [
+        "Mobile game application",
+        "App store packages",
+        "Analytics dashboard",
+        "Marketing materials"
+      ],
+      "timeline": "2-6 months"
+    },
+    {
+      "id": "vr-ar-development",
+      "title": "VR/AR Development",
+      "description": "Immersive virtual and augmented reality experiences",
+      "icon": "🥽",
+      "category": "development",
+      "pricing": {
+        "type": "project",
+        "min": 15000,
+        "max": 80000,
+        "currency": "USD"
+      },
+      "features": [
+        "Oculus and SteamVR integration",
+        "ARCore and ARKit development",
+        "Spatial audio implementation",
+        "Hand tracking and gestures",
+        "Cross-platform VR support"
+      ],
+      "deliverables": [
+        "VR/AR application",
+        "Platform-specific builds",
+        "User interaction guides",
+        "Technical documentation"
+      ],
+      "timeline": "4-8 months"
+    },
+    {
+      "id": "performance-optimization",
+      "title": "Performance Optimization",
+      "description": "Enhance game performance and reduce loading times",
+      "icon": "⚡",
+      "category": "optimization",
+      "pricing": {
+        "type": "hourly",
+        "min": 80,
+        "max": 150,
+        "currency": "USD"
+      },
+      "features": [
+        "Frame rate optimization",
+        "Memory usage reduction",
+        "Asset optimization",
+        "Shader optimization",
+        "Platform-specific tuning"
+      ],
+      "deliverables": [
+        "Performance audit report",
+        "Optimized codebase",
+        "Performance benchmarks",
+        "Best practices guide"
+      ],
+      "timeline": "1-3 weeks"
+    },
+    {
+      "id": "ui-ux-design",
+      "title": "Game UI/UX Design",
+      "description": "Intuitive and engaging user interface design",
+      "icon": "🎨",
+      "category": "design",
+      "pricing": {
+        "type": "project",
+        "min": 3000,
+        "max": 25000,
+        "currency": "USD"
+      },
+      "features": [
+        "User experience research",
+        "Interface prototyping",
+        "Accessibility compliance",
+        "Visual design systems",
+        "Usability testing"
+      ],
+      "deliverables": [
+        "UI/UX design system",
+        "Interactive prototypes",
+        "Usability test results",
+        "Implementation guidelines"
+      ],
+      "timeline": "2-4 weeks"
+    }
+  ]
+}

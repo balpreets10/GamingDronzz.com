@@ -2,11 +2,12 @@
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { useContentManager } from '../../hooks/useContentManager';
 import { useLazyLoad } from '../../hooks/useLazyLoad';
-import { usePaginatedProjects } from '../../hooks/useRealtimeData';
+import { usePaginatedProjects } from '../../hooks/useDataFetch';
 import ResponsiveImage from '../common/ResponsiveImage';
 import Pagination from '../ui/Pagination';
 import ProjectDetailsModal from '../modals/ProjectDetailsModal';
-import { getProjectFolderName, hasProjectAssets } from '../../utils/projectImageMap';
+import { SmartSkeletonLoader, ProjectSkeletonGrid } from '../ui/SkeletonLoader';
+import { getProjectFolderNameSync, hasProjectAssetsSync } from '../../utils/projectImageMap';
 import type { DatabaseProject } from '../../services/DatabaseService';
 import './Projects.css';
 
@@ -30,8 +31,10 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
     const [hasAnimated, setHasAnimated] = useState(false);
     const [selectedProject, setSelectedProject] = useState<DatabaseProject | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [enableDataLoading, setEnableDataLoading] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
-    // Use paginated projects hook
+    // Use paginated projects hook - disabled initially for skeleton animation
     const { 
         data: projects, 
         pagination,
@@ -43,7 +46,7 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
         featuredOnly: showFeaturedOnly,
         category: filter !== 'all' ? filter : undefined,
         itemsPerPage,
-        enabled: true 
+        enabled: enableDataLoading  // Control loading for skeleton animation
     });
 
     // Safe hook usage with error handling
@@ -87,8 +90,8 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
             fill: 'both'
         });
 
-        // Filters animation (if exists)
-        if (filtersRef.current && categories.length > 1) {
+        // Filters animation (if exists and projects are loaded)
+        if (filtersRef.current && categories.length > 1 && projects && projects.length > 0) {
             Array.from(filtersRef.current.children).forEach((child, index) => {
                 (child as HTMLElement).animate([
                     { opacity: 0, transform: 'translateY(30px)' },
@@ -121,7 +124,7 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
         }
 
         setTimeout(() => setHasAnimated(true), 1400);
-    }, [hasAnimated, categories.length]);
+    }, [hasAnimated, categories.length, projects]);
 
     const animateFilterChange = useCallback(() => {
         if (!gridRef.current) return;
@@ -161,18 +164,29 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
         });
     }, []);
 
-    // Safe intersection observer setup
+    // Safe intersection observer setup with data loading trigger
     useEffect(() => {
         if (!projectsRef.current) return;
 
         const observer = new IntersectionObserver(
             ([entry]) => {
                 try {
-                    if (entry?.isIntersecting) {
+                    if (entry?.isIntersecting && !isVisible) {
+                        setIsVisible(true);
+                        
                         if (setCurrentSection) {
                             setCurrentSection('projects');
                         }
-                        if (!hasAnimated && !isLoading) {
+                        
+                        // Enable data loading when section becomes visible with delay for skeleton animation
+                        if (!enableDataLoading) {
+                            // Add development delay similar to Services for skeleton animation
+                            setTimeout(() => {
+                                setEnableDataLoading(true);
+                            }, process.env.NODE_ENV === 'development' ? 800 : 300);
+                        }
+                        
+                        if (!hasAnimated && enableDataLoading) {
                             animateEntry();
                         }
                     }
@@ -197,6 +211,7 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
             }
         };
     }, [setCurrentSection, hasAnimated, isLoading, animateEntry]);
+
 
     // Enhanced filter change handler
     const handleFilterChange = useCallback((newFilter: 'all' | DatabaseProject['category']) => {
@@ -309,7 +324,7 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
             aria-label="Projects section"
         >
             <div className="projects__container">
-                <div ref={headerRef} className="projects__header" style={{ opacity: hasAnimated ? 1 : 0 }}>
+                <div ref={headerRef} className="projects__header" style={{ opacity: enableDataLoading ? 1 : 0 }}>
                     <h2 className="projects__title">
                         {showFeaturedOnly ? 'Featured Projects' : 'Our Projects'}
                     </h2>
@@ -337,8 +352,8 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
                     )}
                 </div>
 
-                {!showFeaturedOnly && categories.length > 1 && (
-                    <div ref={filtersRef} className="projects__filters" style={{ opacity: hasAnimated ? 1 : 0 }}>
+                {!showFeaturedOnly && categories.length > 1 && projects.length > 0 && (
+                    <div ref={filtersRef} className="projects__filters" style={{ opacity: enableDataLoading && projects.length > 0 ? 1 : 0 }}>
                         {categories.map(category => (
                             <button
                                 key={`filter-${category}`}
@@ -353,37 +368,18 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
                     </div>
                 )}
 
-                {/* Loading state */}
-                {isLoading && projects.length === 0 ? (
-                    <div className="projects__loading">
-                        <div className="projects__skeleton-container">
-                            {Array.from({ length: itemsPerPage }, (_, index) => (
-                                <div key={`skeleton-${index}`} className="projects__skeleton-card">
-                                    <div className="projects__skeleton-image"></div>
-                                    <div className="projects__skeleton-content">
-                                        <div className="projects__skeleton-title"></div>
-                                        <div className="projects__skeleton-description"></div>
-                                        <div className="projects__skeleton-description projects__skeleton-description--short"></div>
-                                        <div className="projects__skeleton-tech">
-                                            <div className="projects__skeleton-tag"></div>
-                                            <div className="projects__skeleton-tag"></div>
-                                            <div className="projects__skeleton-tag"></div>
-                                        </div>
-                                        <div className="projects__skeleton-meta">
-                                            <div className="projects__skeleton-badge"></div>
-                                            <div className="projects__skeleton-year"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <p className="projects__loading-text">Loading projects from database...</p>
-                    </div>
-                ) : (
-                    <div ref={gridRef} className="projects__grid-container" style={{ opacity: hasAnimated ? 1 : 0 }}>
-                        <div className="projects__grid">
-                            {projects.length > 0 ? (
-                                projects.map((project, index) => (
+                {/* Enhanced loading state with modern skeleton - show during initial load or when no data */}
+                <SmartSkeletonLoader
+                    isLoading={!enableDataLoading || isLoading}
+                    hasData={enableDataLoading && projects.length > 0}
+                    skeletonCount={2}
+                    className="projects__smart-loader"
+                    fadeTransition={true}
+                >
+                    {projects.length > 0 ? (
+                        <div ref={gridRef} className="projects__grid-container" style={{ opacity: enableDataLoading && projects.length > 0 ? 1 : 0 }}>
+                            <div className="projects__grid">
+                                {projects.map((project, index) => (
                                     <EnhancedProjectCard
                                         key={`${project.id}-${filter}-${pagination.currentPage}-${index}`}
                                         project={project}
@@ -392,66 +388,66 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
                                         isFilteringIn={isAnimating}
                                         onClick={handleProjectClick}
                                     />
-                                ))
-                            ) : (
-                                <div className="projects__empty">
-                                    <div className="projects__empty-icon">
-                                        <span role="img" aria-label="No projects">📁</span>
-                                    </div>
-                                    <h3 className="projects__empty-title">
-                                        {filter === 'all' 
-                                            ? 'No Projects Available' 
-                                            : `No ${filter.charAt(0).toUpperCase() + filter.slice(1)} Projects`}
-                                    </h3>
-                                    <p className="projects__empty-message">
-                                        {filter === 'all'
-                                            ? 'We\'re currently working on exciting new projects. Check back soon!'
-                                            : `We haven't completed any ${filter} projects yet, but we're always exploring new opportunities.`
-                                        }
-                                    </p>
-                                    <div className="projects__empty-actions">
-                                        {filter !== 'all' && (
-                                            <button
-                                                onClick={() => handleFilterChange('all')}
-                                                className="projects__show-all-button"
-                                            >
-                                                View All Projects
-                                            </button>
-                                        )}
-                                        <button
-                                            onClick={handleRefresh}
-                                            className="projects__refresh-button"
-                                            disabled={isLoading}
-                                        >
-                                            {isLoading ? 'Refreshing...' : 'Refresh'}
-                                        </button>
-                                    </div>
-                                </div>
+                                ))}
+                            </div>
+                            
+                            {/* Pagination */}
+                            {showPagination && pagination.totalPages > 1 && (
+                                <Pagination
+                                    currentPage={pagination.currentPage}
+                                    totalPages={pagination.totalPages}
+                                    itemsPerPage={pagination.itemsPerPage}
+                                    totalItems={pagination.totalItems}
+                                    onPageChange={handlePageChange}
+                                    isLoading={isLoading}
+                                    showInfo={true}
+                                    className="projects__pagination"
+                                />
                             )}
                         </div>
-                        
-                        {/* Pagination */}
-                        {showPagination && pagination.totalPages > 1 && (
-                            <Pagination
-                                currentPage={pagination.currentPage}
-                                totalPages={pagination.totalPages}
-                                itemsPerPage={pagination.itemsPerPage}
-                                totalItems={pagination.totalItems}
-                                onPageChange={handlePageChange}
-                                isLoading={isLoading}
-                                showInfo={true}
-                                className="projects__pagination"
-                            />
-                        )}
-                    </div>
-                )}
+                    ) : (
+                        <div className="projects__empty">
+                            <div className="projects__empty-icon">
+                                <span role="img" aria-label="No projects">📁</span>
+                            </div>
+                            <h3 className="projects__empty-title">
+                                {filter === 'all' 
+                                    ? 'No Projects Available' 
+                                    : `No ${filter.charAt(0).toUpperCase() + filter.slice(1)} Projects`}
+                            </h3>
+                            <p className="projects__empty-message">
+                                {filter === 'all'
+                                    ? 'We\'re currently working on exciting new projects. Check back soon!'
+                                    : `We haven't completed any ${filter} projects yet, but we're always exploring new opportunities.`
+                                }
+                            </p>
+                            <div className="projects__empty-actions">
+                                {filter !== 'all' && (
+                                    <button
+                                        onClick={() => handleFilterChange('all')}
+                                        className="projects__show-all-button"
+                                    >
+                                        View All Projects
+                                    </button>
+                                )}
+                                <button
+                                    onClick={handleRefresh}
+                                    className="projects__refresh-button"
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? 'Refreshing...' : 'Refresh'}
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </SmartSkeletonLoader>
 
-                {/* Show loading overlay during refresh */}
+                {/* Enhanced loading overlay during refresh with better UX */}
                 {isLoading && projects.length > 0 && (
-                    <div className="projects__refresh-overlay">
+                    <div className="projects__refresh-overlay projects__refresh-overlay--modern">
                         <div className="projects__refresh-indicator">
                             <div className="projects__spinner projects__spinner--small"></div>
-                            <span>Updating...</span>
+                            <span>Updating projects...</span>
                         </div>
                     </div>
                 )}
@@ -673,8 +669,8 @@ const EnhancedProjectCard: React.FC<EnhancedProjectCardProps> = ({
         >
             <div className="projects__card-image">
                 {(() => {
-                    const projectFolderName = getProjectFolderName(project.title);
-                    const hasAssets = hasProjectAssets(project.title);
+                    const projectFolderName = getProjectFolderNameSync(project.title);
+                    const hasAssets = hasProjectAssetsSync(project.title);
                     
                     if (hasAssets && projectFolderName) {
                         return (

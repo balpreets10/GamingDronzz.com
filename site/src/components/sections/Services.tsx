@@ -132,7 +132,7 @@ const Services: React.FC<ServicesProps> = ({
 
                 {/* Loading State */}
                 {loading && (
-                    <div className="services__loading">
+                    <div className={`services__loading ${loading ? 'services__loading--active' : 'services__loading--hidden'}`}>
                         <LoadingSkeleton />
                     </div>
                 )}
@@ -157,7 +157,7 @@ const Services: React.FC<ServicesProps> = ({
 
                 {/* Services Grid */}
                 {isReady && services.length > 0 && (
-                    <div className="services__grid" role="list">
+                    <div className={`services__grid ${isReady ? 'services__grid--ready' : ''}`} role="list">
                         {services.map((service, index) => (
                             <ServiceCard
                                 key={service.id}
@@ -303,8 +303,27 @@ const ServiceProcess: React.FC<ServiceProcessProps> = ({ process }) => {
 const LoadingSkeleton: React.FC = () => {
     return (
         <div className="services__skeleton" aria-label="Loading services">
-            {Array.from({ length: 6 }, (_, index) => (
-                <div key={index} className="services__skeleton-card" />
+            {Array.from({ length: 2 }, (_, index) => (
+                <div key={index} className="services__skeleton-card">
+                    <div className="services__skeleton-header">
+                        <div className="services__skeleton-icon"></div>
+                        <div className="services__skeleton-title-group">
+                            <div className="services__skeleton-title"></div>
+                            <div className="services__skeleton-category"></div>
+                        </div>
+                    </div>
+                    <div className="services__skeleton-description"></div>
+                    <div className="services__skeleton-features">
+                        <div className="services__skeleton-feature-title"></div>
+                        <div className="services__skeleton-feature"></div>
+                        <div className="services__skeleton-feature"></div>
+                        <div className="services__skeleton-feature"></div>
+                    </div>
+                    <div className="services__skeleton-footer">
+                        <div className="services__skeleton-price"></div>
+                        <div className="services__skeleton-button"></div>
+                    </div>
+                </div>
             ))}
         </div>
     );
