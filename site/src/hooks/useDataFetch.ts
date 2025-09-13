@@ -1,8 +1,6 @@
-// hooks/useRealtimeData.ts - Real-time data synchronization hooks
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { RealtimeChannel, RealtimePostgresChangesPayload } from '@supabase/supabase-js';
+// hooks/useDataFetch.ts - Data fetching hooks
+import { useState, useEffect, useCallback } from 'react';
 import databaseService from '../services/DatabaseService';
-import supabaseService from '../services/SupabaseService';
 import type { 
     DatabaseProject, 
     DatabaseService as DBService, 
@@ -13,137 +11,55 @@ import type {
     IPaginationOptions 
 } from '../services/DatabaseService';
 
-// ===== GENERIC REALTIME HOOK =====
-interface UseRealtimeDataOptions<T> {
-    tableName: string;
-    initialFetch: () => Promise<T[]>;
-    queryOptions?: IQueryOptions;
+// ===== GENERIC DATA FETCHING HOOK =====
+interface UseDataFetchOptions<T> {
+    fetchFunction: () => Promise<T[]>;
     enabled?: boolean;
 }
 
-interface UseRealtimeDataReturn<T> {
+interface UseDataFetchReturn<T> {
     data: T[];
     loading: boolean;
     error: string | null;
     refresh: () => Promise<void>;
 }
 
-function useRealtimeData<T extends { id: string }>({
-    tableName,
-    initialFetch,
-    queryOptions,
+function useDataFetch<T>({
+    fetchFunction,
     enabled = true
-}: UseRealtimeDataOptions<T>): UseRealtimeDataReturn<T> {
+}: UseDataFetchOptions<T>): UseDataFetchReturn<T> {
     const [data, setData] = useState<T[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const channelRef = useRef<RealtimeChannel | null>(null);
-
-    const handleInsert = useCallback((payload: RealtimePostgresChangesPayload<T>) => {
-        setData(prevData => {
-            const newRecord = payload.new as T;
-            const exists = prevData.some(item => item.id === newRecord.id);
-            
-            if (!exists) {
-                return [...prevData, newRecord];
-            }
-            return prevData;
-        });
-    }, []);
-
-    const handleUpdate = useCallback((payload: RealtimePostgresChangesPayload<T>) => {
-        setData(prevData => 
-            prevData.map(item => 
-                item.id === payload.new.id ? payload.new as T : item
-            )
-        );
-    }, []);
-
-    const handleDelete = useCallback((payload: RealtimePostgresChangesPayload<T>) => {
-        setData(prevData => 
-            prevData.filter(item => item.id !== payload.old.id)
-        );
-    }, []);
 
     const fetchData = useCallback(async () => {
-        if (!enabled) return;
-
-        try {
-            setLoading(true);
-            setError(null);
-            const result = await initialFetch();
-            setData(result);
-        } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : 'Failed to fetch data';
-            setError(errorMessage);
-            console.error(`Error fetching ${tableName}:`, err);
-        } finally {
-            setLoading(false);
-        }
-    }, [initialFetch, tableName, enabled]);
-
-    const refresh = useCallback(async () => {
-        await fetchData();
-    }, [fetchData]);
-
-    useEffect(() => {
         if (!enabled) {
             setData([]);
             setLoading(false);
             return;
         }
 
-        // Initial fetch
+        try {
+            setLoading(true);
+            setError(null);
+            const result = await fetchFunction();
+            setData(result);
+        } catch (err) {
+            const errorMessage = err instanceof Error ? err.message : 'Failed to fetch data';
+            setError(errorMessage);
+            console.error('Error fetching data:', err);
+        } finally {
+            setLoading(false);
+        }
+    }, [fetchFunction, enabled]);
+
+    const refresh = useCallback(async () => {
+        await fetchData();
+    }, [fetchData]);
+
+    useEffect(() => {
         fetchData();
-
-        // Set up real-time subscription
-        const client = supabaseService.getClient();
-        const channel = client
-            .channel(`${tableName}_changes`)
-            .on(
-                'postgres_changes',
-                {
-                    event: 'INSERT',
-                    schema: 'public',
-                    table: tableName
-                },
-                handleInsert
-            )
-            .on(
-                'postgres_changes',
-                {
-                    event: 'UPDATE',
-                    schema: 'public',
-                    table: tableName
-                },
-                handleUpdate
-            )
-            .on(
-                'postgres_changes',
-                {
-                    event: 'DELETE',
-                    schema: 'public',
-                    table: tableName
-                },
-                handleDelete
-            )
-            .subscribe((status) => {
-                if (status === 'SUBSCRIBED') {
-                    console.log(`✅ Subscribed to ${tableName} changes`);
-                } else if (status === 'CHANNEL_ERROR') {
-                    console.error(`❌ Failed to subscribe to ${tableName} changes`);
-                }
-            });
-
-        channelRef.current = channel;
-
-        return () => {
-            if (channelRef.current) {
-                client.removeChannel(channelRef.current);
-                channelRef.current = null;
-            }
-        };
-    }, [tableName, fetchData, handleInsert, handleUpdate, handleDelete, enabled]);
+    }, [fetchData]);
 
     return {
         data,
@@ -155,7 +71,7 @@ function useRealtimeData<T extends { id: string }>({
 
 // ===== SPECIALIZED HOOKS =====
 
-export const useRealtimeProjects = (options?: { 
+export const useProjects = (options?: { 
     featuredOnly?: boolean; 
     category?: string;
     enabled?: boolean;
@@ -170,9 +86,8 @@ export const useRealtimeProjects = (options?: {
         return await databaseService.projects.getPublished();
     }, [options?.featuredOnly, options?.category]);
 
-    return useRealtimeData<DatabaseProject>({
-        tableName: 'projects',
-        initialFetch: fetchFunction,
+    return useDataFetch<DatabaseProject>({
+        fetchFunction,
         enabled: options?.enabled
     });
 };
@@ -213,7 +128,6 @@ export const usePaginatedProjects = (options: UsePaginatedProjectsOptions = {}):
     const [paginationResult, setPaginationResult] = useState<IPaginationResult<DatabaseProject> | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const channelRef = useRef<RealtimeChannel | null>(null);
 
     // Reset page when filters change
     useEffect(() => {
@@ -263,74 +177,8 @@ export const usePaginatedProjects = (options: UsePaginatedProjectsOptions = {}):
         await fetchData(currentPage);
     }, [fetchData, currentPage]);
 
-    // Handle real-time updates
-    const handleInsert = useCallback((payload: RealtimePostgresChangesPayload<DatabaseProject>) => {
-        const newProject = payload.new as DatabaseProject;
-        
-        // Check if the new project matches current filters
-        const matchesFilter = 
-            (!featuredOnly || newProject.featured) &&
-            (!category || newProject.category === category) &&
-            newProject.published;
 
-        if (matchesFilter) {
-            // Refresh data to maintain pagination integrity
-            refresh();
-        }
-    }, [featuredOnly, category, refresh]);
-
-    const handleUpdate = useCallback((payload: RealtimePostgresChangesPayload<DatabaseProject>) => {
-        const updatedProject = payload.new as DatabaseProject;
-        
-        setPaginationResult(prev => {
-            if (!prev) return prev;
-            
-            const projectIndex = prev.data.findIndex(p => p.id === updatedProject.id);
-            
-            // Check if updated project matches current filters
-            const matchesFilter = 
-                (!featuredOnly || updatedProject.featured) &&
-                (!category || updatedProject.category === category) &&
-                updatedProject.published;
-
-            if (projectIndex !== -1) {
-                if (matchesFilter) {
-                    // Update existing project
-                    const newData = [...prev.data];
-                    newData[projectIndex] = updatedProject;
-                    return { ...prev, data: newData };
-                } else {
-                    // Project no longer matches filter, refresh to maintain pagination
-                    refresh();
-                    return prev;
-                }
-            } else if (matchesFilter) {
-                // New project matches filter, refresh to maintain pagination
-                refresh();
-            }
-            
-            return prev;
-        });
-    }, [featuredOnly, category, refresh]);
-
-    const handleDelete = useCallback((payload: RealtimePostgresChangesPayload<DatabaseProject>) => {
-        const deletedId = payload.old.id;
-        
-        setPaginationResult(prev => {
-            if (!prev) return prev;
-            
-            const projectExists = prev.data.some(p => p.id === deletedId);
-            
-            if (projectExists) {
-                // Refresh to maintain pagination integrity
-                refresh();
-            }
-            
-            return prev;
-        });
-    }, [refresh]);
-
-    // Initial fetch and real-time subscription
+    // Initial fetch
     useEffect(() => {
         if (!enabled) {
             setPaginationResult(null);
@@ -339,55 +187,7 @@ export const usePaginatedProjects = (options: UsePaginatedProjectsOptions = {}):
         }
 
         fetchData(currentPage);
-
-        // Set up real-time subscription
-        const client = supabaseService.getClient();
-        const channel = client
-            .channel('paginated_projects_changes')
-            .on(
-                'postgres_changes',
-                {
-                    event: 'INSERT',
-                    schema: 'public',
-                    table: 'projects'
-                },
-                handleInsert
-            )
-            .on(
-                'postgres_changes',
-                {
-                    event: 'UPDATE',
-                    schema: 'public',
-                    table: 'projects'
-                },
-                handleUpdate
-            )
-            .on(
-                'postgres_changes',
-                {
-                    event: 'DELETE',
-                    schema: 'public',
-                    table: 'projects'
-                },
-                handleDelete
-            )
-            .subscribe((status) => {
-                if (status === 'SUBSCRIBED') {
-                    console.log('✅ Subscribed to paginated projects changes');
-                } else if (status === 'CHANNEL_ERROR') {
-                    console.error('❌ Failed to subscribe to paginated projects changes');
-                }
-            });
-
-        channelRef.current = channel;
-
-        return () => {
-            if (channelRef.current) {
-                client.removeChannel(channelRef.current);
-                channelRef.current = null;
-            }
-        };
-    }, [currentPage, fetchData, handleInsert, handleUpdate, handleDelete, enabled]);
+    }, [currentPage, fetchData, enabled]);
 
     return {
         data: paginationResult?.data || [],
@@ -406,7 +206,7 @@ export const usePaginatedProjects = (options: UsePaginatedProjectsOptions = {}):
     };
 };
 
-export const useRealtimeServices = (options?: { 
+export const useServices = (options?: { 
     featuredOnly?: boolean; 
     category?: string;
     enabled?: boolean;
@@ -421,14 +221,13 @@ export const useRealtimeServices = (options?: {
         return await databaseService.services.getPublished();
     }, [options?.featuredOnly, options?.category]);
 
-    return useRealtimeData<DBService>({
-        tableName: 'services',
-        initialFetch: fetchFunction,
+    return useDataFetch<DBService>({
+        fetchFunction,
         enabled: options?.enabled
     });
 };
 
-export const useRealtimeArticles = (options?: { 
+export const useArticles = (options?: { 
     featuredOnly?: boolean;
     limit?: number;
     enabled?: boolean;
@@ -442,14 +241,13 @@ export const useRealtimeArticles = (options?: {
         });
     }, [options?.featuredOnly, options?.limit]);
 
-    return useRealtimeData<DatabaseArticle>({
-        tableName: 'articles',
-        initialFetch: fetchFunction,
+    return useDataFetch<DatabaseArticle>({
+        fetchFunction,
         enabled: options?.enabled
     });
 };
 
-export const useRealtimeTestimonials = (options?: { 
+export const useTestimonials = (options?: { 
     featuredOnly?: boolean;
     enabled?: boolean;
 }) => {
@@ -460,9 +258,8 @@ export const useRealtimeTestimonials = (options?: {
         return await databaseService.testimonials.getPublished();
     }, [options?.featuredOnly]);
 
-    return useRealtimeData<DatabaseTestimonial>({
-        tableName: 'testimonials',
-        initialFetch: fetchFunction,
+    return useDataFetch<DatabaseTestimonial>({
+        fetchFunction,
         enabled: options?.enabled
     });
 };

@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { useContentManager } from '../../hooks/useContentManager';
 import { useLazyLoad } from '../../hooks/useLazyLoad';
-import { usePaginatedProjects } from '../../hooks/useRealtimeData';
+import { usePaginatedProjects } from '../../hooks/useDataFetch';
 import ResponsiveImage from '../common/ResponsiveImage';
 import Pagination from '../ui/Pagination';
 import ProjectDetailsModal from '../modals/ProjectDetailsModal';
