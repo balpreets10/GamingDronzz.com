@@ -1,0 +1,117 @@
+/* ThemeSwatch Component Styles */
+
+.theme-swatch {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gd-space-2, 0.5rem);
+    padding: var(--gd-space-3, 0.75rem);
+    background: var(--gd-bg-secondary, #f8fafc);
+    border: 2px solid var(--gd-border-light, #e2e8f0);
+    border-radius: var(--gd-radius-lg, 0.75rem);
+    cursor: pointer;
+    transition: all var(--gd-transition-base, 0.2s ease);
+    min-width: 120px;
+    text-align: left;
+}
+
+.theme-swatch:hover {
+    border-color: var(--gd-color-primary, #3b82f6);
+    background: var(--gd-bg-tertiary, #f1f5f9);
+    transform: translateY(-2px);
+    box-shadow: var(--gd-shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+}
+
+.theme-swatch:focus {
+    outline: none;
+    border-color: var(--gd-color-primary, #3b82f6);
+    box-shadow: 0 0 0 3px var(--gd-color-primary-200, rgba(59, 130, 246, 0.3));
+}
+
+.theme-swatch--selected {
+    border-color: var(--gd-color-primary, #3b82f6);
+    background: var(--gd-color-primary-50, rgba(59, 130, 246, 0.1));
+}
+
+.theme-swatch--selected:hover {
+    background: var(--gd-color-primary-100, rgba(59, 130, 246, 0.15));
+}
+
+/* Color preview circles */
+.theme-swatch__preview {
+    display: flex;
+    gap: var(--gd-space-1, 0.25rem);
+    padding: var(--gd-space-2, 0.5rem);
+    background: var(--gd-bg-primary, #ffffff);
+    border-radius: var(--gd-radius-md, 0.5rem);
+    justify-content: center;
+}
+
+.theme-swatch__color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+/* Theme info */
+.theme-swatch__info {
+    display: flex;
+    align-items: center;
+    gap: var(--gd-space-2, 0.5rem);
+    padding-top: var(--gd-space-1, 0.25rem);
+}
+
+.theme-swatch__icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.theme-swatch__name {
+    font-size: var(--gd-text-sm, 0.875rem);
+    font-weight: 500;
+    color: var(--gd-text-primary, #0f172a);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Selected checkmark */
+.theme-swatch__check {
+    position: absolute;
+    top: var(--gd-space-2, 0.5rem);
+    right: var(--gd-space-2, 0.5rem);
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gd-color-primary, #3b82f6);
+    color: white;
+    border-radius: 50%;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .theme-swatch {
+        transition: none;
+    }
+
+    .theme-swatch:hover {
+        transform: none;
+    }
+}
+
+/* Touch-friendly sizing on mobile */
+@media (max-width: 768px) {
+    .theme-swatch {
+        min-height: 44px;
+        padding: var(--gd-space-3, 0.75rem);
+    }
+
+    .theme-swatch__color {
+        width: 18px;
+        height: 18px;
+    }
+}

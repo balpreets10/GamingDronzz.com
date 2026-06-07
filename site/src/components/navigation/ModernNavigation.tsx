@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import NavigationManager from '../../managers/NavigationManager';
+import { getCurrentTheme, setTheme, subscribeToTheme, type Theme } from '../../managers/ThemeManager';
 import ProfileDropdown from './ProfileDropdown';
 import RadialMenu from './RadialMenu';
+import { ThemePanel } from '../theme';
 import { prefersReducedMotion } from '../../utils/helpers';
 import { useThemeLogo } from '../../utils/logoUtils';
 import './ModernNavigation.css';
@@ -54,6 +56,8 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isThemePanelOpen, setIsThemePanelOpen] = useState(false);
+    const [currentTheme, setCurrentTheme] = useState<Theme | null>(() => getCurrentTheme());
 
     const reducedMotion = useMemo(() => prefersReducedMotion(), []);
     const logoInfo = useThemeLogo();
@@ -66,6 +70,14 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
 
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Subscribe to theme changes
+    useEffect(() => {
+        const unsubscribe = subscribeToTheme((theme) => {
+            setCurrentTheme(theme);
+        });
+        return unsubscribe;
     }, []);
 
     // Initialize navigation manager
@@ -157,6 +169,18 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
         onLoginClickRef.current?.();
     }, []);
 
+    const handleThemeSelect = useCallback(async (themeId: string) => {
+        await setTheme(themeId);
+    }, []);
+
+    const toggleThemePanel = useCallback(() => {
+        setIsThemePanelOpen(prev => !prev);
+    }, []);
+
+    const closeThemePanel = useCallback(() => {
+        setIsThemePanelOpen(false);
+    }, []);
+
     const navClasses = useMemo(() => [
         'modern-nav',
         `modern-nav--${position}`,
@@ -231,8 +255,32 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                     })}
                 </ul>
 
-                {/* Right side - Profile Dropdown + Hamburger */}
+                {/* Right side - Theme Trigger + Profile Dropdown + Hamburger */}
                 <div className="modern-nav__right">
+                    {/* Theme Selector Trigger */}
+                    <button
+                        className="modern-nav__theme-trigger"
+                        onClick={toggleThemePanel}
+                        aria-label="Open theme selector"
+                        aria-expanded={isThemePanelOpen}
+                        type="button"
+                        title="Change theme"
+                    >
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 2a10 10 0 0 1 0 20" fill="currentColor" />
+                        </svg>
+                    </button>
+
                     {/* Profile Dropdown - Desktop */}
                     <ProfileDropdown
                         onLoginClick={handleLoginClick}
@@ -276,6 +324,14 @@ const ModernNavigation: React.FC<ModernNavigationProps> = ({
                     />
                 </div>
             )}
+
+            {/* Theme Selector Panel */}
+            <ThemePanel
+                isOpen={isThemePanelOpen}
+                onClose={closeThemePanel}
+                currentThemeId={currentTheme?.id ?? null}
+                onThemeSelect={handleThemeSelect}
+            />
         </nav>
     );
 };

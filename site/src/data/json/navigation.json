@@ -15,25 +15,32 @@
       "position": 1
     },
     {
+      "id": "apps",
+      "label": "Apps",
+      "href": "#apps",
+      "icon": "📱",
+      "position": 2
+    },
+    {
       "id": "services",
       "label": "Services",
       "href": "#services",
       "icon": "⚙️",
-      "position": 2
+      "position": 3
     },
     {
       "id": "projects",
       "label": "Projects",
       "href": "#projects",
       "icon": "🎮",
-      "position": 3
+      "position": 4
     },
     {
       "id": "contact",
       "label": "Contact",
       "href": "#contact",
       "icon": "📧",
-      "position": 4
+      "position": 5
     }
   ],
   "dashboardNavigation": [
