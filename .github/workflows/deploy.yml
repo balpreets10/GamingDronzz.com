@@ -98,18 +98,25 @@ jobs:
           name: build-staging
           path: dist/
           
-      - name: 🌐 Deploy via FTP to Staging
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: 🌐 Deploy via SCP to Staging Droplet
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.FTP_STAGING_HOST }}
-          username: ${{ secrets.FTP_STAGING_USERNAME }}
-          password: ${{ secrets.FTP_STAGING_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: ./
-          clean: true
-          clean-exclude: |
-            .well-known/**
-            error_log
+          host: ${{ secrets.DO_STAGING_HOST }}
+          username: ${{ secrets.DO_STAGING_USER }}
+          key: ${{ secrets.DO_STAGING_SSH_KEY }}
+          source: "dist/"
+          target: ${{ secrets.DO_STAGING_PATH }}
+          strip_components: 1
+          rm: true
+
+      - name: 🔄 Set File Permissions on Staging
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DO_STAGING_HOST }}
+          username: ${{ secrets.DO_STAGING_USER }}
+          key: ${{ secrets.DO_STAGING_SSH_KEY }}
+          script: |
+            chmod -R 755 ${{ secrets.DO_STAGING_PATH }}
             
       - name: ✅ Deployment Success
         run: |
@@ -132,20 +139,25 @@ jobs:
           name: build-production
           path: dist/
           
-      - name: 🌐 Deploy via FTP to Production
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: 🌐 Deploy via SCP to Production Droplet
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.FTP_PROD_HOST }}
-          username: ${{ secrets.FTP_PROD_USERNAME }}
-          password: ${{ secrets.FTP_PROD_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: ./
-          clean: true
-          clean-exclude: |
-            .well-known/**
-            error_log
-            robots.txt
-            sitemap.xml
+          host: ${{ secrets.DO_PROD_HOST }}
+          username: ${{ secrets.DO_PROD_USER }}
+          key: ${{ secrets.DO_PROD_SSH_KEY }}
+          source: "dist/"
+          target: ${{ secrets.DO_PROD_PATH }}
+          strip_components: 1
+          rm: true
+
+      - name: 🔄 Set File Permissions on Production
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DO_PROD_HOST }}
+          username: ${{ secrets.DO_PROD_USER }}
+          key: ${{ secrets.DO_PROD_SSH_KEY }}
+          script: |
+            chmod -R 755 ${{ secrets.DO_PROD_PATH }}
             
       - name: ✅ Production Deployment Success
         run: |

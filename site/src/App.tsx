@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import ModernNavigation from './components/navigation/ModernNavigation';
 import Hero from './components/sections/Hero';
 import About from './components/sections/About';
+import Apps from './components/sections/Apps';
 import PaginatedProjects from './components/sections/PaginatedProjects';
 import Services from './components/sections/Services';
 import Articles from './components/sections/Articles';
@@ -34,11 +35,12 @@ function App() {
     customConfig: {
       items: [
         { id: 'hero', label: 'Home', href: '#hero', position: 0 },
-        { id: 'about', label: 'About', href: '#about', position: 1 },
-        { id: 'projects', label: 'Projects', href: '#projects', position: 2 },
-        { id: 'services', label: 'Services', href: '#services', position: 3 },
-        { id: 'articles', label: 'Articles', href: '#articles', position: 4 },
-        { id: 'contact', label: 'Contact', href: '#contact', position: 5 }
+        { id: 'apps', label: 'Apps', href: '#apps', position: 1 },
+        { id: 'about', label: 'About', href: '#about', position: 2 },
+        { id: 'projects', label: 'Projects', href: '#projects', position: 3 },
+        { id: 'services', label: 'Services', href: '#services', position: 4 },
+        { id: 'articles', label: 'Articles', href: '#articles', position: 5 },
+        { id: 'contact', label: 'Contact', href: '#contact', position: 6 }
       ]
     }
   });
@@ -128,6 +130,12 @@ function App() {
               primaryCtaText="Get Started"
               onPrimaryCtaClick={() => handleNavigate('contact')}
               currentTheme={currentTheme}
+            />
+
+            {/* Apps Section */}
+            <Apps
+              showFeaturedOnly={false}
+              maxApps={6}
             />
 
             {/* About Section */}

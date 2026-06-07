@@ -115,18 +115,53 @@ VITE_DEBUG_MODE=true|false
 - Minify and obfuscate production code
 - Remove development-only features
 
-## Hosting Requirements
+## Hosting
 
-### Static Hosting
-- Support for SPA routing (React Router)
+### Provider
+- **DigitalOcean Droplet (VPS)** — site is served from a Linux VPS via Nginx or Apache
 - HTTPS required for OAuth authentication
 - Modern browser support (ES2020+)
+
+### Nginx SPA Configuration (required on the Droplet)
+The web server must be configured to fall back to `index.html` for all routes (React Router requirement):
+```nginx
+location / {
+    try_files $uri $uri/ /index.html;
+}
+```
 
 ### Server Configuration
 - Proper MIME types for assets
 - Gzip compression enabled
 - Cache headers for static assets
-- Fallback to index.html for SPA routing
+- Fallback to `index.html` for SPA routing (see Nginx config above)
+
+## CI/CD Deployment (GitHub Actions)
+
+### Deployment Method
+Files are deployed via **SSH/SCP** using `appleboy/scp-action` and `appleboy/ssh-action`.
+
+### Required GitHub Secrets
+Set these in `Settings → Secrets and variables → Actions` on the GitHub repo:
+
+| Secret | Description |
+|---|---|
+| `DO_STAGING_HOST` | Staging droplet IP or hostname |
+| `DO_STAGING_USER` | SSH username on staging droplet |
+| `DO_STAGING_SSH_KEY` | Private SSH key for staging droplet |
+| `DO_STAGING_PATH` | Remote path on staging droplet (e.g. `/var/www/staging`) |
+| `DO_PROD_HOST` | Production droplet IP or hostname |
+| `DO_PROD_USER` | SSH username on production droplet |
+| `DO_PROD_SSH_KEY` | Private SSH key for production droplet |
+| `DO_PROD_PATH` | Remote path on production droplet (e.g. `/var/www/gamingdronzz`) |
+
+### Setting Up the SSH Key
+1. Generate a deploy key: `ssh-keygen -t ed25519 -C "github-actions-deploy" -f ~/.ssh/github_deploy`
+2. Add the **public key** to the droplet: `ssh-copy-id -i ~/.ssh/github_deploy.pub user@droplet-ip`
+   - Or append it manually to `/home/user/.ssh/authorized_keys` on the droplet
+3. Paste the **private key** contents as the `DO_STAGING_SSH_KEY` / `DO_PROD_SSH_KEY` GitHub secret
+
+> If staging and production share the same droplet, the `HOST`, `USER`, and `SSH_KEY` secrets can be identical — only the `PATH` will differ.
 
 ## Monitoring and Debugging
 
