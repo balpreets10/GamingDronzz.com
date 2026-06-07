@@ -1,0 +1,177 @@
+/* ThemePanel Component Styles */
+
+/* Backdrop */
+.theme-panel__backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--gd-overlay-bg, rgba(0, 0, 0, 0.5));
+    backdrop-filter: blur(var(--gd-backdrop-blur, 4px));
+    z-index: var(--gd-z-modal-backdrop, 1040);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--gd-transition-base, 0.2s ease), visibility var(--gd-transition-base, 0.2s ease);
+}
+
+.theme-panel__backdrop--visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Panel */
+.theme-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: 340px;
+    max-width: 100vw;
+    background: var(--gd-modal-bg, #ffffff);
+    z-index: var(--gd-z-modal, 1050);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform var(--gd-transition-slow, 0.3s ease);
+    box-shadow: var(--gd-shadow-2xl, -10px 0 40px rgba(0, 0, 0, 0.15));
+}
+
+.theme-panel--open {
+    transform: translateX(0);
+}
+
+/* Header */
+.theme-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--gd-space-4, 1rem) var(--gd-space-5, 1.25rem);
+    border-bottom: 1px solid var(--gd-border-light, #e2e8f0);
+    flex-shrink: 0;
+}
+
+.theme-panel__title {
+    font-size: var(--gd-text-lg, 1.125rem);
+    font-weight: 600;
+    color: var(--gd-text-primary, #0f172a);
+    margin: 0;
+}
+
+.theme-panel__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: var(--gd-radius-md, 0.5rem);
+    color: var(--gd-text-secondary, #64748b);
+    cursor: pointer;
+    transition: all var(--gd-transition-fast, 0.15s ease);
+}
+
+.theme-panel__close:hover {
+    background: var(--gd-bg-secondary, #f1f5f9);
+    color: var(--gd-text-primary, #0f172a);
+}
+
+.theme-panel__close:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--gd-color-primary, #3b82f6);
+}
+
+/* Content */
+.theme-panel__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--gd-space-4, 1rem) var(--gd-space-5, 1.25rem);
+    overscroll-behavior: contain;
+}
+
+/* Loading state */
+.theme-panel__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--gd-text-secondary, #64748b);
+    font-size: var(--gd-text-sm, 0.875rem);
+}
+
+/* Section */
+.theme-panel__section {
+    margin-bottom: var(--gd-space-6, 1.5rem);
+}
+
+.theme-panel__section:last-child {
+    margin-bottom: 0;
+}
+
+.theme-panel__section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--gd-space-2, 0.5rem);
+    font-size: var(--gd-text-sm, 0.875rem);
+    font-weight: 600;
+    color: var(--gd-text-secondary, #64748b);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 var(--gd-space-3, 0.75rem) 0;
+}
+
+.theme-panel__section-icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+/* Grid */
+.theme-panel__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gd-space-3, 0.75rem);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .theme-panel,
+    .theme-panel__backdrop {
+        transition: none;
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 400px) {
+    .theme-panel {
+        width: 100vw;
+    }
+
+    .theme-panel__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tablet */
+@media (min-width: 401px) and (max-width: 768px) {
+    .theme-panel {
+        width: 320px;
+    }
+}
+
+/* Custom scrollbar */
+.theme-panel__content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.theme-panel__content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.theme-panel__content::-webkit-scrollbar-thumb {
+    background: var(--gd-border-light, #e2e8f0);
+    border-radius: 3px;
+}
+
+.theme-panel__content::-webkit-scrollbar-thumb:hover {
+    background: var(--gd-text-disabled, #94a3b8);
+}

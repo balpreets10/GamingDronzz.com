@@ -1,8 +1,5 @@
 # Gaming Dronzz Website Development Instructions
 
-## Project Structure Overview
-**IMPORTANT**: Always refer to `site-info.md` in the root directory for high-level app overview, build system information, and current project state. Update `site-info.md` whenever structural, system, design, or implementation changes/additions happen.
-
 ### Key Directory Structure
 - **`site/`**: Contains the main React application code, build system, and all app-related files
 - **`agents/`**: Contains specialized agent configurations for different development roles (backend-architect, frontend-developer, database-admin, etc.)

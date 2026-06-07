@@ -155,6 +155,36 @@
     margin-top: var(--gd-space-4);
 }
 
+/* ===== THEME TRIGGER ===== */
+.modern-nav__theme-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: var(--gd-radius-full, 50%);
+    color: var(--gd-text-secondary, #64748b);
+    cursor: pointer;
+    transition: all var(--gd-transition-fast, 0.15s ease);
+}
+
+.modern-nav__theme-trigger:hover {
+    background: var(--gd-bg-secondary, rgba(0, 0, 0, 0.05));
+    color: var(--gd-text-primary, #0f172a);
+}
+
+.modern-nav__theme-trigger:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--gd-color-primary, #3b82f6);
+}
+
+.modern-nav__theme-trigger svg {
+    flex-shrink: 0;
+}
+
 /* ===== HAMBURGER MENU ===== */
 .modern-nav__hamburger {
     display: none;

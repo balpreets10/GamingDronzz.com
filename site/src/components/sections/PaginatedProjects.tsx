@@ -9,6 +9,7 @@ import ProjectDetailsModal from '../modals/ProjectDetailsModal';
 import { SmartSkeletonLoader, ProjectSkeletonGrid } from '../ui/SkeletonLoader';
 import { getProjectFolderNameSync, hasProjectAssetsSync } from '../../utils/projectImageMap';
 import type { DatabaseProject } from '../../services/DatabaseService';
+import DatabaseService from '../../services/DatabaseService';
 import './Projects.css';
 
 interface PaginatedProjectsProps {
@@ -264,10 +265,19 @@ const PaginatedProjects: React.FC<PaginatedProjectsProps> = ({
     }, [handleRefresh]);
 
     // Handle project click for modal
-    const handleProjectClick = useCallback((project: DatabaseProject) => {
+    const handleProjectClick = useCallback(async (project: DatabaseProject) => {
         console.log('🔥 PaginatedProjects - handleProjectClick called with project:', project);
         console.log('🔥 Project title:', project.title);
         console.log('🔥 Project ID:', project.id);
+
+        // Increment view count before opening modal
+        try {
+            await DatabaseService.projects.incrementViewCount(project.id);
+            console.log('✅ View count incremented for project:', project.title);
+        } catch (error) {
+            console.warn('⚠️ Failed to increment view count:', error);
+        }
+
         setSelectedProject(project);
         setIsModalOpen(true);
         console.log('🔥 Modal state updated - isModalOpen should be true');
@@ -659,13 +669,37 @@ const EnhancedProjectCard: React.FC<EnhancedProjectCardProps> = ({
         }
     }, []);
 
+    const handleCardClick = useCallback((e: React.MouseEvent) => {
+        // Don't trigger card click if clicking on action links
+        if ((e.target as HTMLElement).closest('.projects__action')) {
+            return;
+        }
+
+        if (onClick) {
+            onClick(project);
+        }
+    }, [onClick, project]);
+
     return (
         <article
             ref={cardRef}
             className={`projects__card ${isFilteringIn ? 'projects__card--filtering-in' : ''}`}
-            style={{ animationDelay: `${Math.max(0, index * 0.1)}s` }}
+            style={{
+                animationDelay: `${Math.max(0, index * 0.1)}s`,
+                cursor: 'pointer'
+            }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onClick={handleCardClick}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleCardClick(e as React.MouseEvent<HTMLElement>);
+                }
+            }}
+            aria-label={`View details for ${project.title}`}
         >
             <div className="projects__card-image">
                 {(() => {

@@ -15,9 +15,11 @@ interface ThemeManagerConfig {
 
 class ThemeManager {
     private static instance: ThemeManager | null = null;
+    private static readonly STORAGE_KEY = 'gd-user-theme';
     private currentTheme: Theme | null = null;
     private config: Required<ThemeManagerConfig>;
     private isInitialized = false;
+    private subscribers: Set<(theme: Theme) => void> = new Set();
 
     private constructor(config: ThemeManagerConfig = {}) {
         this.config = {
@@ -73,25 +75,103 @@ class ThemeManager {
     }
 
     /**
+     * Set theme manually (user selection)
+     * Saves to localStorage and applies immediately
+     */
+    public async setTheme(themeId: string): Promise<Theme | null> {
+        const theme = await getThemeById(themeId);
+        if (theme) {
+            localStorage.setItem(ThemeManager.STORAGE_KEY, themeId);
+            await this.applyTheme(theme);
+            this.currentTheme = theme;
+            this.notifySubscribers();
+            this.log(`User selected theme: ${theme.name} (${theme.icon})`);
+            return theme;
+        }
+        this.log(`Invalid theme ID: ${themeId}`);
+        return null;
+    }
+
+    /**
+     * Subscribe to theme changes
+     * Returns unsubscribe function
+     */
+    public subscribe(callback: (theme: Theme) => void): () => void {
+        this.subscribers.add(callback);
+        return () => {
+            this.subscribers.delete(callback);
+        };
+    }
+
+    /**
+     * Clear user theme preference (revert to auto selection)
+     */
+    public clearUserTheme(): void {
+        localStorage.removeItem(ThemeManager.STORAGE_KEY);
+        this.log('User theme preference cleared');
+    }
+
+    /**
+     * Get user-saved theme from localStorage
+     */
+    private getUserSavedTheme(): string | null {
+        try {
+            return localStorage.getItem(ThemeManager.STORAGE_KEY);
+        } catch {
+            return null;
+        }
+    }
+
+    /**
+     * Notify all subscribers of theme change
+     */
+    private notifySubscribers(): void {
+        if (this.currentTheme) {
+            this.subscribers.forEach(callback => {
+                try {
+                    callback(this.currentTheme!);
+                } catch (error) {
+                    console.error('ThemeManager subscriber error:', error);
+                }
+            });
+        }
+    }
+
+    /**
      * Cleanup resources
      */
     public destroy(): void {
         this.currentTheme = null;
         this.isInitialized = false;
+        this.subscribers.clear();
         ThemeManager.instance = null;
     }
 
     // ===== PRIVATE METHODS ===== //
 
     /**
-     * Select theme for startup based on session consistency
+     * Select theme for startup based on user preference, session consistency, or random
      */
     private async selectStartupTheme(): Promise<Theme> {
+        // Priority 1: User-saved theme from localStorage
+        const savedThemeId = this.getUserSavedTheme();
+        if (savedThemeId) {
+            const savedTheme = await getThemeById(savedThemeId);
+            if (savedTheme) {
+                this.log(`Loaded user-saved theme: ${savedTheme.name}`);
+                return savedTheme;
+            }
+            // Invalid saved theme, clear it
+            this.clearUserTheme();
+        }
+
+        // Priority 2: Session consistency
         if (this.config.enableSessionConsistency) {
             return this.getSessionConsistentTheme();
-        } else {
-            return this.getRandomTheme();
         }
+
+        // Priority 3: Random theme
+        return this.getRandomTheme();
     }
 
     /**
@@ -199,6 +279,23 @@ export const initializeThemeSystem = async (config?: ThemeManagerConfig): Promis
 export const getCurrentTheme = (): Theme | null => {
     const themeManager = ThemeManager.getInstance();
     return themeManager.getCurrentTheme();
+};
+
+/**
+ * Set theme manually - convenience function
+ * Saves to localStorage and applies immediately
+ */
+export const setTheme = async (themeId: string): Promise<Theme | null> => {
+    const themeManager = ThemeManager.getInstance();
+    return themeManager.setTheme(themeId);
+};
+
+/**
+ * Subscribe to theme changes - convenience function
+ */
+export const subscribeToTheme = (callback: (theme: Theme) => void): (() => void) => {
+    const themeManager = ThemeManager.getInstance();
+    return themeManager.subscribe(callback);
 };
 
 /**
